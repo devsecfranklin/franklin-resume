@@ -28,4 +28,4 @@ html: ## generate HTML from markdown
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build
-	#find . -name '*.md' | xargs /usr/local/bin/mdl
+	find . -name '*.md' | xargs /usr/local/bin/mdl
