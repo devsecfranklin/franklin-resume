@@ -1,0 +1,20 @@
+addons:
+  apt:
+    packages:
+    - curl
+    - libxml2-utils
+    - pandoc
+    - aspell
+    - aspell-en
+before_install:
+- sudo apt-get update -qq
+language: python
+python:
+- '3.4'
+script:
+- curl https://raw.githubusercontent.com/mike42/mdcheckr/master/mdcheckr -o mdcheckr
+- chmod +x mdcheckr
+- sudo cp mdcheckr /usr/local/bin
+- "/usr/local/bin/mdcheckr -v"
+- git config user.email "frank378@gmail.com"
+- git config user.name "@thedevilsvoice"
