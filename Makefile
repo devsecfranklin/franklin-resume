@@ -24,8 +24,4 @@ gen_html: ## generate HTML from markdown
 	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "$(CSS)/franklin.css"
 
 lint: ## check the Markdown files for issues
-	if [ ! command -v mdl ]; then \
-		echo "gem: --no-document" >> ~/.gemrc;\
-		sudo gem install mdl;\
-	fi
 	find . -name '*.md' | xargs /usr/local/bin/mdl

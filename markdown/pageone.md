@@ -1,24 +1,25 @@
-## Currently working to secure cloud infrastructure 
+# Resume
+
+## Currently working to secure cloud infrastructure
 
 ### Recent Tools
 
 - Github/Gitlab
-    - Markdown
+  - Markdown
 - Python
 - Puppet
-    - Ruby
+  - Ruby
 - Ansible
 - Chef
-    - Kitchen, 
-    - Knife
+  - Kitchen
+  - Knife
 - Linux Shell
-    - BASH
-    - ZSH
+  - BASH
+  - ZSH
 - Vagrant
-- AWS  
+- AWS
 - PERL
 - JSON
-
 
 ### Code and Projects
 
