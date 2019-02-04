@@ -19,9 +19,13 @@ export PRINT_HELP_PYSCRIPT
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+build: ## setup the build env
+	bash -xe test/env_setup.sh
+
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
 	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "$(CSS)/franklin.css"
 
 lint: ## check the Markdown files for issues
+	$(MAKE) build
 	find . -name '*.md' | xargs /usr/local/bin/mdl
