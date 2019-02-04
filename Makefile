@@ -1,3 +1,9 @@
+.PHONY: markdown
+
+CSS := css
+MD := markdown
+TEMPLATES := templates
+
 define PRINT_HELP_PYSCRIPT
 import re, sys
 
@@ -12,6 +18,10 @@ export PRINT_HELP_PYSCRIPT
 
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
+
+gen_html: ## generate HTML from markdown
+	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
+	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "$(CSS)/franklin.css"
 
 lint: ## check the Markdown files for issues
 	if [ ! command -v mdl ]; then \
