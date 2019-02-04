@@ -19,7 +19,7 @@ export PRINT_HELP_PYSCRIPT
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-gen_html: ## generate HTML from markdown
+html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
 	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "$(CSS)/franklin.css"
 
