@@ -1,13 +1,13 @@
 @page {
   @bottom-right {
     content: counter(page) " of " counter(pages);
-    font-family: "Arial";
+    font: 16px Helvetica, Sans-Serif;
   }
 }
 
 @page :right {
   @top-right {
-    font-family: "Arial";
+    font: 16px Helvetica, Sans-Serif;
     content: "Franklin Diaz Resume";
   }
 }
@@ -18,23 +18,23 @@
 
 h1 {
   page-break-before: always;
-  font-family: "Arial";
+  font: 16px Helvetica, Sans-Serif;
 }
 
 h2 {
-  font-family: "Arial";
+  font: 16px Helvetica, Sans-Serif;
 }
 
 h3 {
-  font-family: "Arial";
+  font: 16px Helvetica, Sans-Serif;
 }
 
 h4 {
-  font-family: "Arial";
+  font: 16px Helvetica, Sans-Serif;
 }
 
 body {
-  font-family: "Arial";
+  font: 16px Helvetica, Sans-Serif; line-height: 24px; 
 }
 
 #toc_container {
