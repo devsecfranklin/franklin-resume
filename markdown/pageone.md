@@ -4,12 +4,14 @@
 
 ### Recent Tools
 
+
 - Github/Gitlab
   - Markdown
 - Python
 - Puppet
   - Ruby
 - Ansible
+  - molecule
 - Chef
   - Kitchen
   - Knife
@@ -17,11 +19,33 @@
   - BASH
   - ZSH
 - Vagrant
+- Terraform
 - AWS
-- PERL
-- JSON
 
 ### Code and Projects
 
-A few public/shareable examples
+- Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
+- Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
 
+### Education
+
+#### MS Network Security/Network Engineering  
+#### (DePaul University)
+
+- Studied network protocols, network design, focus mostly on lower 4 layers of OSI.
+- About half Network Security and half Network Engineering courses.
+- [Program information](http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx)
+
+#### MS Computer Info Systems 
+#### (Northwestern University)
+
+- Agile, OO Methods.
+- Relational Database specialization.
+- Java programming, interactive web apps with Apache/Tomcat.
+- [Program information](http://sps.northwestern.edu/program-areas/graduate/information-systems/)
+
+#### BS Computer Science 
+#### (Roosevelt University)
+
+- [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx). 
+- Minor mathematics.
