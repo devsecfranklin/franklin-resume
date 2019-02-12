@@ -31,7 +31,7 @@ doc: ## Convert markdown to MS Word
 
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "static/style.css" --metadata title="Franklin Resume"
+	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "/templates/style.css" --metadata title="Franklin Resume"
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build
