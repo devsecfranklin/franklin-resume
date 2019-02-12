@@ -17,7 +17,8 @@
 #      REVISION:  ---
 #==================================================
 #set -o nounset   # Treat unset variables as an error
+
 if [ ! $(command -v mdl) ]; then
   echo "gem: --no-document" >> ~/.gemrc
-  sudo gem install mdl
+  gem install mdl
 fi

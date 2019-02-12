@@ -4,7 +4,7 @@
 
 ### Recent Tools
 
-These are things I use daily in a professional capacity. 
+These are things I use daily in a professional capacity.
 
 - Github
     - Markdown
@@ -19,9 +19,11 @@ These are things I use daily in a professional capacity.
 - Terraform
 - AWS
 
+### Experience
+
 ### Education
 
-#### MS Network Security/Network Engineering  
+#### MS Network Security/Network Engineering
 
 #### (DePaul University)
 
@@ -29,7 +31,7 @@ These are things I use daily in a professional capacity.
 - About half Network Security and half Network Engineering courses.
 - [Program information](http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx)
 
-#### MS Computer Info Systems 
+#### MS Computer Info Systems
 
 #### (Northwestern University)
 
@@ -38,11 +40,11 @@ These are things I use daily in a professional capacity.
 - Java programming, interactive web apps with Apache/Tomcat.
 - [Program information](http://sps.northwestern.edu/program-areas/graduate/information-systems/)
 
-#### BS Computer Science 
+#### BS Computer Science
 
 #### (Roosevelt University)
 
-- [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx). 
+- [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx).
 - Minor mathematics.
 
 ### Code and Projects
@@ -54,5 +56,5 @@ These are things I use daily in a professional capacity.
 
 [![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume)
 
-- [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub. 
+- [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
 - [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
