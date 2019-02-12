@@ -5,7 +5,7 @@ my_resume = Flask(__name__)
 
 @my_resume.route('/')
 def render_static():
-  return render_template('index.html')
+  return render_template('index.html', title = 'Franklin D. Resume')
 
 if __name__ == '__main__':
   bashCommand = "make html"
