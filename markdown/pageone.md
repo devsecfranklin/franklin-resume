@@ -4,16 +4,14 @@
 
 ### Recent Tools
 
-- Github/Gitlab
+These are things I use daily in a professional capacity. 
+
+- Github
     - Markdown
 - Python
 - Puppet
     - Ruby (spec/rake testing)
 - Ansible
-    - molecule
-- Chef
-    - Kitchen
-    - Knife
 - Linux Shell
     - BASH
     - ZSH
@@ -21,14 +19,10 @@
 - Terraform
 - AWS
 
-### Code and Projects
-
-- Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
-- Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
-
 ### Education
 
 #### MS Network Security/Network Engineering  
+
 #### (DePaul University)
 
 - Studied network protocols, network design, focus mostly on lower 4 layers of OSI.
@@ -36,6 +30,7 @@
 - [Program information](http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx)
 
 #### MS Computer Info Systems 
+
 #### (Northwestern University)
 
 - Agile, OO Methods.
@@ -44,10 +39,16 @@
 - [Program information](http://sps.northwestern.edu/program-areas/graduate/information-systems/)
 
 #### BS Computer Science 
+
 #### (Roosevelt University)
 
 - [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx). 
 - Minor mathematics.
+
+### Code and Projects
+
+- Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
+- Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
 
 ### About This Page
 

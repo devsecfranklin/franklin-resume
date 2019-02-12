@@ -1,6 +1,5 @@
 .PHONY: markdown
 
-CSS := css
 MD := markdown
 TEMPLATES := templates
 
@@ -22,9 +21,17 @@ help:
 build: ## setup the build env
 	bash -xe test/env_setup.sh
 
+clean: ## Cleanup all the things
+	rm doc/my_resume.docx
+	rm templates/*.html
+
+doc: ## Convert markdown to MS Word
+	if [ ! -d "doc" ]; then mkdir doc;  fi
+	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.docx"
+
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" -c "$(CSS)/franklin.css"
+	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" --metadata author="Franklin" --template $(MD)/pandoc_template.html
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build
