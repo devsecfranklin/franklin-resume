@@ -10,7 +10,6 @@
 - Puppet
     - Ruby (spec/rake testing)
 - Ansible
-    - molecule
 - Chef
     - Kitchen
     - Knife
@@ -29,6 +28,7 @@
 ### Education
 
 #### MS Network Security/Network Engineering  
+
 #### (DePaul University)
 
 - Studied network protocols, network design, focus mostly on lower 4 layers of OSI.
@@ -36,6 +36,7 @@
 - [Program information](http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx)
 
 #### MS Computer Info Systems 
+
 #### (Northwestern University)
 
 - Agile, OO Methods.
@@ -44,6 +45,7 @@
 - [Program information](http://sps.northwestern.edu/program-areas/graduate/information-systems/)
 
 #### BS Computer Science 
+
 #### (Roosevelt University)
 
 - [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx). 
