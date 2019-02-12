@@ -1,5 +1,6 @@
 .PHONY: markdown
 
+PRE := /app
 MD := markdown
 TEMPLATES := templates
 
@@ -26,12 +27,12 @@ clean: ## Cleanup all the things
 	rm templates/*.html
 
 doc: ## Convert markdown to MS Word
-	if [ ! -d "doc" ]; then mkdir doc;  fi
-	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.docx"
+	if [ ! -d "$(PRE)/doc" ]; then mkdir $(PRE)/doc;  fi
+	pandoc -f markdown -s "$(PRE)/$(MD)/pageone.md" -o "$(PRE)/doc/my_resume.docx"
 
 html: ## generate HTML from markdown
-	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" --metadata author="Franklin" --template $(MD)/pandoc_template.html
+	if [ ! -d "$(PRE)/$(TEMPLATES)" ]; then mkdir $(PRE)/$(TEMPLATES); fi
+	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(MD)/pandoc_template.html
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build

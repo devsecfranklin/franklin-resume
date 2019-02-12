@@ -8,3 +8,11 @@ Log in to see what's up:
 ```
 heroku run bash --app franklin-resume
 ```
+
+
+## Releases
+
+```
+curl -n https://api.heroku.com/apps/franklin-resume/releases/ \
+          -H "Accept: application/vnd.heroku+json; version=3"
+```
