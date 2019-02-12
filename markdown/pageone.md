@@ -4,26 +4,20 @@
 
 ### Recent Tools
 
-- Github/Gitlab
+These are things I use daily in a professional capacity. 
+
+- Github
     - Markdown
 - Python
 - Puppet
     - Ruby (spec/rake testing)
 - Ansible
-- Chef
-    - Kitchen
-    - Knife
 - Linux Shell
     - BASH
     - ZSH
 - Vagrant
 - Terraform
 - AWS
-
-### Code and Projects
-
-- Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
-- Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
 
 ### Education
 
@@ -50,6 +44,11 @@
 
 - [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx). 
 - Minor mathematics.
+
+### Code and Projects
+
+- Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
+- Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
 
 ### About This Page
 
