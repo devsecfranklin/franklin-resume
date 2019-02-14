@@ -9,12 +9,12 @@ def render_static():
 
 @my_resume.route('/download')
 def download():
-  file = open('doc/my_resume.docx','r')
-  returnfile = file.read().encode('latin-1')
+  file = open('my_resume.docx','r')
+  returnfile = file.read().encode('utf-8')
   file.close()
   return Response(returnfile,
-  	 mimetype="text/docx",
-  	 headers={"Content-disposition": "attachment; filename=doc/my_resume.docx"})
+  	 mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  	 headers={"Content-disposition": "attachment; filename=my_resume.docx"})
 
 if __name__ == '__main__':
   bashCommand = "make html"
