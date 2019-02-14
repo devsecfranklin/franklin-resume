@@ -1,5 +1,7 @@
 # Resume
 
+[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) 
+
 ## Currently working to secure cloud infrastructure
 
 ### Recent Tools
@@ -20,6 +22,16 @@ These are things I use daily in a professional capacity.
 - AWS
 
 ### Experience
+
+#### Salesforce
+
+- Oct 2014 - Current
+- Data Science & Network Forensics team
+    - SecDevOps building security data platform & infrastructure
+
+#### Indiana University
+
+
 
 ### Education
 
@@ -54,7 +66,7 @@ These are things I use daily in a professional capacity.
 
 ### About This Page
 
-[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume)
+
 
 - [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
 - [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
