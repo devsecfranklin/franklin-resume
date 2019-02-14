@@ -10,7 +10,7 @@ def render_static():
 @my_resume.route('/download')
 def download():
   file = open('/app/doc/my_resume.docx','r')
-  returnfile = file.read().encode('utf-8')
+  returnfile = file.read()
   file.close()
   return Response(returnfile,
   	 mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
