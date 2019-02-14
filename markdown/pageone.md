@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) 
 
+- [Download a this resume in MS word](https://franklin-resume.herokuapps.com/download)
 - [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
 - [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
 
