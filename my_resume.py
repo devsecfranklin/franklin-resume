@@ -1,5 +1,6 @@
 import subprocess
 from flask import Flask, render_template
+import codecs
 
 my_resume = Flask(__name__)
 
@@ -9,7 +10,7 @@ def render_static():
 
 @my_resume.route('/download')
 def download():
-  file = open('/app/doc/my_resume.docx','r')
+  file = codecs.open('/app/doc/my_resume.docx','r', encoding='utf-8', errors='ignore')
   returnfile = file.read()
   file.close()
   return Response(returnfile,
