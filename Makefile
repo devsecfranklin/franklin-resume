@@ -43,3 +43,6 @@ html: ## generate HTML from markdown
 lint: ## check the Markdown files for issues
 	$(MAKE) build
 	find . -name '*.md' | xargs /usr/local/bin/mdl
+
+pdf: ## generate PDF version of Resume
+	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"

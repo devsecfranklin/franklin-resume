@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) 
 
+- [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
+- [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
+
 ## Currently working to secure cloud infrastructure
 
 ### Recent Tools
@@ -63,10 +66,3 @@ These are things I use daily in a professional capacity.
 
 - Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
 - Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
-
-### About This Page
-
-
-
-- [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
-- [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org

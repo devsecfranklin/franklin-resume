@@ -18,6 +18,8 @@
 #==================================================
 #set -o nounset   # Treat unset variables as an error
 
+sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-latex-recommended
+
 if [ ! $(command -v mdl) ]; then
   echo "gem: --no-document" >> ~/.gemrc
   gem install mdl
