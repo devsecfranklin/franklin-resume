@@ -27,7 +27,6 @@ clean: ## Cleanup all the things
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
 
 doc: ## Convert markdown to MS Word
-	if [ ! -d "doc" ]; then mkdir doc;  fi
 	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.docx"
 
 heroku: ## generate HTML from markdown on heroku
@@ -43,3 +42,6 @@ html: ## generate HTML from markdown
 lint: ## check the Markdown files for issues
 	$(MAKE) build
 	find . -name '*.md' | xargs /usr/local/bin/mdl
+
+pdf: ## generate PDF version of Resume
+	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
