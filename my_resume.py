@@ -10,7 +10,7 @@ def render_static():
 
 @my_resume.route('/download')
 def download():
-  file = codecs.open('/app/doc/my_resume.docx','r')
+  file = codecs.open('/app/doc/my_resume.docx','r', encoding='utf-8', errors='ignore')
   returnfile = file.read()
   file.close()
   return Response(returnfile, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document", headers={"Content-disposition": "attachment; filename=my_resume.docx"})
