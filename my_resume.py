@@ -9,7 +9,7 @@ def render_static():
 
 @my_resume.route('/download')
 def download():
-  file = open('my_resume.docx','r')
+  file = open('/app/doc/my_resume.docx','r')
   returnfile = file.read().encode('utf-8')
   file.close()
   return Response(returnfile,

@@ -27,7 +27,7 @@ clean: ## Cleanup all the things
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
 
 doc: ## Convert markdown to MS Word
-	pandoc -f markdown -s "$(MD)/pageone.md" -o "static/my_resume.docx"
+	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.docx"
 
 heroku: ## generate HTML from markdown on heroku
 	if [ ! -d "$(PRE)/doc" ]; then mkdir $(PRE)/doc;  fi
