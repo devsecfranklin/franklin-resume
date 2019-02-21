@@ -10,9 +10,9 @@ body {
   font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
   font-size: 12px;
   line-height: 1.7;
-  padding: 1em;
-  margin: auto;
-  max-width: 20em;
+  margin: 0 auto;
+  width: 750px;
+  padding: 0px;
   background: #fefefe;
 }
 
@@ -65,7 +65,14 @@ img {
   max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  color: #111;
+  line-height: 125%;
+  margin-top: 0px;
+  font-weight: normal;
+}
+
+h2, h3, h4, h5, h6 {
   color: #111;
   line-height: 125%;
   margin-top: 2em;
@@ -307,11 +314,11 @@ table td {
 
   @page :left {
     margin: 15mm 20mm 15mm 10mm;
-}
+  }
 
   @page :right {
     margin: 15mm 10mm 15mm 20mm;
-}
+  }
 
   p, h2, h3 {
     orphans: 3;

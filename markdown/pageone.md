@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) 
 
-- [Download a this resume in MS word](https://franklin-resume.herokuapps.com/download)
+- This [application is built on Heroku](https://www.heroku.com/what)
 - [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
 - [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
 
@@ -10,9 +10,9 @@
 
 ### Recent Tools
 
-These are things I use daily in a professional capacity.
+Things I've been using lately.
 
-- Github
+- Github, GitLab
     - Markdown
 - Python
 - Puppet
@@ -24,6 +24,9 @@ These are things I use daily in a professional capacity.
 - Vagrant
 - Terraform
 - AWS
+- Digital Ocean
+- Google Cloud
+- Docker
 
 ### Experience
 
@@ -33,32 +36,58 @@ These are things I use daily in a professional capacity.
 - Data Science & Network Forensics team
     - SecDevOps building security data platform & infrastructure
 
+#### Exact Target & Salesforce
+
+- Jan 2014 - Oct 2014
+- Create monitoring and administration tools in Linux environments.
+- Facilitate deployment of custom cloud applications as a github site admin, chef admin, etc.
+- Develop secure build/deployment processes.
+- Train engineers & teams on various open source software and build/deployment processes.
+- Port existing Windows C# web-based deployment tools to Linux/Python (Sledgehammer project).
+- Support loading major releases to stacks every 6 weeks.
+- [ExactTarget](https://www.marketingcloud.com/) was acquired by Salesforce in August of 2014
+
 #### Indiana University
 
+- Aug 2012 – Dec 31st, 2013
+- Principal Research Software Engineer
+- Test Architect in Software Defined Networking Lab, designed test cases and direct test efforts on openflow networks.
+- Wrote web based tools for [GENI/GEMINI](http://www.geni.net/) project.
+- Assistant instructor for undergraduate networking (lead discussions, create and grade homework, and proctor exams).
+- Research very high capacity storage solutions and high speed network connections.
 
+#### Nokia Siemens Networks
+
+- April 2011 – July 2012
+- Senior R&D Engineer
+
+#### Motorola
+
+- Jan 1999 - April 2011
+- CDMA Cellular base station product development.
+
+#### McHenry County College 
+
+- August 2006 –June 2011
+- Adjunct Faculty
+- Taught information systems courses
 
 ### Education
 
-#### MS Network Security/Network Engineering
-
-#### (DePaul University)
+#### DePaul University, MS Network Security/Network Engineering
 
 - Studied network protocols, network design, focus mostly on lower 4 layers of OSI.
 - About half Network Security and half Network Engineering courses.
 - [Program information](http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx)
 
-#### MS Computer Info Systems
-
-#### (Northwestern University)
+#### Northwestern University, MS Computer Info Systems
 
 - Agile, OO Methods.
 - Relational Database specialization.
 - Java programming, interactive web apps with Apache/Tomcat.
 - [Program information](http://sps.northwestern.edu/program-areas/graduate/information-systems/)
 
-#### BS Computer Science
-
-#### (Roosevelt University)
+#### Roosevelt University, BS Computer Science
 
 - [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx).
 - Minor mathematics.
@@ -67,3 +96,4 @@ These are things I use daily in a professional capacity.
 
 - Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
 - Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
+- I run [&#64;indybsides security conference](https://twitter.com/indybsides)
