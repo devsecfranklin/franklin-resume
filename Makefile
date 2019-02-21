@@ -27,17 +27,17 @@ clean: ## Cleanup all the things
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
 
 doc: ## Convert markdown to MS Word
-	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.docx"
+	pandoc -f markdown -s "$(MD)/header.md" "$(MD)/pageone.md" -o "doc/my_resume.docx"
 
 heroku: ## generate HTML from markdown on heroku
 	if [ ! -d "$(PRE)/doc" ]; then mkdir $(PRE)/doc;  fi
 	pandoc -f markdown -s "$(PRE)/$(MD)/pageone.md" -o "$(PRE)/doc/my_resume.docx"	
 	if [ ! -d "$(PRE)/$(TEMPLATES)" ]; then mkdir $(PRE)/$(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(MD)/pandoc_template.html
+	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/header.md" "$(PRE)/$(MD)/dev_header.md" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(MD)/pandoc_template.html
 
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(MD)/pandoc_template.html
+	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/header.md" "$(MD)/dev_header.md" "$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(MD)/pandoc_template.html
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build
