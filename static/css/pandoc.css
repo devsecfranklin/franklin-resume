@@ -10,7 +10,8 @@ body {
   font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
   font-size: 12px;
   line-height: 1.7;
-  margin: 0px;
+  margin: 0 auto;
+  width: 750px;
   padding: 0px;
   background: #fefefe;
 }
