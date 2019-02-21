@@ -96,4 +96,4 @@ Things I've been using lately.
 
 - Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
 - Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
-- I run [@indybsides security conference](https://twitter.com/indybsides)
+- I run [&#64;indybsides security conference](https://twitter.com/indybsides)
