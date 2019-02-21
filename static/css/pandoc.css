@@ -1,6 +1,7 @@
 html {
   font-size: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }

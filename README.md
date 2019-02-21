@@ -9,6 +9,11 @@ Log in to see what's up:
 heroku run bash --app franklin-resume
 ```
 
+Tail the logs
+
+```
+heroku logs --tail -a franklin-resume
+```
 
 ## Releases
 
