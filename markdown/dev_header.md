@@ -1,4 +1,4 @@
-## Currently working to secure cloud infrastructure
+## This Resume is also a Demo Application
 
 [![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) 
 
