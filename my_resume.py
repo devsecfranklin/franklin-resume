@@ -4,7 +4,7 @@ import codecs
 
 DOWNLOADS = "/app/doc"
 
-my_resume = Flask(__name__,static_folder='doc')
+my_resume = Flask(__name__)
 
 @my_resume.route('/')
 def render_static():
