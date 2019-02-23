@@ -15,7 +15,9 @@ script:
 - curl https://raw.githubusercontent.com/mike42/mdcheckr/master/mdcheckr -o mdcheckr
 - chmod +x mdcheckr
 - sudo cp mdcheckr /usr/local/bin
-- /usr/local/bin/mdcheckr markdown/*.md 
+- /usr/local/bin/mdcheckr markdown/header.md 
+- /usr/local/bin/mdcheckr markdown/dev_header.md
+- /usr/local/bin/mdcheckr markdown/pageone.md
 - git config user.email "frank378@gmail.com"
 - git config user.name "@thedevilsvoice"
 - make html
