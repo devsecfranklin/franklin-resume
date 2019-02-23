@@ -1,5 +1,18 @@
+<!doctype html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pandoc.css') }}">
+  <meta name="author" content="Franklin" />
+  <title>Franklin Resume - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
 {% block title %}Page Not Found{% endblock %}
 {% block body %}
-<h1>Page Not Found</h1>
 <p>What you were looking for is just not there.
+<p>Please enjoy this picture of Remy looking majestic. 
+<br>
+<img src="{{url_for('static', filename='majestic_remy.jpg')}}" />
 {% endblock %}
+</html>
