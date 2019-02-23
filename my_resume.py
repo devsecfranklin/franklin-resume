@@ -8,9 +8,9 @@ my_resume = Flask(__name__,static_folder='doc')
 def render_static():
   return render_template('index.html', title = 'Franklin D. Resume')
 
-@my_resume.route('/doc/<path:filename>', methods=['GET', 'POST'])
-def download(filename):
-  return send_from_directory(directory='doc', filename=filename)
+#@my_resume.route('/doc/<path:filename>', methods=['GET', 'POST'])
+#def download(filename):
+#  return send_from_directory(directory='doc', filename=filename)
 
 @my_resume.errorhandler(404)
 def page_not_found(e):
