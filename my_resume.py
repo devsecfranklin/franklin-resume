@@ -10,17 +10,17 @@ my_resume = Flask(__name__,static_folder='doc')
 def render_static():
   return render_template('index.html', title = 'Franklin D. Resume')
 
-  @api.route("/files")
-  def list_files():
-    """Endpoint to list files on the server."""
-    files = []
-    for filename in os.listdir(DOWNLOADS):
-      path = os.path.join(DOWNLOADS, filename)
-      if os.path.isfile(path):
-        files.append(filename)
-    return jsonify(files)
+@my_resume.route("/files")
+def list_files():
+  """Endpoint to list files on the server."""
+  files = []
+  for filename in os.listdir(DOWNLOADS):
+    path = os.path.join(DOWNLOADS, filename)
+    if os.path.isfile(path):
+      files.append(filename)
+  return jsonify(files)
 
-@api.route("/files/<path:path>")
+@my_resume.route("/files/<path:path>")
 def get_file(path):
   """Download a file."""
   return send_from_directory(DOWNLOADS, path, as_attachment=True)
