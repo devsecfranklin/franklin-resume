@@ -10,7 +10,7 @@ def render_static():
 
 @my_resume.route('/doc/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
-return send_from_directory(directory='doc', filename=filename)
+  return send_from_directory(directory='doc', filename=filename)
 
 @my_resume.errorhandler(404)
 def page_not_found(e):
