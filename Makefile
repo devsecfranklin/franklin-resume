@@ -1,4 +1,4 @@
-.PHONY: build doc markdown static templates test
+.PHONY: build doc markdown static templates
 
 PRE := /app
 MD := markdown

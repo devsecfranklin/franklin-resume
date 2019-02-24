@@ -5,7 +5,11 @@
   <meta name="generator" content="pandoc" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/pandoc.css') }}">
   <meta name="author" content="Franklin" />
-  <title>Franklin Resume - </title>
+  {% if title %}
+    <title>{{ title }}</title>
+  {% else %}
+    <title>age Not Found</title>
+  {% endif %}
   <style type="text/css">code{white-space: pre;}</style>
 </head>
 

@@ -1,5 +1,5 @@
 ## Downloads
 
-- [Download in MS Word Format](/doc/my_resume.docx)
-- [Download in PDF Format](/doc/my_resume.pdf)
+- [Download in MS Word Format](/files/my_resume.docx)
+- [Download in PDF Format](/files/my_resume.pdf)
 
