@@ -31,7 +31,4 @@ def page_not_found(e):
   return render_template('404.html'), 404
 
 if __name__ == '__main__':
-  bashCommand = "make html"
-  process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-  output, error = process.communicate()
   my_resume.run(debug=True)
