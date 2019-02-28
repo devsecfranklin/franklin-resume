@@ -1,6 +1,6 @@
 ## This Resume is also a Demo Application
 
-[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) 
+[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) [![Follow Conjur me Twitter](https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&label=Follow%20%40thedevilsvoice)][twitter]
 
 - This [application is built on Heroku](https://www.heroku.com/what)
 - [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
