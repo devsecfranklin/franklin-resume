@@ -1,7 +1,8 @@
 ## This Resume is also a Demo Application
 
-[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) [![Follow Franklin on Twitter](https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&label=Follow%20%40theDevilsVoice)][twitter]
+[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)(https://travis-ci.org/theDevilsVoice/franklin-resume)][build_status] [![Follow Franklin on Twitter](https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&label=Follow%20%40theDevilsVoice)][twitter]
 
+[build_status]: https://travis-ci.org/theDevilsVoice/franklin-resume
 [twitter]: https://twitter.com/intent/user?screen_name=theDevilsVoice "Follow Franklin on Twitter"
 
 - This [application is built on Heroku](https://www.heroku.com/what)
