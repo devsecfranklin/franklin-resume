@@ -1,8 +1,9 @@
 import subprocess
 from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template
 import codecs
-from boto.s3.connection import S3Connection
 
+username = os.environ['S3_KEY'] 
+password = os.environ['S3_SECRET']
 DOWNLOADS = "/app/doc"
 
 my_resume = Flask(__name__)
