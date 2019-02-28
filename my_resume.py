@@ -10,7 +10,10 @@ my_resume = Flask(__name__)
 
 @my_resume.route('/')
 def render_static():
-  return render_template('index.html', title = 'Franklin D. Resume')
+  if not session.get('logged_in'):    
+    return render_template('index.html', title = 'Franklin D. Resume')
+  else:
+    return render_template('secure_index.html', title = 'Franklin Diaz Resume')
 
 @my_resume.route("/files")
 def list_files():
