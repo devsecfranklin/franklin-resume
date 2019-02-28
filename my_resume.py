@@ -2,8 +2,8 @@ import subprocess
 from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template
 import codecs
 
-username = os.environ['S3_KEY'] 
-password = os.environ['S3_SECRET']
+my_username = os.environ['S3_KEY'] 
+my_password = os.environ['S3_SECRET']
 DOWNLOADS = "/app/doc"
 
 my_resume = Flask(__name__)
@@ -32,9 +32,9 @@ def page_not_found(e):
   # note that we set the 404 status explicitly
   return render_template('404.html'), 404
 
-@app.route('/login', methods=['POST'])
+@my_resume.route('/login', methods=['POST'])
 def do_admin_login():
-  if request.form['password'] == 'password' and request.form['username'] == 'admin':
+  if request.form['password'] == my_password and request.form['username'] == my_username:
     session['logged_in'] = True
   else:
     flash('wrong password!')
