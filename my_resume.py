@@ -1,6 +1,7 @@
 import subprocess
 from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template
 import codecs
+from boto.s3.connection import S3Connection
 
 DOWNLOADS = "/app/doc"
 
@@ -29,6 +30,19 @@ def get_file(path):
 def page_not_found(e):
   # note that we set the 404 status explicitly
   return render_template('404.html'), 404
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+  if request.form['password'] == 'password' and request.form['username'] == 'admin':
+    session['logged_in'] = True
+  else:
+    flash('wrong password!')
+  return home()
+
+@my_resume.route("/logout")
+def logout():
+  session['logged_in'] = False
+  return home()
 
 if __name__ == '__main__':
   my_resume.run(debug=True)
