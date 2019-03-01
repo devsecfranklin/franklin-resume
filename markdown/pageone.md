@@ -4,12 +4,14 @@
 
 Things I've been using lately.
 
-- Github, GitLab
+- Github & GitLab
     - Markdown
+    - Travis CI
 - Python
 - Puppet
     - Ruby (spec/rake testing)
 - Ansible
+    - Molecule
 - Linux Shell
     - BASH
     - ZSH
@@ -27,6 +29,12 @@ Things I've been using lately.
 - Oct 2014 - Current
 - Data Science & Network Forensics team
     - SecDevOps building security data platform & infrastructure
+    - automate cluster buildouts 
+        - Splunk
+        - Hadoop, Spark
+        - Airflow
+    - CI/CD pipeline architecture design and implementation
+    - Mentor junior infrastructure security engineers
 
 #### Exact Target & Salesforce
 

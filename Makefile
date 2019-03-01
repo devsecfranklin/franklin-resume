@@ -19,6 +19,11 @@ export PRINT_HELP_PYSCRIPT
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+all: ## generate all the formats
+	$(MAKE) doc
+	$(MAKE) pdf
+	$(MAKE) html
+
 build: ## setup the build env
 	bash -xe test/env_setup.sh
 
@@ -31,6 +36,7 @@ doc: ## Convert markdown to MS Word
 
 pdf: ## generate a PDF version of reume
 	pandoc -s -V geometry:margin=1in -o "doc/my_resume.pdf" "$(MD)/header.md" "$(MD)/pageone.md"
+	#pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
 
 heroku: ## generate HTML from markdown on heroku
 	if [ ! -d "$(PRE)/doc" ]; then mkdir $(PRE)/doc;  fi
@@ -46,5 +52,5 @@ lint: ## check the Markdown files for issues
 	$(MAKE) build
 	find . -name '*.md' | xargs /usr/local/bin/mdl
 
-pdf: ## generate PDF version of Resume
-	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
+local: ## local dev instance
+	docker-compose up --build franklin_resume
