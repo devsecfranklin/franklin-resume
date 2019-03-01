@@ -48,3 +48,6 @@ lint: ## check the Markdown files for issues
 
 pdf: ## generate PDF version of Resume
 	pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
+
+local: ## local dev instance
+	docker-compose up --build franklin_resume

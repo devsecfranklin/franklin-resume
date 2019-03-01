@@ -1,9 +1,13 @@
-import subprocess
-from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template
+import os, subprocess
+from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template, session
 import codecs
 
-my_username = os.environ['S3_KEY'] 
-my_password = os.environ['S3_SECRET']
+debug = True
+if 'S3_KEY' in os.environ:
+  debug = False
+  my_username = os.environ['S3_KEY'] 
+  my_password = os.environ['S3_SECRET']
+
 DOWNLOADS = "/app/doc"
 
 my_resume = Flask(__name__)
@@ -49,4 +53,4 @@ def logout():
   return home()
 
 if __name__ == '__main__':
-  my_resume.run(debug=True)
+  my_resume.run(host="0.0.0.0", debug=True)
