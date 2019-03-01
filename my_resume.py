@@ -3,19 +3,6 @@ from flask import Flask, request, abort, jsonify, send_from_directory, Response,
 import flask
 import codecs
 
-"""
-# Python3 & 2 compatibility
-
-# https://flask-login.readthedocs.io/en/latest/#login-example 
-
-try:
-    from urllib.parse import urlparse, urljoin
-except ImportError:
-    from urlparse import urlparse, urljoin
-
-from flask import request, url_for
-"""
-
 # support for local test env
 debug = True
 
