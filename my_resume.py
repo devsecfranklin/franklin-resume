@@ -2,11 +2,16 @@ import os, subprocess
 from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template, session
 import codecs
 
+# support for local test env
 debug = True
+
 if 'S3_KEY' in os.environ:
   debug = False
-  my_username = os.environ['S3_KEY'] 
-  my_password = os.environ['S3_SECRET']
+  username = os.environ['S3_KEY'] 
+  password = os.environ['S3_SECRET']
+else:
+  username = 'admin'
+  password = 'admin'
 
 DOWNLOADS = "/app/doc"
 
@@ -15,9 +20,9 @@ my_resume = Flask(__name__)
 @my_resume.route('/')
 def render_static():
   if not session.get('logged_in'):    
-    return render_template('index.html', title = 'Franklin D. Resume')
+    return render_template('login.html', title = 'Franklin Resume')
   else:
-    return render_template('secure_index.html', title = 'Franklin Diaz Resume')
+    return render_template('index.html', title = 'Franklin Diaz Resume')
 
 @my_resume.route("/files")
 def list_files():
@@ -41,16 +46,17 @@ def page_not_found(e):
 
 @my_resume.route('/login', methods=['POST'])
 def do_admin_login():
-  if request.form['password'] == my_password and request.form['username'] == my_username:
+  if request.form['password'] == password and request.form['username'] == username:
     session['logged_in'] = True
   else:
     flash('wrong password!')
-  return home()
+  return render_static()
 
 @my_resume.route("/logout")
 def logout():
   session['logged_in'] = False
-  return home()
+  return render_static()
 
 if __name__ == '__main__':
+  my_resume.secret_key = os.urandom(12)
   my_resume.run(host="0.0.0.0", debug=True)
