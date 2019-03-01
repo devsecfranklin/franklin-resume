@@ -1,6 +1,20 @@
 import os, subprocess
-from flask import Flask, request, abort, jsonify, send_from_directory, Response, render_template, session
+from flask import Flask, request, abort, jsonify, send_from_directory, Response, flash, render_template, session
+import flask
 import codecs
+
+"""
+# Python3 & 2 compatibility
+
+# https://flask-login.readthedocs.io/en/latest/#login-example 
+
+try:
+    from urllib.parse import urlparse, urljoin
+except ImportError:
+    from urlparse import urlparse, urljoin
+
+from flask import request, url_for
+"""
 
 # support for local test env
 debug = True
@@ -19,10 +33,7 @@ my_resume = Flask(__name__)
 
 @my_resume.route('/')
 def render_static():
-  if not session.get('logged_in'):    
-    return render_template('login.html', title = 'Franklin Resume')
-  else:
-    return render_template('index.html', title = 'Franklin Diaz Resume')
+  return render_template('index.html', title = 'Franklin Diaz Resume')
 
 @my_resume.route("/files")
 def list_files():
@@ -41,21 +52,14 @@ def get_file(path):
 
 @my_resume.errorhandler(404)
 def page_not_found(e):
-  # note that we set the 404 status explicitly
-  return render_template('404.html'), 404
-
-@my_resume.route('/login', methods=['POST'])
-def do_admin_login():
-  if request.form['password'] == password and request.form['username'] == username:
-    session['logged_in'] = True
-  else:
-    flash('wrong password!')
-  return render_static()
-
-@my_resume.route("/logout")
-def logout():
-  session['logged_in'] = False
-  return render_static()
+  if request.method == 'POST':
+    if request.form['submit_button'] == 'Go Back to Resume':
+      return render_template('index.html', title = 'Franklin Diaz Resume')
+    else:
+      pass # unknown
+  elif request.method == 'GET':
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
   my_resume.secret_key = os.urandom(12)

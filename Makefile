@@ -19,6 +19,11 @@ export PRINT_HELP_PYSCRIPT
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+all: ## generate all the formats
+	$(MAKE) doc
+	$(MAKE) pdf
+	$(MAKE) html
+
 build: ## setup the build env
 	bash -xe test/env_setup.sh
 

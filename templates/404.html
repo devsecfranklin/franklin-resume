@@ -15,10 +15,15 @@
 
 {% block title %}Page Not Found{% endblock %}
 {% block body %}
+
+<form action="/" method="GET">
 <p>What you were looking for is just not there.
+<p><input type="submit" name="submit_button" value="Go Back to Resume">
 <p>Please enjoy this picture of Remy looking majestic. 
 <br>
+
+<br>
 <img src="{{url_for('static', filename='majestic_remy.jpg')}}" />
-{% endblock %}
+</form>{% endblock %}
 
 </html>
