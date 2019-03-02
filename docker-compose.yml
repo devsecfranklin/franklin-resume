@@ -1,8 +1,19 @@
-version: '2'
+version: '3'
 services:
   franklin_resume:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     container_name: franklin_resume
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+  dev_franklin_resume:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    container_name: dev_franklin_resume
     ports:
       - "5000:5000"
     volumes:

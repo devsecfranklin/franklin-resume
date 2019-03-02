@@ -31,6 +31,8 @@ build: ## setup the build env
 clean: ## Cleanup all the things
 	if [ -f "$(DOC)/my_resume.docx" ]; then rm $(DOC)/my_resume.docx; fi
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
+	rm -rf franklin_resume.egg-info
+	rm -rf dist/
 
 dist: ## make a pypi style dist
 	python3 setup.py sdist
@@ -52,8 +54,12 @@ lint: ## check the Markdown files for issues
 	$(MAKE) build
 	find . -name '*.md' | xargs /usr/local/bin/mdl
 
-local: ## local dev instance
+local: ## run application locally
 	docker-compose up --build franklin_resume
+
+local-dev: ## test application locally
+	docker-compose up --build dev_franklin_resume
+	@echo "Now type: docker-compose run dev_franklin_resume /bin/bash"
 
 pdf: ## generate a PDF version of reume
 	pandoc -s -V geometry:margin=1in -o "$(DOC)/my_resume.pdf" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md"

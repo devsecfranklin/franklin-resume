@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+    my_resume application
+
+    :copyright: (c) by Franklin Diaz
+    :license: MIT
+"""
 import os, subprocess
 from flask import Flask, request, abort, jsonify, send_from_directory, Response, flash, render_template, session
 import flask
