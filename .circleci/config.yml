@@ -37,11 +37,24 @@ jobs:
             ~/.local/bin/virtualenv venv
             . venv/bin/activate
             python3 -m pip install -r requirements.dev
+
+  test:
+    docker:
+      - image: circleci/python:3.6.1
+    steps:
       - run: 
           name: run tests
           command: |
-            /bin/pytest
+            echo "tests go here"
+            . venv/bin/activate
       
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
