@@ -1,1 +1,1 @@
-<?php header( 'Location: templates/index.html' ) ;  ?>
+<?php header( 'Location: my_resume/templates/index.html' ) ;  ?>
