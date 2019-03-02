@@ -33,10 +33,10 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            pip install --user virtualenv
+            python3 -m pip install --user virtualenv
             ~/.local/bin/virtualenv venv
             . venv/bin/activate
-            pip install -r requirements.dev
+            python3 -m pip install -r requirements.dev
       - run: 
           name: run tests
           command: |
