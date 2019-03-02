@@ -13,8 +13,21 @@
 
 ## Testing 
 
+#### Run App on Localhost via Docker
+
 - Type 'make local' to start the docker environment.
 - Navigate to http://0.0.0.0:5000/
+
+#### Create Docker Instance to Log in and Run `pytest`
+
+- Type 'make local-dev' to build dev env. 
+- Log in and run pytest:
+
+```
+docker-compose run dev_franklin_resume /bin/bash
+pytest
+py.test
+```
 
 ## Heroku
 
