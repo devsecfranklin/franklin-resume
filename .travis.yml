@@ -1,8 +1,6 @@
 sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
 language: python
 python:
-  - 2.7
-  - 3.4
   - 3.5
   - 3.6
 install: pip install -r requirements/requirements.dev
@@ -16,13 +14,13 @@ addons:
     - aspell-en
 before_script:
   - sudo apt-get update -qq
-  - export FLASK_APP="$TRAVIS_BUILD_DIR/my_resume.py"
+  - export FLASK_APP="my_resume/my_resume.py"
   - export FLASK_DEBUG=1
 script:
 - curl https://raw.githubusercontent.com/mike42/mdcheckr/master/mdcheckr -o mdcheckr
 - chmod +x mdcheckr
 - sudo cp mdcheckr /usr/local/bin
-- /usr/local/bin/mdcheckr ${TRAVIS_BUILD_DIR}/my_resume/markdown/pageone.md
+- /usr/local/bin/mdcheckr markdown/pageone.md
 - git config user.email "frank378@gmail.com"
 - git config user.name "@thedevilsvoice"
 - make html
