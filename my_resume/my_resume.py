@@ -1,9 +1,16 @@
+# -*- coding: utf-8 -*-
+"""
+    my_resume application
+
+    :copyright: (c) by Franklin Diaz
+    :license: MIT
+"""
 import os, subprocess
 from flask import Flask, request, abort, jsonify, send_from_directory, Response, flash, render_template, session
 import flask
 import codecs
 
-DOWNLOADS = "/app/doc"
+DOWNLOADS = "/app/my_resume/doc"
 
 app = Flask(__name__)
 
@@ -67,3 +74,12 @@ def page_not_found(e):
 if __name__ == '__main__':
   app = create_app(debug=True)
   app.run(host="0.0.0.0")
+
+"""
+   _____                _    _ _         ____                                
+  |  ___| __ __ _ _ __ | | _| (_)_ __   |  _ \ ___  ___ _   _ _ __ ___   ___ 
+  | |_ | '__/ _` | '_ \| |/ / | | '_ \  | |_) / _ \/ __| | | | '_ ` _ \ / _ \
+  |  _|| | | (_| | | | |   <| | | | | | |  _ <  __/\__ \ |_| | | | | | |  __/
+  |_|  |_|  \__,_|_| |_|_|\_\_|_|_| |_| |_| \_\___||___/\__,_|_| |_| |_|\___|
+                                                                             
+"""

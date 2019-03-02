@@ -7,6 +7,6 @@
 - [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub
     - At fisrt I was just converting GitHub flavored Markdown to static Flask via Pandoc. 
     - It seems to be morphing into a Python/Flask project. 
-- [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
-- [Continuous Integration](https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master) id done via circleci.com
+- [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of Markdown files is done via travis-ci.org
+- [Continuous Integration](https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master) of Python 3.6 Flask application is done via circleci.com
 - This [application is built on Heroku](https://www.heroku.com/what)

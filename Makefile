@@ -1,8 +1,9 @@
 .PHONY: build doc markdown static templates
 
 PRE := /app
+DOC := my_resume/doc
 MD := markdown
-TEMPLATES := templates
+TEMPLATES := my_resume/templates
 
 define PRINT_HELP_PYSCRIPT
 import re, sys
@@ -25,24 +26,25 @@ all: ## generate all the formats
 	$(MAKE) html
 
 build: ## setup the build env
-	bash -xe test/env_setup.sh
+	bash -xe tests/env_setup.sh
 
 clean: ## Cleanup all the things
-	if [ -f "doc/my_resume.docx" ]; then rm doc/my_resume.docx; fi
+	if [ -f "$(DOC)/my_resume.docx" ]; then rm $(DOC)/my_resume.docx; fi
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
+	rm -rf franklin_resume.egg-info
+	rm -rf dist/
+
+dist: ## make a pypi style dist
+	python3 setup.py sdist
 
 doc: ## Convert markdown to MS Word
-	pandoc -f markdown -t docx -s "$(MD)/header.md" "$(MD)/pageone.md" -o "doc/my_resume.docx"
-
-pdf: ## generate a PDF version of reume
-	pandoc -s -V geometry:margin=1in -o "doc/my_resume.pdf" "$(MD)/header.md" "$(MD)/pageone.md"
-	#pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
+	pandoc -f markdown -t docx -s -o "$(DOC)/my_resume.docx" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md" 
 
 heroku: ## generate HTML from markdown on heroku
-	if [ ! -d "$(PRE)/doc" ]; then mkdir $(PRE)/doc;  fi
-	pandoc -f markdown -s "$(PRE)/$(MD)/pageone.md" -o "$(PRE)/doc/my_resume.docx"	
+	if [ ! -d "$(PRE)/$(DOC)" ]; then mkdir $(PRE)/$(DOC);  fi
+	pandoc -f markdown -s "$(PRE)/$(MD)/pageone.md" -o "$(PRE)/$(DOC)/my_resume.docx"	
 	if [ ! -d "$(PRE)/$(TEMPLATES)" ]; then mkdir $(PRE)/$(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/header.md" "$(PRE)/$(MD)/dev_header.md" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(MD)/pandoc_template.html
+	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/header.md" "$(PRE)/$(MD)/dev_header.md" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(TEMPLATES)/pandoc_template.html
 
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
@@ -52,5 +54,13 @@ lint: ## check the Markdown files for issues
 	$(MAKE) build
 	find . -name '*.md' | xargs /usr/local/bin/mdl
 
-local: ## local dev instance
+local: ## run application locally
 	docker-compose up --build franklin_resume
+
+local-dev: ## test application locally
+	docker-compose up --build dev_franklin_resume
+	@docker-compose run dev_franklin_resume /bin/bash
+
+pdf: ## generate a PDF version of reume
+	pandoc -s -V geometry:margin=1in -o "$(DOC)/my_resume.pdf" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md"
+	#pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
