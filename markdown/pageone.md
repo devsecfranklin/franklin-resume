@@ -1,4 +1,4 @@
-## Currently working to secure cloud infrastructure
+## Currently Working on Security Infrastructure
 
 ### Recent Tools 
 
@@ -7,20 +7,16 @@ Things I've been using lately.
 - Github & GitLab
     - Markdown
     - Travis CI
+    - CircleCI
 - Python
 - Puppet
     - Ruby (spec/rake testing)
-- Ansible
-    - Molecule
-- Linux Shell
+- Ansible & Molecule
+- Linux Shell Scripting
     - BASH
     - ZSH
-- Vagrant
-- Terraform
-- AWS
-- Digital Ocean
-- Google Cloud
-- Docker
+- Vagrant, Docker, Terraform
+- Digital Ocean, Google Cloud, AWS
 
 ### Experience
 
@@ -29,11 +25,21 @@ Things I've been using lately.
 - Oct 2014 - Current
 - Data Science & Network Forensics team
     - SecDevOps building security data platform & infrastructure
-    - automate cluster buildouts 
+    - Large scale log aggregation
+        - In-house solution 
+        - Funnel logs into SIEM via Kafka
+    - Large scale packet capture 
+        - Designed and built Moloch based setup 
+    - Automate cluster buildouts 
         - Splunk
-        - Hadoop, Spark
-        - Airflow
+        - Hadoop
+        - Spark, Pyspark
+    - Build & maintain Data Science Pipeline 
+        - Airflow, Tensorflow, Keras, etc.
     - CI/CD pipeline architecture design and implementation
+        - Create and implement standards in build & test
+        - Jenkins, BlueOcean, CloudBees, etc. 
+        - Docker, Puppet, Ansible/Molecule
     - Mentor junior infrastructure security engineers
 
 #### Exact Target & Salesforce
@@ -65,12 +71,13 @@ Things I've been using lately.
 
 - Jan 1999 - April 2011
 - CDMA Cellular base station product development.
+- Motorola Networks division was acquired by Nokia Siemens
 
 #### McHenry County College 
 
 - August 2006 –June 2011
 - Adjunct Faculty
-- Taught information systems courses
+- Taught information systems courses in the evenings
 
 ### Education
 

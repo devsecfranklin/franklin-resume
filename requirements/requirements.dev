@@ -2,3 +2,5 @@
 
 # Testing
 pytest
+pytest-flask
+tox
