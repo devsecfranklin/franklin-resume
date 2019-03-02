@@ -48,7 +48,8 @@ jobs:
             python3 -m pip install --user virtualenv
             ~/.local/bin/virtualenv venv
             . venv/bin/activate
-            echo "tests go here"
+            echo "lets do some testing"
+            pytest
       
       - store_artifacts:
           path: test-reports

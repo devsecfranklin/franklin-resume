@@ -14,11 +14,18 @@ import pytest
 
 from my_resume.my_resume import create_app
 
+
+"""
+Unit Tests
+"""
 class TestCase(unittest.TestCase):
   def setUp(self):
     self.app = create_app(debug=True)
     self.client = self.app.test_client()
 
+"""
+Python Tests
+"""
 @pytest.fixture
 def app():
   app = create_app(debug=True)

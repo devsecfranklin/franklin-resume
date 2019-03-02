@@ -25,3 +25,4 @@ script:
 - git config user.name "@thedevilsvoice"
 - make html
 - make doc
+- pytest
