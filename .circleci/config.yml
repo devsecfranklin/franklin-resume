@@ -47,7 +47,8 @@ jobs:
           command: |
             python3 -m pip install --user virtualenv
             ~/.local/bin/virtualenv venv
-            cp /home/circleci/project/requirements/requirements.dev venv
+            cp requirements/requirements.dev venv/requirements.dev
+            cp requirements/requirements.txt venv/requirements.txt
             . venv/bin/activate
             python3 -m pip install -r requirements.dev
             echo "lets do some testing"
