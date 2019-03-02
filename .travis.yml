@@ -12,9 +12,6 @@ addons:
     - aspell-en
 before_script:
   - sudo apt-get update -qq
-  - export FLASK_APP="my_resume/my_resume.py"
-  - export FLASK_DEBUG=1
-  - pip install -r requirements/requirements.dev
 script:
 - curl https://raw.githubusercontent.com/mike42/mdcheckr/master/mdcheckr -o mdcheckr
 - chmod +x mdcheckr
@@ -24,4 +21,3 @@ script:
 - git config user.name "@thedevilsvoice"
 - make html
 - make doc
-- pytest
