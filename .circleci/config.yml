@@ -40,7 +40,7 @@ jobs:
       - run: 
           name: run tests
           command: |
-            which pytest
+            /bin/pytest
       
       - store_artifacts:
           path: test-reports
