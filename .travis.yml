@@ -1,3 +1,11 @@
+sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
+language: python
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+install: pip install -r requirements.dev
 addons:
   apt:
     packages:
@@ -6,11 +14,10 @@ addons:
     - pandoc
     - aspell
     - aspell-en
-before_install:
-- sudo apt-get update -qq
-language: python
-python:
-- '3.4'
+before_script:
+  - sudo apt-get update -qq
+  - export FLASK_APP="$TRAVIS_BUILD_DIR/my_resume.py"
+  - export FLASK_DEBUG=1
 script:
 - curl https://raw.githubusercontent.com/mike42/mdcheckr/master/mdcheckr -o mdcheckr
 - chmod +x mdcheckr

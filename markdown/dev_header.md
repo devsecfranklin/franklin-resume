@@ -1,9 +1,10 @@
 ## This Resume is also a Demo Application
 
-[![Follow Franklin on Twitter](https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&label=Follow%20me%20on%20Twitter)][twitter] [![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume)
+[![Build Status](https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master)](https://travis-ci.org/theDevilsVoice/franklin-resume) [![CircleCI](https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master.svg?style=svg)](https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master) [![Follow Franklin on Twitter](https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&label=Follow%20me%20on%20Twitter)][twitter] 
 
 [twitter]: https://twitter.com/intent/user?screen_name=theDevilsVoice "Follow Franklin on Twitter"
 
 - This [application is built on Heroku](https://www.heroku.com/what)
 - [The code for this application](https://github.com/theDevilsVoice/franklin-resume) is stored in GitHub.
 - [Continuous Integration](https://travis-ci.org/theDevilsVoice/franklin-resume) of this application is done via travis-ci.org
+
