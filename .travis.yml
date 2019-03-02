@@ -5,7 +5,7 @@ python:
   - 3.4
   - 3.5
   - 3.6
-install: pip install -r requirements.dev
+install: pip install -r requirements/requirements.dev
 addons:
   apt:
     packages:
@@ -27,4 +27,3 @@ script:
 - git config user.name "@thedevilsvoice"
 - make html
 - make doc
-- pytest

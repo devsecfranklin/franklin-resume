@@ -5,5 +5,5 @@ WORKDIR /app
 
 RUN pip install --upgrade pip
 RUN pip install Cython
-RUN pip install -r requirements.txt
+RUN pip install -r requirements/requirements.txt
 CMD ["python", "my_resume.py"]
