@@ -1,2 +1,2 @@
 release: make heroku
-web: gunicorn my_resume:app
+web: gunicorn --chdir my_resume my_resume:app
