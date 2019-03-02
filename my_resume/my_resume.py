@@ -3,7 +3,7 @@ from flask import Flask, request, abort, jsonify, send_from_directory, Response,
 import flask
 import codecs
 
-DOWNLOADS = "/app/doc"
+DOWNLOADS = "/app/my_resume/doc"
 
 app = Flask(__name__)
 
