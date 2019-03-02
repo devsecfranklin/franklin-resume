@@ -33,7 +33,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            - pip install -r requirements.dev
+            pip install -r requirements.dev
             . venv/bin/activate
             python manage.py test
             # flask test
