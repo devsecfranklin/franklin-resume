@@ -44,7 +44,7 @@ heroku: ## generate HTML from markdown on heroku
 	if [ ! -d "$(PRE)/$(DOC)" ]; then mkdir $(PRE)/$(DOC);  fi
 	pandoc -f markdown -s "$(PRE)/$(MD)/pageone.md" -o "$(PRE)/$(DOC)/my_resume.docx"	
 	if [ ! -d "$(PRE)/$(TEMPLATES)" ]; then mkdir $(PRE)/$(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/header.md" "$(PRE)/$(MD)/dev_header.md" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(TEMPLATES)/pandoc_template.html
+	pandoc -f markdown -t html5 -o "$(PRE)/$(TEMPLATES)/index.html" "$(PRE)/$(MD)/header.md" "$(PRE)/$(MD)/dev_header.md" "$(PRE)/$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(PRE)/$(MD)/pandoc_template.html
 
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi

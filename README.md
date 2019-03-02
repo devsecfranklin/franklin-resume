@@ -1,5 +1,3 @@
-# franklin-resume
-
 ```
  _____                _    _ _         ____                                
 |  ___| __ __ _ _ __ | | _| (_)_ __   |  _ \ ___  ___ _   _ _ __ ___   ___ 
@@ -21,10 +19,10 @@
 #### Create Docker Instance to Log in and Run `pytest`
 
 - Type 'make local-dev' to build dev env. 
-- Log in and run pytest:
+- Docker will setup up container and put you in the project directory. 
+- Test like so:
 
 ```
-docker-compose run dev_franklin_resume /bin/bash
 pytest
 py.test
 ```
