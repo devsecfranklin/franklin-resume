@@ -59,7 +59,7 @@ local: ## run application locally
 
 local-dev: ## test application locally
 	docker-compose up --build dev_franklin_resume
-	@echo "Now type: docker-compose run dev_franklin_resume /bin/bash"
+	@docker-compose run dev_franklin_resume /bin/bash
 
 pdf: ## generate a PDF version of reume
 	pandoc -s -V geometry:margin=1in -o "$(DOC)/my_resume.pdf" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md"

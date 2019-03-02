@@ -10,6 +10,7 @@ services:
     volumes:
       - .:/app
   dev_franklin_resume:
+    hostname: franklin_resume
     build:
       context: .
       dockerfile: docker/Dockerfile.dev
