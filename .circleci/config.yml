@@ -33,7 +33,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            virtualenv venv
+            pip install --user virtualenv
+            .local/bin/virtualenv venv
             . venv/bin/activate
             pip install -r requirements.dev
       - run: 
