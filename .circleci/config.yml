@@ -34,9 +34,11 @@ jobs:
           name: install dependencies
           command: |
             pip install -r requirements.dev
+      - run: 
+          name: run tests
+          command: |
             . venv/bin/activate
             python manage.py test
-            # flask test
       
       - store_artifacts:
           path: test-reports
