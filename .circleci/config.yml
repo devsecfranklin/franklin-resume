@@ -67,7 +67,7 @@ jobs:
             python3 -m pip install --user -r requirements/requirements.dev
             echo "lets do some testing"
             # move test commands to tox.ini
-            tox
+            ~/.local/bin/tox
       
       - store_artifacts:
           path: test-reports
