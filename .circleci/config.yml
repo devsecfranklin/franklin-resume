@@ -62,11 +62,13 @@ jobs:
           name: run tests
           command: |
             python3 -m pip install --user virtualenv
-            ~/.local/bin/virtualenv venv
-            . venv/bin/activate
-            python3 -m pip install -r requirements/requirements.dev
+            python3 -m pip install --user tox
+            #~/.local/bin/virtualenv venv
+            #. venv/bin/activate
+            #python3 -m pip install --user -r requirements/requirements.dev
             echo "lets do some testing"
-            pytest --setup-show tests/unit/
+            # move test commands to tox.ini
+            ~/.local/bin/tox
       
       - store_artifacts:
           path: test-reports
