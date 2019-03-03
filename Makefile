@@ -26,16 +26,26 @@ all: ## generate all the formats
 	$(MAKE) html
 
 build: ## setup the build env
+	python3 -m compileall .
 	bash -xe tests/env_setup.sh
 
+.PHONY: clean
 clean: ## Cleanup all the things
 	if [ -f "$(DOC)/my_resume.docx" ]; then rm $(DOC)/my_resume.docx; fi
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
-	rm -rf franklin_resume.egg-info
-	rm -rf dist/
+	rm -rf .tox
+	rm -rf venv
+	rm -rf .pytest_cache
+	rm -rf .coverage
+	rm -rf *.egg-info
+	rm -rf build
+	rm -rf dist
+	find . -name '*.pyc' | xargs rm -rf
+	find . -name '__pycache__' | xargs rm -rf
 
 dist: ## make a pypi style dist
-	python3 setup.py sdist
+	python3 -m compileall .
+	python3 setup.py sdist bdist_wheel
 
 doc: ## Convert markdown to MS Word
 	pandoc -f markdown -t docx -s -o "$(DOC)/my_resume.docx" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md" 
@@ -58,9 +68,18 @@ local: ## run application locally
 	docker-compose up --build franklin_resume
 
 local-dev: ## test application locally
+	python3 -m compileall .
 	docker-compose up --build dev_franklin_resume
 	@docker-compose run dev_franklin_resume /bin/bash
 
 pdf: ## generate a PDF version of reume
 	pandoc -s -V geometry:margin=1in -o "$(DOC)/my_resume.pdf" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md"
 	#pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
+
+.PHONY: test
+test: ## test with tox
+	tox
+
+.PHONY: venv
+venv: ## spin up venv
+	tox -e venv
