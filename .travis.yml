@@ -10,6 +10,8 @@ addons:
     - pandoc
     - aspell
     - aspell-en
+install: 
+  - python3 -m pip install tox
 before_script:
   - sudo apt-get update -qq
 script:
@@ -19,5 +21,6 @@ script:
 - /usr/local/bin/mdcheckr markdown/pageone.md
 - make html
 - make doc
+- tox 
 notifications:
   email: false
