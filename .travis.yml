@@ -12,6 +12,7 @@ addons:
     - aspell-en
 install: 
   - python3 -m pip install tox
+  - python3 -m pip install coveralls
 before_script:
   - sudo apt-get update -qq
 script:
