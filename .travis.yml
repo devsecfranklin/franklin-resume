@@ -11,9 +11,9 @@ addons:
     - aspell
     - aspell-en
 install: 
-  - python3 -m pip install tox
+- python3 -m pip install tox
 before_script:
-  - sudo apt-get update -qq
+- sudo apt-get update -qq
 script:
 - curl https://raw.githubusercontent.com/mike42/mdcheckr/master/mdcheckr -o mdcheckr
 - chmod +x mdcheckr
@@ -21,6 +21,6 @@ script:
 - /usr/local/bin/mdcheckr markdown/pageone.md
 - make html
 - make doc
-- tox 
+- tox -e venv
 notifications:
   email: false
