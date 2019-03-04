@@ -71,8 +71,8 @@ jobs:
             ~/.local/bin/tox
       
       - store_artifacts:
-          path: test-reports
-          destination: test-reports
+          path: htmlcov
+          destination: htmlcov
 
 workflows:
   version: 2
