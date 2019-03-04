@@ -22,6 +22,5 @@ script:
 - make html
 - make doc
 - tox 
-- coveralls
 notifications:
   email: false
