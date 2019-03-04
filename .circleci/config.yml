@@ -68,12 +68,8 @@ jobs:
             #python3 -m pip install --user -r requirements/requirements.dev
             echo "lets do some testing"
             # move test commands to tox.ini
-            ~/.local/bin/tox
+            ~/.local/bin/tox -e venv
       
-      - store_artifacts:
-          path: htmlcov
-          destination: htmlcov
-
 workflows:
   version: 2
   build_and_test:
