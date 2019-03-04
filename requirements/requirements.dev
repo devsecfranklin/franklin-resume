@@ -3,7 +3,6 @@
 # Testing
 pytest
 pytest-flask
-tox
 coverage
 flake8
 pylint

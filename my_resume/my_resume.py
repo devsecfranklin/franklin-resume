@@ -10,7 +10,8 @@ from flask import Flask, request, abort, jsonify, send_from_directory, Response,
 import flask
 import codecs
 
-DOWNLOADS = "/app/my_resume/doc"
+CURR_DIR = os.path.basename(os.getcwd())
+DOWNLOADS = CURR_DIR + "/my_resume/doc"
 
 app = Flask(__name__)
 
