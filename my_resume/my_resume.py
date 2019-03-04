@@ -11,7 +11,7 @@ import flask
 import codecs
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
-DOWNLOADS = CURR_DIR + "/my_resume/doc"
+DOWNLOADS = CURR_DIR + "/doc"
 
 app = Flask(__name__)
 
