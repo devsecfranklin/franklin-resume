@@ -2,3 +2,4 @@ pandoc
 gunicorn
 flask
 tox
+pre-commit

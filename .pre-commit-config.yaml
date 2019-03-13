@@ -1,0 +1,6 @@
+repos:
+    repo: https://github.com/theDevilsVoice/franklin-resume
+    rev: v0.1
+    hooks:
+    -   id: trailing-whitespace
+
