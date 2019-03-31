@@ -21,6 +21,6 @@ script:
 - /usr/local/bin/mdcheckr markdown/pageone.md
 - make html
 - make doc
-- tox -e venv
+- tox 
 notifications:
   email: false

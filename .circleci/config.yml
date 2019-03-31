@@ -68,7 +68,8 @@ jobs:
             #python3 -m pip install --user -r requirements/requirements.dev
             echo "lets do some testing"
             # move test commands to tox.ini
-            ~/.local/bin/tox -e venv
+            #~/.local/bin/tox -e venv
+            ~/.local/bin/tox 
       
 workflows:
   version: 2
