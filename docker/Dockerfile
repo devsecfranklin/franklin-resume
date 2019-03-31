@@ -1,7 +1,7 @@
 FROM python:3.6
 ADD . /app
 WORKDIR /app
-USER thedevilsvoice:thedevilsvoice
+#USER thedevilsvoice:thedevilsvoice
 
 RUN pip install --upgrade pip
 RUN pip install Cython
