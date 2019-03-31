@@ -60,7 +60,7 @@ def create_app(debug):
 
 @app.route('/')
 def render_static():
-    return render_template('base.html', title='Franklin Diaz Resume')
+    return render_template('index.html', title='Franklin Diaz Resume')
 
 
 @app.route("/files")

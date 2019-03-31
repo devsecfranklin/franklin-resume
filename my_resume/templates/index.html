@@ -1,173 +1,247 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/pandoc.css') }}">
-  <meta name="author" content="Franklin" />
-  <title>Franklin Resume - </title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.2.0">
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <link rel="stylesheet" href=
+  "{{ url_for('static', filename='css/style.css') }}">
+  <meta name="author" content="Franklin">
+  <title>Franklin Resume</title>
+  <style type="text/css">
+  code{white-space: pre;}
+  </style>
+  <meta name="viewport" content="width=device-width">
+  <meta charset="UTF-8">
+  <link href=
+  'http://fonts.googleapis.com/css?family=Rokkitt:400,700|Lato:400,300'
+  rel='stylesheet' type='text/css'><!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 </head>
-<body>
-    <div class="container">
-    <div class="row">
-            <div class="span12">
-            <h1 id="franklin-diaz-resume">Franklin Diaz Resume</h1>
-<ul>
-<li><a href="https://www.linkedin.com/in/franklin-diaz-b38870164">Find me on LinkedIn</a></li>
-</ul>
-<h2 id="this-resume-is-also-a-demo-application">This Resume is also a Demo Application</h2>
-<p><a href="https://travis-ci.org/theDevilsVoice/franklin-resume"><img src="https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master" alt="Build Status" /></a> <a href="https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master"><img src="https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master.svg?style=svg" alt="CircleCI" /></a> <a href="https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master"><img src="https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master" alt="Coverage Status" /></a> <a href="https://twitter.com/intent/user?screen_name=theDevilsVoice" title="Follow Franklin on Twitter"><img src="https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&amp;label=Follow%20me%20on%20Twitter" alt="Follow Franklin on Twitter" /></a></p>
-<ul>
-<li><a href="https://github.com/theDevilsVoice/franklin-resume">The code for this application</a> is stored in GitHub
-<ul>
-<li>At first I was just converting GitHub flavored Markdown to static Flask via Pandoc.</li>
-<li>It seems to be morphing into a Python/Flask project.</li>
-</ul></li>
-<li><a href="https://travis-ci.org/theDevilsVoice/franklin-resume">Continuous Integration</a> of Markdown files is done via travis-ci.org</li>
-<li><a href="https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master">Continuous Integration</a> of Python 3.6 Flask application is done via circleci.com</li>
-<li>This <a href="https://www.heroku.com/what">application is built on Heroku</a></li>
-</ul>
-<h2 id="downloads">Downloads</h2>
-<ul>
-<li><a href="/files/my_resume.docx">Download in MS Word Format</a></li>
-<li><a href="/files/my_resume.pdf">Download in PDF Format</a></li>
-</ul>
-<h2 id="currently-working-on-security-infrastructure">Currently Working on Security Infrastructure</h2>
-<h3 id="recent-tools-languages">Recent Tools &amp; Languages</h3>
-<p>Things I've been using lately.</p>
-<ul>
-<li>Github &amp; GitLab
-<ul>
-<li>Markdown</li>
-<li>Travis CI</li>
-<li>CircleCI</li>
-</ul></li>
-<li>Python</li>
-<li>Puppet
-<ul>
-<li>Ruby (spec/rake testing)</li>
-</ul></li>
-<li>Ansible &amp; Molecule</li>
-<li>Linux Shell Scripting
-<ul>
-<li>BASH</li>
-<li>ZSH</li>
-</ul></li>
-<li>Vagrant, Docker, Terraform</li>
-<li>Digital Ocean, Google Cloud, AWS</li>
-</ul>
-<h3 id="experience">Experience</h3>
-<h4 id="salesforce">Salesforce</h4>
-<ul>
-<li>Oct 2014 - Current</li>
-<li>Data Science &amp; Network Forensics team
-<ul>
-<li>SecDevOps building security data platform &amp; infrastructure</li>
-<li>Large scale log aggregation
-<ul>
-<li>In-house solution</li>
-<li>Funnel logs into SIEM via Kafka</li>
-</ul></li>
-<li>Large scale packet capture
-<ul>
-<li>Designed and built Moloch based setup</li>
-</ul></li>
-<li>Automate cluster buildouts
-<ul>
-<li>Splunk</li>
-<li>Hadoop</li>
-<li>Spark, Pyspark</li>
-</ul></li>
-<li>Build &amp; maintain Data Science Pipeline
-<ul>
-<li>Airflow, Tensorflow, Keras, etc.</li>
-</ul></li>
-<li>CI/CD pipeline architecture design and implementation
-<ul>
-<li>Create and implement standards in build &amp; test</li>
-<li>Jenkins, BlueOcean, CloudBees, etc.</li>
-<li>Docker, Puppet, Ansible/Molecule</li>
-</ul></li>
-<li>Mentor junior infrastructure security engineers</li>
-</ul></li>
-</ul>
-<h4 id="exact-target-salesforce">Exact Target &amp; Salesforce</h4>
-<ul>
-<li>Jan 2014 - Oct 2014</li>
-<li>Create monitoring and administration tools in Linux environments.</li>
-<li>Facilitate deployment of custom cloud applications as a github site admin, chef admin, etc.</li>
-<li>Develop secure build/deployment processes.</li>
-<li>Train engineers &amp; teams on various open source software and build/deployment processes.</li>
-<li>Port existing Windows C# web-based deployment tools to Linux/Python (Sledgehammer project).</li>
-<li>Support loading major releases to stacks every 6 weeks.</li>
-<li><a href="https://www.marketingcloud.com/">ExactTarget</a> was acquired by Salesforce in August of 2014</li>
-</ul>
-<h4 id="indiana-university">Indiana University</h4>
-<ul>
-<li>Aug 2012 – Dec 31st, 2013</li>
-<li>Principal Research Software Engineer</li>
-<li>Test Architect in Software Defined Networking Lab, designed test cases and direct test efforts on openflow networks.</li>
-<li>Wrote web based tools for <a href="http://www.geni.net/">GENI/GEMINI</a> project.</li>
-<li>Assistant instructor for undergraduate networking (lead discussions, create and grade homework, and proctor exams).</li>
-<li>Research very high capacity storage solutions and high speed network connections.</li>
-</ul>
-<h4 id="nokia-siemens-networks">Nokia Siemens Networks</h4>
-<ul>
-<li>April 2011 – July 2012</li>
-<li>Senior R&amp;D Engineer</li>
-</ul>
-<h4 id="motorola">Motorola</h4>
-<ul>
-<li>Jan 1999 - April 2011</li>
-<li>CDMA Cellular base station product development.</li>
-<li>Motorola Networks division was acquired by Nokia Siemens</li>
-</ul>
-<h4 id="mchenry-county-college">McHenry County College</h4>
-<ul>
-<li>August 2006 –June 2011</li>
-<li>Adjunct Faculty</li>
-<li>Taught information systems courses in the evenings</li>
-</ul>
-<h3 id="education">Education</h3>
-<h4 id="depaul-university-ms-network-securitynetwork-engineering">DePaul University, MS Network Security/Network Engineering</h4>
-<ul>
-<li>Studied network protocols, network design, focus mostly on lower 4 layers of OSI.</li>
-<li>About half Network Security and half Network Engineering courses.</li>
-<li><a href="http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx">Program information</a></li>
-</ul>
-<h4 id="northwestern-university-ms-computer-info-systems">Northwestern University, MS Computer Info Systems</h4>
-<ul>
-<li>Agile, OO Methods.</li>
-<li>Relational Database specialization.</li>
-<li>Java programming, interactive web apps with Apache/Tomcat.</li>
-<li><a href="http://sps.northwestern.edu/program-areas/graduate/information-systems/">Program information</a></li>
-</ul>
-<h4 id="roosevelt-university-bs-computer-science">Roosevelt University, BS Computer Science</h4>
-<ul>
-<li><a href="https://www.roosevelt.edu/CAS/Programs/CS.aspx">C++ based cirriculum</a>.</li>
-<li>Minor mathematics.</li>
-</ul>
-<h3 id="code-and-projects">Code and Projects</h3>
-<ul>
-<li>Administer <a href="https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook">The Hacker Cookbook</a> just for fun</li>
-<li>Cyber Shield 2018 - Trainer - (Infrastructure) Blue Team Tools &amp; Tehcniques
-<ul>
-<li><a href="https://dod.defense.gov/News/Article/Article/1520257/national-guard-conducts-annual-nationwide-cybersecurity-exercise/">Here is a link to the event</a></li>
-</ul></li>
-<li>Electronic badges, for example, <a href="https://github.com/DEAD10C5/bat_mini">the bat badge</a>
-<ul>
-<li>Here <a href="https://imgur.com/gallery/bK1vn">are some pictures of it</a></li>
-</ul></li>
-<li>I run <a href="https://twitter.com/indybsides">@indybsides security conference</a>
-<ul>
-<li><a href="https://imgur.com/a/w0UnE">Here are some pictures of it</a></li>
-</ul></li>
-</ul>
-            </div>
+<body id="top">
+  <div id="cv" class="instaFade">
+    <div class="mainDetails">
+      <div id="headshot" class="quickFade"><img src=
+      "{{ url_for('static', filename='headshot.jpg') }}" alt=
+      "mughsot"></div>
+      <div id="name">
+        <h1 class="quickFade delayTwo">Franklin Diaz</h1>
+        <h2 class="quickFade delayThree">Infrastructure
+        Security</h2>
+      </div>
+      <div id="contactDetails" class="quickFade delayFour">
+        <ul>
+          <li>e: <a href="mailto:frank378@gmail.com" target=
+          "_blank">frank378@gmail.com</a>
+          </li>
+          <li>w: <a href=
+          "https://www.linkedin.com/in/franklin-diaz-b38870164">LinkedIn</a>
+          </li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div id="mainArea" class="quickFade delayFive">
+      <section>
+        <article>
+          <div class="sectionTitle">
+            <h1>Personal Profile</h1>
+          </div>
+          <div class="sectionContent">
+	    Experienced professional with a proven record of delivering solutions on time. 
+          </div>
+        </article>
+        <div class="clear"></div>
+      </section>
+      <section>
+        <div class="sectionTitle">
+          <h1>Work Experience</h1>
+        </div>
+        <div class="sectionContent">
+          <article>
+            <h2>Salesforce.com</h2>
+            <p class="subDetails">Oct 2014 - Current</p>
+            <ul>
+              <li>Senior Network Security Engineer</li>
+              <li>Data Science & Network Forensics team</li>
+              <li>SecDevOps building security data platform &
+              infrastructure</li>
+              <li>Large scale log aggregation, in-house
+              solution</li>
+              <li>Funnel logs into SIEM via Kafka</li>
+              <li>Large scale packet capture</li>
+              <li>Designed and built Moloch based setup</li>
+              <li>Automate cluster buildouts (Splunk, Hadoop,
+              Spark/PySpark</li>
+              <li>Build & maintain Data Science Pipeline (Airflow,
+              Tensorflow, Keras)</li>
+              <li>CI/CD pipeline architecture design and
+              implementation</li>
+              <li>Create and implement standards in build &
+              test</li>
+              <li>Jenkins, BlueOcean, CloudBees, etc.</li>
+              <li>Mentor junior infrastructure security
+              engineers</li>
+            </ul>
+          </article>
+          <article>
+            <h2>Exact Target & Salesforce</h2>
+            <p class="subDetails">Jan 2014 - Oct 2014</p>
+            <ul>
+              <li>Create monitoring and administration tools in
+              Linux environments.</li>
+              <li>Facilitate deployment of custom cloud
+              applications as a github site admin, chef admin,
+              etc.</li>
+              <li>Develop secure build/deployment processes.</li>
+              <li>Train engineers & teams on various open source
+              software and build/deployment processes.</li>
+              <li>Port existing Windows C# web-based deployment
+              tools to Linux/Python (Sledgehammer project).</li>
+              <li>Support loading major releases to stacks every 6
+              weeks.</li>
+              <li>
+                <a href="https://www.marketingcloud.com/">Exact
+                Target</a> was acquired by Salesforce in August of
+                2014
+              </li>
+            </ul>
+          </article>
+          <article>
+            <h2>Indiana University</h2>
+            <p class="subDetails">Aug 2012 – Dec 31st, 2013</p>
+            <ul>
+              <li>Principal Research Software Engineer</li>
+              <li>Test Architect in Software Defined Networking
+              Lab, designed test cases and direct test efforts on
+              openflow networks.</li>
+              <li>Wrote web based tools for <a href=
+              "http://www.geni.net/">GENI/GEMINI</a> project.
+              </li>
+              <li>Assistant instructor for undergraduate networking
+              (lead discussions, create and grade homework, and
+              proctor exams).</li>
+              <li>Research very high capacity storage solutions and
+              high speed network connections.</li>
+            </ul>
+          </article>
+          <article>
+            <h2>Nokia Siemens Networks</h2>
+            <p class="subDetails">April 2011 – July 2012</p>
+            <p>Senior R&amp;D Engineer</p>
+          </article>
+          <article>
+            <h2>Motorola</h2>
+            <p class="subDetails">Jan 1999 - April 2011</p>
+            <ul>
+              <li>CDMA Cellular base station product
+              development.</li>
+              <li>Motorola Networks division was acquired by Nokia
+              Siemens</li>
+            </ul>
+          </article>
+          <article>
+            <h2>McHenry County College</h2>
+            <p class="subDetails">August 2006 –June 2011</p>
+          </article>
+        </div>
+        <div class="clear"></div>
+      </section>
+      <section>
+        <div class="sectionTitle">
+          <h1>Key Skills</h1>
+        </div>
+        <div class="sectionContent">
+          <ul class="keySkills">
+            <li>Github</li>
+            <li>Python</li>
+            <li>Ansible</li>
+            <li>Molecule</li>
+            <li>Vagrant</li>
+            <li>Docker</li>
+            <li>Terraform</li>
+            <li>Digital Ocean</li>
+            <li>Google Cloud</li>
+            <li>AWS</li>
+            <li>Puppet</li>
+          </ul>
+        </div>
+        <div class="clear"></div>
+      </section>
+      <section>
+        <div class="sectionTitle">
+          <h1>Education</h1>
+        </div>
+        <div class="sectionContent">
+          <article>
+            <h2>DePaul University</h2>
+            <p class="subDetails">MS Network Security/Network
+            Engineering</p>
+            <p>Studied network protocols, network design, focus
+            mostly on lower 4 layers of OSI. About half Network
+            Security and half Network Engineering courses.</p>
+          </article>
+          <article>
+            <h2>Northwestern University</h2>
+            <p class="subDetails">MS Computer Info Systems</p>
+            <p>Agile, OO Methods. Relational Database
+            specialization. Java programming, interactive web apps
+            with Apache/Tomcat.</p>
+          </article>
+          <article>
+            <h2>Roosevelt University</h2>
+            <p class="subDetails">BS Computer Science</p>
+            <p>C++ based cirriculum. Minor mathematics.</p>
+          </article>
+        </div>
+        <div class="clear"></div>
+      </section>
+      <section>
+        <article>
+          <div class="sectionTitle">
+            <h1>Resume Application</h1>
+          </div>
+          <div class="sectionContent">
+            <p><img src=
+            "https://travis-ci.org/theDevilsVoice/franklin-resume.svg?branch=master"><img src="https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master.svg?style=svg">
+            <img src=
+            "https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master">
+            <img src=
+            "https://img.shields.io/twitter/follow/thedevilsvoice.svg?style=social&amp;label=Follow%20me%20on%20Twitter"></p>
+            <p>This resume is a Python 3 Flask application
+            developed locally in docker and <a href=
+            "https://www.heroku.com/what">hosted on Heroku</a>. At
+            first I was just converting GitHub flavored Markdown to
+            static Flask via Pandoc. It seems to be morphing into a
+            Python/Flask project.</p>
+            <ul>
+              <li>The code for this application <a href=
+              "https://github.com/theDevilsVoice/franklin-resume">
+                is stored in GitHub</a>
+              </li>
+              <li>Continuous Integration <a href=
+              "https://travis-ci.org/theDevilsVoice/franklin-resume">
+                of Markdown files is done via travis-ci.org</a>
+              </li>
+              <li>Continuous Integration of Python 3.6 Flask
+              application is done via <a href=
+              "https://circleci.com/gh/theDevilsVoice/franklin-resume/tree/master">
+                circleci.com</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+        <div class="clear"></div>
+      </section>
     </div>
   </div>
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
 </body>
 </html>
-
