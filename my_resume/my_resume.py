@@ -53,9 +53,8 @@ def create_app(debug):
     # app.register_module(frontend)
 
     # other setup tasks
-
-    return app
     """
+    return app
 
 
 @app.route('/')
