@@ -6,20 +6,14 @@
 """
 # -*- coding: utf-8 -*-
 
-import codecs
 import os
-import subprocess
 
 import flask
-from flask import abort
-from flask import flash
 from flask import Flask
 from flask import jsonify
 from flask import render_template
 from flask import request
-from flask import Response
 from flask import send_from_directory
-from flask import session
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 DOWNLOADS = CURR_DIR + "/doc"
@@ -53,9 +47,8 @@ def create_app(debug):
     # app.register_module(frontend)
 
     # other setup tasks
-
-    return app
     """
+    return app
 
 
 @app.route('/')
@@ -93,7 +86,7 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app = create_app(debug=True)
+    create_app(debug=True)
     app.run(host="0.0.0.0")
 
 r"""
