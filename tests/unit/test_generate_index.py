@@ -8,5 +8,8 @@
   :license: MIT
 """
 
+import pytest
+from flask import request
+
 def test_myview(client):
     assert client.get('/').status_code == 200

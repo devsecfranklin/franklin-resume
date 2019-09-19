@@ -12,35 +12,34 @@ Things I've been using lately.
 - Puppet
     - Ruby (spec/rake testing)
 - Ansible & Molecule
+- Chef
 - Linux Shell Scripting
     - BASH
     - ZSH
 - Vagrant, Docker, Terraform
-- Digital Ocean, Google Cloud, AWS
+- Digital Ocean, AWS
 
 ### Experience
 
 #### Salesforce
 
 - Oct 2014 - Current
-- Data Science & Network Forensics team
-    - SecDevOps building security data platform & infrastructure
+- Security Detection Engineering
+    - SecDevOps building security data platform, infrastructure, pipelines
     - Large scale log aggregation
         - In-house solution 
         - Funnel logs into SIEM via Kafka
-    - Large scale packet capture 
+    - Large scale packet capture
         - Designed and built Moloch based setup 
-    - Automate cluster buildouts 
+    - Automate cluster buildouts
         - Splunk
         - Hadoop
         - Spark, Pyspark
-    - Build & maintain Data Science Pipeline 
+    - Build & maintain Data Science Pipeline
         - Airflow, Tensorflow, Keras, etc.
     - CI/CD pipeline architecture design and implementation
         - Create and implement standards in build & test
-        - Jenkins, BlueOcean, CloudBees, etc. 
         - Docker, Puppet, Ansible/Molecule
-    - Mentor junior infrastructure security engineers
 
 #### Exact Target & Salesforce
 

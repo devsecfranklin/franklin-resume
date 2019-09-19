@@ -1,5 +1,11 @@
 .PHONY: build doc markdown static templates
 
+REQS := requirements.txt
+REQS_TEST := requirements.dev
+# Used for colorizing output of echo messages
+BLUE := "\\033[1\;36m"
+NC := "\\033[0m" # No color/default
+
 PRE := /app
 DOC := my_resume/doc
 MD := markdown
@@ -29,12 +35,11 @@ build: ## setup the build env
 	python3 -m compileall .
 	bash -xe tests/env_setup.sh
 
-.PHONY: clean
 clean: ## Cleanup all the things
 	if [ -f "$(DOC)/my_resume.docx" ]; then rm $(DOC)/my_resume.docx; fi
 	if [ -f "$(TEMPLATES)/index.html" ]; then rm $(TEMPLATES)/index.html; fi
 	rm -rf .tox
-	rm -rf venv
+	rm -rf myvenv
 	rm -rf .pytest_cache
 	rm -rf .coverage
 	rm -rf *.egg-info
@@ -69,6 +74,7 @@ local: ## run application locally
 	docker-compose up --build franklin_resume
 
 local-dev: ## test application locally
+	$(MAKE) print-status MSG="Building Resume Application...hang tight!"
 	python3 -m compileall .
 	docker-compose up --build dev_franklin_resume
 	@docker-compose run dev_franklin_resume /bin/bash
@@ -77,10 +83,19 @@ pdf: ## generate a PDF version of reume
 	pandoc -s -V geometry:margin=1in -o "$(DOC)/my_resume.pdf" "$(MD)/header.md" "$(MD)/doc_header.md" "$(MD)/pageone.md"
 	#pandoc -f markdown -s "$(MD)/pageone.md" -o "doc/my_resume.pdf"
 
-.PHONY: test
-test: ## test with tox
-	tox
+print-status:
+	@:$(call check_defined, MSG, Message to print)
+	@echo "$(BLUE)$(MSG)$(NC)"
 
-.PHONY: venv
-venv: ## spin up venv
-	tox -e venv
+python: ## set up the python environment
+	$(MAKE) print-status MSG="Set up the Python environment"
+	LD_LIBRARY_PATH=/usr/local/lib python3 -m venv myvenv
+	. myvenv/bin/activate; \
+	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install wheel; \
+	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -rrequirements/$(REQS)
+
+test: python ## test the flask app
+	$(MAKE) print-status MSG="Test the Flask App"
+	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -rrequirements/$(REQS_TEST)
+	# tox
+	python3 -m pytest tests/
