@@ -4,7 +4,7 @@
 
 [twitter]: https://twitter.com/intent/user?screen_name=theDevilsVoice "Follow Franklin on Twitter"
 
-- [The code for this application](https://github.com/hotpeppersecfranklin-resume) is stored in GitHub
+- [The code for this application](https://github.com/hotpeppersec/franklin-resume) is stored in GitHub
     - At first I was just converting GitHub flavored Markdown to static Flask via Pandoc. 
     - It seems to be morphing into a Python/Flask project. 
 - [Continuous Integration](https://travis-ci.org/hotpeppersec/franklin-resume) of Markdown files is done via travis-ci.org
