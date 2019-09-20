@@ -64,7 +64,7 @@ heroku: ## generate HTML from markdown on heroku
 
 html: ## generate HTML from markdown
 	if [ ! -d "$(TEMPLATES)" ]; then mkdir $(TEMPLATES); fi
-	pandoc -f markdown -t html5 -o "$(TEMPLATES)/index.html" "$(MD)/header.md" "$(MD)/dev_header.md" "$(MD)/downloads.md" "$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(MD)/pandoc_template.html
+	pandoc -f markdown -t html5 -o "$(TEMPLATES)/md_index.html" "$(MD)/header.md" "$(MD)/dev_header.md" "$(MD)/downloads.md" "$(MD)/pageone.md" --title "Franklin Resume" --metadata author="Franklin" --template $(MD)/pandoc_template.html
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build
