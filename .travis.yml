@@ -19,8 +19,8 @@ script:
 - chmod +x mdcheckr
 - sudo cp mdcheckr /usr/local/bin
 - /usr/local/bin/mdcheckr markdown/pageone.md
-- make html
-- make doc
+- echo "test dir `pwd`"
 - tox 
+- cd markdown && make html && make doc
 notifications:
   email: false
