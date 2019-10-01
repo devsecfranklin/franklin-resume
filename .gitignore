@@ -1,5 +1,4 @@
 .DS_Store
-franklin-resume.wpr 
 *.deb
 __pycache__/
 sdist/
@@ -12,3 +11,5 @@ coverage.xml
 
 # virtualenv
 myvenv/
+
+markdown/my_resume.*

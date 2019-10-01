@@ -18,7 +18,10 @@
 #==================================================
 #set -o nounset   # Treat unset variables as an error
 
-sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-latex-recommended
+if [ ! -f /.dockerenv ]
+then 
+  sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-latex-recommended
+fi 
 
 if [ ! $(command -v mdl) ]; then
   echo "gem: --no-document" >> ~/.gemrc
