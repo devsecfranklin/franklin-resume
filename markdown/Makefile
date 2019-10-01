@@ -37,6 +37,9 @@ html: ## generate HTML from markdown
 	--title "Franklin Resume" --metadata author="Franklin" 
 	#--template pandoc_template.html --data-dir=$(PWD)
 
+lint: ## check the Markdown files for issues
+	find . -name '*.md' | xargs /usr/local/bin/mdl
+
 pdf: ## generate a PDF version of resume
 	$(MAKE) print-status MSG="generate a PDF version of resume"
 	if [ ! -f "/.dockerenv" ]; then pandoc -s -V geometry:margin=1in -o "my_resume.pdf" "header.md" "doc_header.md" "pageone.md"; fi

@@ -19,8 +19,9 @@
 #set -o nounset   # Treat unset variables as an error
 
 if [ ! -f /.dockerenv ]
-then 
-  sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-latex-recommended
+then
+  echo "install pdflatex" 
+  #sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-latex-recommended
 fi 
 
 if [ ! $(command -v mdl) ]; then

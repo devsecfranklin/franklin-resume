@@ -13,3 +13,6 @@ coverage.xml
 myvenv/
 
 markdown/my_resume.*
+build/
+dist/
+franklin_resume.egg-info/
