@@ -44,13 +44,15 @@ dist: ## make a pypi style dist
 
 lint: ## check the Markdown files for issues
 	$(MAKE) build
-	find . -name '*.md' | xargs /usr/local/bin/mdl
+	find ./markdown -name '*.md' | xargs /usr/local/bin/mdl
 
 local: ## run application locally
+	@if [ -f /.dockerenv ]; then echo "Don't run make local inside docker container" && exit 1; fi;
 	docker-compose -f docker/docker-compose.yml up --build franklin_resume
 
 local-dev: ## test application locally
 	$(MAKE) print-status MSG="Building Resume Application...hang tight!"
+	@if [ -f /.dockerenv ]; then echo "Don't run make local-dev inside docker container" && exit 1; fi;
 	python3 -m compileall .
 	docker-compose -f docker/docker-compose.yml up --build dev_franklin_resume
 	@docker-compose -f docker/docker-compose.yml run dev_franklin_resume /bin/bash
