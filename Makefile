@@ -48,6 +48,7 @@ local: ## run application locally
 
 local-dev: ## test application locally
 	$(MAKE) print-status MSG="Building Resume Application...hang tight!"
+	$(MAKE) clean
 	@if [ -f /.dockerenv ]; then echo "Don't run make local-dev inside docker container" && exit 1; fi;
 	python3 -m compileall .
 	docker-compose -f docker/docker-compose.yml up --build dev_franklin_resume
@@ -67,5 +68,6 @@ python: ## set up the python environment
 test: python ## test the flask app
 	$(MAKE) print-status MSG="Test the Flask App"
 	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -rrequirements/$(REQS_TEST)
-	# tox
-	python3 -m pytest tests/
+	tox -e pylint
+	tox -e myvenv
+	#python3 -m pytest tests/
