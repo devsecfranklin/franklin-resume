@@ -40,11 +40,7 @@ clean: ## Cleanup all the things
 
 dist: ## make a pypi style dist
 	python3 -m compileall .
-	python3 setup.py sdist bdist_wheel
-
-lint: ## check the Markdown files for issues
-	$(MAKE) build
-	find ./markdown -name '*.md' | xargs /usr/local/bin/mdl
+	python3 setup.py sdist bdist
 
 local: ## run application locally
 	@if [ -f /.dockerenv ]; then echo "Don't run make local inside docker container" && exit 1; fi;
