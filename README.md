@@ -11,7 +11,7 @@
 [![CircleCI](https://circleci.com/gh/hotpeppersec/franklin-resume/tree/master.svg?style=svg)](https://circleci.com/gh/hotpeppersec/franklin-resume/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/theDevilsVoice/franklin-resume.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/theDevilsVoice/franklin-resume/alerts/)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=franklin-resume)
+
 
 ## Testing 
 

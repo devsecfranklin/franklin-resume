@@ -1,9 +1,9 @@
-FROM python:3.6
+#FROM python:3.6
+FROM debian:buster
 ADD . /app
 WORKDIR /app
-#EXPOSE 8000
 
-RUN pip install --upgrade pip
-RUN pip install Cython
-RUN pip install -r requirements/requirements.dev
-#CMD ["python", "my_resume/my_resume.py"]
+RUN apt update && apt install -y python3-pip pandoc
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install Cython
+RUN python3 -m pip install -r requirements/requirements.dev
