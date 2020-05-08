@@ -12,7 +12,7 @@ apt -y install apt-utils
 
 #RUN pip install --upgrade pip
 #RUN pip install Cython
-RUN python3 -m pip install -r requirements/requirements.dev
+RUN python -m pip install -r requirements/requirements.dev
 
 # sphinx stuff
 #RUN make python; \
