@@ -1,3 +1,5 @@
+.PHONY: docker
+
 REQS := requirements.txt
 REQS_TEST := requirements.dev
 # Used for colorizing output of echo messages
@@ -46,7 +48,7 @@ dist: ## make a pypi style dist
 	python3 -m compileall .
 	python3 setup.py sdist bdist
 
-docker: python ## build docker container for testing
+docker: ## build docker container for testing
 	$(MAKE) print-status MSG="Building with docker-compose"
 	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
 	python3 -m compileall .
