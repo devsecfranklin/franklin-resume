@@ -6,13 +6,12 @@ ADD . /app
 WORKDIR /app
 
 # env stuff
-RUN apt update; \
-apt -y install apt-utils
-#RUN apt -y install make git wget pandoc latexmk python3-pip python3-graphviz texlive-fonts-recommended texlive-latex-extra
+RUN apt update && apt -y install apt-utils
+RUN apt -y install python3-pip python3-setuptools; \
+pip3 install -rrequirements/requirements.dev
 
-#RUN pip install --upgrade pip
-#RUN pip install Cython
-RUN python3 -m pip install -r requirements/requirements.dev
+#RUN apt -y install make git wget pandoc latexmk python3-pip \
+#   python3-graphviz texlive-fonts-recommended texlive-latex-extra
 
 # sphinx stuff
 #RUN make python; \
