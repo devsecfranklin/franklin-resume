@@ -1,4 +1,4 @@
-FROM python:3.8.1-buster
+FROM python:3.8.2-buster
 LABEL AUTHOR="franklin@bitsmasher.net"
 ENV DEBIAN_FRONTEND noninteractive
 
