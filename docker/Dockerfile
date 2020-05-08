@@ -1,7 +1,9 @@
-FROM python:3.6
+FROM python:3.8.1-buster
+LABEL AUTHOR="franklin@bitsmasher.net"
+ENV DEBIAN_FRONTEND noninteractive
+
 ADD . /app
 WORKDIR /app
-#USER thedevilsvoice:thedevilsvoice
 
 RUN pip install --upgrade pip
 RUN pip install Cython

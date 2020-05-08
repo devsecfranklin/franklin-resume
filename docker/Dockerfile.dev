@@ -1,9 +1,20 @@
-FROM python:3.6
+FROM debian:buster
+LABEL AUTHOR="franklin@bitsmasher.net"
+ENV DEBIAN_FRONTEND noninteractive
 ADD . /app
 WORKDIR /app
-#EXPOSE 8000
 
-RUN pip install --upgrade pip
-RUN pip install Cython
-RUN pip install -r requirements/requirements.dev
-#CMD ["python", "my_resume/my_resume.py"]
+# env stuff
+RUN apt update; \
+apt -y install apt-utils
+#RUN apt -y install make git wget pandoc latexmk python3-pip python3-graphviz texlive-fonts-recommended texlive-latex-extra
+
+#RUN pip install --upgrade pip
+#RUN pip install Cython
+RUN python3 -m pip install -r requirements/requirements.dev
+
+# sphinx stuff
+#RUN make python; \
+#if [ ! -d "pygments-css" ]; then git clone https://github.com/richleland/pygments-css.git; fi; \
+#cp ${WORKDIR}/pygments-css/vim.css ${WORKDIR}/docs/theme/static/
+#RUN make docs
