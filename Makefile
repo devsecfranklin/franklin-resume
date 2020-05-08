@@ -22,6 +22,10 @@ export PRINT_HELP_PYSCRIPT
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+app: ## run application locally
+	@if [ -f /.dockerenv ]; then echo "Don't run make local inside docker container" && exit 1; fi;
+	docker-compose -f docker/docker-compose.yml up --build franklin_resume
+
 build: ## setup the build env
 	python3 -m compileall .
 	bash -xe tests/env_setup.sh
@@ -42,17 +46,12 @@ dist: ## make a pypi style dist
 	python3 -m compileall .
 	python3 setup.py sdist bdist
 
-local: ## run application locally
-	@if [ -f /.dockerenv ]; then echo "Don't run make local inside docker container" && exit 1; fi;
-	docker-compose -f docker/docker-compose.yml up --build franklin_resume
-
-local-dev: ## test application locally
-	$(MAKE) print-status MSG="Building Resume Application...hang tight!"
-	$(MAKE) clean
-	@if [ -f /.dockerenv ]; then echo "Don't run make local-dev inside docker container" && exit 1; fi;
+docker: python ## build docker container for testing
+	$(MAKE) print-status MSG="Building with docker-compose"
+	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
 	python3 -m compileall .
-	docker-compose -f docker/docker-compose.yml up --build dev_franklin_resume
-	@docker-compose -f docker/docker-compose.yml run dev_franklin_resume /bin/bash
+	docker-compose -f docker/docker-compose.yml build dev_franklin_resume
+	@docker-compose -f docker/docker-compose.yml run franklin_resume /bin/bash
 
 print-status:
 	@:$(call check_defined, MSG, Message to print)
@@ -63,7 +62,7 @@ python: ## set up the python environment
 	LD_LIBRARY_PATH=/usr/local/lib python3 -m venv myvenv
 	. myvenv/bin/activate; \
 	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install wheel; \
-	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -rrequirements/$(REQS)
+	if [ -f '$(REQS)' ]; then LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -r$(REQS); fi
 
 test: python ## test the flask app
 	$(MAKE) print-status MSG="Test the Flask App"
