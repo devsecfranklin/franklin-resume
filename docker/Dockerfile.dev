@@ -1,5 +1,5 @@
 FROM debian:buster
-LABEL AUTHOR="franklin@bitsmasher.net"
+LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 ENV DEBIAN_FRONTEND noninteractive
 
 ADD . /app
@@ -8,7 +8,7 @@ WORKDIR /app
 # env stuff
 RUN apt update && apt -y install apt-utils
 RUN apt -y install python3-pip python3-setuptools; \
-pip3 install -rrequirements/requirements.dev
+pip3 install -rpython/requirements-test.txt
 
 #RUN apt -y install make git wget pandoc latexmk python3-pip \
 #   python3-graphviz texlive-fonts-recommended texlive-latex-extra
