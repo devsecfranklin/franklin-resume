@@ -3,8 +3,8 @@
 branch = True
 omit =
     *__init__*
-    *venv/lib/python3.6/site-packages*
-    tests/*
+    *python/myvenv/*
+    *test/*
 
 [report]
 # Regexes for lines to exclude from consideration
@@ -26,7 +26,7 @@ exclude_lines =
 
 omit =
     *__init__*
-    *venv/lib/python3.6/site-packages*
-    tests/*
+    *python/myvenv/*
+    *test/*
 
 ignore_errors = True
