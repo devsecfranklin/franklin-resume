@@ -20,4 +20,5 @@ jobs:
     - name: Build the docker-compose stack
       run: |
         sudo apt -y install python3-setuptools git
+        make test
         make docker

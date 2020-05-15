@@ -49,9 +49,9 @@ dist: ## make a pypi style dist
 	python3 -m compileall .
 	python3 setup.py sdist bdist
 
-docker: ## build docker container for testing
+docker: python ## build docker container for testing
+	if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
 	$(MAKE) print-status MSG="Building with docker-compose"
-	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
 	python3 -m compileall .
 	docker-compose -f docker/docker-compose.yml build dev_franklin_resume
 	@docker-compose -f docker/docker-compose.yml run franklin_resume /bin/bash
@@ -62,14 +62,11 @@ print-status:
 
 python: ## set up the python environment
 	$(MAKE) print-status MSG="Set up the Python environment"
-	LD_LIBRARY_PATH=/usr/local/lib python3 -m venv myvenv
-	. myvenv/bin/activate; \
-	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install wheel; \
 	if [ -f '$(REQS)' ]; then LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -r$(REQS); fi
 
 test: python ## test the flask app
+	#if [ ! -f /.dockerenv ]; then $(MAKE) print-status MSG="Run make test inside docker container" && exit 1; fi
 	$(MAKE) print-status MSG="Test the Flask App"
-	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -r$(REQS_TEST)
-	tox -e pylint
-	tox -e myvenv
-	#python3 -m pytest tests/
+	if [ -f '$(REQS_TEST)' ]; then pip3 install -r$(REQS_TEST); fi
+	cd python && if [ -f "tox.ini" ]; then tox -e pylint; fi
+	cd python && if [ -f "tox.ini" ]; then tox -e myvenv; fi

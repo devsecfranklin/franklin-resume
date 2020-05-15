@@ -15,6 +15,9 @@ from flask import render_template
 from flask import request
 from flask import send_from_directory
 
+from flask import url_for
+from flask_weasyprint import HTML, render_pdf
+
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 DOWNLOADS = CURR_DIR + "/doc"
 
@@ -71,6 +74,12 @@ def list_files():
 def get_file(path):
     """Download a file."""
     return send_from_directory(DOWNLOADS, path, as_attachment=True)
+
+
+@app.route('/franklin_resume.pdf')
+def build_pdf():
+    html = render_template('index.html')
+    return render_pdf(HTML(string=html))
 
 
 @app.errorhandler(404)
