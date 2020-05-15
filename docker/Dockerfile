@@ -1,11 +1,13 @@
-#FROM python:3.6
-FROM debian:buster
+FROM python:3.8.3-buster
+LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
+ENV DEBIAN_FRONTEND noninteractive
+
 ADD . /app
 WORKDIR /app
-#USER thedevilsvoice:thedevilsvoice
 
-RUN apt update && apt install -y python3-pip pandoc
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install Cython
-RUN python3 -m pip install -r requirements/requirements.txt
-CMD ["python3", "my_resume/my_resume.py"]
+RUN pip install --upgrade pip
+RUN pip install Cython
+RUN pip install -r python/requirements.txt
+RUN wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+RUN dpkg -i /app/pandoc-2.7.3-1-amd64.deb
+CMD ["python", "my_resume/my_resume.py"]

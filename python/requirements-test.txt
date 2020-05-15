@@ -1,0 +1,14 @@
+-r requirements.txt
+
+# Testing
+pytest
+pytest-flask
+coverage
+flake8
+pylint
+py
+coveralls
+sphinx
+pygments
+rst2pdf
+restructuredtext-lint

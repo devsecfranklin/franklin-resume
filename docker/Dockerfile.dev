@@ -1,9 +1,20 @@
-#FROM python:3.6
 FROM debian:buster
+LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
+ENV DEBIAN_FRONTEND noninteractive
+
 ADD . /app
 WORKDIR /app
 
-RUN apt update && apt install -y python3-pip pandoc
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install Cython
-RUN python3 -m pip install -r requirements/requirements.dev
+# env stuff
+RUN apt update && apt -y install apt-utils
+RUN apt -y install python3-pip python3-setuptools; \
+pip3 install -rpython/requirements-test.txt
+
+#RUN apt -y install make git wget pandoc latexmk python3-pip \
+#   python3-graphviz texlive-fonts-recommended texlive-latex-extra
+
+# sphinx stuff
+#RUN make python; \
+#if [ ! -d "pygments-css" ]; then git clone https://github.com/richleland/pygments-css.git; fi; \
+#cp ${WORKDIR}/pygments-css/vim.css ${WORKDIR}/docs/theme/static/
+#RUN make docs
