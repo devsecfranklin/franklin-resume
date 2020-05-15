@@ -1,7 +1,8 @@
-.PHONY: docker
+.PHONY: docker python
 
-REQS := requirements.txt
-REQS_TEST := requirements.dev
+REQS := python/requirements.txt
+REQS_TEST := python/requirements-test.txt
+
 # Used for colorizing output of echo messages
 BLUE := "\\033[1\;36m"
 NC := "\\033[0m" # No color/default
@@ -68,7 +69,7 @@ python: ## set up the python environment
 
 test: python ## test the flask app
 	$(MAKE) print-status MSG="Test the Flask App"
-	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -rrequirements/$(REQS_TEST)
+	LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -r$(REQS_TEST)
 	tox -e pylint
 	tox -e myvenv
 	#python3 -m pytest tests/
