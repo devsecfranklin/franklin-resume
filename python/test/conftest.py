@@ -12,7 +12,7 @@
 import unittest
 import pytest
 
-from my_resume.my_resume import create_app
+from my_resume import create_app
 
 
 """
