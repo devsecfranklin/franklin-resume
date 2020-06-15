@@ -19,3 +19,6 @@ franklin_resume.egg-info/
 
 # sphinx
 docs/_build
+
+# php
+vendor/
