@@ -22,3 +22,5 @@ docs/_build
 
 # php
 vendor/
+
+.terraform
