@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: franklin-resume
+  labels:
+    app: franklin-resume
+    role: service
+    tier: backend
+spec:
+  type: LoadBalancer
+  ports:
+    # the port that this service should serve on
+  - port: 5000
+  selector:
+    name: franklin-resume
+    environment: dev
