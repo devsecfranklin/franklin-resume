@@ -46,8 +46,10 @@ clean: ## Cleanup all the things
 	find . -name '__pycache__' | xargs rm -rf
 
 dist: ## make a pypi style dist
-	python3 -m compileall .
-	python3 setup.py sdist bdist
+	if [ ! -f /.dockerenv ]; then $(MAKE) print-status MSG="Run make dist inside docker container" && exit 1; fi
+	$(MAKE) print-status MSG="Make a Pypi style dist"
+	cd python && python -m compileall .
+	cd python && python setup.py sdist bdist
 
 docker: python ## build docker container for testing
 	if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
