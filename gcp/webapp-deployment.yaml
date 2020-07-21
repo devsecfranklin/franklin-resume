@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: franklin-resume
+        environment: dev
+    spec:
+      containers:
+      - name: franklin-resume
+        image: us.gcr.io/my-resume-71445/franklin-resume:v1
+        ports:
+        - containerPort: 80
+

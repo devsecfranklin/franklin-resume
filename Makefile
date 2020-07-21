@@ -54,7 +54,7 @@ dist: ## make a pypi style dist
 docker: python ## build docker container for testing
 	if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
 	$(MAKE) print-status MSG="Building with docker-compose"
-	python3 -m compileall .
+	#python3 -m compileall .
 	docker-compose -f docker/docker-compose.yml build dev_franklin_resume
 	@docker-compose -f docker/docker-compose.yml run franklin_resume /bin/bash
 
