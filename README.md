@@ -10,7 +10,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/theDevilsVoice/franklin-resume.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/theDevilsVoice/franklin-resume/alerts/)
 
-
 ## Testing
 
 #### Run App on Localhost via Docker
@@ -20,11 +19,11 @@
 
 #### Create Docker Instance to Log in and Run `pytest`
 
-- Type 'make local-dev' to build dev env. 
-- Docker will setup up container and put you in the project directory. 
+- Type 'make local-dev' to build dev env.
+- Docker will setup up container and put you in the project directory.
 - Test like so:
 
-```
+```fish
 make local-dev
 pytest
 py.test
@@ -32,7 +31,7 @@ tox -e pylint
 tox -e venv
 ```
 
-## Heroku
+## Heroku (Platform as a Service)
 
 Log in to see what's up: 
 
@@ -52,3 +51,5 @@ Heroku Releases
 curl -n https://api.heroku.com/apps/franklin-resume/releases/ \
           -H "Accept: application/vnd.heroku+json; version=3"
 ```
+
+## GCloud (Infrastructure as a Service)
