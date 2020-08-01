@@ -27,10 +27,10 @@ Things I've been using lately.
 - Security Detection Engineering
   - SecDevOps building security data platform, infrastructure, pipelines
   - Large scale log aggregation
-    - In-house solution 
+    - In-house solution
     - Funnel logs into SIEM via Kafka
   - Large scale packet capture
-    - Designed and built Moloch based setup 
+    - Designed and built Moloch based setup
   - Automate cluster buildouts
     - Splunk
     - Hadoop
