@@ -5,17 +5,17 @@
 Things I've been using lately.
 
 - Github & GitLab
-    - Markdown
-    - Travis CI
-    - CircleCI
+  - Markdown
+  - Travis CI
+  - CircleCI
 - Python
 - Puppet
-    - Ruby (spec/rake testing)
+  - Ruby (spec/rake testing)
 - Ansible & Molecule
 - Chef
 - Linux Shell Scripting
-    - BASH
-    - ZSH
+  - BASH
+  - ZSH
 - Vagrant, Docker, Terraform
 - Digital Ocean, AWS
 
@@ -25,21 +25,21 @@ Things I've been using lately.
 
 - Oct 2014 - Current
 - Security Detection Engineering
-    - SecDevOps building security data platform, infrastructure, pipelines
-    - Large scale log aggregation
-        - In-house solution 
-        - Funnel logs into SIEM via Kafka
-    - Large scale packet capture
-        - Designed and built Moloch based setup 
-    - Automate cluster buildouts
-        - Splunk
-        - Hadoop
-        - Spark, Pyspark
-    - Build & maintain Data Science Pipeline
-        - Airflow, Tensorflow, Keras, etc.
-    - CI/CD pipeline architecture design and implementation
-        - Create and implement standards in build & test
-        - Docker, Puppet, Ansible/Molecule
+  - SecDevOps building security data platform, infrastructure, pipelines
+  - Large scale log aggregation
+    - In-house solution 
+    - Funnel logs into SIEM via Kafka
+  - Large scale packet capture
+    - Designed and built Moloch based setup 
+  - Automate cluster buildouts
+    - Splunk
+    - Hadoop
+    - Spark, Pyspark
+  - Build & maintain Data Science Pipeline
+    - Airflow, Tensorflow, Keras, etc.
+  - CI/CD pipeline architecture design and implementation
+    - Create and implement standards in build & test
+    - Docker, Puppet, Ansible/Molecule
 
 #### Exact Target & Salesforce
 
@@ -102,8 +102,8 @@ Things I've been using lately.
 
 - Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
 - Cyber Shield 2018 - Trainer - (Infrastructure) Blue Team Tools & Tehcniques
-    - [Here is a link to the event](https://dod.defense.gov/News/Article/Article/1520257/national-guard-conducts-annual-nationwide-cybersecurity-exercise/)
+  - [Here is a link to the event](https://dod.defense.gov/News/Article/Article/1520257/national-guard-conducts-annual-nationwide-cybersecurity-exercise/)
 - Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
-    - Here [are some pictures of it](https://imgur.com/gallery/bK1vn)
+  - Here [are some pictures of it](https://imgur.com/gallery/bK1vn)
 - I run [&#64;indybsides security conference](https://twitter.com/indybsides)
-    - [Here are some pictures of it](https://imgur.com/a/w0UnE)
+  - [Here are some pictures of it](https://imgur.com/a/w0UnE)
