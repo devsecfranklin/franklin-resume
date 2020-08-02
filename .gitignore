@@ -16,12 +16,6 @@ markdown/my_resume.*
 build/
 dist/
 franklin_resume.egg-info/
-
-# sphinx
-docs/_build
-
-# php
-vendor/
-
+.vscode
 .terraform
 .envrc
