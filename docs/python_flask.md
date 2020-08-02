@@ -4,7 +4,7 @@ There is a Python3 Flask application running on Heroku.
 
 ## Testing
 
-### Log in to see what's up:
+### Log in to Heroku to See What's Up
 
 ```bash
 heroku run bash --app franklin-resume
