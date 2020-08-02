@@ -39,7 +39,7 @@ clean: ## Cleanup all the things
 	rm -rf .pytest_cache
 	rm -rf .coverage
 	rm -rf *.egg-info
-	rm -rf docs/_build build
+	rm -rf rst/_build build
 	rm -rf dist
 	rm -rf htmlcov
 	find . -name '*.pyc' | xargs rm -rf
