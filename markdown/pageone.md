@@ -72,7 +72,7 @@ Things I've been using lately.
 - CDMA Cellular base station product development.
 - Motorola Networks division was acquired by Nokia Siemens
 
-#### McHenry County College 
+#### McHenry County College
 
 - August 2006 –June 2011
 - Adjunct Faculty
