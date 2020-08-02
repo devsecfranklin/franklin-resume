@@ -1,8 +1,4 @@
-# Testing & Deploy Pipeline
-
-## GitHub Workflows
-
-## GitHub Integrations
+# Testing
 
 ## Tox & Pytest
 

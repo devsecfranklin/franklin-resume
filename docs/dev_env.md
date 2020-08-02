@@ -7,7 +7,7 @@
 ## Direnv
 
 I use [the direnv shell extension](https://direnv.net/) to make
-it easier to manage Shell variables. The `.envrc` file is not 
+it easier to manage Shell variables. The `.envrc` file is not
 checked in to the repo since the filename will trigger security
 alerts with GitGaurdian. A copy of my `.envrc` file is
 here for reference:
