@@ -2,9 +2,9 @@
 
 ## Generation
 
-These are HTML files generated like so: 
+These are HTML files generated like so:
 
-```
+```bash
 make html
 ```
 
@@ -15,4 +15,3 @@ This folder should contain three directories:
 - css
 - fonts
 - js
-
