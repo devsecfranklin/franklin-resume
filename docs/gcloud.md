@@ -32,3 +32,5 @@ gcloud container clusters create franklin-resume-cluster --zone us-central1-a --
 kubectl create -f gcp/webapp-deployment.yaml
 kubectl apply -f gcp/webapp-deployment.yaml
 ```
+
+- Now [run the terraform](https://github.com/thedevilsvoice/franklin-resume/tree/master/gcp) to provision the K8s cluster in GKE.

@@ -1,24 +1,8 @@
 
-## Currently Working on Security Infrastructure
+## DevSecOps
 
-### Recent Tools & Languages
-
-Things I've been using lately.
-
-* Github & GitLab
-  * Markdown
-  * Travis CI
-  * CircleCI
-* Python
-* Puppet
-  * Ruby (spec/rake testing)
-* Ansible & Molecule
-* Chef
-* Linux Shell Scripting
-  * BASH
-  * ZSH
-* Vagrant, Docker, Terraform
-* Digital Ocean, AWS
+* I build tools & data pipelines for development & security teams.
+* I create and manage CI/CD pipelines for efficient software testing & deployment.
 
 ## Experience
 
@@ -51,14 +35,14 @@ Things I've been using lately.
 * Train engineers & teams on various open source software and build/deployment processes.
 * Port existing Windows C# web-based deployment tools to Linux/Python (Sledgehammer project).
 * Support loading major releases to stacks every 6 weeks.
-* `ExactTarget <https://www.marketingcloud.com/>`_ was acquired by Salesforce in August of 2014
+* [ExactTarget](https://www.marketingcloud.com/) was acquired by Salesforce in August of 2014
 
 ### Indiana University
 
 * Aug 2012 – Dec 31st, 2013
 * Principal Research Software Engineer
 * Test Architect in Software Defined Networking Lab, designed test cases and direct test efforts on openflow networks.
-* Wrote web based tools for `GENI/GEMINI <http://www.geni.net/>`_ project.
+* Wrote web based tools for [GENI/GEMINI](http://www.geni.net/) project.
 * Assistant instructor for undergraduate networking (lead discussions, create and grade homework, and proctor exams).
 * Research very high capacity storage solutions and high speed network connections.
 
@@ -85,26 +69,27 @@ Things I've been using lately.
 
 * Studied network protocols, network design, focus mostly on lower 4 layers of OSI.
 * About half Network Security and half Network Engineering courses.
-* `Program information <http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx>`
+* [Program information](http://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx)
 
 ### Northwestern University, MS Computer Info Systems
 
 * Agile, OO Methods.
 * Relational Database specialization.
 * Java programming, interactive web apps with Apache/Tomcat.
-* `Program information <http://sps.northwestern.edu/program-areas/graduate/information-systems/>`_
+* [Program information](http://sps.northwestern.edu/program-areas/graduate/information-systems/)
 
 ### Roosevelt University, BS Computer Science
 
-* `C++ based cirriculum <https://www.roosevelt.edu/CAS/Programs/CS.aspx>`_.
+* [C++ based cirriculum](https://www.roosevelt.edu/CAS/Programs/CS.aspx).
 * Minor mathematics.
 
 ## Code and Projects
 
-* Administer `The Hacker Cookbook <https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook>`_ just for fun
+* Administer [The Hacker Cookbook](https://github.com/Nocsetse/1337-Noms-The-Hacker-Cookbook) just for fun
 * Cyber Shield 2018 - Trainer - (Infrastructure) Blue Team Tools & Tehcniques
-  * `Here is a link to the event <https://dod.defense.gov/News/Article/Article/1520257/national-guard-conducts-annual-nationwide-cybersecurity-exercise/>`_
-* Electronic badges, for example, `the bat badge <https://github.com/DEAD10C5/bat_mini>`_
-  * Here `are some pictures of it <https://imgur.com/gallery/bK1vn>`_
-* I run `&#64;indybsides security conference <https://twitter.com/indybsides>`_
-  * `Here are some pictures of it <https://imgur.com/a/w0UnE>`_
+  * [Here is a link to the event](https://dod.defense.gov/News/Article/Article/1520257/national-guard-conducts-annual-nationwide-cybersecurity-exercise/)
+* Electronic badges, for example, [the bat badge](https://github.com/DEAD10C5/bat_mini)
+  * Here [are some pictures of it](https://imgur.com/gallery/bK1vn)
+* I run [&#64;indybsides security conference](https://twitter.com/indybsides)
+  * [Here are some pictures of it](https://imgur.com/a/w0UnE)
+  
