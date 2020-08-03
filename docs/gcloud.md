@@ -9,6 +9,8 @@ I am able to [push a snapshot of the container](https://cloud.google.com/contain
 Once the containerized application snapshot is uploaded, the Terraform scripts create a
 Kubernetes cluster [using Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/docs/quickstart) in GCloud.
 
+![](images/gke.png)
+
 ## The Technical Details
 
 It is possible to generate the Docker container with the Python3/Flask
