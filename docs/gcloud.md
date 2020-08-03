@@ -9,6 +9,8 @@ I am able to [push a snapshot of the container](https://cloud.google.com/contain
 Once the containerized application snapshot is uploaded, the Terraform scripts create a
 Kubernetes cluster [using Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/docs/quickstart) in GCloud.
 
+![GKE](https://thedevilsvoice.github.io/franklin-resume/docs/images/gke.png)
+
 ## The Technical Details
 
 It is possible to generate the Docker container with the Python3/Flask
@@ -32,3 +34,5 @@ gcloud container clusters create franklin-resume-cluster --zone us-central1-a --
 kubectl create -f gcp/webapp-deployment.yaml
 kubectl apply -f gcp/webapp-deployment.yaml
 ```
+
+- Now [run the terraform](https://github.com/thedevilsvoice/franklin-resume/tree/master/gcp) to provision the K8s cluster in GKE.

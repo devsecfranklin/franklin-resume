@@ -14,3 +14,5 @@ more.
 
 There are toms of great Integrations that can be plugged in to a repo to improve
 code quality, test coverage, security, and more.
+
+![CI](https://thedevilsvoice.github.io/franklin-resume/docs/images/ci.png)
