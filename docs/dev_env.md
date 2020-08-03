@@ -1,8 +1,14 @@
 # Development Environment
 
+## VSCode
+
+I use the [Visual Studio Code IDE](https://code.visualstudio.com/) with various plugins
+and scanners, [Prisma Cloud](https://marketplace.visualstudio.com/items?itemName=PaloAltoNetworksInc.prisma-cloud) IaC security scanner for example.
+
 ## Fish Shell
 
-## VSCode
+This is a fun shell! The [oh my fish](https://github.com/oh-my-fish/oh-my-fish)
+extension has [lots of great themes](https://github.com/oh-my-fish/oh-my-fish/blob/master/docs/Themes.md).
 
 ## Direnv
 
