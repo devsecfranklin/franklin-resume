@@ -19,3 +19,4 @@ franklin_resume.egg-info/
 .vscode
 .terraform
 .envrc
+vendor

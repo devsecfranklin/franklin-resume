@@ -14,6 +14,7 @@
 
 - [Heroku Version](https://franklin-resume.herokuapp.com/) is running here.
 - [GitHub Pages version](https://thedevilsvoice.github.io/franklin-resume/docs/resume.html) of resume.
+- [Download PDF Version](https://thedevilsvoice.github.io/franklin-resume/docs/pdf/resume.pdf)
 
 ## Techniques and Work Samples
 
