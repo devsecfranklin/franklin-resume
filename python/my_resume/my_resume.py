@@ -67,7 +67,7 @@ def build_pdf():
 
 
 @app.errorhandler(404)
-def page_not_found():
+def page_not_found(my_err):
   """needs a docstring"""
   if request.method == 'POST':
     if request.form['submit_button'] == 'Go Back to Resume':
@@ -77,7 +77,7 @@ def page_not_found():
     return render_template('404.html'), 404
   else:
     pass
-  return None
+  return my_err
 
 
 if __name__ == '__main__':
