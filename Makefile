@@ -22,7 +22,7 @@ endef
 
 export PRINT_HELP_PYSCRIPT
 
-help: 
+help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 app: ## run application locally
@@ -65,11 +65,11 @@ print-status:
 
 python: ## set up the python environment
 	$(MAKE) print-status MSG="Set up the Python environment"
-	if [ -f '$(REQS)' ]; then LD_LIBRARY_PATH=/usr/local/lib python3 -m pip install -r$(REQS); fi
+	if [ -f '$(REQS)' ]; then python3 -m pip install -r$(REQS); fi
 
 test: python ## test the flask app
-	#if [ ! -f /.dockerenv ]; then $(MAKE) print-status MSG="Run make test inside docker container" && exit 1; fi
+	if [ ! -f /.dockerenv ]; then $(MAKE) print-status MSG="Run make test inside docker container" && exit 1; fi
 	$(MAKE) print-status MSG="Test the Flask App"
 	if [ -f '$(REQS_TEST)' ]; then pip3 install -r$(REQS_TEST); fi
-	cd python && if [ -f "tox.ini" ]; then tox -e pylint; fi
-	cd python && if [ -f "tox.ini" ]; then tox -e myvenv; fi
+	#cd python && if [ -f "tox.ini" ]; then tox -e pylint; fi
+	cd python && if [ -f "tox.ini" ]; then tox; fi
