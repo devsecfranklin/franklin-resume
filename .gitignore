@@ -1,7 +1,9 @@
 .DS_Store
 *.deb
-__pycache__/
-sdist/
+.vscode
+.terraform
+.envrc
+markdown/my_resume.*
 
 # Unit test / coverage reports
 htmlcov/
@@ -9,14 +11,10 @@ htmlcov/
 .coverage
 coverage.xml
 
-# virtualenv
-myvenv/
-
-markdown/my_resume.*
-build/
-dist/
-franklin_resume.egg-info/
-.vscode
-.terraform
-.envrc
-vendor
+# Python
+__pycache__
+*.egg-info
+python/build
+python/dist
+python/myvenv
+python/sdist
