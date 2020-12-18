@@ -12,11 +12,18 @@
 
 ## View My Resume
 
-- [Heroku Version](https://franklin-resume.herokuapp.com/) is running here.
+- [Heroku Version](https://franklin-resume.herokuapp.com/) is running here. You probably want this.
+
+### Other versions
+
+See it on GH Pages or get a PDF copy:
+
 - [GitHub Pages version](https://thedevilsvoice.github.io/franklin-resume/docs/resume.html) of resume.
 - [Download PDF Version](https://thedevilsvoice.github.io/franklin-resume/docs/pdf/resume.pdf)
 
 ## Techniques and Work Samples
+
+These are here for demonstration purposes.
 
 - [Infrastructure as a Service version](https://thedevilsvoice.github.io/franklin-resume/docs/gcloud.html) of resume.
 - [Platform as a Service version](https://thedevilsvoice.github.io/franklin-resume/docs/python_flask.html) of resume.

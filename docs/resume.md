@@ -1,30 +1,24 @@
 
-## DevSecOps
+## Objective
 
-* I build tools & data pipelines for development & security teams.
-* I create and manage CI/CD pipelines for efficient software testing & deployment.
+Seeking Lead DevSecOps role to leverage my experience building
+tools and data pipelines for development & security teams.
 
 ## Experience
 
 ### Salesforce
 
 * Oct 2014 - Jan 2020
-* Security Detection Engineering
-  * SecDevOps building security data platform, infrastructure, pipelines
-  * Large scale log aggregation
-    * In-house solution
-    * Funnel logs into SIEM via Kafka
-  * Large scale packet capture
-    * Designed and built Moloch based setup
-  * Automate cluster buildouts
-    * Splunk
-    * Hadoop
-    * Spark, Pyspark
-  * Build & maintain Data Science Pipeline
-    * Airflow, Tensorflow, Keras, etc.
-  * CI/CD pipeline architecture design and implementation
-    * Create and implement standards in build & test
-    * Docker, Puppet, Ansible/Molecule
+
+Worked on the Security Detection Engineering (SDE) team. Leveraged my DevSecOps skills to acclerate development of our buildout of FedRamp High GovCloud environment in AWS.
+
+Our team designed, built and maintained STEMS, an in-house large scale log collection solution to aggregate security application and host logs from internal networks, data centers, and acquisitions.
+
+Built & maintained Data Science Pipeline, where we pushed the security logs through a normalizer into a Hadoop cluster. Built and maintaned the Airflow setup so we could run data science models as DAGs.
+
+Built out Moloch based large scale packet capture on internal comapny IT networks.
+
+Built and maintained the CI/CD pipeline architecture for the SDE team (Jenkins, Blue Ocean)
 
 ### Exact Target & Salesforce
 
@@ -40,28 +34,26 @@
 ### Indiana University
 
 * Aug 2012 – Dec 31st, 2013
-* Principal Research Software Engineer
-* Test Architect in Software Defined Networking Lab, designed test cases and direct test efforts on openflow networks.
-* Wrote web based tools for [GENI/GEMINI](http://www.geni.net/) project.
-* Assistant instructor for undergraduate networking (lead discussions, create and grade homework, and proctor exams).
-* Research very high capacity storage solutions and high speed network connections.
+
+Principal Research Software Engineer. Test Architect in Software Defined Networking Lab, designed test cases and direct test efforts on openflow networks. Wrote web based tools for [GENI/GEMINI](http://www.geni.net/) project. Assistant instructor for undergraduate networking (lead discussions, create and grade homework, and proctor exams). Research very high capacity storage solutions and high speed network connections.
 
 ### Nokia Siemens Networks
 
 * April 2011 – July 2012
-* Senior R&D Engineer
+
+Senior R&D Engineer
 
 ### McHenry County College
 
 * August 2006 –June 2011
-* Adjunct Faculty
-* Taught information systems courses in the evenings
+
+Adjunct Faculty teaching evening information systems courses.
 
 ### Motorola
 
 * Jan 1999 - April 2011
-* CDMA Cellular base station product development.
-* Motorola Networks division was acquired by Nokia Siemens
+
+CDMA Cellular base station product development. Motorola Networks division was acquired by Nokia Siemens Networks.
 
 ## Education
 
