@@ -18,7 +18,5 @@ jobs:
           python-version: 3.8
       - name: Build the docker-compose stack
         run: |
-          sudo touch /.dockerenv
           sudo apt -y install python3-setuptools git
-          make test
           make docker
