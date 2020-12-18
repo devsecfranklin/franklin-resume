@@ -2,7 +2,7 @@
 ## Objective
 
 Seeking Lead DevSecOps role to leverage my experience building
-tools and data pipelines for development & security teams.
+tools, infrastucture and pipelines for development & security teams.
 
 ## Experience
 
