@@ -34,14 +34,15 @@ build: ## setup the build env
 	bash -xe tests/env_setup.sh
 
 clean: ## Cleanup all the things
-	rm -rf .tox
-	rm -rf myvenv
-	rm -rf .pytest_cache
-	rm -rf .coverage
-	rm -rf *.egg-info
-	rm -rf rst/_build build
-	rm -rf dist
-	rm -rf htmlcov
+	rm -rf rst/_build
+	rm -rf python/.coverage
+	rm -rf python/*.egg-info
+	rm -rf python/.pytest_cache
+	rm -rf python/.tox
+	rm -rf python/build
+	rm -rf python/dist
+	rm -rf python/htmlcov
+	rm -rf python/myvenv
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
 
