@@ -17,7 +17,7 @@ DESCRIPTION = 'Resume Application'
 URL = 'https://github.com/theDevilsVoice/franklin-resume'
 EMAIL = 'frank378@gmail.com'
 AUTHOR = 'Franklin Diaz'
-REQUIRES_PYTHON = '>=3.6.0'
+REQUIRES_PYTHON = '>=3.9.0'
 VERSION = '0.1'
 
 # What packages are required for this module to be executed?
@@ -116,7 +116,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy'
     ],
