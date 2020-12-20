@@ -1,4 +1,5 @@
 <!doctype html>
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -6,24 +7,30 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/pandoc.css') }}">
   <meta name="author" content="Franklin" />
   {% if title %}
-    <title>{{ title }}</title>
+  <title>{{ title }}</title>
   {% else %}
-    <title>Page Not Found</title>
+  <title>Page Not Found</title>
   {% endif %}
-  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
 </head>
 
 {% block title %}Page Not Found{% endblock %}
 {% block body %}
 
 <form action="/" method="GET">
-<p>What you were looking for is just not there.
-<p><input type="submit" name="" value="Go Back to Resume">
-<p>Please enjoy this picture of Remy looking majestic. 
-<br>
+  <p>What you were looking for is just not there.
+  <p><input type="submit" name="" value="Go Back to Resume">
+  <p>Please enjoy this picture of Remy looking majestic.
+    <br>
 
-<br>
-<img src="{{url_for('static', filename='majestic_remy.jpg')}}" />
+    <br>
+    <center>
+      <img src="{{url_for('static', filename='majestic_remy.jpg')}}" />
 </form>{% endblock %}
+</center>
 
 </html>

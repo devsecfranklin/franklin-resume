@@ -155,6 +155,7 @@ section:last-child {
 	margin-bottom: 3px;
 }
 
+
 @media all and (min-width: 602px) and (max-width: 800px) {
 	#headshot {
 		display: none;
@@ -214,7 +215,6 @@ section:last-child {
 		padding: 0 25px;
 	}
 
-
 	.keySkills {
 	-moz-column-count:1;
 	-webkit-column-count:1;
@@ -227,11 +227,6 @@ section:last-child {
 	}
 }
 
-@media print {
-    #cv {
-        width: 100%;
-    }
-}
 
 @-webkit-keyframes reset {
 	0% {

@@ -8,14 +8,12 @@
 
 import os
 
-#import flask
 from flask import Flask
 from flask import jsonify
 from flask import render_template
 from flask import request
 from flask import send_from_directory
 
-#from flask import url_for
 from flask_weasyprint import HTML, render_pdf
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -59,11 +57,11 @@ def get_file(path):
   return send_from_directory(DOWNLOADS, path, as_attachment=True)
 
 
-@app.route('/franklin_resume.pdf')
+@app.route('/pdf')
 def build_pdf():
-  """needs a docstring"""
+  """Generate a PDF file from a string of HTML."""
   html = render_template('index.html')
-  return render_pdf(HTML(string=html))
+  return render_pdf(HTML(string=html),download_filename='franklin_diaz_resume.pdf')
 
 
 @app.errorhandler(404)

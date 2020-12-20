@@ -17,7 +17,7 @@
   <![endif]-->
 </head>
 
-<body id="top">
+<body id="top" style="background-color:white;">
   <div id="cv" class="instaFade">
     <div class="mainDetails">
       <div id="headshot" class="quickFade"><img src="{{ url_for('static', filename='headshot.jpg') }}" alt="mugshot">
@@ -36,7 +36,6 @@
       <div class="clear"></div>
     </div>
     <div id="mainArea" class="quickFade delayFive">
-
       <section>
         <article>
           <div class="sectionTitle">
@@ -50,7 +49,7 @@
         <p>&nbsp;</p>
         <div class="clear"></div>
       </section>
-
+      <p>&nbsp;</p>
       <section>
         <div class="sectionTitle">
           <h1>Education</h1>
@@ -64,14 +63,12 @@
             <p>Studied network protocols, network design, focus mostly on lower 4 layers of OSI. About half Network
               Security and half Network Engineering courses.</p>
           </article>
-          <p>&nbsp;</p>
           <article>
             <h2>Northwestern University</h2>
             <p class="subDetails">MS Computer Info Systems</p>
             <p>Agile, OO Methods. Relational Database specialization. Java programming, interactive web apps with
               Apache/Tomcat.</p>
           </article>
-          <p>&nbsp;</p>
           <article>
             <h2>Roosevelt University</h2>
             <p class="subDetails"><a
@@ -79,17 +76,16 @@
                 Science</a></p>
             <p>C++ based cirriculum. Minor mathematics.</p>
           </article>
-          <p>&nbsp;</p>
         </div>
         <div class="clear"></div>
       </section>
-
       <section>
+        <p style="page-break-before: always"></p>
         <div class="sectionTitle">
           <h1>Work Experience</h1>
         </div>
+
         <div class="sectionContent">
-          <p>&nbsp;</p>
           <article>
             <h2>Palo Alto Networks</h2>
             <p class="subDetails">Consulting Engineer - Jan 2020 to Current</p>
@@ -107,6 +103,9 @@
             </ul>
           </article>
           <p>&nbsp;</p>
+        </div>
+
+        <div class="sectionContent">
           <article>
             <h2>Salesforce.com</h2>
             <p class="subDetails">Senior Security Engineer - Oct 2014 to Dec 2019</p>
@@ -125,6 +124,8 @@
             </ul>
           </article>
           <p>&nbsp;</p>
+        </div>
+        <div class="sectionContent">
           <article>
             <h2>Exact Target</h2>
             <p class="subDetails">Senior Deployment Engineer - Jan 2014 to Oct 2014</p>
@@ -138,9 +139,10 @@
               <li>Support deployment of custom cloud applications using Chef & Knife.</li>
               <li>Wrote Python for the Sledgehammer project, which was an in-house deployment and automation tool.</li>
             </ul>
-            <p class="keySkills">
           </article>
           <p>&nbsp;</p>
+        </div>
+        <div class="sectionContent">
           <article>
             <h2>Indiana University</h2>
             <p class="subDetails">Principal Research Software Engineer - Aug 2012 to Dec 31st, 2013</p>
@@ -154,12 +156,15 @@
             </ul>
           </article>
           <p>&nbsp;</p>
+        </div>
+        <div class="sectionContent">
           <article>
             <h2>Nokia Siemens Networks</h2>
             <p class="subDetails">Senior R&amp;D Engineer - April 2011 to July 2012</p>
             CDMA Cellular base station product development.
           </article>
-          <p>&nbsp;</p>
+        </div>
+        <div class="sectionContent">
           <article>
             <h2>Motorola</h2>
             <p class="subDetails">Senior Software Engineer - Jan 1999 to April 2011</p>
@@ -169,6 +174,8 @@
             </ul>
           </article>
           <p>&nbsp;</p>
+        </div>
+        <div class="sectionContent">
           <article>
             <h2>McHenry County College</h2>
             <p class="subDetails">Adjunct Faculty - August 2006 to June 2011</p>
