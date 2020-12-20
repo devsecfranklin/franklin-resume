@@ -234,8 +234,8 @@ section:last-child {
 }
 
 @page {
-  @bottom-center {
-    content: 'Last Update: 20 December 2020';
+  @bottom-left{
+    content: 'Updated December 2020';
   }
   @bottom-right {
     content: "Page " counter(page) " of " counter(pages);
