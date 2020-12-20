@@ -227,6 +227,20 @@ section:last-child {
 	}
 }
 
+@media print {
+  html, body {
+      height: 99%;
+  }
+}
+
+@page {
+  @bottom-center {
+    content: 'Last Update: 20 December 2020';
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+  }
+}
 
 @-webkit-keyframes reset {
 	0% {
