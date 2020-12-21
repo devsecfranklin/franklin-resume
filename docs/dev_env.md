@@ -46,7 +46,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="${TF_CREDS}"
 export GOOGLE_PROJECT="${TF_ADMIN}"
 ```
 
-# Generate PDF Locally
+## Generate PDF Locally
 
 ``` bash
 make docker
