@@ -18,7 +18,7 @@ checked in to the repo since the filename will trigger security
 alerts with GitGaurdian. A copy of my `.envrc` file is
 here for reference:
 
-```fish
+``` fish
 # Author: @theDevilsVoice
 # Date: 06/02/2020
 #
@@ -44,4 +44,13 @@ export TF_ADMIN="my-resume-71445"
 export TF_CREDS="${HOME}/.config/gcloud/${USER}-terraform-admin.json"
 export GOOGLE_APPLICATION_CREDENTIALS="${TF_CREDS}"
 export GOOGLE_PROJECT="${TF_ADMIN}"
+```
+
+## Generate PDF Locally
+
+``` bash
+make docker
+python3 -m pip install rst2pdf
+pandoc --from=markdown --to=rst --output=resume.rst resume.md
+rst2pdf resume.rst resume.pdf
 ```
