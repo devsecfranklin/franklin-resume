@@ -3,18 +3,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+  <!-- Hello Robots, please have the latest version of this page. No cache. -->
+  <meta name="robots" content="noarchive" />
+  <meta name="googlebot" content="noarchive">
+  <meta name="googlebot-news" content="noarchive">
   <meta name="generator" content="Bluefish 2.2.9">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="Content-Language" content="en-us">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <meta name="author" content="Franklin">
-  <title>Franklin Resume</title>
+  <meta name="author" content="Franklin Diaz">
+  <title>Franklin Diaz Resume</title>
+  <meta name="Description"
+    content="resume of a DevSecOps security infrastructure engineer with 10 years of experience seeking remote opportunities.">
+  <meta name="keywords"
+    content="resume, infrastructure, security, engineering, DevOps, DevSecOps, Python, Ansible, Terraform.">
   <meta name="viewport" content="width=device-width">
   <meta charset="UTF-8">
   <link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700|Lato:400,300' rel='stylesheet' type='text/css'>
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+
+  <!-- OpenGraph https://ogp.me/ -->
+  <meta property="og:title" content="Resume of Franklin Diaz" />
+  <meta property="og:type" content="document" />
+  <meta property="og:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta property="og:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
+  <meta property="og:description"
+    content="resume of a DevSecOps security infrastructure engineer with 10 years of experience seeking remote opportunities." />
+
+  <!-- Twitter specific -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta name="twitter:title" content="Franklin Diaz Resume" />
+  <meta name="twitter:description"
+    content="resume of a DevSecOps security infrastructure engineer with 10 years of experience seeking remote opportunities." />
+  <meta name="twitter:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
 </head>
 
 <body id="top" style="background-color:white;">
