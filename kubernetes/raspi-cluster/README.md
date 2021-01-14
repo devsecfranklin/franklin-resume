@@ -6,10 +6,8 @@ Build the docker container with the Flask app
 docker-compose -f docker/docker-compose.yml build dev_franklin_resume
 docker tag docker_franklin_resume:latest frank378/franklin-resume:arm-0.1
 docker images
-```
-
-
 docker pull frank378/franklin-resume:arm-0.1
+```
 
 Now you can deploy it
 
@@ -21,3 +19,4 @@ kubectl get svc
 kubectl get pods
 kubectl describe pods/franklin-resume-pod
 ```
+
