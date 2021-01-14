@@ -1,3 +1,5 @@
+# how to kube
+
 cd to workspace/franklin-resume
 
 Build the docker container with the Flask app
