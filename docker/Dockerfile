@@ -8,6 +8,6 @@ WORKDIR /app
 RUN pip install --upgrade pip
 RUN pip install Cython
 RUN pip install -r python/requirements.txt
-RUN wget --no-check-certificate https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
-RUN dpkg -i /app/pandoc-2.7.3-1-amd64.deb
+#RUN wget --no-check-certificate https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+#RUN dpkg -i /app/pandoc-2.11.3.2-1-amd64.deb
 CMD ["python", "python/my_resume/my_resume.py"]

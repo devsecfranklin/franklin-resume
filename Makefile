@@ -57,7 +57,7 @@ docker: python ## build docker container for testing
 	$(MAKE) print-status MSG="Building with docker-compose"
 	#python3 -m compileall .
 	docker-compose -f docker/docker-compose.yml build dev_franklin_resume
-	@docker-compose -f docker/docker-compose.yml run franklin_resume /bin/bash
+	@docker-compose -f docker/docker-compose.yml run dev_franklin_resume /bin/bash
 
 print-status:
 	@:$(call check_defined, MSG, Message to print)
