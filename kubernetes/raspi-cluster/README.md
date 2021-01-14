@@ -22,3 +22,5 @@ kubectl get pods
 kubectl describe pods/franklin-resume-pod
 ```
 
+That's it!
+
