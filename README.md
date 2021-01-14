@@ -23,3 +23,4 @@ These are here for demonstration purposes.
 * [The CI/CD pipeline](https://thedevilsvoice.github.io/franklin-resume/docs/ci_cd_pipeline.html) for this resume application.
 * [The local dev & build env](https://thedevilsvoice.github.io/franklin-resume/docs/ci_cd_pipeline.html) for this resume application.
 * [Containerized Testing](https://thedevilsvoice.github.io/franklin-resume/docs/testing.html) that runs locally or in build pipeline.
+* [Docker Hub: Latest Container Image](https://thedevilsvoice.github.io/franklin-resume/docs/docker.html)
