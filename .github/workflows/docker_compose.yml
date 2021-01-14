@@ -19,4 +19,4 @@ jobs:
       - name: Build the docker-compose stack
         run: |
           sudo apt -y install python3-setuptools git
-          make app
+          docker-compose -f docker/docker-compose.yml up -d --build franklin_resume
