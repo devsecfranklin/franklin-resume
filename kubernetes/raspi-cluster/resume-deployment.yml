@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: franklin-resume-deployment
+  labels:
+    app: my-resume
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-resume 
+  template:
+    metadata:
+      labels:
+        app: my-resume
+    spec:
+      containers:
+        - name: my-resume 
+          image: frank378/franklin-resume:arm-0.1
+          ports:
+            - containerPort: 5000
