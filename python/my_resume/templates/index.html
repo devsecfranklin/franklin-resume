@@ -8,7 +8,7 @@
   <meta name="googlebot-news" content="noarchive" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   <meta name="author" content="Franklin Diaz">
   <title>Franklin Diaz Resume</title>
   <meta name="description"
@@ -33,14 +33,14 @@
   <meta name="twitter:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
 </head>
 
-<body id="top" style="background-color:white;">
+<body id="top">
   <div id="cv" class="instaFade">
     <div class="mainDetails">
       <div id="headshot" class="quickFade"><img src="{{ url_for('static', filename='headshot.jpg') }}" alt="mugshot">
       </div>
       <div id="name">
         <h1 class="quickFade delayTwo">Franklin Diaz</h1>
-        <h2 class="quickFade delayThree">Sccurity Infrastructure Engineer</h2>
+        <h2 class="quickFade delayThree">Security Infrastructure Engineer</h2>
       </div>
       <div id="contactDetails" class="quickFade delayFour">
         <ul>
