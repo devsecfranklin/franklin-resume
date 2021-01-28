@@ -1,7 +1,7 @@
 """
     my_resume application
 
-    :copyright: (c) by Franklin Diaz
+    :copyright: (c) 2021 by Franklin Diaz
     :license: MIT
 """
 # -*- coding: utf-8 -*-
