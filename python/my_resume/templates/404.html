@@ -1,36 +1,22 @@
 <!doctype html>
+<html lang="en-US">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/pandoc.css') }}">
+  <link rel="stylesheet" type="text/css" href="/static/css/404.css">
   <meta name="author" content="Franklin" />
-  {% if title %}
-  <title>{{ title }}</title>
-  {% else %}
   <title>Page Not Found</title>
-  {% endif %}
-  <style type="text/css">
-    code {
-      white-space: pre;
-    }
-  </style>
+
 </head>
 
-{% block title %}Page Not Found{% endblock %}
-{% block body %}
-
-<form action="/" method="GET">
-  <p>What you were looking for is just not there.
-  <p><input type="submit" name="" value="Go Back to Resume">
-  <p>Please enjoy this picture of Remy looking majestic.
-    <br>
-
-    <br>
-    <center>
-      <img src="{{url_for('static', filename='majestic_remy.jpg')}}" />
-</form>{% endblock %}
-</center>
+<body>
+  <h1>Page Not Found</h1>
+  <center>
+    <form action="/" method="GET">
+      <input type="submit" name="" value="Go Back to Resume">
+    </form>
+  </center>
+  <h1>Page Not Found</h1>
+</body>
 
 </html>
