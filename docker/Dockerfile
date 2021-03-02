@@ -1,4 +1,4 @@
-FROM python:3.9.1-buster
+FROM python:3.9.2-buster
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 ENV DEBIAN_FRONTEND noninteractive
 
