@@ -7,5 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-- name: Check spelling
-  uses: check-spelling/check-spelling@0.0.17-alpha
+    - name: Check spelling
+      uses: check-spelling/check-spelling@0.0.17-alpha
