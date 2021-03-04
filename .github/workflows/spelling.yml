@@ -1,7 +1,7 @@
 name: Spell-Checker
 on:
-  pull_request:
-    branches: [ main ]
+  push:
+  pull_request_target:
 jobs:
   build:
     runs-on: ubuntu-latest
