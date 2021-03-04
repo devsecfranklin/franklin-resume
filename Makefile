@@ -23,7 +23,7 @@ endef
 export PRINT_HELP_PYSCRIPT
 
 help:
-	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
+	@python3 -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 app: ## run application locally
 	@if [ -f /.dockerenv ]; then echo "Don't run make local inside docker container" && exit 1; fi;
