@@ -67,7 +67,3 @@ print-status:
 	@:$(call check_defined, MSG, Message to print)
 	@echo "$(BLUE)$(MSG)$(NC)"
 
-test: ## run all test cases
-	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
-	@$(MAKE) print-status MSG="Running test cases"
-	@nix-shell --run "tox"
