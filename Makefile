@@ -5,10 +5,15 @@ REQS_TEST := python/requirements-test.txt
 
 # Used for colorizing output of echo messages
 BLUE := "\\033[1\;36m"
+LBLUE := "\\033[1\;34m"
+LRED := "\\033[1\;31m"
 NC := "\\033[0m" # No color/default
 
-PRE := /app
-TEMPLATES := my_resume/templates
+SHELL:=/bin/bash
+SHELLOPTS:=$(if $(SHELLOPTS),$(SHELLOPTS):)pipefail:errexit
+MAKEFLAGS += --no-print-directory
+MAKEOVERRIDES := $(filter-out NIX_REMOTE=%,$(MAKEOVERRIDES))
+unexport NIX_REMOTE
 
 define PRINT_HELP_PYSCRIPT
 import re, sys
@@ -26,12 +31,8 @@ help:
 	@python3 -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 app: ## run application locally
-	@if [ -f /.dockerenv ]; then echo "Don't run make local inside docker container" && exit 1; fi;
+	@if [ -f /.dockerenv ]; then echo "Don't run make app inside docker container" && exit 1; fi;
 	docker-compose -f docker/docker-compose.yml up --build franklin_resume
-
-build: ## setup the build env
-	python3 -m compileall .
-	bash -xe tests/env_setup.sh
 
 clean: ## Cleanup all the things
 	rm -rf rst/_build
@@ -45,31 +46,27 @@ clean: ## Cleanup all the things
 	rm -rf python/myvenv
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
+	if [ -f .buildlog ]; then rm .buildlog; fi
+	$(MAKE) print-status MSG="Clean up stale docker artifacts"
+	docker system prune -f
+	docker image prune -f
 
-dist: ## make a pypi style dist
-	if [ ! -f /.dockerenv ]; then $(MAKE) print-status MSG="Run make dist inside docker container" && exit 1; fi
-	$(MAKE) print-status MSG="Make a Pypi style dist"
-	cd python && python -m compileall .
-	cd python && python setup.py sdist bdist
+build: ## build a container for the image repo
+	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make build inside docker container <***" && exit 1; fi
+	@$(MAKE) print-status MSG="Building the docker container"
+	docker build -t frank378:franklin_resume \
+		--build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') . | tee .buildlog
 
-docker: python ## build docker container for testing
-	if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
-	$(MAKE) print-status MSG="Building with docker-compose"
-	#python3 -m compileall .
-	docker-compose -f docker/docker-compose.yml build dev_franklin_resume
-	@docker-compose -f docker/docker-compose.yml run dev_franklin_resume /bin/bash
+print-error:
+	@:$(call check_defined, MSG, Message to print)
+	@echo -e "$(LRED)$(MSG)$(NC)"
 
 print-status:
 	@:$(call check_defined, MSG, Message to print)
 	@echo "$(BLUE)$(MSG)$(NC)"
 
-python: ## set up the python environment
-	$(MAKE) print-status MSG="Set up the Python environment"
-	if [ -f '$(REQS)' ]; then python3 -m pip install -r$(REQS); fi
+test: ## run all test cases
+	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
+	@$(MAKE) print-status MSG="Running test cases"
+	@nix-shell --run "tox"
 
-test: python ## test the flask app
-	if [ ! -f /.dockerenv ]; then $(MAKE) print-status MSG="Run make test inside docker container" && exit 1; fi
-	$(MAKE) print-status MSG="Test the Flask App"
-	if [ -f '$(REQS_TEST)' ]; then pip3 install -r$(REQS_TEST); fi
-	#cd python && if [ -f "tox.ini" ]; then tox -e pylint; fi
-	cd python && if [ -f "tox.ini" ]; then tox; fi

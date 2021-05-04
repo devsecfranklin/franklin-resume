@@ -1,4 +1,7 @@
-FROM python:3.9.4-buster
+# syntax=docker/dockerfile:1
+
+FROM python:3.9.4-slim-buster
+
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 ENV DEBIAN_FRONTEND noninteractive
 
