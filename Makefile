@@ -34,6 +34,12 @@ app: ## run application locally
 	@if [ -f /.dockerenv ]; then echo "Don't run make app inside docker container" && exit 1; fi;
 	docker-compose -f docker/docker-compose.yml up --build franklin_resume
 
+build: ## build a container for the image repo
+	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make build inside docker container <***" && exit 1; fi
+	@$(MAKE) print-status MSG="Building the docker container"
+	docker build -t frank378:franklin_resume \
+		--build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') . | tee .buildlog
+
 clean: ## Cleanup all the things
 	rm -rf rst/_build
 	rm -rf python/.coverage
@@ -47,15 +53,11 @@ clean: ## Cleanup all the things
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
 	if [ -f .buildlog ]; then rm .buildlog; fi
-	$(MAKE) print-status MSG="Clean up stale docker artifacts"
-	docker system prune -f
-	docker image prune -f
-
-build: ## build a container for the image repo
-	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make build inside docker container <***" && exit 1; fi
-	@$(MAKE) print-status MSG="Building the docker container"
-	docker build -t frank378:franklin_resume \
-		--build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') . | tee .buildlog
+  
+test: ## run all test cases
+	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
+	@$(MAKE) print-status MSG="Running test cases"
+	@nix-shell --run "tox"
 
 print-error:
 	@:$(call check_defined, MSG, Message to print)
@@ -69,4 +71,3 @@ test: ## run all test cases
 	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
 	@$(MAKE) print-status MSG="Running test cases"
 	@nix-shell --run "tox"
-
