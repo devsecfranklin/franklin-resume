@@ -32,7 +32,7 @@ help:
 
 app: ## run application locally
 	@if [ -f /.dockerenv ]; then echo "Don't run make app inside docker container" && exit 1; fi;
-	docker-compose -f docker/docker-compose.yml up --build franklin_resume
+	docker-compose -f docker-compose.yml up --build franklin_resume
 
 build: ## build a container for the image repo
 	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make build inside docker container <***" && exit 1; fi

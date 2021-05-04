@@ -1,8 +1,6 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -19,4 +17,4 @@ jobs:
       - name: Build the docker-compose stack
         run: |
           sudo apt -y install python3-setuptools git
-          docker-compose -f docker/docker-compose.yml up -d --build franklin_resume
+          docker-compose -f docker-compose.yml up -d --build franklin_resume
