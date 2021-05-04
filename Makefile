@@ -65,5 +65,5 @@ print-error:
 
 print-status:
 	@:$(call check_defined, MSG, Message to print)
-	@echo "$(BLUE)$(MSG)$(NC)"
+	@echo -e "$(BLUE)$(MSG)$(NC)"
 
