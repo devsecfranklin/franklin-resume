@@ -13,7 +13,9 @@ ENV DEBIAN_FRONTEND noninteractive
 ADD . /app
 WORKDIR /app
 
-RUN pip install --upgrade pip
 RUN pip install Cython
 RUN pip install -r python/requirements.txt
+
+ENTRYPOINT [ "python3" ]
+
 CMD ["python3", "python/my_resume/my_resume.py"]
