@@ -6,16 +6,16 @@
 .envrc
 markdown/my_resume.*
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-coverage.xml
-
 # Python
 __pycache__
+_build
+.coverage
 *.egg-info
-python/build
-python/dist
-python/myvenv
-python/sdist
+*.log
+*config.py
+*.egg-info
+.pytest_cache
+.tox/
+MANIFEST
+coverage.xml
+htmlcov/

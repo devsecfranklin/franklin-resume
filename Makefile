@@ -46,13 +46,11 @@ clean: ## Cleanup all the things
 	rm -rf python/*.egg-info
 	rm -rf python/.pytest_cache
 	rm -rf python/.tox
-	rm -rf python/build
-	rm -rf python/dist
-	rm -rf python/htmlcov
-	rm -rf python/myvenv
-	find . -name '*.pyc' | xargs rm -rf
-	find . -name '__pycache__' | xargs rm -rf
-	if [ -f .buildlog ]; then rm .buildlog; fi
+	@find . -name '*.pyc' | xargs rm -rf
+	@find . -name '__pycache__' | xargs rm -rf
+	@if [ -f .buildlog ]; then rm .buildlog; fi
+	@if [ ! -d "/nix" ]; then nix-collect-garbage -d; fi
+
   
 test: ## run all test cases
 	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
