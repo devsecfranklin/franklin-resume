@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.9.5-slim-buster
+FROM python:3.9.5-buster
 
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 
@@ -15,7 +15,4 @@ WORKDIR /app
 
 RUN pip install Cython
 RUN pip install -r python/requirements.txt
-
-ENTRYPOINT [ "python3" ]
-
-CMD ["python3", "python/my_resume/my_resume.py"]
+CMD ["/usr/local/bin/python3", "python/my_resume/my_resume.py"]

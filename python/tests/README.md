@@ -6,7 +6,13 @@ About the testing.
   * It needs to match what you set for the XML user on the Panorama.
 * type `make test` from the top level of the repo.
 * Test cases run in `nix-shell`. So you have to install `nix-shell`.
-* Cloud function needs private IP. Test cases need public IP and maybe disable GP.
+<<<<<<< Updated upstream
+* Cloud function needs private IP. Test cases need public IP and maybe disable 
+GP.
+=======
+* Cloud function needs private IP. Test cases need public IP and maybe
+  disable GP.
+>>>>>>> Stashed changes
 
 ## Python Local Dev Env (Single User Nix Shell install)
 
@@ -40,4 +46,3 @@ tox
 exit
 nix-collect-garbage -d
 ```
-
