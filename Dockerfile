@@ -5,13 +5,13 @@ FROM python:3.9.5-buster
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 
 # This is used for adding to the label of the docker image.
-ARG BUILD_DATE
-LABEL org.label-schema.build-date=$BUILD_DATE
+#ARG BUILD_DATE
+#LABEL org.label-schema.build-date=$BUILD_DATE
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ADD . /app
-WORKDIR /app
+ADD . /workspace/franklin-resume
+WORKDIR /franklin-resume
 
 RUN pip install Cython
 RUN pip install -r python/requirements.txt

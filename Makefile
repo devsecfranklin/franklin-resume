@@ -53,9 +53,13 @@ clean: ## Cleanup all the things
 
   
 test: ## run all test cases
-	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
-	@$(MAKE) print-status MSG="Running test cases"
-	@nix-shell --run "tox"
+        @$(MAKE) print-status MSG="Running test cases"
+	@if [ -d "/nix" ]; \
+		then nix-shell --run "tox"; \
+	else \
+		@python3 -m pip install tests/requirements-test.txt; \
+		tox; \
+	fi
 
 print-error:
 	@:$(call check_defined, MSG, Message to print)
