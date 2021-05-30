@@ -53,7 +53,7 @@ clean: ## Cleanup all the things
 
   
 test: ## run all test cases
-        @$(MAKE) print-status MSG="Running test cases"
+	@$(MAKE) print-status MSG="Running test cases"
 	@if [ -d "/nix" ]; \
 		then nix-shell --run "tox"; \
 	else \
