@@ -1,0 +1,5 @@
+pytest
+pytest-flask
+coverage
+flake8
+pylint

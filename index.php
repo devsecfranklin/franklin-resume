@@ -1,1 +1,1 @@
-<?php header( 'Location: python/my_resume/templates/index.html' ) ;  ?>
+<?php header( 'Location: src/templates/index.html' ) ;  ?>

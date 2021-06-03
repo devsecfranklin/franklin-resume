@@ -1,1 +1,1 @@
-web: gunicorn --chdir python/my_resume my_resume:app
+web: gunicorn --chdir src my_resume:app
