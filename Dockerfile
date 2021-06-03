@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.8-buster
+FROM python:3.9-buster
 
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 
