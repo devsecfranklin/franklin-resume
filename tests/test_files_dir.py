@@ -8,9 +8,10 @@
   :license: MIT
 """
 
-#from flask import json, jsonify
+# from flask import json, jsonify
+
 
 def test_files(client):
-  response = client.get("/files/")
-  assert client.get('/files').status_code == 200
-  #assert client.get(response.json, dict(success=True))
+    response = client.get("/files/")
+    assert client.get("/files").status_code == 200
+    # assert client.get(response.json, dict(success=True))
