@@ -9,7 +9,7 @@
     :license: MIT
 """
 
-from my_resume.my_resume import create_app
+from src.my_resume import create_app
 
 def test_create_app(app):
   """
