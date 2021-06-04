@@ -1,26 +1,19 @@
-"""
-    my_resume application
+"""my_resume application
 
-    :copyright: (c) 2021 by Franklin Diaz
+    :copyright: © 2021 by Franklin Diaz
     :license: MIT
 """
-# -*- coding: utf-8 -*-
 
 import os
 
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import Flask, render_template, request
 from flask_weasyprint import HTML, render_pdf
 
 app = Flask(__name__)
 
-"""
-Move app setup tasks into create_app
-so we can reference from test harness
-"""
-
 
 def create_app(debug):
-    """need docstring"""
+    """Move app setup tasks into create_app so we can reference from test harness."""
     app.debug = debug
     app.secret_key = os.urandom(12)
     return app
@@ -28,7 +21,7 @@ def create_app(debug):
 
 @app.route("/")
 def render_static():
-    """needs docstring"""
+    """Render the HTML page."""
     return render_template("index.html", title="Franklin Diaz Resume")
 
 
@@ -41,7 +34,7 @@ def build_pdf():
 
 @app.errorhandler(404)
 def page_not_found(my_err):
-    """needs a docstring"""
+    """Return a custom 404 error page."""
     if request.method == "POST":
         if request.form["submit_button"] == "Go Back to Resume":
             return render_template("index.html", title="Franklin Diaz Resume")
