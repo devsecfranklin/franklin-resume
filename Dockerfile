@@ -11,8 +11,8 @@ LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 ENV DEBIAN_FRONTEND noninteractive
 
 ADD . /workspace/franklin-resume
-WORKDIR /franklin-resume
+WORKDIR /workspace/franklin-resume
 
 RUN pip install Cython
-RUN pip install -rrequirements.txt
-CMD ["/usr/local/bin/python3", "src/my_resume.py"]
+RUN pip install -r/workspace/franklin-resume/requirements.txt
+CMD ["/usr/local/bin/python3", "/workspace/franklin-resume/src/my_resume.py"]
