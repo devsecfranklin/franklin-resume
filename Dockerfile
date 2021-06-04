@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.8-buster
+FROM python:3.9-buster
 
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 
@@ -14,5 +14,5 @@ ADD . /workspace/franklin-resume
 WORKDIR /franklin-resume
 
 RUN pip install Cython
-RUN pip install -r python/requirements-test.txt
-CMD ["/usr/local/bin/python3", "python/my_resume/my_resume.py"]
+RUN pip install -rrequirements.txt
+CMD ["/usr/local/bin/python3", "src/my_resume.py"]
