@@ -3,3 +3,5 @@ pytest-flask
 coverage
 flake8
 pylint
+isort
+black

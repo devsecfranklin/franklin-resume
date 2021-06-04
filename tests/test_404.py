@@ -9,10 +9,11 @@
 """
 
 import pytest
-from werkzeug.datastructures import ImmutableMultiDict
 from flask import request
+from werkzeug.datastructures import ImmutableMultiDict
+
 
 def test_404(client):
-  request.form = ImmutableMultiDict([('submit_button', 'Go Back to Resume')])
-  response = client.get('/garbage')
-  assert client.get('/garbage').status_code == 404
+    request.form = ImmutableMultiDict([("submit_button", "Go Back to Resume")])
+    response = client.get("/garbage")
+    assert client.get("/garbage").status_code == 404

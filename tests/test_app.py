@@ -11,8 +11,9 @@
 
 from src.my_resume import create_app
 
+
 def test_create_app(app):
-  """
-  Instantiate the application
-  """
-  assert app
+    """
+    Instantiate the application
+    """
+    assert app
