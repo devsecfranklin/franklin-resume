@@ -1,7 +1,7 @@
 .PHONY: docker python
 
-REQS := python/requirements.txt
-REQS_TEST := python/requirements-test.txt
+REQS := requirements.txt
+REQS_TEST := tests/requirements-test.txt
 
 # Used for colorizing output of echo messages
 BLUE := "\\033[1\;36m"
@@ -57,7 +57,7 @@ test: ## run all test cases
 	@if [ -d "/nix" ]; \
 		then nix-shell --run "tox"; \
 	else \
-		@python3 -m pip install tests/requirements-test.txt; \
+		@python3 -m pip install $(REQS_TEST); \
 		tox; \
 	fi
 
