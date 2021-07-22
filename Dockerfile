@@ -3,16 +3,17 @@
 FROM python:3.9-buster
 
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
+LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume"
 
-# This is used for adding to the label of the docker image.
-#ARG BUILD_DATE
-#LABEL org.label-schema.build-date=$BUILD_DATE
+WORKDIR /workspace
+ENV MY_DIR /workspace
+COPY . ${MY_DIR}
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ADD . /workspace/franklin-resume
-WORKDIR /workspace/franklin-resume
+RUN \
+  pip install Cython; \
+  pip install -r${MY_DIR}/requirements.txt
 
-RUN pip install Cython
-RUN pip install -r/workspace/franklin-resume/requirements.txt
-CMD ["/usr/local/bin/python3", "/workspace/franklin-resume/src/my_resume.py"]
+CMD ["/usr/local/bin/python3", "${MY_DIR}/src/my_resume.py"]
+
