@@ -5,8 +5,8 @@ FROM python:3.9-buster
 LABEL maintainer "Franklin Diaz <franklin@bitsmasher.net>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume"
 
-WORKDIR /workspace
-ENV MY_DIR /workspace
+WORKDIR /workspace/source
+ENV MY_DIR /workspace/source
 COPY . ${MY_DIR}
 
 ENV DEBIAN_FRONTEND noninteractive
