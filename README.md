@@ -1,4 +1,4 @@
-``` bash
+```sh
  _____                _    _ _         ____
 |  ___| __ __ _ _ __ | | _| (_)_ __   |  _ \ ___  ___ _   _ _ __ ___   ___
 | |_ | '__/ _` | '_ \| |/ / | | '_ \  | |_) / _ \/ __| | | | '_ ` _ \ / _ \
@@ -6,6 +6,7 @@
 |_|  |_|  \__,_|_| |_|_|\_\_|_|_| |_| |_| \_\___||___/\__,_|_| |_| |_|\___|
 
 ```
+
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/devsecfranklin/franklin-resume/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=devsecfranklin%2Ffranklin-resume&benchmark=INFRASTRUCTURE+SECURITY)
 
 [![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master)
