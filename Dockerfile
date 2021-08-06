@@ -17,3 +17,6 @@ RUN \
 
 CMD ["/usr/local/bin/python3", "${MY_DIR}/src/my_resume.py"]
 
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://0.0.0.0:5000/ || exit 1
+
