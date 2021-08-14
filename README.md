@@ -7,9 +7,7 @@
 
 ```
 
-[![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/devsecfranklin/franklin-resume/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=devsecfranklin%2Ffranklin-resume&benchmark=INFRASTRUCTURE+SECURITY)
-
-[![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master)
+[![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/devsecfranklin/franklin-resume/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=devsecfranklin%2Ffranklin-resume&benchmark=INFRASTRUCTURE+SECURITY) [![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master)
 
 ## View My Resume
 

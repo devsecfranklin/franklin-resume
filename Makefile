@@ -51,6 +51,13 @@ clean: ## Cleanup all the things
 	@if [ -f .buildlog ]; then rm .buildlog; fi
 	@if [ ! -d "/nix" ]; then nix-collect-garbage -d; fi
 
+print-error:
+	@:$(call check_defined, MSG, Message to print)
+	@echo -e "$(LRED)$(MSG)$(NC)"
+
+print-status:
+	@:$(call check_defined, MSG, Message to print)
+	@echo -e "$(BLUE)$(MSG)$(NC)"
   
 test: ## run all test cases
 	@$(MAKE) print-status MSG="Running test cases"
@@ -60,12 +67,3 @@ test: ## run all test cases
 		@python3 -m pip install $(REQS_TEST); \
 		tox; \
 	fi
-
-print-error:
-	@:$(call check_defined, MSG, Message to print)
-	@echo -e "$(LRED)$(MSG)$(NC)"
-
-print-status:
-	@:$(call check_defined, MSG, Message to print)
-	@echo -e "$(BLUE)$(MSG)$(NC)"
-
