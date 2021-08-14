@@ -1,7 +1,6 @@
 # Security Policy
 
-- This project uses lgtm.com to scan for security issues.
-- You can [click here to follow a link to the most recent security scan report](https://lgtm.com/projects/g/hotpeppersec/franklin-resume/alerts/?mode=list).
+- This project uses [https://bridgecrew.io](https://bridgecrew.io) to scan for security issues.
 
 ## Supported Versions
 
@@ -13,4 +12,5 @@ All versions of this project are currently being supported with security updates
 
 ## Reporting a Vulnerability
 
-Use [the "issues" tab in this repo](https://github.com/hotpeppersec/franklin-resume/issues) to report any possible security issues to the authors.
+Use [the "issues" tab in this repo](https://github.com/devsecfranklin/franklin-resume/issues) to
+report any possible security issues to the authors.
