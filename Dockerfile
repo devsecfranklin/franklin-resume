@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.9-buster-slim
+FROM python:3.9-slim-buster
 
 LABEL maintainer "Franklin Diaz <2730246+devsecfranklin@users.noreply.github.com>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume"
@@ -27,7 +27,7 @@ RUN addgroup --gid 9001 engr && \
     	--gecos "" \
     	--home "/home/franklin" \
     	--ingroup "engr" \
-    	--no-create-home \
+    	#--no-create-home \
     	--uid "9001" \
     	--uid "9001" \
     	"franklin"; \
