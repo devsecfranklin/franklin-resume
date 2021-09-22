@@ -18,7 +18,7 @@ URL = 'https://github.com/theDevilsVoice/franklin-resume'
 EMAIL = 'frank378@gmail.com'
 AUTHOR = 'Franklin Diaz'
 REQUIRES_PYTHON = '>=3.9.0'
-VERSION = '0.1'
+VERSION = '0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [

@@ -1,4 +1,4 @@
-.PHONY: docker python
+.PHONY: python
 
 REQS := requirements.txt
 REQS_TEST := tests/requirements-test.txt
@@ -41,11 +41,11 @@ build: ## build a container for the image repo
 		--build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') . | tee .buildlog
 
 clean: ## Cleanup all the things
-	rm -rf rst/_build
-	rm -rf python/.coverage
-	rm -rf python/*.egg-info
-	rm -rf python/.pytest_cache
-	rm -rf python/.tox
+	rm -rf _build
+	rm -rf .coverage
+	rm -rf *.egg-info
+	rm -rf .pytest_cache
+	rm -rf .tox
 	@find . -name '*.pyc' | xargs rm -rf
 	@find . -name '__pycache__' | xargs rm -rf
 	@if [ -f .buildlog ]; then rm .buildlog; fi
