@@ -13,14 +13,29 @@
 
 * [Heroku Version](https://franklin-resume.herokuapp.com/) is running here. You probably want this.
 
-## Techniques and Work Samples
+## Container
 
-These are here for demonstration purposes.
+* [Docker Hub: Latest Container Image](https://hub.docker.com/repository/docker/frank378/franklin-resume)
 
-* [Infrastructure as a Service version](https://devsecfranklin.github.io/franklin-resume/docs/gcloud.html) of resume.
-* [Platform as a Service version](https://devsecfranklin.github.io/franklin-resume/docs/python_flask.html) of resume.
-* [My Current Development Environment](https://devsecfranklin.github.io/franklin-resume/docs/dev_env.html) for reference.
-* [The CI/CD pipeline](https://devsecfranklin.github.io/franklin-resume/docs/ci_cd_pipeline.html) for this resume application.
-* [The local dev & build env](https://devsecfranklin.github.io/franklin-resume/docs/ci_cd_pipeline.html) for this resume application.
-* [Containerized Testing](https://devsecfranklin.github.io/franklin-resume/docs/testing.html) that runs locally or in build pipeline.
-* [Docker Hub: Latest Container Image](https://devsecfranklin.github.io/franklin-resume/docs/docker.html)
+## Tox & Pytest w/Nix
+
+* Install nix-shell
+
+```sh
+sudo install -d -m755 -o $(id -u) -g $(id -g) /nix
+curl -L https://nixos.org/nix/install | sh
+```
+
+Create Docker Instance to Log in and Run `pytest`
+
+* You must have Docker installed and running locally.
+* Type `make build` to build the container.
+
+```sh
+source $HOME/.nix-profile/etc/profile.d/nix.sh
+unset NIX_REMOTE || set -e NIX_REMOTE && if [ -f "requirements.txt" ]; then nix-shell; fi
+python3 -m pip install tox
+tox
+exit
+nix-collect-garbage -d
+```
