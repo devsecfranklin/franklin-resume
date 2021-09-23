@@ -39,7 +39,6 @@ def page_not_found(my_err):
         if request.form["submit_button"] == "Go Back to Resume":
             return render_template("index.html", title="Franklin Diaz Resume")
     elif request.method == "GET":
-        # note that we set the 404 status explicitly
         return render_template("404.html"), 404
     else:
         pass
@@ -49,3 +48,4 @@ def page_not_found(my_err):
 if __name__ == "__main__":
     create_app(debug=True)
     app.run(host="0.0.0.0")
+
