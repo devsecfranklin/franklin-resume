@@ -50,6 +50,7 @@ clean: ## Cleanup all the things
 	@find . -name '__pycache__' | xargs rm -rf
 	@if [ -f .buildlog ]; then rm .buildlog; fi
 	@if [ ! -d "/nix" ]; then nix-collect-garbage -d; fi
+	@if [ -d "venv" ]; then rm -rf venv; fi
 
 print-error:
 	@:$(call check_defined, MSG, Message to print)
@@ -58,12 +59,8 @@ print-error:
 print-status:
 	@:$(call check_defined, MSG, Message to print)
 	@echo -e "$(BLUE)$(MSG)$(NC)"
-  
+
 test: ## run all test cases
+	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
 	@$(MAKE) print-status MSG="Running test cases"
-	@if [ -d "/nix" ]; \
-		then nix-shell --run "tox"; \
-	else \
-		@python3 -m pip install $(REQS_TEST); \
-		tox; \
-	fi
+	@nix-shell --run "tox -e py39"
