@@ -1,15 +1,18 @@
-"""my_resume application
-
-    :copyright: © 2021 by Franklin Diaz
-    :license: MIT
-"""
-
 import os
+import logging
+import logging.config   
 
 from flask import Flask, render_template, request
 from flask_weasyprint import HTML, render_pdf
 
 app = Flask(__name__)
+
+logging.config.fileConfig(
+    "logging.conf",
+    defaults={"logfilename": "resume.log"},
+    disable_existing_loggers=False,
+)
+logger = logging.getLogger("__name__")
 
 
 def create_app(debug):
@@ -49,3 +52,9 @@ if __name__ == "__main__":
     create_app(debug=True)
     app.run(host="0.0.0.0")
 
+
+"""my_resume application
+
+    __copyright__ = © 2021 by Franklin Diaz
+    __license__   = MIT
+"""
