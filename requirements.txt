@@ -1,8 +1,6 @@
-pandoc
 gunicorn
 flask
 tox
-pre-commit
 Flask-WeasyPrint
 flask-login
 flask-sqlalchemy
