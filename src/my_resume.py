@@ -2,6 +2,8 @@ import os
 from flask import Flask, render_template, request
 from flask_weasyprint import HTML, render_pdf
 
+import pdfkit
+
 app = Flask(__name__)
 
 
@@ -20,9 +22,15 @@ def render_static():
 
 @app.route("/pdf")
 def build_pdf():
-    """Generate a PDF file from a string of HTML."""
+    """Generate a PDF file from HTML."""
     html = render_template("index.html")
     return render_pdf(HTML(string=html), download_filename="franklin_diaz_resume.pdf")
+
+
+@app.route("/pdfkit")
+def build_pdf():
+    """Generate a PDF file from an HTML file."""
+    return pdfkit.from_file('index.html', 'franklin_diaz_resume.pdf')
 
 
 @app.errorhandler(404)

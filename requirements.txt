@@ -5,3 +5,4 @@ Flask-WeasyPrint
 flask-login
 flask-sqlalchemy
 sqlalchemy==1.4.28
+pdfkit
