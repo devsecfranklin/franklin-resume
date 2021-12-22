@@ -30,7 +30,10 @@ def build_pdf():
 @app.route("/pdfkit")
 def build_pdf():
     """Generate a PDF file from an HTML file."""
-    return pdfkit.from_file('index.html', 'franklin_diaz_resume.pdf')
+    rendered_template = render_template('index.html', user=user)
+    rendered_template = rendered_template.encode('utf-8')
+    pdf = pdfkit.from_string(rendered_template, False, css='./static/css/styles.css')
+    return render_pdf(HTML(string=html), download_filename="franklin_diaz_resume.pdf")
 
 
 @app.errorhandler(404)
