@@ -314,13 +314,6 @@ section:last-child {
   }
 }
 
-@media print {
-  html,
-  body {
-    height: 99%;
-  }
-}
-
 @page {
   @bottom-left {
     content: "Updated January 2021";
