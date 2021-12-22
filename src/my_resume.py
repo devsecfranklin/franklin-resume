@@ -1,8 +1,7 @@
 import os
+
 from flask import Flask, render_template, request
 from flask_weasyprint import HTML, render_pdf
-
-import pdfkit
 
 app = Flask(__name__)
 
@@ -23,17 +22,11 @@ def render_static():
 @app.route("/pdf")
 def build_pdf():
     """Generate a PDF file from HTML."""
+    css = "static/css/styles.css"
     html = render_template("index.html")
-    return render_pdf(HTML(string=html), download_filename="franklin_diaz_resume.pdf")
-
-
-@app.route("/pdfkit")
-def build_pdf():
-    """Generate a PDF file from an HTML file."""
-    rendered_template = render_template('index.html', user=user)
-    rendered_template = rendered_template.encode('utf-8')
-    pdf = pdfkit.from_string(rendered_template, False, css='./static/css/styles.css')
-    return render_pdf(HTML(string=html), download_filename="franklin_diaz_resume.pdf")
+    return render_pdf(
+        HTML(string=html), stylesheets=css, download_filename="franklin_diaz_resume.pdf"
+    )
 
 
 @app.errorhandler(404)
@@ -51,7 +44,7 @@ def page_not_found(my_err):
 
 if __name__ == "__main__":
     create_app(debug=True)
-    app.run(host='0.0.0.0')
+    app.run(host="0.0.0.0")
 
 
 """my_resume application
