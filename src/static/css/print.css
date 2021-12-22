@@ -1,5 +1,5 @@
 /* print.css */
-header, footer, aside, nav, form, iframe, .delayOne, .delayTwo, .delayThree, .delayFour, .delayFive {
+header, footer, aside, nav, form, iframe, delayOne, delayTwo, delayThree, delayFour, delayFive, quickFade, sectionTitle, sectionContent {
   display: none;
 }
 
