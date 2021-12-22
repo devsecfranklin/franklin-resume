@@ -316,7 +316,7 @@ section:last-child {
 
 @page {
   @bottom-left {
-    content: "Updated January 2021";
+    content: "Updated December 2021";
   }
   @bottom-right {
     content: "Page " counter(page) " of " counter(pages);

@@ -1,11 +1,15 @@
 /* print.css */
-header, footer, aside, nav, form, iframe, delayOne, delayTwo, delayThree, delayFour, delayFive, quickFade, sectionTitle, sectionContent {
+header, footer, aside, nav, form, iframe, p, h1, delayOne, delayTwo, delayThree, delayFour, delayFive, quickFade, sectionTitle, sectionContent {
   display: none;
 }
 
 article {
   column-width: 17em;
   column-gap: 3em;
+}
+
+a::after {
+  content: " (" attr(href) ")";
 }
 
 * {
