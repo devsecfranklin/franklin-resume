@@ -1,0 +1,46 @@
+/* print.css */
+header, footer, aside, nav, form, iframe, .delayOne, .delayTwo, .delayThree, .delayFour, .delayFive {
+  display: none;
+}
+
+article {
+  column-width: 17em;
+  column-gap: 3em;
+}
+
+* {
+  background-image: none !important;
+}
+
+img, svg {
+  display: none !important;
+}
+
+img.print, svg.print {
+  display: block;
+  max-width: 100%;
+}
+
+table, img, svg {
+  break-inside: avoid;
+}
+
+/* target all pages */
+@page {
+  margin: 2cm;
+}
+
+/* target the first page only */
+@page :first {
+  margin-top: 6cm;
+}
+
+/* target left (even-numbered) pages only */
+@page :left {
+  margin-right: 4cm;
+}
+
+/* target right (odd-numbered) pages only */
+@page :right {
+  margin-left: 4cm;
+}
