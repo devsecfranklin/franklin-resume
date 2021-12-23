@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, render_template, request
 from flask_weasyprint import HTML, render_pdf
 
@@ -20,9 +21,12 @@ def render_static():
 
 @app.route("/pdf")
 def build_pdf():
-    """Generate a PDF file from a string of HTML."""
+    """Generate a PDF file from HTML."""
+    css = "static/css/print.css"
     html = render_template("index.html")
-    return render_pdf(HTML(string=html), download_filename="franklin_diaz_resume.pdf")
+    return render_pdf(
+        HTML(string=html), stylesheets=css, download_filename="franklin_diaz_resume.pdf"
+    )
 
 
 @app.errorhandler(404)
@@ -40,7 +44,7 @@ def page_not_found(my_err):
 
 if __name__ == "__main__":
     create_app(debug=True)
-    app.run(host='0.0.0.0')
+    app.run(host="0.0.0.0")
 
 
 """my_resume application

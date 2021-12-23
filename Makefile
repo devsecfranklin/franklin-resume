@@ -1,5 +1,10 @@
 .PHONY: python
 
+PY39 := $(shell command -v python3 2> /dev/null)
+ifndef PY39
+    PY39 := $(shell command -v python 2> /dev/null)
+endif
+
 REQS := requirements.txt
 REQS_TEST := tests/requirements-test.txt
 
@@ -59,6 +64,14 @@ print-error:
 print-status:
 	@:$(call check_defined, MSG, Message to print)
 	@echo -e "$(BLUE)$(MSG)$(NC)"
+
+python: ## build the python env
+	@$(PY39) -m venv _build 
+	. _build/bin/activate
+	@$(PY39) -m pip install --upgrade pip
+	@$(PY39) -m pip install tox
+	@$(PY39) -m pip install -r requirements.txt --no-warn-script-location
+	@$(PY39) -m pip install -r tests/requirements-test.txt --no-warn-script-location
 
 test: ## run all test cases
 	@if [ ! -d "/nix" ]; then $(MAKE) print-error MSG="You don't have nix installed." && exit 1; fi
