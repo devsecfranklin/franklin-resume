@@ -16,6 +16,6 @@ RUN \
   pip install Cython && \
   pip install -r${MY_DIR}/requirements.txt && \
   apt update && \
-  apt install librust-gobject-sys-dev libpango1.0-dev
+  apt install -y librust-gobject-sys-dev libpango1.0-dev
 
 CMD ["/usr/local/bin/python3", "src/my_resume.py"]
