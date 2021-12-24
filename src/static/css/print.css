@@ -1,34 +1,31 @@
-/* print.css */
-@media print {
-
-  header,
-  form,
-  footer,
-  aside,
-  nav,
-  form,
-  iframe,
-  p,
-  h1,
-  .clear,
-  .delayOne,
-  .delayTwo,
-  .delayThree,
-  .delayFour,
-  .delayFive,
-  .instaFade,
-  .quickFade,
-  sectionTitle,
-  sectionContent {
-    display: none;
-  }
-
-  article {
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
+header,
+form,
+footer,
+aside,
+nav,
+form,
+iframe,
+p,
+h1,
+.clear,
+.delayOne,
+.delayTwo,
+.delayThree,
+.delayFour,
+.delayFive,
+.instaFade,
+.quickFade,
+sectionTitle,
+sectionContent {
+  display: none;
 }
+
+article {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 
 a::after {
   content: " ("attr(href) ")";
@@ -60,16 +57,19 @@ svg {
   margin: 2cm;
 }
 
-@page:first {
+@page: first {
   margin: 0cm;
 }
-@page:last {
+
+@page: last {
   margin: 5cm;
 }
-@page:left {
+
+@page: left {
   margin: 2cm 1.5cm 2cm 2cm;
 }
-@page:right {
+
+@page: right {
   margin: 2cm 2cm 2cm 1.5cm;
 }
 
