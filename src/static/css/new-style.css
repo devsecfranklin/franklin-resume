@@ -70,7 +70,7 @@ a:hover {
 }
 
 ul {
-        margin: 0 0 32px 17px;
+        margin: 0 0 24px 12px;
 }
 
 #objective {
@@ -91,7 +91,7 @@ dt {
         text-align: right;
         padding: 0 26px 0 0;
         width: 150px;
-        fl oat: left;
+        float: left;
         height: 100px;
         border-right: 1px solid #999;
 }
@@ -112,5 +112,10 @@ dd.clear {
         .noprint,
         .noprint * {
                 display: none !important;
+        }
+
+
+        body, h2, dt, span {
+                font-size: 10px;
         }
 }
