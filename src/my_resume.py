@@ -22,7 +22,7 @@ def render_static():
 @app.route("/pdf")
 def build_pdf():
     """Generate a PDF file from HTML."""
-    css = "./static/css/print.css"
+    css = "css/print.css"
     html = render_template("index.html")
     return render_pdf(
         HTML(string=html), stylesheets=css, download_filename="franklin_diaz_resume.pdf"
