@@ -8,7 +8,7 @@ markdown/my_resume.*
 
 # Python
 __pycache__
-_build
+venv
 .coverage
 *.egg-info
 *.log

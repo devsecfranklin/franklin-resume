@@ -1,31 +1,57 @@
 /* print.css */
-header, form, footer, aside, nav, form, iframe, p, h1, .clear, .delayOne, .delayTwo, .delayThree, .delayFour, .delayFive, .instaFade, .quickFade, sectionTitle, sectionContent {
-  display: none;
-}
+@media print {
 
-article {
-  column-width: 17em;
-  column-gap: 3em;
+  header,
+  form,
+  footer,
+  aside,
+  nav,
+  form,
+  iframe,
+  p,
+  h1,
+  .clear,
+  .delayOne,
+  .delayTwo,
+  .delayThree,
+  .delayFour,
+  .delayFive,
+  .instaFade,
+  .quickFade,
+  sectionTitle,
+  sectionContent {
+    display: none;
+  }
+
+  article {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }
 
 a::after {
-  content: " (" attr(href) ")";
+  content: " ("attr(href) ")";
 }
 
 * {
   background-image: none !important;
 }
 
-img, svg {
+img,
+svg {
   display: none !important;
 }
 
-img.print, svg.print {
+img.print,
+svg.print {
   display: block;
   max-width: 100%;
 }
 
-table, img, svg {
+table,
+img,
+svg {
   break-inside: avoid;
 }
 
