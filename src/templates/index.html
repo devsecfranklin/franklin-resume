@@ -32,17 +32,18 @@
 
 <body>
   <div id="page-wrap">
-    <img src="{{ url_for('static', filename='headshot.jpg') }}" alt="Photo of Franklin" id="pic" />
+    <img class="one" src="{{ url_for('static', filename='headshot.jpg') }}" alt="Photo of Franklin" id="pic" />
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
+      <form action="/pdf" method="GET">
+        <button name="pdfBtn" type="submit">Download PDF</button>
+      </form>
       <p>
         Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
         Web: <a href="https://g.dev/franklin">GDev Page</a><br />
         LinkedIn: <a href="https://www.linkedin.com/in/franklin-diaz/">LinkedIn</a><br />
       </p>
-      <form action="/pdf" method="GET">
-        <button name="pdfBtn" type="submit">Download PDF</button>
-      </form>
+
     </div>
 
     <div id="objective">
@@ -111,7 +112,7 @@
     </dl>
   </div>
 
-  <div class="dontprint">
+  <div class="noprint">
     <a href="https://github.com/devsecfranklin/franklin-resume">
       <img style="position: absolute; top: 0; right: 0; border: 0;"
         src="{{ url_for('static', filename='forkme_right_darkblue_121621.png') }}" alt="Fork me on GitHub" /></a>

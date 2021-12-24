@@ -12,6 +12,10 @@ COPY . ${MY_DIR}
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
-  pip install -r${MY_DIR}/requirements.txt
+  pip install --upgrade pip && \
+  pip install Cython && \
+  pip install -r${MY_DIR}/requirements.txt && \
+  apt update && \
+  apt install librust-gobject-sys-dev libpango1.0-dev
 
 CMD ["/usr/local/bin/python3", "src/my_resume.py"]

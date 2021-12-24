@@ -56,6 +56,13 @@ clean: ## Cleanup all the things
 	@if [ ! -d "/nix" ]; then nix-collect-garbage -d; fi
 	@if [ -d "venv" ]; then rm -rf venv; fi
 
+docker: python ## build docker container for testing
+	if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make docker inside docker container <***" && exit 1; fi
+	$(MAKE) print-status MSG="Building with docker-compose"
+	#python3 -m compileall .
+	docker-compose build franklin_resume
+	@docker-compose run franklin_resume /bin/bash
+
 print-error:
 	@:$(call check_defined, MSG, Message to print)
 	@echo -e "$(LRED)$(MSG)$(NC)"

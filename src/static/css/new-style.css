@@ -23,6 +23,11 @@ body {
         margin: -30px 0 0 0;
 }
 
+img.one {
+        height: 25%;
+        width: 25%;
+}
+
 h1 {
         margin: 0 0 16px 0;
         padding: 0 0 16px 0;
@@ -100,4 +105,12 @@ dd.clear {
         float: none;
         margin: 0;
         height: 15px;
+}
+
+@media print {
+
+        .noprint,
+        .noprint * {
+                display: none !important;
+        }
 }
