@@ -37,13 +37,12 @@ help:
 
 app: ## run application locally
 	@if [ -f /.dockerenv ]; then echo "Don't run make app inside docker container" && exit 1; fi;
-	docker run -d -p 5000:5000 frank378:franklin_resume
+	docker run -it -p 5000:5000 frank378:franklin_resume
 
 build: ## build a container for the image repo
 	@if [ -f /.dockerenv ]; then $(MAKE) print-status MSG="***> Don't run make build inside docker container <***" && exit 1; fi
 	@$(MAKE) print-status MSG="Building the docker container"
-	docker build -t frank378:franklin_resume \
-		--build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') . | tee .buildlog
+	docker build -t frank378:franklin_resume .
 
 clean: ## Cleanup all the things
 	rm -rf _build

@@ -22,10 +22,8 @@ def render_static():
 @app.route("/pdf")
 def build_pdf():
     """Generate a PDF file from HTML."""
-    html = "index.html"
-    return render_pdf(
-        HTML(string=html), download_filename="franklin_diaz_resume.pdf"
-    )
+    html = render_template("index.html")
+    return render_pdf(HTML(string=html), download_filename="franklin_diaz_resume.pdf")
 
 
 @app.errorhandler(404)
@@ -43,7 +41,7 @@ def page_not_found(my_err):
 
 if __name__ == "__main__":
     create_app(debug=True)
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000)
 
 
 """my_resume application
