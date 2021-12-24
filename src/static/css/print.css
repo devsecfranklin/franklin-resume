@@ -60,19 +60,17 @@ svg {
   margin: 2cm;
 }
 
-/* target the first page only */
-@page :first {
-  margin-top: 6cm;
+@page:first {
+  margin: 0cm;
 }
-
-/* target left (even-numbered) pages only */
-@page :left {
-  margin-right: 4cm;
+@page:last {
+  margin: 5cm;
 }
-
-/* target right (odd-numbered) pages only */
-@page :right {
-  margin-left: 4cm;
+@page:left {
+  margin: 2cm 1.5cm 2cm 2cm;
+}
+@page:right {
+  margin: 2cm 2cm 2cm 1.5cm;
 }
 
 @media all and (min-width: 602px) and (max-width: 800px) {
