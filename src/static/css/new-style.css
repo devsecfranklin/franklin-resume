@@ -115,7 +115,19 @@ dd.clear {
         }
 
 
-        body, h2, dt, span {
+        body,
+        h2,
+        dt,
+        span {
                 font-size: 10px;
+        }
+
+        @page {
+                size: 297mm 210mm;
+                /* landscape */
+                /* you can also specify margins here: */
+                margin: 25mm;
+                margin-right: 45mm;
+                /* for compatibility with both A4 and Letter */
         }
 }
