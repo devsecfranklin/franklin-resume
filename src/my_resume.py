@@ -42,7 +42,9 @@ def page_not_found(my_err):
 
 if __name__ == "__main__":
     create_app(debug=False)
-    app.run(host="0.0.0.0")
+    #create app(debug=True)
+    app.run(host="127.0.0.1")
+    #app.run(host="0.0.0.0", port="5000")
 
 
 """my_resume application
