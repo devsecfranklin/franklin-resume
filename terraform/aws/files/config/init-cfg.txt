@@ -1,0 +1,2 @@
+Set these values for each firewall in terraform.tfvars in the "bootstrap_options" sections.
+
