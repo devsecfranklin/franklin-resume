@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new-style.css') }}">
   <meta name="author" content="Franklin Diaz">
   <title>Franklin Diaz Resume</title>
+  <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
   <meta name="description" content="Resume of a Principal DevSecOps/security leader seeking remote opportunities." />
   <meta name="keywords"
     content="resume, infrastructure, security, engineering, DevOps, DevSecOps, Python, Ansible, Terraform, Puppet, AWS, GCP, OCI, Azure" />
@@ -33,7 +34,10 @@
 <body>
   <div id="page-wrap">
     <div class="noprint">
-    <img class="one" src="{{ url_for('static', filename='headshot.jpg') }}" alt="Photo of Franklin" id="pic" />
+      <img class="one" src="{{ url_for('static', filename='headshot.jpg') }}" alt="Photo of Franklin" id="pic" />
+    </div>
+    <div class="onlyPrint">
+      <img class="one" src="{{ url_for('static', filename='ORCID.png') }}" alt="Franklin ORCID" id="pic" />
     </div>
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
