@@ -133,3 +133,9 @@ dd.clear {
                 /* for compatibility with both A4 and Letter */
         }
 }
+
+@media screen {
+        .onlyPrint * {
+                display: none !important;
+        }
+}
