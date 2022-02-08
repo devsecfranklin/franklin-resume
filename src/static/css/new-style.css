@@ -135,7 +135,7 @@ dd.clear {
 }
 
 @media screen {
-        .onlyPrint {
-                display: none;
+        .onlyPrint * {
+                display: none !important;
         }
 }
