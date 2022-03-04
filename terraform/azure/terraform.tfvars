@@ -381,7 +381,7 @@ outbound_files = {
 }
 
 tags = {
-  Application_Name  = "palo_security",
+  Application_Name = "palo_security",
 }
 
 //allow_inbound_data_ips

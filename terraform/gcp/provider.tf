@@ -23,6 +23,7 @@ provider "google-beta" {
   region  = var.region
 }
 */
+
 /*
  * To learn how to schedule deployments and services using the provider, 
  * go here: https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider

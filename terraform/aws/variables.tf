@@ -18,7 +18,7 @@ variable "work_bucket" {
 
 variable "prefix_name_tag" {
   description = "Prepend a string to Name tags for the created resources. Can be empty."
-  default     = ""
+  default     = "franklin-"
   type        = string
 }
 

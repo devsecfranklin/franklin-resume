@@ -11,6 +11,7 @@ variable "image_uri" {
 
 module "vpc" {
   source = "./modules/vpc"
+
   networks = [
     {
       name            = "ti-ai-outside"
@@ -37,28 +38,56 @@ module "vpc" {
   ]
 }
 
-/*
 # Spawn the VM-series firewall as a Google Cloud Engine Instance.
 module "vmseries" {
   source = "./modules/vmseries"
+
+  create_instance_group = true
+
   instances = {
-    "ps-devsecops-fw01" = {
-      name = "ps-devsecops-fw01"
-      zone = "us-central1-a" # data.google_compute_zones.this.names[2]
+    "ti-ai-fw01" = {
+      name = "ti-ai-fw-01"
+      zone = var.zone # data.google_compute_zones.this.names[2]
 
       network_interfaces = [
         {
-          subnetwork = module.vpc.subnetworks["ps-devsecops-untrust"].self_link
+          subnetwork = module.vpc.subnetworks["ti-ai-outside"].self_link
           public_nat = true
         },
         {
-          subnetwork = module.vpc.subnetworks["ps-devsecops-mgmt"].self_link
+          subnetwork = module.vpc.subnetworks["ti-ai-mgt"].self_link
           public_nat = true
         },
         {
-          subnetwork = module.vpc.subnetworks["ps-devsecops-trust"].self_link
+          subnetwork = module.vpc.subnetworks["ti-ai-dmz"].self_link
+          public_nat = true
+        },
+        {
+          subnetwork = module.vpc.subnetworks["ti-ai-sandbox"].self_link
           public_nat = false
-          ip_address = "192.168.2.15"
+        },
+      ]
+    }
+    "ti-ai-fw02" = {
+      name = "ti-ai-fw-02"
+      zone = var.zone # data.google_compute_zones.this.names[2]
+
+      network_interfaces = [
+        {
+          subnetwork = module.vpc.subnetworks["ti-ai-outside"].self_link
+          public_nat = true
+        },
+        {
+          subnetwork = module.vpc.subnetworks["ti-ai-mgt"].self_link
+          public_nat = true
+        },
+        {
+          subnetwork = module.vpc.subnetworks["ti-ai-dmz"].self_link
+          public_nat = true
+        },
+        {
+          subnetwork = module.vpc.subnetworks["ti-ai-sandbox"].self_link
+          public_nat = false
         },
       ]
     }
@@ -67,4 +96,3 @@ module "vmseries" {
 
   image_uri = var.image_uri
 }
-*/

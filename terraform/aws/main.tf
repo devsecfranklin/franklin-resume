@@ -152,3 +152,14 @@ module "security_route" {
   next_hop_set    = each.value.next_hop_set
 }
 
+
+/*
+resource "aws_instance" "dmz_host" {
+  ami           = "ami-081ff4b9aa4e81a08"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "ExampleAppServerInstance"
+  }
+}
+*/

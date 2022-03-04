@@ -19,7 +19,25 @@ variable "project_id" {
 variable "name" {
   description = "Name to add to our resources"
   type        = string
+  default     = "lab-franklin"
+}
+
+variable "prefix_name_tag" {
+  description = "Prepend a string to Name tags for the created resources. Can be empty."
   default     = "franklin-"
+  type        = string
+}
+
+variable "global_tags" {
+  description = "Optional map of arbitrary tags to apply to all the created resources."
+  default     = {}
+  type        = map(string)
+}
+
+variable "vpc_tags" {
+  description = "Optional map of arbitrary tags to apply to the created VPC resource, in addition to the `global_tags`."
+  default     = {}
+  type        = map(string)
 }
 
 variable "secondary_ip_range" {
