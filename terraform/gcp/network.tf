@@ -76,7 +76,7 @@ resource "google_compute_firewall" "allow-mgmt-traffic" {
 }
 
 module "internal_lb" {
-  source = "github.com/gruntwork-io/terraform-google-load-balancer.git//modules/internal-load-balancer?ref=v0.2.0"
+  source = "github.com/gruntwork-io/terraform-google-load-balancer.git//modules/internal-load-balancer?ref=v0.5.0"
 
   name    = var.name
   region  = var.region
