@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     null = {
-      version = "~> 2.1"
+      version = "~> 3.0"
     }
     random = {
       version = "~> 2.3"
