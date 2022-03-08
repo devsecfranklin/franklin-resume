@@ -15,7 +15,7 @@
 #     to a single log file with today's date.
 #
 #     ./gcp_check.sh -v ti-ai-network-host
-#     ./gcp_check.sh ti-ai-outside
+#     ./gcp_check.sh -v ti-ai-outside
 #
 # ------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ function usage()
    echo "Syntax: gcp_check.sh [-h|-v|-V]"
    echo "options:"
    echo "h     Print this Help."
-   echo "v     Verbose mode."
+   echo "v     Specify a Network Name (VPC)."
    echo "V     Print software version and exit."
    echo
 }
@@ -45,6 +45,7 @@ function usage()
 function my_version() {
   echo "gcp_check.sh - version 0.1 - fdiaz@paloaltonetwoks.com"
 }
+
 function get_subnets() {
   printf "\n# --- GCP Network Details ----------------------------------------\n" | tee -a ${OUTPUT}
   gcloud compute networks describe ${1} | tee -a ${OUTPUT}
@@ -138,7 +139,7 @@ function main() {
   done
 }
 
-while getopts "h:v:V" option; do
+while getopts "hv:V" option; do
    case $option in
       h) # display Help
          usage
