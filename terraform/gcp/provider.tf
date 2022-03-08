@@ -17,12 +17,10 @@ provider "google" {
   //impersonate_service_account = var.service_account_terraform
 }
 
-/*
 provider "google-beta" {
   project = var.project_id
   region  = var.region
 }
-*/
 
 /*
  * To learn how to schedule deployments and services using the provider, 

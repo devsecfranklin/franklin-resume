@@ -75,6 +75,7 @@ resource "google_compute_firewall" "allow-mgmt-traffic" {
   }
 }
 
+// ******************************* Internal TCP/UDP load balancer  ************************ //
 module "internal_lb" {
   source = "github.com/gruntwork-io/terraform-google-load-balancer.git//modules/internal-load-balancer?ref=v0.5.0"
 
@@ -147,3 +148,36 @@ data "template_file" "proxy_startup_script" {
     ilb_ip      = module.internal_lb.load_balancer_ip_address
   }
 }
+
+/* Does the Loab Balancer module handle this part? 
+# allow communication within the subnet 
+resource "google_compute_firewall" "gcp_fw_ilb_to_vm_series" {
+  name          = "l4-ilb-fw-allow-ilb-to-backends"
+  provider      = google-beta
+  direction     = "INGRESS"
+  network       = module.vpc.networks["ti-ai-dmz"].self_link
+  source_ranges = ["10.0.0.0/8"]
+  allow {
+    protocol = "tcp"
+  }
+  allow {
+    protocol = "udp"
+  }
+  allow {
+    protocol = "icmp"
+  }
+}
+
+# allow SSH
+resource "google_compute_firewall" "gcp_fw_ilb_ssh_to_vm_series" {
+  name      = "l4-ilb-fw-ssh"
+  provider  = google-beta
+  direction = "INGRESS"
+  network   = module.vpc.networks["ti-ai-dmz"].self_link
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+  source_tags = ["allow-ssh"]
+}
+*/
