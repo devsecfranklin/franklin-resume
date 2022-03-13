@@ -23,7 +23,7 @@ data "aws_ami" "ubuntu" {
 
 module "testing_ec2" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "3.4.0"
+  version = "3.5.0"
 
   name = "nj-courts-test-instance"
 
