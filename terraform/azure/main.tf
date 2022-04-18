@@ -1,3 +1,4 @@
+/*
 data "azurerm_resource_group" "savista_rg" {
   name = var.resource_group_name
 }
@@ -385,3 +386,4 @@ resource "azurerm_virtual_network_peering" "hub-to-security" {
 
   depends_on = [azurerm_virtual_network_peering.security-to-hub]
 }
+*/

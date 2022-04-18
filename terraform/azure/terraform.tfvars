@@ -1,7 +1,4 @@
-location             = "South Central US"
-resource_group_name  = "rg-franklin"
-virtual_network_name = "vnet-franklin"
-enable_zones         = true
+enable_zones = true
 
 network_security_groups = {
   "nsg-sec-mgmt" = {

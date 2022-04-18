@@ -1,12 +1,12 @@
 variable "location" {
   description = "The Azure region to use."
-  default     = "East US 2"
+  default     = "East US"
   type        = string
 }
 
 variable "resource_group_name" {
   description = "Name of the Resource Group to create. If not provided, it will be auto-generated."
-  default     = ""
+  default     = "franklin-lab"
   type        = string
 }
 
@@ -56,6 +56,7 @@ variable "outbound_storage_share_name" {
 
 variable "virtual_network_name" {
   description = "Name of the Virtual Network to create."
+  default     = "franklin-vnet"
   type        = string
 }
 

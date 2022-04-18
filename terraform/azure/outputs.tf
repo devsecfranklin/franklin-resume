@@ -1,3 +1,4 @@
+/*
 output "username" {
   description = "Initial administrative username to use for VM-Series."
   value       = var.username
@@ -32,3 +33,4 @@ output "frontend_ipsec_ips" {
   description = "IP Addresses of the inbound IPSec load balancer."
   value       = module.inbound_ipsec_lb.frontend_ip_configs
 }
+*/
