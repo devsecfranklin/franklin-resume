@@ -1,0 +1,10 @@
+type=dhcp-client
+vm-auth-key=575809127214723            
+panorama-server=10.116.32.12
+panorama-server-2=10.116.160.8
+tplname=adtoci-ashburn-pa1-stack
+dgname=adtoci-ashburn-pafw
+dhcp-send-hostname=yes
+dhcp-send-client-id=yes
+dhcp-accept-server-hostname=yes
+dhcp-accept-server-domain=yes
