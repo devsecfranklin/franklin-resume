@@ -1,7 +1,7 @@
 type=dhcp-client
-vm-auth-key=645717276829951
-panorama-server=10.11.43.245
-panorama-server-2=10.11.43.244
+vm-auth-key=474301481030100
+panorama-server=34.134.31.136
+panorama-server-2=34.136.90.64
 tplname=stk-common
 dgname=Common
 dhcp-send-hostname=yes
