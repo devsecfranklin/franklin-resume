@@ -378,7 +378,9 @@ outbound_files = {
 }
 
 tags = {
-  Application_Name = "palo_security",
+  application = "Palo Alto Networks VM-Series"
+  managed_by  = "terraform 1.x"
+  owner       = "franklin"
 }
 
 //allow_inbound_data_ips

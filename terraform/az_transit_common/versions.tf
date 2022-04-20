@@ -12,7 +12,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "franklin-lab"
-    storage_account_name = "custxxyz"
+    storage_account_name = "franklintfstate"
     container_name       = "tfstatecommon"
     key                  = "terraform-vm.tfstate"
   }

@@ -6,18 +6,13 @@ This folder shows Terraform code that helps to deploy a [Transit VNet design mod
 
 Adjust  `terraform.tfvars` file to your needs.
 
-```bash
-$ terraform init
-$ terraform apply
+```sh
+terraform init
+terraform plan -out franklin.plan -var-file terraform.tfvars
+terraform apply "franklin.plan"
+terraform output -json password
 ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13, < 2.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.0 |
 
 ## Modules
 
@@ -83,4 +78,3 @@ $ terraform apply
 | <a name="output_mgmt_ip_addresses"></a> [mgmt\_ip\_addresses](#output\_mgmt\_ip\_addresses) | IP Addresses for VM-Series management (https or ssh). |
 | <a name="output_password"></a> [password](#output\_password) | Initial administrative password to use for VM-Series. |
 | <a name="output_username"></a> [username](#output\_username) | Initial administrative username to use for VM-Series. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

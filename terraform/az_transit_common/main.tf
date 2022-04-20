@@ -9,6 +9,7 @@ resource "random_password" "this" {
   override_special = "_%@"
 }
 
+/* Existing resources can be imported
 resource "azurerm_resource_group" "this" {
   name     = var.resource_group_name
   location = var.location
@@ -19,7 +20,31 @@ resource "azurerm_virtual_network" "this" {
   name                = var.virtual_network_name
   location            = var.location
   resource_group_name = data.azurerm_resource_group.this.name
-  address_space       = data.azurerm_virtual_network.this.address_space 
+  address_space       = data.azurerm_virtual_network.this.address_space
+  tags                = var.tags
+}
+
+resource "azurerm_subnet" "this" {
+  for_each = var.subnets
+
+  name                = each.key
+  resource_group_name = data.azurerm_resource_group.this.name
+  address_space       = data.azurerm_virtual_network.this.address_space
+  address_prefixes    = each.value
+}
+*/
+
+resource "azurerm_resource_group" "this" {
+  name     = var.resource_group_name
+  location = var.location
+  tags     = var.tags
+}
+
+resource "azurerm_virtual_network" "this" {
+  name                = var.virtual_network_name
+  location            = var.location
+  resource_group_name = azurerm_resource_group.this.name
+  address_space       = var.address_space
   tags                = var.tags
 }
 
@@ -27,15 +52,15 @@ resource "azurerm_subnet" "this" {
   for_each = var.subnets
 
   name                 = each.key
-  resource_group_name = data.azurerm_resource_group.this.name
-  address_space       = data.azurerm_virtual_network.this.address_space
+  resource_group_name  = azurerm_resource_group.this.name
+  virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = each.value
 }
 
 # Allow inbound access to Management subnet.
 resource "azurerm_network_security_rule" "mgmt" {
   name                        = "vmseries-mgmt-allow-inbound"
-  resource_group_name         = data.azurerm_resource_group.this.name
+  resource_group_name         = azurerm_resource_group.this.name
   network_security_group_name = azurerm_network_security_group.this["nsg-mgmt"].name
   access                      = "Allow"
   direction                   = "Inbound"
@@ -55,7 +80,7 @@ resource "azurerm_public_ip" "public" {
 
   name                = "${var.name_prefix}${each.key}-public"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = azurerm_resource_group.this.name
   allocation_method   = "Static"
   sku                 = "Standard"
   availability_zone   = var.enable_zones ? "Zone-Redundant" : "No-Zone"
@@ -67,7 +92,7 @@ module "inbound_lb" {
 
   name                              = var.inbound_lb_name
   location                          = var.location
-  resource_group_name               = data.azurerm_resource_group.this.name
+  resource_group_name               = azurerm_resource_group.this.name
   frontend_ips                      = var.frontend_ips
   enable_zones                      = var.enable_zones
   network_security_group_name       = "nsg-untrust"
@@ -80,11 +105,11 @@ module "outbound_lb" {
 
   name                = var.outbound_lb_name
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = azurerm_resource_group.this.name
   enable_zones        = var.enable_zones
   frontend_ips = {
     outbound = {
-      subnet_id                     = data.azurerm_subnet.this["trust"].id
+      subnet_id                     = azurerm_subnet.this["trust"].id
       private_ip_address_allocation = "Static"
       private_ip_address            = var.olb_private_ip
       availability_zone             = var.enable_zones ? null : "No-Zone" # For the regions without AZ support.
@@ -103,7 +128,7 @@ module "bootstrap" {
   source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/bootstrap?ref=v0.2.0"
 
   location             = var.location
-  resource_group_name  = data.azurerm_resource_group.this.name
+  resource_group_name  = azurerm_resource_group.this.name
   storage_account_name = var.storage_account_name
   storage_share_name   = var.storage_share_name
   files                = var.files
@@ -112,7 +137,7 @@ module "bootstrap" {
 resource "azurerm_availability_set" "this" {
   name                = "${var.name_prefix}-fw-as"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = azurerm_resource_group.this.name
 
   tags = var.tags
 }
@@ -123,7 +148,7 @@ module "common_vmseries" {
   for_each = var.vmseries
 
   location                  = var.location
-  resource_group_name       = data.azurerm_resource_group.this.name
+  resource_group_name       = azurerm_resource_group.this.name
   name                      = each.key
   avzone                    = try(each.value.avzone, 1)
   username                  = var.username
@@ -146,7 +171,7 @@ module "common_vmseries" {
   interfaces = [
     {
       name      = "${each.key}-mgmt"
-      subnet_id = data.azurerm_subnet.this["mgmt"].id
+      subnet_id = azurerm_subnet.this["mgmt"].id
       # subnet_id           = lookup(module.vnet.subnet_ids, "mgmt", null)
       create_public_ip    = true
       enable_backend_pool = false
@@ -154,7 +179,7 @@ module "common_vmseries" {
     },
     {
       name      = "${each.key}-untrust"
-      subnet_id = data.azurerm_subnet.this["untrust"].id
+      subnet_id = azurerm_subnet.this["untrust"].id
       # subnet_id            = lookup(module.vnet.subnet_ids, "untrust", null)
       public_ip_address_id = azurerm_public_ip.public[each.key].id
       lb_backend_pool_id   = module.inbound_lb.backend_pool_id
@@ -164,7 +189,7 @@ module "common_vmseries" {
     {
       name = "${each.key}-trust"
       # subnet_id           = lookup(module.vnet.subnet_ids, "trust", null)
-      subnet_id           = data.azurerm_subnet.this["trust"].id
+      subnet_id           = azurerm_subnet.this["trust"].id
       lb_backend_pool_id  = module.outbound_lb.backend_pool_id
       enable_backend_pool = true
 
@@ -183,7 +208,7 @@ resource "azurerm_network_security_group" "this" {
 
   name                = each.key
   location            = try(each.value.location, var.location)
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = azurerm_resource_group.this.name
   tags                = var.tags
 }
 
@@ -205,7 +230,7 @@ resource "azurerm_network_security_rule" "this" {
   }
 
   name                         = each.value.name
-  resource_group_name          = data.azurerm_resource_group.this.name
+  resource_group_name          = azurerm_resource_group.this.name
   network_security_group_name  = azurerm_network_security_group.this[each.value.nsg_name].name
   priority                     = each.value.rule.priority
   direction                    = each.value.rule.direction
@@ -224,7 +249,7 @@ resource "azurerm_route_table" "this" {
 
   name                = each.key
   location            = try(each.value.location, var.location)
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = azurerm_resource_group.this.name
   tags                = var.tags
 }
 
@@ -246,7 +271,7 @@ resource "azurerm_route" "this" {
   }
 
   name                   = each.value.name
-  resource_group_name    = data.azurerm_resource_group.this.name
+  resource_group_name    = azurerm_resource_group.this.name
   route_table_name       = azurerm_route_table.this[each.value.route_table_name].name
   address_prefix         = each.value.route.address_prefix
   next_hop_type          = each.value.route.next_hop_type
@@ -256,13 +281,13 @@ resource "azurerm_route" "this" {
 resource "azurerm_subnet_network_security_group_association" "this" {
   for_each = { for k, v in var.subnets : k => v if lookup(v, "network_security_group", "") != "" }
 
-  subnet_id                 = data.azurerm_subnet.this[each.key].id
+  subnet_id                 = azurerm_subnet.this[each.key].id
   network_security_group_id = azurerm_network_security_group.this[each.value.network_security_group].id
 }
 
 resource "azurerm_subnet_route_table_association" "this" {
   for_each = { for k, v in var.subnets : k => v if lookup(v, "route_table", "") != "" }
 
-  subnet_id      = data.azurerm_subnet.this[each.key].id
+  subnet_id      = azurerm_subnet.this[each.key].id
   route_table_id = azurerm_route_table.this[each.value.route_table].id
 }

@@ -7,7 +7,7 @@ fw_version       = "10.0.7" # Can be empty.
 
 global_tags = {
   application = "Palo Alto Networks VM-Series GWLB"
-  managed_by = "terraform 1.x"
+  managed_by  = "terraform 1.x"
 }
 
 security_vpc_name = "Network-Security-VPC"

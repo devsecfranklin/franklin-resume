@@ -1,23 +1,23 @@
 name_prefix = "marvell"
 
-resource_group_name = "RG01-GRID"
+resource_group_name = "franklin-rg01"
 location            = "West US2"
 enable_zones        = false
 
-virtual_network_name = "c1us-fwvmseries-vnet01"
+virtual_network_name = "franklin-vnet01"
+address_space        = ["10.199.0.0/21"]
 
 network_security_groups = {
   "nsg-mgmt"    = {}
   "nsg-trust"   = {}
   "nsg-untrust" = {}
-  "nsg-gateway" = {}
+  //"nsg-gateway" = {}
 }
 
 allow_inbound_mgmt_ips = [
-  "134.238.135.137", # Put your own public IP address here
+  "134.238.135.137", # Put your own public IP address here FOR MGMT ACCESS
   "134.238.135.14",
   "68.38.137.81"
-  #"10.255.0.0/24",   # Example Panorama access
 ]
 
 olb_private_ip = "10.199.1.100"
@@ -38,10 +38,10 @@ route_tables = {
         address_prefix = "10.199.0.0/24"
         next_hop_type  = "None"
       }
-      "gateway_blackhole" = {
-        address_prefix = "10.199.3.0/24"
-        next_hop_type  = "None"
-      }
+      //"gateway_blackhole" = {
+      //  address_prefix = "10.199.3.0/24"
+      //  next_hop_type  = "None"
+      //}
     }
   }
   "untrust_rt" = {
@@ -54,10 +54,10 @@ route_tables = {
         address_prefix = "10.199.0.0/24"
         next_hop_type  = "None"
       }
-      "gateway_blackhole" = {
-        address_prefix = "10.199.3.0/24"
-        next_hop_type  = "None"
-      }
+      //"gateway_blackhole" = {
+      //  address_prefix = "10.199.3.0/24"
+      //  next_hop_type  = "None"
+      //}
     }
   }
   "mgmt_rt" = {
@@ -70,6 +70,11 @@ route_tables = {
         address_prefix = "10.199.2.0/24"
         next_hop_type  = "None"
       }
+    }
+  }
+}
+
+/*
       "gateway_blackhole" = {
         address_prefix = "10.199.3.0/24"
         next_hop_type  = "None"
@@ -94,25 +99,34 @@ route_tables = {
     }
   }
 }
+*/
 
 subnets = {
   "mgmt" = {
+    address_prefixes       = ["10.199.0.0/24"]
     network_security_group = "nsg-mgmt"
-    # route_table            = "mgmt_rt"
-  }
+    route_table            = "mgmt_rt"
+  },
   "trust" = {
+    address_prefixes       = ["10.199.2.0/24"]
     network_security_group = "nsg-trust"
     route_table            = "trust_rt"
-  }
+  },
   "untrust" = {
+    address_prefixes       = ["10.199.1.0/24"]
     network_security_group = "nsg-untrust"
-    # route_table            = "untrust_rt"
+    route_table            = "untrust_rt"
   }
+}
+
+/*
   "gateway" = {
+    address_prefixes = ["10.199.3.0/24"]
     network_security_group = "nsg-gateway"
     route_table            = "gateway_rt"
   }
 }
+*/
 
 frontend_ips = {
   "some_app_01" = {
@@ -150,13 +164,17 @@ vmseries = {
 
 common_vmseries_version = "10.1.4"
 common_vmseries_vm_size = "Standard_DS4_v2"
-common_vmseries_sku     = "byol"
-storage_account_name    = "marvelltfstorage" # this is unique in all of Azure
-storage_share_name      = "bootstrapshare"
+//common_vmseries_sku     = "byol"
+storage_account_name = "franklintfstate" # this is unique in all of Azure
+storage_share_name   = "bootstrapshare"
 
 files = {
   "files/authcodes"    = "license/authcodes" # authcode is required only with common_vmseries_sku = "byol"
   "files/init-cfg.txt" = "config/init-cfg.txt"
 }
 
-tags = {}
+tags = {
+  application = "Palo Alto Networks VM-Series"
+  managed_by  = "terraform 1.x"
+  owner       = "franklin"
+}
