@@ -5,7 +5,7 @@ variable "location" {
 
 variable "prefix" {
   description = "This is just to identify your resources, as all name are hardocded"
-  default     = "fosix"
+  default     = "franklin"
 }
 
 variable "vmseries_rg" {
