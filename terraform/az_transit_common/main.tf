@@ -1,3 +1,10 @@
+# Create the Resource Group.
+resource "azurerm_resource_group" "this" {
+  name     = coalesce(var.resource_group_name, "${var.name_prefix}")
+  location = var.location
+  tags     = var.tags
+}
+
 # Generate a random password.
 resource "random_password" "this" {
   length           = 16
@@ -9,52 +16,18 @@ resource "random_password" "this" {
   override_special = "_%@"
 }
 
-/* Existing resources can be imported
-resource "azurerm_resource_group" "this" {
-  name     = var.resource_group_name
-  location = var.location
-  tags     = var.tags
-}
+# Create the network required for the topology.
+module "vnet" {
+  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/vnet?ref=v0.2.0"
 
-resource "azurerm_virtual_network" "this" {
-  name                = var.virtual_network_name
-  location            = var.location
-  resource_group_name = data.azurerm_resource_group.this.name
-  address_space       = data.azurerm_virtual_network.this.address_space
-  tags                = var.tags
-}
-
-resource "azurerm_subnet" "this" {
-  for_each = var.subnets
-
-  name                = each.key
-  resource_group_name = data.azurerm_resource_group.this.name
-  address_space       = data.azurerm_virtual_network.this.address_space
-  address_prefixes    = each.value
-}
-*/
-
-resource "azurerm_resource_group" "this" {
-  name     = var.resource_group_name
-  location = var.location
-  tags     = var.tags
-}
-
-resource "azurerm_virtual_network" "this" {
-  name                = var.virtual_network_name
-  location            = var.location
-  resource_group_name = azurerm_resource_group.this.name
-  address_space       = var.address_space
-  tags                = var.tags
-}
-
-resource "azurerm_subnet" "this" {
-  for_each = var.subnets
-
-  name                 = each.key
-  resource_group_name  = azurerm_resource_group.this.name
-  virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes     = each.value
+  virtual_network_name    = var.virtual_network_name
+  location                = var.location
+  resource_group_name     = azurerm_resource_group.this.name
+  address_space           = var.address_space
+  network_security_groups = var.network_security_groups
+  route_tables            = var.route_tables
+  subnets                 = var.subnets
+  tags                    = var.tags
 }
 
 # Allow inbound access to Management subnet.
@@ -71,7 +44,7 @@ resource "azurerm_network_security_rule" "mgmt" {
   destination_address_prefix  = "*"
   destination_port_range      = "*"
 
-  # depends_on = [module.vnet]
+  depends_on = [module.vnet]
 }
 
 # Create public IPs for the Internet-facing data interfaces so they could talk outbound.
@@ -109,7 +82,7 @@ module "outbound_lb" {
   enable_zones        = var.enable_zones
   frontend_ips = {
     outbound = {
-      subnet_id                     = azurerm_subnet.this["trust"].id
+      subnet_id                     = lookup(module.vnet.subnet_ids, "trust", null)
       private_ip_address_allocation = "Static"
       private_ip_address            = var.olb_private_ip
       availability_zone             = var.enable_zones ? null : "No-Zone" # For the regions without AZ support.
@@ -171,16 +144,16 @@ module "common_vmseries" {
   interfaces = [
     {
       name      = "${each.key}-mgmt"
-      subnet_id = azurerm_subnet.this["mgmt"].id
-      # subnet_id           = lookup(module.vnet.subnet_ids, "mgmt", null)
+      #subnet_id = azurerm_subnet.this["mgmt"].id
+      subnet_id           = lookup(module.vnet.subnet_ids, "mgmt", null)
       create_public_ip    = true
       enable_backend_pool = false
       private_ip_address  = try(each.value.mgmt_private_ip, null)
     },
     {
       name      = "${each.key}-untrust"
-      subnet_id = azurerm_subnet.this["untrust"].id
-      # subnet_id            = lookup(module.vnet.subnet_ids, "untrust", null)
+      #subnet_id = azurerm_subnet.this["untrust"].id
+      subnet_id            = lookup(module.vnet.subnet_ids, "untrust", null)
       public_ip_address_id = azurerm_public_ip.public[each.key].id
       lb_backend_pool_id   = module.inbound_lb.backend_pool_id
       enable_backend_pool  = true
@@ -188,8 +161,8 @@ module "common_vmseries" {
     },
     {
       name = "${each.key}-trust"
-      # subnet_id           = lookup(module.vnet.subnet_ids, "trust", null)
-      subnet_id           = azurerm_subnet.this["trust"].id
+      subnet_id           = lookup(module.vnet.subnet_ids, "trust", null)
+      #subnet_id           = azurerm_subnet.this["trust"].id
       lb_backend_pool_id  = module.outbound_lb.backend_pool_id
       enable_backend_pool = true
 
@@ -200,7 +173,7 @@ module "common_vmseries" {
 
   # diagnostics_storage_uri = module.bootstrap.storage_account.primary_blob_endpoint
 
-  # depends_on = [module.bootstrap]
+  depends_on = [module.bootstrap]
 }
 
 resource "azurerm_network_security_group" "this" {
@@ -265,6 +238,7 @@ locals {
   ])
 }
 
+/*
 resource "azurerm_route" "this" {
   for_each = {
     for route in local.route : "${route.route_table_name}-${route.name}" => route
@@ -291,3 +265,4 @@ resource "azurerm_subnet_route_table_association" "this" {
   subnet_id      = azurerm_subnet.this[each.key].id
   route_table_id = azurerm_route_table.this[each.value.route_table].id
 }
+*/

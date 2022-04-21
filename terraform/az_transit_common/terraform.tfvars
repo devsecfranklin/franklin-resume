@@ -1,4 +1,4 @@
-name_prefix = "marvell"
+name_prefix = "franklin"
 
 resource_group_name = "franklin-rg01"
 location            = "West US2"
@@ -11,7 +11,6 @@ network_security_groups = {
   "nsg-mgmt"    = {}
   "nsg-trust"   = {}
   "nsg-untrust" = {}
-  //"nsg-gateway" = {}
 }
 
 allow_inbound_mgmt_ips = [
@@ -23,110 +22,64 @@ allow_inbound_mgmt_ips = [
 olb_private_ip = "10.199.1.100"
 
 route_tables = {
-  "trust_rt" = {
+  "nsg-trust" = {
     routes = {
       "fw_int_lb" = {
         address_prefix         = "0.0.0.0/0"
         next_hop_type          = "VirtualAppliance"
-        next_hop_in_ip_address = "10.199.1.100"
+        next_hop_in_ip_address = "10.199.2.100"
       }
       "untrust_blackhole" = {
-        address_prefix = "10.199.2.0/24"
+        address_prefix = "10.199.1.0/24"
         next_hop_type  = "None"
       }
       "mgmt_blackhole" = {
         address_prefix = "10.199.0.0/24"
         next_hop_type  = "None"
       }
-      //"gateway_blackhole" = {
-      //  address_prefix = "10.199.3.0/24"
-      //  next_hop_type  = "None"
-      //}
     }
   }
   "untrust_rt" = {
     routes = {
       "trust_blackhole" = {
-        address_prefix = "10.199.1.0/24"
+        address_prefix = "10.199.2.0/24"
         next_hop_type  = "None"
       }
       "mgmt_blackhole" = {
         address_prefix = "10.199.0.0/24"
         next_hop_type  = "None"
       }
-      //"gateway_blackhole" = {
-      //  address_prefix = "10.199.3.0/24"
-      //  next_hop_type  = "None"
-      //}
     }
   }
   "mgmt_rt" = {
     routes = {
       "trust_blackhole" = {
+        address_prefix = "10.199.2.0/24"
+        next_hop_type  = "None"
+      }
+      "untrust_blackhole" = {
         address_prefix = "10.199.1.0/24"
         next_hop_type  = "None"
       }
-      "untrust_blackhole" = {
-        address_prefix = "10.199.2.0/24"
-        next_hop_type  = "None"
-      }
     }
   }
 }
-
-/*
-      "gateway_blackhole" = {
-        address_prefix = "10.199.3.0/24"
-        next_hop_type  = "None"
-      }
-    }
-  }
-  "gateway_rt" = {
-    routes = {
-      "fw_int_lb" = {
-        address_prefix         = "0.0.0.0/0"
-        next_hop_type          = "VirtualAppliance"
-        next_hop_in_ip_address = "10.199.1.100"
-      }
-      "untrust_blackhole" = {
-        address_prefix = "10.199.2.0/24"
-        next_hop_type  = "None"
-      }
-      "mgmt_blackhole" = {
-        address_prefix = "10.199.0.0/24"
-        next_hop_type  = "None"
-      }
-    }
-  }
-}
-*/
 
 subnets = {
   "mgmt" = {
     address_prefixes       = ["10.199.0.0/24"]
     network_security_group = "nsg-mgmt"
-    route_table            = "mgmt_rt"
-  },
+  }
   "trust" = {
     address_prefixes       = ["10.199.2.0/24"]
     network_security_group = "nsg-trust"
-    route_table            = "trust_rt"
-  },
+    route_table            = "nsg-trust"
+  }
   "untrust" = {
     address_prefixes       = ["10.199.1.0/24"]
     network_security_group = "nsg-untrust"
-    route_table            = "untrust_rt"
   }
 }
-
-/*
-  "gateway" = {
-    address_prefixes = ["10.199.3.0/24"]
-    network_security_group = "nsg-gateway"
-    route_table            = "gateway_rt"
-  }
-}
-*/
 
 frontend_ips = {
   "some_app_01" = {
@@ -151,13 +104,13 @@ frontend_ips = {
 
 vmseries = {
   "paloaltovm-001" = {
-    trust_private_ip   = "10.199.1.4"
-    untrust_private_ip = "10.199.2.4"
+    trust_private_ip   = "10.199.2.4"
+    untrust_private_ip = "10.199.1.4"
     mgmt_private_ip    = "10.199.0.4"
   }
   "paloaltovm-002" = {
-    trust_private_ip   = "10.199.1.5"
-    untrust_private_ip = "10.199.2.5"
+    trust_private_ip   = "10.199.2.5"
+    untrust_private_ip = "10.199.1.5"
     mgmt_private_ip    = "10.199.0.5"
   }
 }
@@ -165,7 +118,7 @@ vmseries = {
 common_vmseries_version = "10.1.4"
 common_vmseries_vm_size = "Standard_DS4_v2"
 //common_vmseries_sku     = "byol"
-storage_account_name = "franklintfstate" # this is unique in all of Azure
+//storage_account_name = "franklintfstate" # this is unique in all of Azure
 storage_share_name   = "bootstrapshare"
 
 files = {
