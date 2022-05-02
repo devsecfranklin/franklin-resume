@@ -8,11 +8,6 @@ jobs:
     name: 'Tekton Trigger'
     runs-on: ubuntu-latest
     steps:
-      - name: Run Bridgecrew 
-        id: Bridgecrew
-        uses: bridgecrewio/bridgecrew-action@master
-        with:
-          api-key: ${{ secrets.BRIDGECREW_API_KEY }}
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
