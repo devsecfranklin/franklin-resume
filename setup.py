@@ -7,7 +7,7 @@ URL = 'https://github.com/devsecfranklin/franklin-resume'
 EMAIL = 'frank378@gmail.com'
 AUTHOR = 'Franklin Diaz'
 REQUIRES_PYTHON = '>=3.9.0'
-VERSION = '0.2'
+VERSION = '0.3'
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()

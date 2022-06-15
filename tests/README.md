@@ -6,7 +6,7 @@
 heroku logs --tail -a franklin-resume
 ```
 
-## About the testing.
+## About the Testing
 
 * Add a "password =" line to config.ini
   * It needs to match what you set for the XML user on the Panorama.
