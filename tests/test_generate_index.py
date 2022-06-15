@@ -1,3 +1,10 @@
+import unittest
+import pytest
+
+
+def test_myview(client):
+    assert client.get("/").status_code == 200
+
 """my_resume application
 
   Test like so: python3 -m pytest tests/
