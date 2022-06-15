@@ -1,13 +1,7 @@
-"""my_resume application
-
-    Test like so: python3 -m pytest tests/
-
-    :copyright: © 2021 by Franklin Diaz
-    :license: MIT
-"""
 import unittest
 
 import pytest
+
 from src.my_resume import create_app
 
 
@@ -31,3 +25,12 @@ def test_client():
     flaskr.app.config["TESTING"] = True
     client = flaskr.app.test_client()
     yield client
+
+
+"""my_resume application
+
+    Test like so: python3 -m pytest tests/
+
+    :copyright: © 2021 by Franklin Diaz
+    :license: MIT
+"""
