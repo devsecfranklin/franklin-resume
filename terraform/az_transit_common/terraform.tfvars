@@ -14,12 +14,12 @@ network_security_groups = {
 }
 
 allow_inbound_mgmt_ips = [
-  "134.238.135.137", # Put your own public IP address here FOR MGMT ACCESS
-  "134.238.135.14",
+  "34.134.31.136", # Put your own public IP address here FOR MGMT ACCESS
+  "34.136.90.64",
   "68.38.137.81"
 ]
 
-olb_private_ip = "10.199.1.100"
+olb_private_ip = "10.199.2.100"
 
 route_tables = {
   "nsg-trust" = {
@@ -54,11 +54,11 @@ route_tables = {
   "mgmt_rt" = {
     routes = {
       "trust_blackhole" = {
-        address_prefix = "10.199.2.0/24"
+        address_prefix = "10.199.1.0/24"
         next_hop_type  = "None"
       }
       "untrust_blackhole" = {
-        address_prefix = "10.199.1.0/24"
+        address_prefix = "10.199.2.0/24"
         next_hop_type  = "None"
       }
     }
@@ -119,7 +119,7 @@ common_vmseries_version = "10.1.4"
 common_vmseries_vm_size = "Standard_DS4_v2"
 //common_vmseries_sku     = "byol"
 //storage_account_name = "franklintfstate" # this is unique in all of Azure
-storage_share_name   = "bootstrapshare"
+storage_share_name = "bootstrapshare"
 
 files = {
   "files/authcodes"    = "license/authcodes" # authcode is required only with common_vmseries_sku = "byol"

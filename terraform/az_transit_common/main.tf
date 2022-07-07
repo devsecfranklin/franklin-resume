@@ -143,7 +143,7 @@ module "common_vmseries" {
   # ])
   interfaces = [
     {
-      name      = "${each.key}-mgmt"
+      name = "${each.key}-mgmt"
       #subnet_id = azurerm_subnet.this["mgmt"].id
       subnet_id           = lookup(module.vnet.subnet_ids, "mgmt", null)
       create_public_ip    = true
@@ -151,7 +151,7 @@ module "common_vmseries" {
       private_ip_address  = try(each.value.mgmt_private_ip, null)
     },
     {
-      name      = "${each.key}-untrust"
+      name = "${each.key}-untrust"
       #subnet_id = azurerm_subnet.this["untrust"].id
       subnet_id            = lookup(module.vnet.subnet_ids, "untrust", null)
       public_ip_address_id = azurerm_public_ip.public[each.key].id
@@ -160,8 +160,8 @@ module "common_vmseries" {
       private_ip_address   = try(each.value.untrust_private_ip, null)
     },
     {
-      name = "${each.key}-trust"
-      subnet_id           = lookup(module.vnet.subnet_ids, "trust", null)
+      name      = "${each.key}-trust"
+      subnet_id = lookup(module.vnet.subnet_ids, "trust", null)
       #subnet_id           = azurerm_subnet.this["trust"].id
       lb_backend_pool_id  = module.outbound_lb.backend_pool_id
       enable_backend_pool = true
