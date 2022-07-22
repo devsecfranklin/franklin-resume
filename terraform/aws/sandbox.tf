@@ -98,7 +98,7 @@ data "aws_ami" "this" {
    # put an application load balancer in front of the app servers
 module "app1_ec2" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "4.1.0"
+  version = "4.1.1"
 
   name           = "nj-courts-sandbox-app-b"
   ami                    = data.aws_ami.this.id
@@ -113,7 +113,7 @@ module "app1_ec2" {
 
 module "app1_ec2" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "4.1.0"
+  version = "4.1.1"
 
   name                   = "nj-courts-sandbox-app-b"
   ami                    = data.aws_ami.this.id
