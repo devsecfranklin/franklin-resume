@@ -11,6 +11,11 @@ terraform {
       source  = "oracle/oci"
       version = ">= 4.69.0"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+
   }
 }
 
@@ -27,4 +32,8 @@ provider "google" {
 provider "google-beta" {
   project = var.project_id
   region  = var.region
+}
+
+provider "aws" {
+  region = var.aws_region
 }

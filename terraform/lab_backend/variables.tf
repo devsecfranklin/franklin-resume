@@ -4,6 +4,11 @@ variable "name" {
   default     = "franklin-lab"
 }
 
+variable "name_prefix" {
+  type    = string
+  default = "lab-franklin-"
+}
+
 /* *********************** AZURE ********************** */
 
 variable "resource_group_name" {
@@ -40,4 +45,20 @@ variable "region" {
   description = "The region will be used to choose the default location for regional resources. Regional resources are spread across several zones."
   type        = string
   default     = "us-central1"
+}
+
+/* ******************** AWS CLOUD ********************** */
+variable "aws_region" {
+  default = "us-west-1"
+  type    = string
+}
+
+variable "s3_bucket_name" {
+  type    = string
+  default = "ps-east-lab-franklin"
+}
+
+variable "s3_acl_value" {
+  default = "private"
+  type    = string
 }
