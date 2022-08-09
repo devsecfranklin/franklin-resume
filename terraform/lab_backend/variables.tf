@@ -55,7 +55,7 @@ variable "aws_region" {
 
 variable "s3_bucket_name" {
   type    = string
-  default = "ps-east-lab-franklin"
+  default = "lab-franklin"
 }
 
 variable "s3_acl_value" {

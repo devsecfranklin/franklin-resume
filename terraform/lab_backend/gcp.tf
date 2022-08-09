@@ -42,6 +42,7 @@ resource "google_compute_firewall" "lab-ingress" {
     "34.136.90.64/32",  # ps-devsecops-panorama-two-10-0-4
     "20.94.221.230/32", # Azure lab firewall number one
     "20.94.221.221/32", # Azure lab firewall number two
-    "34.66.44.164/32"   # gke cluster
+    "34.66.44.164/32",  # gke cluster
+    "35.185.72.81/32"   # gcp test fw
   ]
 }
