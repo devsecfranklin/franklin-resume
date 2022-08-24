@@ -1,0 +1,25 @@
+
+Error: A resource with the ID "/subscriptions/5b2ef0fb-a2bf-48e8-aafa-cf78b7b5092f/resourceGroups/rg-ssg-palo-scus/providers/Microsoft.Network/publicIPAddresses/gateway" already exists - to be managed via Terraform this resource needs to be imported into the State. Please see the resource documentation for "azurerm_public_ip" for more information.
+
+  on main.tf line 118, in resource "azurerm_public_ip" "global-protect":
+ 118: resource "azurerm_public_ip" "global-protect" {
+
+
+
+Error: network.VirtualNetworkPeeringsClient#CreateOrUpdate: Failure sending request: StatusCode=0 -- Original Error: Code="ResourceNotFound" Message="The Resource 'Microsoft.Network/virtualNetworks/ssg-vnet-gp-southcentralus' under resource group 'rg-ssg-palo-scus' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+
+  on main.tf line 146, in resource "azurerm_virtual_network_peering" "gp-to-mgmt":
+ 146: resource "azurerm_virtual_network_peering" "gp-to-mgmt" {
+
+
+
+Error: compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=0 -- Original Error: Code="ResourcePurchaseValidationFailed" Message="User failed validation to purchase resources. Error message: 'You have not accepted the legal terms on this subscription: '5b2ef0fb-a2bf-48e8-aafa-cf78b7b5092f' for this plan. Before the subscription can be used, you need to accept the legal terms of the image. To read and accept legal terms, use the Azure CLI commands described at https://go.microsoft.com/fwlink/?linkid=2110637 or the PowerShell commands available at https://go.microsoft.com/fwlink/?linkid=862451. Alternatively, deploying via the Azure portal provides a UI experience for reading and accepting the legal terms. Offer details: publisher='paloaltonetworks' offer = 'vmseries-flex', sku = 'bundle2', Correlation Id: '9b187423-9677-bced-ffeb-eea9656d66e4'.'"
+
+  on ../../modules/vmseries/main.tf line 48, in resource "azurerm_virtual_machine" "this":
+  48: resource "azurerm_virtual_machine" "this" {
+
+
+
+Error: compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=0 -- Original Error: Code="ResourcePurchaseValidationFailed" Message="User failed validation to purchase resources. Error message: 'You have not accepted the legal terms on this subscription: '5b2ef0fb-a2bf-48e8-aafa-cf78b7b5092f' for this plan. Before the subscription can be used, you need to accept the legal terms of the image. To read and accept legal terms, use the Azure CLI commands described at https://go.microsoft.com/fwlink/?linkid=2110637 or the PowerShell commands available at https://go.microsoft.com/fwlink/?linkid=862451. Alternatively, deploying via the Azure portal provides a UI experience for reading and accepting the legal terms. Offer details: publisher='paloaltonetworks' offer = 'vmseries-flex', sku = 'bundle2', Correlation Id: '9b187423-9677-bced-ffeb-eea9656d66e4'.'"
+
+  on ../../modules/vmseries/main.tf line 48, in resour

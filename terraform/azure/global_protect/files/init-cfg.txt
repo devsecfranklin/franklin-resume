@@ -1,0 +1,10 @@
+type=dhcp-client
+vm-auth-key=002147818000515
+panorama-server=10.11.43.245
+panorama-server-2=10.11.43.244
+tplname=ssg-stack
+dgname=ssg-device-group
+dhcp-send-hostname=yes
+dhcp-send-client-id=yes
+dhcp-accept-server-hostname=yes
+dhcp-accept-server-domain=yes
