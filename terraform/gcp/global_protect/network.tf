@@ -12,7 +12,6 @@ resource "google_compute_subnetwork" "lab_franklin_gp_subnet" {
   ip_cidr_range = "10.10.24.0/24"
   region        = "us-east1"
   network       = google_compute_network.lab_franklin_gp.id
-
 }
 
 resource "google_compute_route" "private_network_internet_route" {
@@ -78,4 +77,19 @@ resource "google_compute_firewall" "allow-rdp" {
   }
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["rdp"]
+}
+
+resource "google_compute_firewall" "public_ssh" {
+  name    = "public-ssh"
+  project = var.project_id
+  network = var.vpc_name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  direction     = "INGRESS"
+  source_ranges = ["0.0.0.0/0"]
+  //target_tags = ["nginx-instance"] # point this at the desired instance
 }

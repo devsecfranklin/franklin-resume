@@ -15,6 +15,10 @@ EOF
     ****************************************************************
     Create GP Client VMs
     ****************************************************************
+    use the “target_tags” to apply firewall rules to VM instances.
+    If no “target_tags” are specified, the firewall rule applies to
+    all instances on the specified VPC network.
+    ****************************************************************
 */
 
 resource "google_compute_instance" "vm_instance_public" {

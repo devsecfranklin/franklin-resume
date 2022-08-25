@@ -53,3 +53,52 @@ variable "windows_instance_type" {
   description = "VM instance type for Windows Server"
   default     = "n2-standard-2"
 }
+
+# Load balancer variables
+variable "create_health_check" {
+  description = "Whether to create a health check on the target pool."
+  type        = bool
+  default     = true
+}
+
+variable "health_check_interval_sec" {
+  description = "Health check parameter, see [provider doc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_http_health_check)"
+  type        = number
+  default     = null
+}
+
+variable "health_check_healthy_threshold" {
+  description = "Health check parameter, see [provider doc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_http_health_check)"
+  type        = number
+  default     = null
+}
+
+variable "health_check_timeout_sec" {
+  description = "Health check parameter, see [provider doc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_http_health_check)"
+  type        = number
+  default     = null
+}
+
+variable "health_check_unhealthy_threshold" {
+  description = "Health check parameter, see [provider doc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_http_health_check)"
+  type        = number
+  default     = null
+}
+
+variable "health_check_http_port" {
+  description = "Health check parameter, see [provider doc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_http_health_check)"
+  type        = number
+  default     = null
+}
+
+variable "health_check_http_request_path" {
+  description = "Health check http request path, with the default adjusted to /php/login.php to be able to check the health of the PAN-OS webui."
+  type        = string
+  default     = "/php/login.php"
+}
+
+variable "health_check_http_host" {
+  description = "Health check http request host header, with the default adjusted to localhost to be able to check the health of the PAN-OS webui."
+  type        = string
+  default     = "localhost"
+}
