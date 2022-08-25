@@ -1,0 +1,34 @@
+resource "google_storage_bucket" "tekton-storage" {
+  name          = "${var.name}-${var.tekton_bucket_name}"
+  location      = "US"
+  force_destroy = false
+
+  uniform_bucket_level_access = false
+}
+
+# https://github.com/kubernetes/kubernetes/issues/79739
+resource "google_compute_firewall" "allow-tekton-webhook" {
+  name        = "${var.name}-allow-tekton-webhook"
+  project     = var.project_id
+  network     = google_compute_network.vpc.name
+  description = "Allow Tekton webhook ingress traffic"
+
+  allow {
+    protocol = "tcp"
+    ports = ["443",
+      "8008",
+      "8080",
+      "8443",
+      "9090",
+      "9443" # GitHub webhook
+    ]
+  }
+  allow {
+    protocol = "udp"
+  }
+
+  direction = "INGRESS"
+  # kubectl get endpoints -n tekton-pipelines
+  # kubectl describe endpoints tekton-pipelines-webhook
+  source_ranges = ["10.254.0.0/16"]
+}
