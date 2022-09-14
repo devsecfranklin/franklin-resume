@@ -1,0 +1,15 @@
+https://cloud.google.com/kubernetes-engine/docs/deprecations/apis-1-22
+
+ Deprecated APIs called
+API
+	
+User agent
+	
+Total calls (last 30 days)
+	
+Last called
+	
+/apis/networking.k8s.io/v1beta1/ingresses 	nginx-ingress-controller/v0.34.1 (linux/amd64) ingress-nginx/v20200715-ingress-nginx-2.11.0-8-gda5fa45e2 	5912 	Jul 19, 2022, 11:31:00 PM 	
+/apis/certificates.k8s.io/v1beta1/certificatesigningrequests 	pan-mgmt-init/v0.0.0 (linux/amd64) kubernetes/$Format 	2317 	Jul 19, 2022, 6:05:00 AM 	
+/apis/networking.k8s.io/v1beta1/ingressclasses 	nginx-ingress-controller/v0.34.1 (linux/amd64) ingress-nginx/v20200715-ingress-nginx-2.11.0-8-gda5fa45e2 	32 	Jul 19, 2022, 6:05:00 AM 	
+
