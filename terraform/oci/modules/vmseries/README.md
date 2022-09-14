@@ -2,7 +2,6 @@
 
 A Terraform module for deploying a VM-Series firewall in Oracle cloud. This module is not intended for use with autoscaling.
 
-
 ## Usage
 
 ```hcl

@@ -1,4 +1,4 @@
-# Global Protect 
+# Global Protect
 
 * Test in PAN labs
 
@@ -6,7 +6,7 @@
 az login -t 66b66353-3b76-4e41-9dc3-fee328bd400e
 ```
 
-## terraform 
+## terraform
 
 * Put the VM auth key in files/init-cfg.txt
 * Put the Authcode(s) in files/authcodes
@@ -16,7 +16,7 @@ export ARM_ACCESS_KEY=$(az storage account keys list --resource-group rg-ssg-pal
 terraform init -migrate
 ```
 
-## deploy 
+## deploy
 
 ```sh
  az vm image accept-terms --offer vmseries-flex --publish paloaltonetworks --plan bundle2

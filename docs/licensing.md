@@ -5,9 +5,8 @@
 - Generate a device serial number on adminsite.
 - Add serial number to `PANORAMA` -> `Management` -> `General Settings`
 - Do device registration in CSP portal
-- Go to `PANORAMA` -> `Licenses` and click get licenses. 
+- Go to `PANORAMA` -> `Licenses` and click get licenses.
 
 Add the "no stop" tags, or else your licenses will get messed up after a few days.
 
 ## Firewalls
-

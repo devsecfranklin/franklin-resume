@@ -5,7 +5,7 @@
 - Comment out SSH key name on line one of `terraform.tfavrs`
 - Update the name of the S3 bucket in `terraform/providers.tf` line 21 and 29.
   - verify other settings in `terraform/providers.tf`
-- Update `transit_gateway_name` on line 202 of terraform.tfvars. 
+- Update `transit_gateway_name` on line 202 of terraform.tfvars.
   - Note that `create_tgw` should be set to `false` in terraform.tfavrs on line 205.
 - Update the `vm-auth-key` on line 118 and 139 of `terraform.tfvars`
 
@@ -14,11 +14,11 @@
 Perform these steps on call with PS engineer.
 
 ```sh
-# say yes to preserve existing state by copying to new S3 backend. 
-terraform init --migrate-state 
+# say yes to preserve existing state by copying to new S3 backend.
+terraform init --migrate-state
 terraform validate
 terraform plan -out njcourts.plan -var-file=terraform.tfvars
-terraform apply "njcourts.plan" 
+terraform apply "njcourts.plan"
 ```
 
 - This will create a new test instance in the Security VPC as requested.
@@ -47,7 +47,8 @@ These steps may be completed prior to our meeting time.
   - suggest name: `TPL-GWLB`
 - Create a Virtual Router in the network template (Templates -> Network -> Virtual Routers)
   - The VR is will be "empty", no routes will be set in the VR.
-  - (unless you are doing overlay routing, overlay routing not in reference architecture and not recommended)
+  - Unless you are doing overlay routing
+  - Overlay routing not in reference architecture and not recommended
 - Make sure the correct template is selected from the drop down.
 - Create the zones.
 
@@ -97,28 +98,27 @@ Internet gateway `NetworkTeam-Sandbox-Test-VPC-igw` has an edge association with
 | --- |  --- |
 | NetworkTeam-Sandbox-Test-VPC-gwlb-endpointa | 10.243.148.0/28 |
 | NetworkTeam-Sandbox-Test-VPC-gwlb-endpointa | 10.243.148.64/28 |
-| NetworkTeam-Sandbox-Test-VPC-gwlb-endpointb | 10.243.149.0/28	|
+| NetworkTeam-Sandbox-Test-VPC-gwlb-endpointb | 10.243.149.0/28 |
 | NetworkTeam-Sandbox-Test-VPC-gwlb-endpointb | 10.243.149.64/28 |
 
 - Install VM series AWS plug-in from the UI of each firewall.
   - (We have an open feature request to get this updated)
   - Fraom Panorama (templates -> device -> vm-series , select template, AWS tab. COmmit and push)
 
-
 ```sh
-admin@nj-courts-fw-02> show plugins vm_series aws 
+admin@nj-courts-fw-02> show plugins vm_series aws
 > gwlb   Show AWS Gateway Load Balancer settings
-> ha     ha 
+> ha     ha
 
 admin@nj-courts-fw-02> show plugins vm_series aws gwlb
 
     GWLB enabled    :    True
     Overlay Routing :    False
     ================================================
-    VPC endpoint              Interface      
+    VPC endpoint              Interface
     ================================================
 
-admin@nj-courts-fw-02> 
+admin@nj-courts-fw-02>
 ```
 
 - Find the GWLB in AWS console `security-gwlb`
@@ -142,23 +142,23 @@ request plugins vm_series aws gwlb associate vpc-endpoint vpce-0d306321a02403377
 
 - Verify on each firewall CLI using the command `show plugins vm_series aws gwlb`. No `commit` is required.
 
-Example output: 
+Example output:
 
 ```sh
-admin@nj-courts-fw-02> show plugins vm_series aws gwlb                                                          
+admin@nj-courts-fw-02> show plugins vm_series aws gwlb
     GWLB enabled    :    True
     Overlay Routing :    False
     ================================================
-    VPC endpoint              Interface      
+    VPC endpoint              Interface
     ================================================
-    vpce-0cbffacdc1557bf36    ethernet1/1.20 
-    vpce-09bc0a9060c0ece67    ethernet1/1.10 
-    vpce-094fb5891fe8c375c    ethernet1/1.10 
-    vpce-08ea8c967cc2d9c05    ethernet1/1.30 
-    vpce-0684c619325b27e9b    ethernet1/1.20 
-    vpce-0d306321a02403377    ethernet1/1.30 
+    vpce-0cbffacdc1557bf36    ethernet1/1.20
+    vpce-09bc0a9060c0ece67    ethernet1/1.10
+    vpce-094fb5891fe8c375c    ethernet1/1.10
+    vpce-08ea8c967cc2d9c05    ethernet1/1.30
+    vpce-0684c619325b27e9b    ethernet1/1.20
+    vpce-0d306321a02403377    ethernet1/1.30
 
-admin@nj-courts-fw-02> 
+admin@nj-courts-fw-02>
 ```
 
 ### Sandbox VPC Routes
@@ -219,16 +219,16 @@ transit_gateway_route_tables = {
 Note that TGW RT's are found under TGW rather than the usual Route Table section.
 
 1. Find the `nj-courts-from_spokes` TGW route table.
-1. Under the associations tab, Verify you see a TGW attachment named `NetworkTeam-Sandbox-Test-VPC-TGW-Attach` or similar.
-1. In the propagations tab, create a propagation for `NetworkTeam-Sandbox-Test-VPC-TGW-Attach`.
+2. Under the associations tab, Verify you see a TGW attachment named `NetworkTeam-Sandbox-Test-VPC-TGW-Attach` or similar.
+3. In the propagations tab, create a propagation for `NetworkTeam-Sandbox-Test-VPC-TGW-Attach`.
 
 ### From Security VPC - Associations and Propagations
 
 Note that TGW RT's are found under TGW rather than the usual Route Table section.
 
 1. Find the `nj-courts-from_security` TGW route table.
-1. Under the associations tab, Verify you see a TGW attachment named `security-vpc` or similar.
-1. In the propagations tab, create a propagation for `NetworkTeam-Sandbox-Test-VPC-TGW-Attach`.
+2. Under the associations tab, Verify you see a TGW attachment named `security-vpc` or similar.
+3. In the propagations tab, create a propagation for `NetworkTeam-Sandbox-Test-VPC-TGW-Attach`.
 
 ## NAT Gateways
 
@@ -249,8 +249,9 @@ may not need to be sent to the Security VPC for inspection, but these cases shou
 exceptional.
 
 - Edit the inbound security group rules for `app1_web`
-  - Note that you can make a more permanent change in Terraform if you add your IP as a /32 in the `ssh-from-inet` under the `app1_vpc_security_groups` section in `terraform.tfvars` file.
-- Attempt to SSH to the instance. 
+  - Note that you can make a more permanent change in Terraform if you add your IP as a /32 in the `ssh-from-inet`
+    under the `app1_vpc_security_groups` section in `terraform.tfvars` file.
+- Attempt to SSH to the instance.
 
 ```sh
 ssh 54.159.222.214 -l ubuntu -i ~/.ssh/id_rsa

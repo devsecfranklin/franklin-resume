@@ -155,7 +155,7 @@ function main() {
     fi
 
     if [ "${MY_OS}" == "mac" ]; then
-        open https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272
+        open "https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272"
         #venv/bin/python3 -m webbrowser -n https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272
         echo -e "${CYAN}If your browser did not open, navigate to ${YELLOW}https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272${CYAN} for AWS Universal IDP${NC}"
     fi

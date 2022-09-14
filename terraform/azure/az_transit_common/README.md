@@ -5,7 +5,7 @@ This folder shows Terraform code that helps to deploy a [Transit VNet design mod
 ## Usage
 
 1. Edit files/init-cfg.txt to match lab config. (auth key expires April 2023)
-1. Adjust  `terraform.tfvars` file to your needs.
+2. Adjust  `terraform.tfvars` file to your needs.
 
 ```sh
 terraform init
@@ -24,4 +24,4 @@ terraform output -json password # use pass to log in to UI of each firewall and 
 Prepare to connect to Panorama
 
 1. Set DNS `168.63.129.16`
-1. Set NTP `3.pool.ntp.org` and `2.pool.ntp.org`
+2. Set NTP `3.pool.ntp.org` and `2.pool.ntp.org`

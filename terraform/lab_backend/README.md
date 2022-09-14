@@ -1,6 +1,6 @@
 # Lab Backend
 
-## Terraform 
+## Terraform
 
 ```sh
 brew install kreuzwerker/taps/m1-terraform-provider-helper
