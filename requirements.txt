@@ -1,7 +1,7 @@
 gunicorn==20.1.0
 flask==2.2.2
-tox==3.25.1
+tox==3.26.0
 Flask-WeasyPrint
 flask-login
 flask-sqlalchemy
-sqlalchemy==1.4.40
+sqlalchemy==1.4.41
