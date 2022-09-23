@@ -49,6 +49,6 @@ if __name__ == "__main__":
 
 """my_resume application
 
-    __copyright__ = © 2021 by Franklin Diaz
+    __copyright__ = © 2021-2022 by Franklin Diaz
     __license__   = MIT
 """
