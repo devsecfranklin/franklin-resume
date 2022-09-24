@@ -1,1 +1,1 @@
-worker: gunicorn --chdir src my_resume:app
+web: gunicorn --chdir src my_resume:app
