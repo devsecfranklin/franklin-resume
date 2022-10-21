@@ -13,4 +13,3 @@ gcloud compute addresses list | grep ctfd
 
 k get ingress -n ctfd
 ```
-
