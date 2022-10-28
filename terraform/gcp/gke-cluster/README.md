@@ -1,5 +1,12 @@
 # Terraform
 
+## Google Cloud
+
+```sh
+gcloud components install kubectl
+gcloud container clusters get-credentials --region us-central1 ps-devsecops-gke
+```
+
 ## Create Cluster
 
 * Run Terraform to create the cluster.

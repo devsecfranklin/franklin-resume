@@ -100,13 +100,11 @@ resource "google_compute_firewall" "allow-corp" {
 
   direction = "INGRESS"
   source_ranges = [
-    "34.99.247.242/32",  # Łukasz
-    "68.38.137.81/32",   # Franklin lab
-    "213.189.47.210/32", # Kuba
-    "84.207.227.14/32",  # Kuba
-    "34.134.31.136/32",  # ps-devsecops-panorama-three-10-0-4 
-    "34.136.90.64/32",   # ps-devsecops-panorama-two-10-0-4 
-    "34.66.44.164/32"    # gke cluster
+    "54.215.48.190/32", # Denver - DS 
+    "68.38.137.81/32",  # Franklin lab
+    "34.134.31.136/32", # ps-devsecops-panorama-three-10-0-4 
+    "34.136.90.64/32",  # ps-devsecops-panorama-two-10-0-4 
+    "34.66.44.164/32"   # gke cluster
   ]
 }
 

@@ -51,12 +51,8 @@ resource "google_container_cluster" "primary" {
       display_name = "franklin-lab"
     }
     cidr_blocks {
-      cidr_block   = "213.189.47.210/32"
-      display_name = "kuba-office"
-    }
-    cidr_blocks {
-      cidr_block   = "84.207.227.14/32"
-      display_name = "kuba-globalprotect"
+      cidr_block   = "54.215.48.190/32"
+      display_name = "denver-ds"
     }
     cidr_blocks {
       cidr_block   = "34.134.31.136/32"
@@ -89,10 +85,13 @@ resource "google_container_cluster" "primary" {
     }
     // Provide the ability to scale pod replicas based on real-time metrics
     horizontal_pod_autoscaling {
-      disabled = false
+      disabled = true
     }
   }
-
+  cluster_autoscaling {
+    enabled = false
+  }
+  /*
   cluster_autoscaling {
     enabled = true
     resource_limits {
@@ -113,25 +112,26 @@ resource "google_container_cluster" "primary" {
       ]
     }
   }
+  */
 }
 
-/*
 resource "google_container_node_pool" "primary_nodes" {
-  name     = "${google_container_cluster.primary.name}-node-pool"
+  #name     = "${google_container_cluster.primary.name}-node-pool"
+  name     = "ps-east-node-pool"
   project  = var.project_id
   location = var.region
   cluster  = google_container_cluster.primary.name
 
   node_count = var.gke_num_nodes
 
-  autoscaling {
-    min_node_count = 2
-    max_node_count = 15
-  }
+  //autoscaling {
+  //  min_node_count = 2
+  //  max_node_count = 15
+  //}
 
   node_config {
-    // COS or COS_containerd are ideal here.
-    image_type = "COS"
+    // ubuntu_containerd or COS_containerd are ideal here. 
+    image_type = "cos_containerd"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
     disk_type = "pd-ssd"
 
@@ -144,7 +144,7 @@ resource "google_container_node_pool" "primary_nodes" {
     // only those needed for GCR and stackdriver logging/monitoring/tracing needs.
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/devstorage.read_write",
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
       "https://www.googleapis.com/auth/cloud-platform",
@@ -152,12 +152,12 @@ resource "google_container_node_pool" "primary_nodes" {
 
     labels = {
       env = var.name
-      app = "ps-devsecops-ci-build" // label used for node selection in CI pipelines
+      app = "ps-east-ci-build" // label used for node selection in CI pipelines
     }
 
     preemptible  = false
     machine_type = var.node_machine_type
-    tags         = ["gke-node", "${var.name}-gke"]
+    tags         = ["gke-node", "ps-east-gke"]
 
     metadata = {
       disable-legacy-endpoints = "true"
@@ -170,22 +170,23 @@ resource "google_container_node_pool" "primary_nodes" {
     auto_upgrade = true
   }
 }
-*/
 
 // CN series firewall node pool
-/*
+// https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/cn-series-prerequisites
 resource "google_container_node_pool" "cn-series" {
-  name     = "${var.name}-cn-series-nodepool"
+  name     = "ps-east-cn-series-nodepool"
   project  = var.project_id
   location = var.region
   cluster  = google_container_cluster.primary.name
 
   node_count = 3
 
+  /*
   autoscaling {
     min_node_count = 3
     max_node_count = 18
   }
+  */
 
   node_config {
 
@@ -198,12 +199,13 @@ resource "google_container_node_pool" "cn-series" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/devstorage.read_write",
       "https://www.googleapis.com/auth/compute",
     ]
 
     labels = {
       env = var.name
-      app = "ps-devsecops-cn-series"
+      app = "ps-east-cn-series"
     }
 
 
@@ -214,7 +216,7 @@ resource "google_container_node_pool" "cn-series" {
       disable-legacy-endpoints = "true"
     }
 
-    tags = ["gke-node", "${var.name}-gke"]
+    tags = ["gke-node", "ps-east-gke"]
   }
   # Fix broken nodes automatically and keep them updated with the control plane.
   management {
@@ -222,4 +224,3 @@ resource "google_container_node_pool" "cn-series" {
     auto_upgrade = true
   }
 }
-*/
