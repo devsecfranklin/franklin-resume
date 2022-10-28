@@ -36,8 +36,8 @@ resource "google_container_cluster" "primary" {
   }
 
   master_auth {
-    #username = var.gke_username
-    #password = var.gke_password
+    //username = var.gke_username
+    //password = var.gke_password
 
     client_certificate_config {
       issue_client_certificate = false
@@ -63,7 +63,7 @@ resource "google_container_cluster" "primary" {
       display_name = "panorama-two"
     }
     cidr_blocks {
-      cidr_block   = "75.70.99.60/32"
+      cidr_block   = "156.146.51.68/32"
       display_name = "franklin-denver"
     }
   }
@@ -88,10 +88,7 @@ resource "google_container_cluster" "primary" {
       disabled = true
     }
   }
-  cluster_autoscaling {
-    enabled = false
-  }
-  /*
+
   cluster_autoscaling {
     enabled = true
     resource_limits {
@@ -112,7 +109,6 @@ resource "google_container_cluster" "primary" {
       ]
     }
   }
-  */
 }
 
 resource "google_container_node_pool" "primary_nodes" {
@@ -174,7 +170,7 @@ resource "google_container_node_pool" "primary_nodes" {
 // CN series firewall node pool
 // https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/cn-series-prerequisites
 resource "google_container_node_pool" "cn-series" {
-  name     = "ps-east-cn-series-nodepool"
+  name     = "ps-east-cn-series"
   project  = var.project_id
   location = var.region
   cluster  = google_container_cluster.primary.name
@@ -191,7 +187,7 @@ resource "google_container_node_pool" "cn-series" {
   node_config {
 
     // COS or COS_containerd are ideal here.
-    image_type = "COS_containerd"
+    image_type = "cos_containerd"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
     disk_type = "pd-ssd"
 
@@ -224,3 +220,4 @@ resource "google_container_node_pool" "cn-series" {
     auto_upgrade = true
   }
 }
+

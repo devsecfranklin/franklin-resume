@@ -1,4 +1,4 @@
-name: 'Cloudbot Ingest PR'
+name: 'Cloudbot'
 on:
   - pull_request
 env:

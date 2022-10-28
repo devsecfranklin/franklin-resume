@@ -4,7 +4,9 @@
 
 ```sh
 gcloud components install kubectl
-gcloud container clusters get-credentials --region us-central1 ps-devsecops-gke
+gcloud container clusters update ps-devsecops-gke --region us-central1 --enable-master-authorized-networks \
+       --master-authorized-networks 156.146.51.68/32
+gcloud auth application-default login
 ```
 
 ## Create Cluster
@@ -23,6 +25,6 @@ access from cloud shell
 
 ```sh
 dig +short myip.opendns.com @resolver1.opendns.com
-gcloud container clusters update pso-automation-fdiaz-gke --region us-central1 --enable-master-authorized-networks  --master-authorized-networks 104
-.196.60.8/32
+gcloud container clusters update pso-automation-fdiaz-gke --region us-central1 \
+       --enable-master-authorized-networks  --master-authorized-networks 104.196.60.8/32
 ```
