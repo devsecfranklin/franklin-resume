@@ -7,6 +7,7 @@ gcloud components install kubectl
 gcloud container clusters update ps-devsecops-gke --region us-central1 --enable-master-authorized-networks \
        --master-authorized-networks 156.146.51.68/32
 gcloud auth application-default login
+gcloud container clusters update ps-devsecops-gke --project gcp-gcs-pso --zone 'us-central1' --enable-autoprovisioning \ --autoprovisioning-image-type='COS_CONTAINERD'
 ```
 
 ## Create Cluster

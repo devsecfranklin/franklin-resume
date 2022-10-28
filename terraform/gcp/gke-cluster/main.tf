@@ -4,12 +4,12 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "primary" {
-  name               = "${var.name}-gke"
-  project            = var.project_id
-  location           = var.region
-  network            = google_compute_network.vpc.name
-  subnetwork         = google_compute_subnetwork.gke-subnet.name
-  min_master_version = data.google_container_engine_versions.gke_version.latest_master_version
+  name       = "${var.name}-gke"
+  project    = var.project_id
+  location   = var.region
+  network    = google_compute_network.vpc.name
+  subnetwork = google_compute_subnetwork.gke-subnet.name
+  // min_master_version = data.google_container_engine_versions.gke_version.latest_master_version
   node_locations = [
     "us-central1-a",
     "us-central1-b",
@@ -101,13 +101,16 @@ resource "google_container_cluster" "primary" {
       minimum       = 2
       maximum       = 16
     }
-
     auto_provisioning_defaults {
       service_account = var.service_account_terraform
       oauth_scopes = [
         "https://www.googleapis.com/auth/cloud-platform"
       ]
     }
+  }
+
+  release_channel {
+    channel = "STABLE"
   }
 }
 
@@ -120,10 +123,10 @@ resource "google_container_node_pool" "primary_nodes" {
 
   node_count = var.gke_num_nodes
 
-  //autoscaling {
-  //  min_node_count = 2
-  //  max_node_count = 15
-  //}
+  autoscaling {
+    min_node_count = 2
+    max_node_count = 15
+  }
 
   node_config {
     // ubuntu_containerd or COS_containerd are ideal here. 
@@ -170,27 +173,23 @@ resource "google_container_node_pool" "primary_nodes" {
 // CN series firewall node pool
 // https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/cn-series-prerequisites
 resource "google_container_node_pool" "cn-series" {
-  name     = "ps-east-cn-series"
-  project  = var.project_id
-  location = var.region
-  cluster  = google_container_cluster.primary.name
-
+  name       = "ps-east-cn-series"
+  project    = var.project_id
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
   node_count = 3
-
-  /*
   autoscaling {
     min_node_count = 3
     max_node_count = 18
   }
-  */
 
   node_config {
-
     // COS or COS_containerd are ideal here.
     image_type = "cos_containerd"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
-    disk_type = "pd-ssd"
-
+    disk_type    = "pd-ssd"
+    preemptible  = true
+    machine_type = "n1-standard-8"
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
@@ -204,10 +203,6 @@ resource "google_container_node_pool" "cn-series" {
       app = "ps-east-cn-series"
     }
 
-
-    preemptible  = true
-    machine_type = "n1-standard-8"
-
     metadata = {
       disable-legacy-endpoints = "true"
     }
@@ -220,4 +215,3 @@ resource "google_container_node_pool" "cn-series" {
     auto_upgrade = true
   }
 }
-
