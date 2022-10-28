@@ -28,3 +28,17 @@ dig +short myip.opendns.com @resolver1.opendns.com
 gcloud container clusters update pso-automation-fdiaz-gke --region us-central1 \
        --enable-master-authorized-networks  --master-authorized-networks 104.196.60.8/32
 ```
+
+## Access
+
+* Add your IP as a /32 around line 132 in networks.tf
+  * ONLY /32 are allowed, otherwise IT will contact us about a violation.
+* Add your IP as a /32 cidr_block in main.tf
+  * example:
+
+```hcl
+   cidr_blocks {
+      cidr_block   = "84.207.227.14/32"
+      display_name = "kuba-remote"
+    }
+```

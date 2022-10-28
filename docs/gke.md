@@ -23,6 +23,20 @@ kubectl label node gke-ps-devsecops-gke-dev-test-6959817f-3oo1  node-role.kubern
         "node-role.kubernetes.io/dev-test": dev-test
 ```
 
+## Access
+
+- Add your IP as a /32 around line 132 in networks.tf
+  - ONLY /32 are allowed, otherwise IT will contact us about a violation.
+- Add your IP as a /32 cidr_block in main.tf
+  - example:
+
+```hcl
+   cidr_blocks {
+      cidr_block   = "84.207.227.14/32"
+      display_name = "kuba-remote"
+    }
+```
+
 ## Operation
 
 The dashboard is already installed, but here is how you could re-install it:

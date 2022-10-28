@@ -1,0 +1,88 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: github-pr-pipeline
+  namespace: tekton-pipelines
+spec:
+  params:
+    - name: pr-number
+      type: string
+    - name: package
+      type: string
+    - name: imageUrl
+      type: string
+  resources:
+    - name: source
+      type: git
+  results:
+    - name: my-test-task-docker
+      description: Testing docker.
+      value: $(tasks.test.my-test-task-docker.path)
+    - name: my-test-task-docker
+      description: Testing terraform.
+      value: $(tasks.test.my-test-task-terraform.path)
+    - name: my-test-task-python
+      description: Found tox.ini. Smells like a Python project.
+      value: $(tasks.test.my-test-task-python.path)
+    - name: my-test-task-examples
+      description: Sarah test results
+      value: $(tasks.my-test-task-examples.path)
+  tasks:
+  - name: test
+    taskRef:
+      name: test
+    resources:
+      inputs:
+      - name: source
+        resource: source
+  - name: kaniko
+    taskRef:
+      name: kaniko
+    runAfter:
+      - test
+    resources:
+      inputs:
+      - name: source
+        resource: source
+    params:
+      - name: package
+        value: $(params.package)
+      - name: imageUrl
+        value: $(params.imageUrl)
+  - name: write-results-to-pr
+    taskRef:
+      name: github-add-comment
+    runAfter:
+      - kaniko
+    resources:
+      inputs:
+      - name: source
+        resource: source
+    params:
+      - name: REQUEST_URL
+        value: https://github.com/$(params.package)/pull/$(params.pr-number)
+      - name: COMMENT_OR_FILE
+        value: |
+          https://github.com/$(params.package)/pull/$(params.pr-number) CI Test results
+
+          Test steps were successful.
+           
+          * Use `tkn pr logs` for detailed test results.
+          * Use `tkn tr logs` to see tasks from this pipeline run.
+
+          Perform `terraform validate`?
+          $(tasks.test.results.my-test-task-terraform)
+          
+          Search for `tox.ini`/Python testing?
+          $(tasks.test.results.my-test-task-python)
+
+          Is there an examples/ folder?
+          $(tasks.test.results.my-test-task-examples)
+
+          Build image from Dockerfile and push to gcr.io?
+          $(tasks.test.results.my-test-task-docker)
+           ✨ A shiny ✨ new ✨ Docker image ✨ for you! $(params.imageUrl):latest
+
+          <!---
+          This is a comment
+          -->
