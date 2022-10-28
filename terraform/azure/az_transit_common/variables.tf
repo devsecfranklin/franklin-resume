@@ -1,12 +1,12 @@
 variable "location" {
   description = "The Azure region to use."
-  default     = "East US 2"
+  default     = "West US 2"
   type        = string
 }
 
 variable "resource_group_name" {
   description = "Name of the Resource Group to create. If not provided, it will be auto-generated."
-  default     = ""
+  default     = "franklin-lab"
   type        = string
 }
 variable "address_space" {

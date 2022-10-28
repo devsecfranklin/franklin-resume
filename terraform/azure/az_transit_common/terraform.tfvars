@@ -1,10 +1,10 @@
-name_prefix = "franklin"
+name_prefix = "franklin-lab"
 
-resource_group_name = "franklin-rg01"
+resource_group_name = "franklin-lab"
 location            = "West US2"
 enable_zones        = false
 
-virtual_network_name = "franklin-vnet01"
+virtual_network_name = "franklin-lab-vnet01"
 address_space        = ["10.199.0.0/21"]
 
 network_security_groups = {

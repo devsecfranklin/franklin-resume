@@ -1,6 +1,6 @@
 variable "location" {
   description = "The Azure region to use."
-  default     = "East US"
+  default     = "Central US"
   type        = string
 }
 
@@ -12,7 +12,7 @@ variable "resource_group_name" {
 
 variable "name_prefix" {
   description = "A prefix for all the names of the created Azure objects. It can end with a dash `-` character, if your naming convention prefers such separator."
-  default     = ""
+  default     = "franklin-lab-"
   type        = string
 }
 

@@ -12,8 +12,8 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "franklin-lab"
-    storage_account_name = "franklinx321"
-    container_name       = "tfstatefranklinlab"
+    storage_account_name = "franklinx321"       # create manually in az portal
+    container_name       = "az-transit-tfstate" # create manually in az portal
     key                  = "terraform-vm.tfstate"
   }
 }
@@ -35,7 +35,7 @@ resource "azurerm_storage_account" "tfstate" {
 }
 
 resource "azurerm_storage_container" "tfstate" {
-  name                  = "tfstatefranklinlab"
+  name                  = "az-transit-tfstate"
   storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }

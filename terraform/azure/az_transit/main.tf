@@ -1,13 +1,13 @@
-/*
-data "azurerm_resource_group" "savista_rg" {
+data "azurerm_resource_group" "franklin_rg" {
   name = var.resource_group_name
 }
 
 data "azurerm_virtual_network" "vnet_hub" {
   name                = var.virtual_network_name
-  resource_group_name = data.azurerm_resource_group.savista_rg.name
+  resource_group_name = data.azurerm_resource_group.franklin_rg.name
 }
 
+/*
 // for panorama connection vnet peering
 data "azurerm_virtual_network" "mgmt_vnet" {
   name                = "ssg-vnet-mgmt-southcentralus"
