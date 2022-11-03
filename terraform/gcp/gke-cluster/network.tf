@@ -100,6 +100,7 @@ resource "google_compute_firewall" "allow-corp" {
 
   direction = "INGRESS"
   source_ranges = [
+    "34.103.71.242/32", # Corporate
     "54.215.48.190/32", # Denver - DS 
     "156.146.51.68/32", # Palmer Lake
     "68.38.137.81/32",  # Franklin lab

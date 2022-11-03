@@ -47,6 +47,10 @@ resource "google_container_cluster" "primary" {
   # You can ONLY add /32 here or it will trigger security event
   master_authorized_networks_config {
     cidr_blocks {
+      cidr_block   = "34.103.71.242/32"
+      display_name = "corporate-net1"
+    }
+    cidr_blocks {
       cidr_block   = "68.38.137.81/32"
       display_name = "franklin-lab"
     }
@@ -110,7 +114,7 @@ resource "google_container_cluster" "primary" {
   }
 
   release_channel {
-    channel = "STABLE"
+    channel = "REGULAR" # [UNSPECIFIED RAPID REGULAR STABLE]
   }
 }
 
