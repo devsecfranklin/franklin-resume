@@ -38,6 +38,8 @@ spec:
         ctfd: redis
         app: ctfd-redis-cache
     spec:
+      nodeSelector:
+        env: dev-node
       containers:
       - image: redis:4
         imagePullPolicy: ""

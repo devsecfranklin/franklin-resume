@@ -1,4 +1,6 @@
-#!/bin/bash -
+#!/bin/bash
+
+# 03 Nov 2022 franklin
 
 #set -o nounset  # Treat unset variables as an error
 
@@ -19,15 +21,7 @@ CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-cat <<EOF | kubectl create -f -
-apiVersion: v1
-kind: Secret
-metadata:
-  name: basic-user-pass
-  annotations:
-    tekton.dev/git-0: https://github.com # Described below
-type: kubernetes.io/basic-auth
-stringData:
-  username: $(pass show gh-username)
-  password: $(pass show gh-password)
-EOF
+shopt -s expand_aliases
+alias k=$(which kubectl)
+
+k get pods -n ctfd | grep ctfd | cut -f1 -d' '

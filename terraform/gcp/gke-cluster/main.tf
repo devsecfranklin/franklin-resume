@@ -154,7 +154,8 @@ resource "google_container_node_pool" "primary_nodes" {
     ]
 
     labels = {
-      env = var.name
+      # env = var.name
+      env = "dev-node"
       app = "ps-east-ci-dev" // label used for node selection in CI pipelines
     }
 
@@ -171,7 +172,7 @@ resource "google_container_node_pool" "primary_nodes" {
   management {
     auto_repair  = true
     auto_upgrade = true
-  }terraform apply "franklin.plan"
+  }
 }
 
 // CN series firewall node pool
@@ -204,7 +205,8 @@ resource "google_container_node_pool" "cn-series" {
     ]
 
     labels = {
-      env = var.name
+      #env = var.name
+      env = "cn-series"
       app = "ps-east-cn-series"
     }
 

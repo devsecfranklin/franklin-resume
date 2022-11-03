@@ -70,6 +70,8 @@ spec:
         ctfd: nginx
         app: ctfd-nginx
     spec:
+      nodeSelector:
+        env: dev-node
       containers:
       - image: nginx:1.17
         imagePullPolicy: ""

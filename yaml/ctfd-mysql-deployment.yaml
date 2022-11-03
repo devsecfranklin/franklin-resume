@@ -38,6 +38,8 @@ spec:
         ctfd: mysql
         app: ctfd-mysql-db
     spec:
+      nodeSelector:
+        env: dev-node
       containers:
       - args:
         - mysqld

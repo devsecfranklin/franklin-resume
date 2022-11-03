@@ -21,7 +21,7 @@ CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-k="/usr/bin/kubectl"
+k=`which kubectl`
 
 # SETUP Tasks
 [ ! -d "`pwd`/yaml" ] && echo "${RED}run from top level of repo${NC}" && exit 1
@@ -29,38 +29,38 @@ command -v jq >/dev/null 2>&1 || { echo >&2 "${RED}Need to install jq.${NC}"; ex
 
 # Namespace
 NAMESPACE=$(${k} get ns ctfd -o json | jq .status.phase -r)
-echo "${CYAN}Namespace: ${NAMESPACE}${NC}"
-if [ ${NAMESPACE} != "Active" ]; then
+echo -e "${CYAN}Namespace: ${NAMESPACE}${NC}"
+if [ ! "${NAMESPACE}" == "Active" ]; then
   kubectl create ns ctfd
   sleep 5
 fi
 
 # set context
-echo "${CYAN}Setting Context: ctfd${NC}"
-${k} config set-context --current --namespace=ctfd
+# echo -e "${CYAN}Setting Context: ctfd${NC}"
+# ${k} config set-context --current --namespace=ctfd
 
 # Set up the storage class
-echo "${CYAN}Set up StorageClass${NC}"
-${k} apply -f yaml/ctfd-storage-class.yaml
+echo -e "${CYAN}Set up StorageClass${NC}"
+${k} apply -f yaml/ctfd-storage-class.yaml -n ctfd
 
 # Deploy MySQL
-echo "${CYAN}Set up MySQL${NC}"
-${k} apply -f yaml/ctfd-mysql-deployment.yaml
+echo -e "${CYAN}Set up MySQL${NC}"
+${k} apply -f yaml/ctfd-mysql-deployment.yaml  -n ctfd
 sleep 5
 
 # Deploy Redis
-echo "${CYAN}Set up Redis${NC}"
-${k} apply -f yaml/ctfd-redis-deployment.yaml
+echo -e "${CYAN}Set up Redis${NC}"
+${k} apply -f yaml/ctfd-redis-deployment.yaml -n ctfd
 sleep 5
 
 # Deploy Application
-echo "${CYAN}Deploy CTFd${NC}"
-${k} apply -f yaml/ctfd-deployment.yaml
+echo -e "${CYAN}Deploy CTFd${NC}"
+${k} apply -f yaml/ctfd-deployment.yaml -n ctfd
 sleep 5
 
 # Deploy NGiNX
-echo "${CYAN}Deploy NGiNx${NC}"
-${k} apply -f yaml/ctfd-ngnix-deployment.yaml
+echo -e "${CYAN}Deploy NGiNx${NC}"
+${k} apply -f yaml/ctfd-ngnix-deployment.yaml -n ctfd
 sleep 5
 
 # Status

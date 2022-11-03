@@ -1,4 +1,6 @@
-#!/bin/bash -
+#!/bin/bash
+
+# franklin 11/03/2022
 
 #set -o nounset  # Treat unset variables as an error
 
@@ -13,21 +15,23 @@
 
 RED='\033[0;31m'
 #LRED='\033[1;31m'
-#LGREEN='\033[1;32m'
+LGREEN='\033[1;32m'
 CYAN='\033[0;36m'
-#LPURP='\033[1;35m'
+LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-cat <<EOF | kubectl create -f -
-apiVersion: v1
-kind: Secret
-metadata:
-  name: basic-user-pass
-  annotations:
-    tekton.dev/git-0: https://github.com # Described below
-type: kubernetes.io/basic-auth
-stringData:
-  username: $(pass show gh-username)
-  password: $(pass show gh-password)
-EOF
+ns="dev-${1}"
+
+if [ "${ns}" == "dev-" ]; then
+  echo "Dont forget the username."
+  exit 0
+fi
+
+echo -e "${LPURP}### ------------------- ###${NC}"
+echo "     Checking ${1}"
+echo -e "${LPURP}### ------------------- ###${NC}"
+kubectl get resourcequota -n "${ns}"
+echo -e "${LPURP}### ------------------- ###${NC}"
+kubectl get secrets  -n "${ns}"
+echo -e "${LPURP}### ------------------- ###${NC}"
