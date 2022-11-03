@@ -1,5 +1,5 @@
 # Gets the current version of Kubernetes engine
-data "google_container_engine_versions" "gke_version" { location = var.zone }
+//data "google_container_engine_versions" "gke_version" { location = var.zone }
 
 /*
 resource "google_container_cluster" "primary" {

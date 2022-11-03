@@ -17,6 +17,7 @@ variable "name" {
   type        = string
 }
 
+/*
 variable "secondary_ip_range" {
   // See https://cloud.google.com/kubernetes-engine/docs/how-to/alias-ips
   description = "The CIDR from which to allocate pod IPs for IP Aliasing."
@@ -43,6 +44,8 @@ variable "gke_password" {
 
 variable "gke_num_nodes" {
   description = "number of gke nodes"
+  default = 3
+  type = number
 }
 
 variable "node_machine_type" {
@@ -56,3 +59,4 @@ variable "service_account_terraform" {
   type        = string
   default     = ""
 }
+*/

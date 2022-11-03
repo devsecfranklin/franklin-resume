@@ -120,7 +120,7 @@ resource "google_container_cluster" "primary" {
 
 resource "google_container_node_pool" "primary_nodes" {
   #name     = "${google_container_cluster.primary.name}-node-pool"
-  name     = "ps-east-node-pool"
+  name     = "ps-east-dev"
   project  = var.project_id
   location = var.region
   cluster  = google_container_cluster.primary.name
@@ -155,7 +155,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
     labels = {
       env = var.name
-      app = "ps-east-ci-build" // label used for node selection in CI pipelines
+      app = "ps-east-ci-dev" // label used for node selection in CI pipelines
     }
 
     preemptible  = false
@@ -171,7 +171,7 @@ resource "google_container_node_pool" "primary_nodes" {
   management {
     auto_repair  = true
     auto_upgrade = true
-  }
+  }terraform apply "franklin.plan"
 }
 
 // CN series firewall node pool
@@ -182,6 +182,7 @@ resource "google_container_node_pool" "cn-series" {
   location   = var.region
   cluster    = google_container_cluster.primary.name
   node_count = 3
+
   autoscaling {
     min_node_count = 3
     max_node_count = 18
@@ -213,6 +214,7 @@ resource "google_container_node_pool" "cn-series" {
 
     tags = ["gke-node", "ps-east-gke"]
   }
+
   # Fix broken nodes automatically and keep them updated with the control plane.
   management {
     auto_repair  = true

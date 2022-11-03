@@ -14,7 +14,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: limit-compute
-  namespace: ${ns}
+  namespace: "${ns}"
 spec:
   hard:
     requests.cpu: "10"
@@ -43,3 +43,7 @@ subjects:
   kind: User
   name: $(whoami)
 EOF
+
+echo "### ------------------- ###"
+kubectl get resourcequota -n ${ns}
+

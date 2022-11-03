@@ -1,3 +1,16 @@
+data "google_tpu_tensorflow_versions" "available" {
+}
+
+resource "google_tpu_node" "tpu" {
+  name = "test-tpu"
+  zone = "us-central1-a"
+
+  accelerator_type   = "v3-8"
+  tensorflow_version = data.google_tpu_tensorflow_versions.available.versions[0]
+  cidr_block         = "10.2.0.0/29"
+}
+
+/*
 resource "google_project_service" "machine_learning" {
   project                    = var.project_id
   service                    = "ml.googleapis.com"
@@ -10,6 +23,7 @@ resource "google_ml_engine_model" "default" {
   description = "franklin-test-model"
   regions     = ["us-central1"]
 }
+*/
 
 /*
 resource "google_project_service" "ai_platform" {
