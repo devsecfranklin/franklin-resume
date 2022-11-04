@@ -126,17 +126,24 @@ resource "google_container_node_pool" "primary_nodes" {
   cluster  = google_container_cluster.primary.name
 
   node_count = var.gke_num_nodes
-
+  node_locations = [
+    "us-central1-a",
+    "us-central1-b",
+    "us-central1-c",
+  ]
   autoscaling {
     min_node_count = 2
-    max_node_count = 15
+    max_node_count = 36
   }
 
   node_config {
-    // ubuntu_containerd or COS_containerd are ideal here. 
-    image_type = "cos_containerd"
-    #using pd-ssd's is recommended for pods that do any scratch disk operations.
-    disk_type = "pd-ssd"
+    image_type        = "COS_CONTAINERD"
+    disk_type         = "pd-ssd"
+    disk_size_gb      = 100
+    guest_accelerator = []
+    local_ssd_count   = 0
+    service_account   = "default"
+    preemptible       = false
 
     // https://tfsec.dev/docs/google/GCP012/
     // Use a custom service account for this node pool.  Be sure to grant it
@@ -156,18 +163,29 @@ resource "google_container_node_pool" "primary_nodes" {
     labels = {
       # env = var.name
       env = "dev-node"
-      app = "ps-east-ci-dev" // label used for node selection in CI pipelines
+      app = "ps-east-dev" // label used for node selection in CI pipelines
     }
 
-    preemptible  = false
     machine_type = var.node_machine_type
     tags         = ["gke-node", "ps-east-gke"]
 
     metadata = {
       disable-legacy-endpoints = "true"
     }
-  }
+    taint = []
+    shielded_instance_config {
+      enable_integrity_monitoring = true
+      enable_secure_boot          = false
+    }
 
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
+  }
+  upgrade_settings {
+    max_surge       = 1
+    max_unavailable = 0
+  }
   # Fix broken nodes automatically and keep them updated with the control plane.
   management {
     auto_repair  = true
@@ -186,16 +204,19 @@ resource "google_container_node_pool" "cn-series" {
 
   autoscaling {
     min_node_count = 3
-    max_node_count = 18
+    max_node_count = 36
   }
 
   node_config {
-    // COS or COS_containerd are ideal here.
-    image_type = "cos_containerd"
+    image_type = "COS_CONTAINERD"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
-    disk_type    = "pd-ssd"
-    preemptible  = true
-    machine_type = "n1-standard-8"
+    disk_type         = "pd-ssd"
+    disk_size_gb      = 100
+    guest_accelerator = []
+    local_ssd_count   = 0
+    service_account   = "default"
+    preemptible       = false
+    machine_type      = "n1-standard-8"
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
@@ -203,20 +224,29 @@ resource "google_container_node_pool" "cn-series" {
       "https://www.googleapis.com/auth/devstorage.read_write",
       "https://www.googleapis.com/auth/compute",
     ]
-
     labels = {
       #env = var.name
       env = "cn-series"
       app = "ps-east-cn-series"
     }
-
     metadata = {
       disable-legacy-endpoints = "true"
     }
+    tags  = ["gke-node", "ps-east-gke"]
+    taint = []
+    shielded_instance_config {
+      enable_integrity_monitoring = true
+      enable_secure_boot          = false
+    }
 
-    tags = ["gke-node", "ps-east-gke"]
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
   }
-
+  upgrade_settings {
+    max_surge       = 1
+    max_unavailable = 0
+  }
   # Fix broken nodes automatically and keep them updated with the control plane.
   management {
     auto_repair  = true

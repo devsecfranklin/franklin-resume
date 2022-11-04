@@ -1,6 +1,7 @@
 _build
 *_check_results_*.txt
 *.bkp
+key
 
 # This is a minimal list, OK to add things per repo
 # mac specific
