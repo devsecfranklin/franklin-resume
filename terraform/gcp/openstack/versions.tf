@@ -9,7 +9,7 @@ terraform {
   }
   backend "gcs" {
     bucket = "ps-devsecops"
-    prefix = "dev-tf"
+    prefix = "openstack-tf"
     //credentials = "$GOOGLE_APPLICATION_CREDENTIALS"
   }
   //required_version = "~> 1.0"
