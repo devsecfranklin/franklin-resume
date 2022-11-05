@@ -133,7 +133,7 @@ resource "google_compute_firewall" "ps-devsecops-allow-tekton-webhook" {
 /*
 module "address" {
   source       = "terraform-google-modules/address/google"
-  version      = "3.1.1"
+  version      = "3.1.2"
   project_id   = var.project_id
   region       = var.region
   address_type = "EXTERNAL"
