@@ -4,7 +4,8 @@ sudo apt-get update;
 sudo apt-get install -y qemu-kvm;
 sudo apt-get upgrade -y;
 sudo apt-get autoremove -y;
-git clone https://opendev.org/openstack/openstack-ansible /opt/openstack-ansible;
+sudo snap install microstack --beta;
+sudo microstack init --auto --control;
 EOF
 }
 
