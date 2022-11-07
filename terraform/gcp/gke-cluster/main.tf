@@ -89,7 +89,7 @@ resource "google_container_cluster" "primary" {
     }
     // Provide the ability to scale pod replicas based on real-time metrics
     horizontal_pod_autoscaling {
-      disabled = true
+      disabled = false
     }
   }
 
@@ -132,7 +132,7 @@ resource "google_container_node_pool" "primary_nodes" {
     "us-central1-c",
   ]
   autoscaling {
-    min_node_count = 2
+    min_node_count = 1
     max_node_count = 36
   }
 
@@ -200,13 +200,15 @@ resource "google_container_node_pool" "cn-series" {
   project    = var.project_id
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 3
-
+  node_count = 1
+  node_locations = [
+    "us-central1-b",
+    "us-central1-c",
+  ]
   autoscaling {
-    min_node_count = 3
+    min_node_count = 1
     max_node_count = 36
   }
-
   node_config {
     image_type = "COS_CONTAINERD"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
@@ -225,7 +227,6 @@ resource "google_container_node_pool" "cn-series" {
       "https://www.googleapis.com/auth/compute",
     ]
     labels = {
-      #env = var.name
       env = "cn-series"
       app = "ps-east-cn-series"
     }
@@ -238,7 +239,6 @@ resource "google_container_node_pool" "cn-series" {
       enable_integrity_monitoring = true
       enable_secure_boot          = false
     }
-
     workload_metadata_config {
       mode = "GKE_METADATA"
     }

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# 03 Nov 2022 franklin
+# 04 Nov 2022 franklin
 
-#set -o nounset  # Treat unset variables as an error
+set -o nounset  # Treat unset variables as an error
 
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31
@@ -17,11 +17,18 @@ RED='\033[0;31m'
 #LRED='\033[1;31m'
 #LGREEN='\033[1;32m'
 CYAN='\033[0;36m'
-#LPURP='\033[1;35m'
+LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 shopt -s expand_aliases
 alias k=$(which kubectl)
 
-k get pods -n ctfd --output=wide | grep ctfd | cut -f1 -d' '
+
+# Collect the Endpoint IP address for setting up the API server on Panorama.
+# Panorama uses this IP address to connect to your Kubernetes cluster.
+
+echo -e "${LPURP}### ------------------- ###${NC}"
+k get nodes
+echo -e "${LPURP}### ------------------- ###${NC}"
+# k describe node <node-name>
