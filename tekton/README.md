@@ -122,4 +122,3 @@ kubectl delete pods --field-selector status.phase=Failed -n tekton-pipelines
 kubectl get taskruns -o yaml 
 kubectl describe pod git-clone-run-67v2n-pod-5q2sw 
 ```
-
