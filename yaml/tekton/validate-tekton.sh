@@ -19,8 +19,11 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+shopt -s expand_aliases
+alias k=$(which kubectl)
+
 function chk_secret {
-  if [ -z $(kubectl get secrets --all-namespaces | grep \"github-auth\") ]; then
+  if [ -z $(k get secrets --all-namespaces | grep \"github-auth\") ]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}Tekton GitHub secret found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing Tekton GitHub secret. Create the secret and do another terraform apply.${NC}"
@@ -29,31 +32,31 @@ function chk_secret {
 }
 
 function chk_svc_acct {
-  if [[ $(kubectl get serviceaccounts -n tekton-pipelines | grep "tekton-sa") ]]; then
+  if [[ $(k get serviceaccounts -n tekton-pipelines | grep "tekton-franklin-sa") ]]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}Service Account tekton-sa found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing Tekton Service Account tekton-sa.${NC}"
     exit 1
   fi
-  if [[ $(kubectl get roles -n tekton-pipelines | grep tekton-bot | cut -f1 -d" ") == "tekton-bot" ]]; then
-    echo -e "\xE2\x9C\x94 ${LGREEN}Role tekton-bot found.${NC}"
+  if [[ $(k get roles -n tekton-pipelines | grep tekton-franklin | cut -f1 -d" ") == "tekton-franklin" ]]; then
+    echo -e "\xE2\x9C\x94 ${LGREEN}Role tekton-franklin found.${NC}"
   else
-    echo -e "\xE2\x9D\x8C ${RED} Missing Role tekton-bot.${NC}"
+    echo -e "\xE2\x9D\x8C ${RED} Missing Role tekton-franklin.${NC}"
     exit 1
   fi
-  if [[ $(kubectl get rolebindings -n tekton-pipelines | grep tekton-role-binding | cut -f1 -d" ") == "tekton-role-binding" ]]; then
+  if [[ $(k get rolebindings -n tekton-pipelines | grep tekton-role-binding | cut -f1 -d" ") == "tekton-role-binding" ]]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}Cluster Role Binding tekton-role-binding found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing Cluster Role Binding tekton-role-binding.${NC}"
     exit 1
   fi
-  if [ $(kubectl get clusterroles | grep tekton-bot-clusterrole | cut -f1 -d" ") == "tekton-bot-clusterrole" ]; then
+  if [ $(k get clusterroles | grep tekton-bot-clusterrole | cut -f1 -d" ") == "tekton-bot-clusterrole" ]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}Cluster Role tekton-bot-clusterrole found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing Cluster Role tekton-bot-clusterrole.${NC}"
     exit 1
   fi
-  if [ $(kubectl get clusterrolebindings | grep tekton-bot-clusterbinding | cut -f1 -d" ") == "tekton-bot-clusterbinding" ]; then
+  if [ $(k get clusterrolebindings | grep tekton-bot-clusterbinding | cut -f1 -d" ") == "tekton-bot-clusterbinding" ]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}Cluster Role Binding tekton-bot-clusterbinding found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing Cluster Role Binding tekton-bot-clusterbinding.${NC}"
@@ -62,13 +65,13 @@ function chk_svc_acct {
 }
 
 function chk_storage {
-  if [[ $(kubectl get configmaps -n tekton-pipelines| grep tekton-storage-configmap | cut -f1 -d" ") == "tekton-storage-configmap" ]]; then
+  if [[ $(k get configmaps -n tekton-pipelines| grep tekton-storage-configmap | cut -f1 -d" ") == "tekton-storage-configmap" ]]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}ConfigMap tekton-storage-configmap found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing ConfigMap tekton-storage-configmap.${NC}"
     exit 1
   fi
-  if [ $(kubectl get pvc -n tekton-pipelines | grep tekton-pvc | cut -f1 -d" ") == "tekton-pvc" ]; then
+  if [ $(k get pvc -n tekton-pipelines | grep tekton-pvc | cut -f1 -d" ") == "tekton-pvc" ]; then
     echo -e "\xE2\x9C\x94 ${LGREEN}Persisten Volume Claim tekton-pvc found.${NC}"
   else
     echo -e "\xE2\x9D\x8C ${RED} Missing Persistent Volume Claim tekton-pvc.${NC}"

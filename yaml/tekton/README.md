@@ -12,6 +12,12 @@ gcloud container clusters get-credentials ps-devsecops-gke --region=us-central1
 kubectl create clusterrolebinding fdiaz-gke-bot-cluster-admin-binding --clusterrole=cluster-admin --user=fdiaz-gke-bot@gcp-gcs-pso.iam.gserviceaccount.com
 kubectl get endpoints --namespace default kubernetes
 kubectl get nodes
+```
+
+[Installation](https://tekton.dev/docs/installation/pipelines/#installing-tekton-pipelines-on-kubernetes)
+
+```sh
+kubectl config set-context --current --namespace=tekton-pipelines
 kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 kubectl apply -f https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
 kubectl apply -f https://storage.googleapis.com/tekton-releases/triggers/latest/interceptors.yaml
