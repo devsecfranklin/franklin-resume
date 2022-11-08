@@ -1,0 +1,67 @@
+ubuntu@openshift:~$ openshift-install create cluster --dir INSTALL --log-level=INFO
+INFO Credentials loaded from environment variable "GOOGLE_CREDENTIALS", file "/home/ubuntu/.config/gcloud/gcp-gcs-pso-a7272b66e31e.json" 
+INFO Consuming Install Config from target directory 
+INFO Creating infrastructure resources...         
+ERROR                                              
+ERROR Error: Error creating ManagedZone: googleapi: Error 403: Forbidden, forbidden 
+ERROR                                              
+ERROR   with module.dns.google_dns_managed_zone.int, 
+ERROR   on dns/base.tf line 5, in resource "google_dns_managed_zone" "int": 
+ERROR    5: resource "google_dns_managed_zone" "int" { 
+ERROR                                              
+ERROR                                              
+ERROR Error: Error creating service account: googleapi: Error 403: Permission iam.serviceAccounts.create is required to perform this operation on project projects/gcp-gcs-pso., forbidden 
+ERROR                                              
+ERROR   with module.iam.google_service_account.worker-node-sa, 
+ERROR   on iam/main.tf line 5, in resource "google_service_account" "worker-node-sa": 
+ERROR    5: resource "google_service_account" "worker-node-sa" { 
+ERROR                                              
+ERROR                                              
+ERROR Error: Error creating service account: googleapi: Error 403: Permission iam.serviceAccounts.create is required to perform this operation on project projects/gcp-gcs-pso., forbidden 
+ERROR                                              
+ERROR   with module.master.google_service_account.master-node-sa, 
+ERROR   on master/main.tf line 5, in resource "google_service_account" "master-node-sa": 
+ERROR    5: resource "google_service_account" "master-node-sa" { 
+ERROR                                              
+ERROR                                              
+ERROR Error: Error waiting to create Router: Error waiting for Creating Router: Quota 'ROUTERS' exceeded.  Limit: 20.0 globally. 
+ERROR                                              
+ERROR                                              
+ERROR   with module.network.google_compute_router.router[0], 
+ERROR   on network/network.tf line 28, in resource "google_compute_router" "router": 
+ERROR   28: resource "google_compute_router" "router" { 
+ERROR                                              
+ERROR failed to fetch Cluster: failed to generate asset "Cluster": failure applying terraform for "cluster" stage: failed to create cluster: failed to apply Terraform: exit status 1 
+ERROR                                              
+ERROR Error: Error creating ManagedZone: googleapi: Error 403: Forbidden, forbidden 
+ERROR                                              
+ERROR   with module.dns.google_dns_managed_zone.int, 
+ERROR   on dns/base.tf line 5, in resource "google_dns_managed_zone" "int": 
+ERROR    5: resource "google_dns_managed_zone" "int" { 
+ERROR                                              
+ERROR                                              
+ERROR Error: Error creating service account: googleapi: Error 403: Permission iam.serviceAccounts.create is required to perform this operation on project projects/gcp-gcs-pso., forbidden 
+ERROR                                              
+ERROR   with module.iam.google_service_account.worker-node-sa, 
+ERROR   on iam/main.tf line 5, in resource "google_service_account" "worker-node-sa": 
+ERROR    5: resource "google_service_account" "worker-node-sa" { 
+ERROR                                              
+ERROR                                              
+ERROR Error: Error creating service account: googleapi: Error 403: Permission iam.serviceAccounts.create is required to perform this operation on project projects/gcp-gcs-pso., forbidden 
+ERROR                                              
+ERROR   with module.master.google_service_account.master-node-sa, 
+ERROR   on master/main.tf line 5, in resource "google_service_account" "master-node-sa": 
+ERROR    5: resource "google_service_account" "master-node-sa" { 
+ERROR                                              
+ERROR                                              
+ERROR Error: Error waiting to create Router: Error waiting for Creating Router: Quota 'ROUTERS' exceeded.  Limit: 20.0 globally. 
+ERROR                                              
+ERROR                                              
+ERROR   with module.network.google_compute_router.router[0], 
+ERROR   on network/network.tf line 28, in resource "google_compute_router" "router": 
+ERROR   28: resource "google_compute_router" "router" { 
+ERROR                                              
+ERROR                                              
+ubuntu@openshift:~$ 
+
+
