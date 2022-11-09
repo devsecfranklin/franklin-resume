@@ -1,0 +1,14 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: ps-automation-build-and-push
+spec:
+  serviceAccountName: cloud-bot
+  taskRef:
+    name: ps-automation-build-and-push
+  resources:
+    inputs:
+      - name: ps-automation
+        resourceRef:
+          name: ps-automation

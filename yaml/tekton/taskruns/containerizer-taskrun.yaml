@@ -1,0 +1,13 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: containerizer-test
+spec:
+  taskRef:
+    name: containerizer-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer

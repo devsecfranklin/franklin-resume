@@ -26,9 +26,8 @@ kubectl get namespace tekton-pipelines
 watch kubectl get pods -n tekton-pipelines
 kubectl config set-context --current --namespace=tekton-pipelines
 kubectl api-resources --api-group='tekton.dev'
-```
-
 kubectl get podsecuritypolicy
+```
 
 ## Watch the logs
 
@@ -87,7 +86,6 @@ tkn hub install task git-clone -n tekton-pipelines
  --param revision=main --param deleteExisting=true \
  --workspace name=output,claimName=tekton-ci-build --use-param-defaults \
  --showlog
-
 ```
 
 Testing

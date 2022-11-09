@@ -1,0 +1,14 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: gcp-tagging-automation-build-and-push
+spec:
+  serviceAccountName: cloud-bot
+  taskRef:
+    name: gcp-tagging-automation-build-and-push
+  resources:
+    inputs:
+      - name: gcp-tagging-automation
+        resourceRef:
+          name: gcp-tagging-automation

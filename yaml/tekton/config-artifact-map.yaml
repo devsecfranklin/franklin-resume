@@ -8,4 +8,3 @@ data:
   bucket.service.account.secret.name: tekton-storage
   bucket.service.account.secret.key: gcs-config
   bucket.service.account.field.name: GOOGLE_APPLICATION_CREDENTIALS
-

@@ -1,0 +1,14 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: franklin-resume-build-and-push
+spec:
+  serviceAccountName: cloud-bot
+  taskRef:
+    name: franklin-resume-build-and-push
+  resources:
+    inputs:
+      - name: franklin-resume
+        resourceRef:
+          name: franklin-resume
