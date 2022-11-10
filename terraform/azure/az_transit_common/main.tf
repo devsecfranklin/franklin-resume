@@ -18,7 +18,7 @@ resource "random_password" "this" {
 
 # Create the network required for the topology.
 module "vnet" {
-  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/vnet?ref=v0.4.0"
+  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/vnet?ref=v0.5.0"
 
   virtual_network_name    = var.virtual_network_name
   location                = var.location
@@ -61,7 +61,7 @@ resource "azurerm_public_ip" "public" {
 
 # The Inbound Load Balancer for handling the traffic from the Internet.
 module "inbound_lb" {
-  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/loadbalancer?ref=v0.4.0"
+  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/loadbalancer?ref=v0.5.0"
 
   name                              = var.inbound_lb_name
   location                          = var.location
@@ -74,7 +74,7 @@ module "inbound_lb" {
 
 # The Outbound Load Balancer for handling the traffic from the private networks.
 module "outbound_lb" {
-  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/loadbalancer?ref=v0.4.0"
+  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/loadbalancer?ref=v0.5.0"
 
   name                = var.outbound_lb_name
   location            = var.location
@@ -98,7 +98,7 @@ module "outbound_lb" {
 
 # The storage account for VM-Series initialization.
 module "bootstrap" {
-  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/bootstrap?ref=v0.4.0"
+  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/bootstrap?ref=v0.5.0"
 
   location             = var.location
   resource_group_name  = azurerm_resource_group.this.name
@@ -116,7 +116,7 @@ resource "azurerm_availability_set" "this" {
 }
 
 module "common_vmseries" {
-  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/vmseries?ref=v0.4.0"
+  source = "github.com/PaloAltoNetworks/terraform-azurerm-vmseries-modules//modules/vmseries?ref=v0.5.0"
 
   for_each = var.vmseries
 
