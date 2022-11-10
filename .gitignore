@@ -29,7 +29,6 @@ key
 .terraform.d
 *.tfstate
 *.tfstate.*
-.vscode
 .idea
 *.dtmp
 
