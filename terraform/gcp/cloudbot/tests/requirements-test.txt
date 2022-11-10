@@ -1,0 +1,6 @@
+grpcio
+flake8==4.0.1
+pytest==6.2.5
+coverage==6.1.2
+isort==5.10.1
+black==21.11.b0

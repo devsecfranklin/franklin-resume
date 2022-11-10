@@ -1,4 +1,6 @@
 _build
+__pycache__
+.buildlog 
 *_check_results_*.txt
 *.bkp
 key
@@ -39,3 +41,19 @@ terraform.rc
 # Auto variables
 *.auto.tfvars
 *.auto.tfvars.json
+
+Makefile
+Makefile.in
+configure
+configure~
+config/
+config/install-sh
+config/missing
+aclocal
+aclocal.m4
+autom4te.cache/
+config.status
+config.log
+COPYING
+INSTALL
+libtool
