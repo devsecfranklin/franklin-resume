@@ -2,8 +2,8 @@
 
 ## Call Cloud Function from external
 
-- Test with CURL from your local machine.
-- Your [service account must be a valid "invoker"](https://cloud.google.com/functions/docs/securing/authenticating) for the Cloud Function.
+* Test with CURL from your local machine.
+* Your [service account must be a valid "invoker"](https://cloud.google.com/functions/docs/securing/authenticating) for the Cloud Function.
 
 ```sh
 gcloud config set account fdiaz-bot@gcp-gcs-pso.iam.gserviceaccount.com
@@ -28,3 +28,13 @@ safety check -r src/requirements.txt
 safety check -r tests/requirements-test.txt
 safety check -r test/requirements-security.txt
 ```
+
+## Container Image
+
+* Type `make` to build the docker image.
+  * Type `docker image ls` to see it in your list.
+  * Tag the image like so: `docker tag <IMAGE_ID> frank378/cloudbot:dev_franklin_cloudbot`
+* Type `docker login --username frank378` to log in to docker hub.
+  * Use personal access token as pass since 2fa is enabled.
+* Push the tagged image to dockerhub
+  * Example: `docker push frank378/cloudbot:dev_franklin_cloudbot`
