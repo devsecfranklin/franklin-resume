@@ -2,6 +2,11 @@
 
 * Check for Ubuntu images like so `gcloud compute images list --filter 'family ~ ubuntu'`
 * `gcloud compute ssh --zone=us-central1-a openstack-franklin`
+* The IP of the instance will change at each boot, but this works if you know the public IP:
+
+```sh
+ssh -l ubuntu -i ~/.ssh/id_rsa_work 34.70.70.44
+```
 
 ## Microstack
 
@@ -28,5 +33,10 @@ microstack.openstack security group rule list
 ```sh
 microstack.launch cirros --name franklin
 ssh -i ~/.ssh/id_microstack cirros@<ip-address>
-
 ```
+
+## PanOS Install
+
+1. Login in to the Palo Alto Networks Customer Support Portal.
+2. Select Updates -> Software Updates and choose Panorama Base Images from the Filter By drop-down.
+3. Download the `Panorama-KVM-10.2.3.qcow2` file.

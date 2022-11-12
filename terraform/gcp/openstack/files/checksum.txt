@@ -1,0 +1,10 @@
+FileName: Panorama-KVM-10.2.3.qcow2
+
+Version: 10.2.3
+
+Size:4.1 GB
+
+MD5:d9f7b1df335e006d2af59d880b24a23f
+
+SHA256:8eaa3f80c2b6a45caa9766c7c6177367644db1e6a64b732f3d3f13c417d782ba
+
