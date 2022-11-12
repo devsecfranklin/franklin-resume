@@ -25,7 +25,7 @@ RUN apk add --no-cache \
         libc-dev
 
 # Crossplane CLI
-RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | ash
+# RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | ash
 
 # Terrascan
 #RUN go get github.com/accurics/terrascan \

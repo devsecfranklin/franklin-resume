@@ -1,6 +1,6 @@
 # Lab
 
-[![Bandit Python Security Check](https://github.com/devsecfranklin/lab-franklin/actions/workflows/bandit.yml/badge.svg)](https://github.com/devsecfranklin/lab-franklin/actions/workflows/bandit.yml)
+[![Bandit Python Security Check](https://github.com/devsecfranklin/lab-franklin/actions/workflows/bandit.yml/badge.svg)](https://github.com/devsecfranklin/lab-franklin/actions/workflows/bandit.yml) [![build cloudbot pod](https://github.com/devsecfranklin/lab-franklin/actions/workflows/trivy.yaml/badge.svg)](https://github.com/devsecfranklin/lab-franklin/actions/workflows/trivy.yaml)
 
 ## MacOS
 

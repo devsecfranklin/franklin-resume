@@ -13,7 +13,11 @@ AC_CONFIG_COMMANDS([franklin-build],
 AC_CONFIG_FILES([
  Makefile
  docker/Makefile
+ docker/cloudbot/Makefile
 ])
+
+AC_CHECK_PROG(HAVE_NODE, [node], [node])
+test -z "$HAVE_NODE"     && AC_MSG_ERROR([Could not find node.js. Please make sure you have it installed])
 
 dnl le python
 AM_PATH_PYTHON(3.8) # minimum version of Python
