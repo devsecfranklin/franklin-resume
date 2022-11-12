@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudbot-service
+  namespace: ci-build
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
+  labels:
+    app: cloudbot-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: cloudbot
+  ports:
+  - port: 80
+    targetPort: 8089
+    protocol: TCP

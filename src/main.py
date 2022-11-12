@@ -60,6 +60,10 @@ def main(request):
         else:
             logger.info("This PR already has the %s label on it.", label_name)
 
+        import requests
+        api_url = "http://10.11.0.109"
+        cloudbot_response = requests.get(api_url)
+        logger.info(str(cloudbot_response))
         return request_json["message"]
     else:
         return f"No JSON message from you."

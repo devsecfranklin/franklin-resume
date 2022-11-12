@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: cloudbot-build-pod
+  namespace: ci-build
+  labels:
+    app: cloudbot
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cloudbot
+  template:
+    metadata:
+      labels:
+        app: cloudbot
+    spec:
+      nodeSelector:
+        env: build
+      containers:
+      - name: cloudbot
+        image: gcr.io/gcp-gcs-pso/build-pod

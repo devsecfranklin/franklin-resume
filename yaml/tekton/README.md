@@ -2,7 +2,8 @@
 
 [Need to add firewall rule in GCP/GKE](https://stackoverflow.com/questions/59461747/tekton-on-private-kubernetes-cluster-on-gcp-gke)
 
-- The rule is called `ps-devsecops-allow-tekton-webhook`
+* The rule is called `ps-devsecops-allow-tekton-webhook`
+* [Tekton bug](https://github.com/tektoncd/pipeline/issues/5631)
 
 ## Setup
 
@@ -56,8 +57,8 @@ kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
 
 ### Create Pipeline Resources
 
-- git repos
-- buckets/pvc
+* git repos
+* buckets/pvc
 
 ### Create Pipelines
 

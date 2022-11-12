@@ -1,15 +1,10 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.17.3-alpine3.13
+FROM node:7
 
 LABEL maintainer="Franklin D <franklin@bitsmasher.net>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/lab-franklin"
 
-RUN apk add --virtual --no-cache \
-  wget \
-  unzip \
-  bash \
-  git \
-  ca-certificates \
-  openssh && rm -rf /var/cache/apk/*
+ADD app.js /app.js
 
+ENTRYPOINT ["node", "app.js"]
