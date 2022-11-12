@@ -9,3 +9,13 @@ kubectl apply -f replica-set.yaml
 ```
 
 * Cloudbot service load balancer IP: `10.11.0.109:80`
+
+## Debug
+
+* You can view the logs in the GKE console under the Services section of the cluster.
+
+```sh
+k rollout history deployment cloudbot-deployment -n ci-build 
+k logs -f deployment/cloudbot-deployment -n ci-build
+kubectl logs (kubectl get pods -n ci-build | grep cloudbot-build-pod | cut -f1 -d' ')  -n ci-build -f
+```

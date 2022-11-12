@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cloudbot
+  name: cloudbot-deployment
+  namespace: ci-build
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudbot
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cloudbot
+    spec:
+      nodeSelector:
+        env: build
+      containers:
+      - name: cloudbot
+        image: gcr.io/gcp-gcs-pso/build-pod
+        imagePullPolicy: Always
+        volumeMounts:
+          # name should match from volumes section
+          - name: nfs-volume-1
+            mountPath: "/data"
+      volumes:
+      - name: nfs-volume-1
+        persistentVolumeClaim:
+          claimName: nfs-pvc

@@ -57,3 +57,5 @@ config.log
 COPYING
 INSTALL
 libtool
+
+node_modules/
