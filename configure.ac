@@ -12,6 +12,7 @@ AC_CONFIG_COMMANDS([franklin-build],
  [mypkgname=$PACKAGE_NAME])
 AC_CONFIG_FILES([
  Makefile
+ docker/Makefile
 ])
 
 dnl le python
