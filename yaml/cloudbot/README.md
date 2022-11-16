@@ -20,3 +20,8 @@ k rollout history deployment cloudbot-deployment -n ci-build
 k logs -f deployment/cloudbot-deployment -n ci-build
 kubectl logs (kubectl get pods -n ci-build | grep cloudbot-build-pod | cut -f1 -d' ')  -n ci-build -f
 ```
+
+## Tasks
+
+* Clone the repo/PR
+* If there is a Makefile, build from it.
