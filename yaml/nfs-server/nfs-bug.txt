@@ -1,0 +1,10 @@
+🌖k logs -n storage nfs-server-6589f84b97-w9pff                                                 269ms  Tue 15 Nov 2022 03:52:57 PM EST
+W1115 15:53:25.688127 3637877 gcp.go:119] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.26+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Serving /exports
+Serving /
+rpcinfo: can't contact rpcbind: : RPC: Unable to receive; errno = Connection refused
+Starting rpcbind
+exportfs: / does not support NFS export
+NFS started
+🌖    

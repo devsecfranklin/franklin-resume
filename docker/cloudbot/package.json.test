@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "octokit": "^2.0.10",
+    "winston": "^3.8.2"
+  }
+}

@@ -13,6 +13,7 @@ kubectl apply -f replica-set.yaml
 ## Debug
 
 * You can view the logs in the GKE console under the Services section of the cluster.
+  (This is faster than waiting on Cloud Function logs to update)
 
 ```sh
 k rollout history deployment cloudbot-deployment -n ci-build 

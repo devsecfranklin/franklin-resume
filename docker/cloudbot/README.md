@@ -4,6 +4,8 @@
 
 ```sh
 npm install winston
+npm install octokit
+pass show GIT_TOKEN
 ```
 
 ## Build Container and push to gcr
@@ -14,6 +16,7 @@ npm install winston
 sudo sysctl -w net.ipv6.conf.all.forwarding=1
 docker build -t gcr.io/gcp-gcs-pso/build-pod .
 docker push gcr.io/gcp-gcs-pso/build-pod
+docker history --human --format "{{.CreatedBy}}: {{.Size}}" gcr.io/gcp-gcs-pso/build-pod
 ```
 
 ## Debug

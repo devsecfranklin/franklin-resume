@@ -15,7 +15,7 @@ spec:
     spec:
       spec:
       nodeSelector:
-        app: ps-east-dev
+        env: dev-node
       containers:
       - name: nfs-server
         image: gcr.io/google_containers/volume-nfs:0.8

@@ -2,7 +2,7 @@ import logging
 
 from flask import Flask, request
 from github import Github
-
+import requests
 import github_util
 import helpers
 
@@ -60,10 +60,11 @@ def main(request):
         else:
             logger.info("This PR already has the %s label on it.", label_name)
 
-        import requests
-        api_url = "http://10.11.0.109"
-        cloudbot_response = requests.get(api_url)
+
+        url = "http://10.11.0.109"
+        cloudbot_response = requests.post(url, json=request_json)
         logger.info(str(cloudbot_response))
+
         return request_json["message"]
     else:
         return f"No JSON message from you."
