@@ -1,7 +1,6 @@
 .DS_Store
 *.deb
 .buildlog
-.vscode
 .terraform
 .envrc
 markdown/my_resume.*
