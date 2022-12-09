@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.11.0-slim-buster
+FROM python:3.11.1-slim-buster
 LABEL maintainer="Franklin D. <thedevilsvoice@protonmail.ch>"
 LABEL org.opencontainers.image.source="https://github.com/DEAD10C5/bot-cloudbot"
 ENV DEBIAN_FRONTEND noninteractive
