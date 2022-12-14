@@ -35,7 +35,7 @@ python:
 		source _build/bin/activate; \
 		_build/bin/python -m pip install --upgrade pip; \
         _build/bin/python -m pip install tox; \
-		_build/bin/python -m pip install -r requirements.txt --no-warn-script-location; \
+		_build/bin/python -m pip install -r src/requirements.txt --no-warn-script-location; \
 	)
 
 test: ## run all test cases
