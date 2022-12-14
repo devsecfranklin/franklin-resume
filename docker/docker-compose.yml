@@ -1,0 +1,12 @@
+version: '3'
+services:
+  franklin-resume:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: franklin-resume
+    container_name: franklin-resume
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/workspaces/franklin-resume
