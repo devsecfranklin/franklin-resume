@@ -2,8 +2,10 @@
 
 FROM python:3.11-bullseye
 
-LABEL maintainer "Franklin <devsecfranklin@duck.com>"
+LABEL org.opencontainers.image.authors="Franklin <devsecfranklin@duck.com>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume"
+LABEL org.opencontainers.image.description="Resume as Code (RaC)"
+LABEL org.opencontainers.image.licenses=MIT
 
 WORKDIR /workspace
 ENV MY_DIR /workspace
