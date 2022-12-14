@@ -1,1 +1,8 @@
-../requirements.txt
+tomli>=2.0.1
+gunicorn==20.1.0
+flask==2.2.2
+tox==4.0.4
+Flask-WeasyPrint
+flask-login
+flask-sqlalchemy
+sqlalchemy==2.0.0b1
