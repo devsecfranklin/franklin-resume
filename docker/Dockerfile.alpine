@@ -2,7 +2,7 @@
 
 FROM alpine:3.17
 
-LABEL maintainer="Franklin D <franklin@bitsmasher.net>"
+LABEL maintainer="Franklin D <devsecfranklin@duck.com>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/lab-franklin"
 
 RUN apk add --no-cache \
