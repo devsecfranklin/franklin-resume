@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
 
 """
-Authors:       Franklin D. <thedevilsvoice@protonmail.ch>
+Authors:       Franklin D. <devsecfranklin@duck.com>
 
 Description:
 
