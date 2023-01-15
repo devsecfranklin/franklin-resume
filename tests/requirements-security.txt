@@ -1,2 +1,2 @@
 bandit
-safety
+safety==2.3.5

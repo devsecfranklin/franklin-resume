@@ -13,7 +13,7 @@ build:
 	docker-compose -f docker-compose.yml build franklin_resume
 
 clean:
-	@for trash in aclocal aclocal.m4 autom4te.cache config config.log config.status configure libtool Makefile Makefile.in; do\
+	@for trash in aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in; do\
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\
@@ -34,16 +34,22 @@ python:
 	( \
 		source _build/bin/activate; \
 		_build/bin/python -m pip install --upgrade pip; \
-        _build/bin/python -m pip install tox; \
 		_build/bin/python -m pip install -r src/requirements.txt --no-warn-script-location; \
 	)
 
-test: ## run all test cases
+test:
 	@$(PY39) -m venv _build
 	( \
 		source _build/bin/activate; \
 		_build/bin/python -m pip install --upgrade pip; \
 		_build/bin/python -m pip install tox; \
-        _build/bin/python -m pip install -r tests/requirements-test.txt --no-warn-script-location; \
+		_build/bin/python -m pip install -r tests/requirements-test.txt --no-warn-script-location; \
+	)
+
+security: 
+	@$(PY39) -m venv _build
+	( \
+		source _build/bin/activate; \
+		_build/bin/python -m pip install --upgrade pip; \
 		_build/bin/python -m pip install -r tests/requirements-security.txt; \
 	)

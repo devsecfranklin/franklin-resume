@@ -247,7 +247,7 @@ function main() {
   if [ ! -d "aclocal" ]; then mkdir aclocal; fi
   run_libtoolize
   run_aclocal
-  run_autoheader
+  # run_autoheader
   run_automake
   run_autoconf
   ./configure
