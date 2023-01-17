@@ -6,7 +6,7 @@
 # v0.4 11/10/2022 Add automake check
 # v0.5 11/15/2022 Handle Docker container builds
 
-# Author:  2730246+devsecfranklin@users.noreply.github.com 
+# Author:  devsecfranklin@duck.com
 
 #set -eu
 
@@ -61,16 +61,20 @@ function run_autopoint() {
 }
 
 function run_libtoolize() {
-  echo "Checking libtoolize version..."
-  libtoolize --version 2>&1 > /dev/null
+  MY_LIBTOOL="libtoolize"
+  if [ "$MY_OS" == "mac" ]; then
+    MY_LIBTOOL="glibtoolize"
+  fi
+  echo "Checking ${MY_LIBTOOL} version..."
+  ${MY_LIBTOOL} --version 2>&1 > /dev/null
   rc=$?
   if test $rc -ne 0 ; then
-      echo "Could not determine the version of libtool on your machine"
-      echo "libtool --version produced:"
-      libtool --version
+      echo "Could not determine the version of ${MY_LIBTOOL} on your machine"
+      echo "${MY_LIBTOOL} --version produced:"
+      ${MY_LIBTOOL} --version
       exit 1
   fi
-  lt_ver=`libtoolize --version | awk '{print $NF; exit}'`
+  lt_ver=`${MY_LIBTOOL} --version | awk '{print $NF; exit}'`
   lt_maj=`echo $lt_ver | sed 's;\..*;;g'`
   lt_min=`echo $lt_ver | sed -e 's;^[0-9]*\.;;g'  -e 's;\..*$;;g'`
   lt_teeny=`echo $lt_ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g'`
@@ -94,17 +98,17 @@ function run_libtoolize() {
 
       *)
           echo "You are running a newer libtool than gerbv has been tested with."
-    echo "It will probably work, but this is a warning that it may not."
+    echo -e "${YELLOW}It will probably work, but this is a warning that it may not.${NC}"
     ;;
   esac
-  echo "Running libtoolize..."
-  libtoolize --force --copy --automake || exit 1
+  echo -e "${CYAN}Running ${MY_LIBTOOL}...${NC}"
+  ${MY_LIBTOOL} --force --copy --automake || exit 1
 }
 
 function run_aclocal() {
   echo -e "${LBLUE}Checking aclocal version...${NC}"
   acl_ver=`aclocal --version | awk '{print $NF; exit}'`
-  echo "    $acl_ver"
+  echo -e "${CYAN}    $acl_ver${NC}"
 
   echo -e "${CYAN}Running aclocal...${NC}"
   #aclocal -I m4 $ACLOCAL_FLAGS || exit 1
@@ -113,40 +117,40 @@ function run_aclocal() {
 }
 
 function run_autoheader() {
-  echo "Checking autoheader version..."
+  echo -e "${CYAN}Checking autoheader version...${NC}"
   ah_ver=`autoheader --version | awk '{print $NF; exit}'`
-  echo "    $ah_ver"
+  echo -e "${CYAN}    $ah_ver${NC}"
 
-  echo "Running autoheader..."
+  echo -e "${CYAN}Running autoheader...${NC}"
   autoheader || exit 1
-  echo "... done with autoheader."
+  echo -e "${CYAN}... done with autoheader.${NC}"
 }
 
 function run_automake() {
-  echo "Checking automake version..."
+  echo -e "${CYAN}Checking automake version...${NC}"
   am_ver=`automake --version | awk '{print $NF; exit}'`
-  echo "    $am_ver"
+  echo -e "${CYAN}    $am_ver${NC}"
 
-  echo "Running automake..."
+  echo -e "${CYAN}Running automake...${NC}"
   automake -a -c --add-missing || exit 1
   #automake --force --copy --add-missing || exit 1
-  echo "... done with automake."
+  echo -e "${CYAN}... done with automake.${NC}"
 }
 
 function run_autoconf() {
-  echo "Checking autoconf version..."
+  echo -e "${CYAN}Checking autoconf version...${NC}"
   ac_ver=`autoconf --version | awk '{print $NF; exit}'`
-  echo "    $ac_ver"
+  echo -e "${CYAN}    $ac_ver${NC}"
 
-  echo "Running autoconf..."
+  echo -e "${CYAN}Running autoconf...${NC}"
   autoreconf -i || exit 1
-  echo "... done with autoconf."
+  echo -e "${CYAN}... done with autoconf.${NC}"
 }
 
 function check_installed() {
   if ! command -v ${1} &> /dev/null
   then
-    echo "${1} could not be found"
+    echo -e "${CYAN}${1} could not be found${NC}"
     exit
   fi
 }
@@ -180,15 +184,16 @@ function install_macos() {
   brew upgrade
 
   echo -e "${CYAN}Setting up autools for MacOS (this may take a while...)${NC}"
-  # brew install libtool
+  brew install libtool
   brew install automake
   brew install gawk
+  # brew install pass # not sure if we need this
 }
 
 function install_debian() {
   # sudo apt install gnuplot gawk libtool psutils make autopoint
   #declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" "automake" )
-  declare -a Packages=( "git" "make" "automake" "libtool" )
+  declare -a Packages=( "git" "make" "automake" "libtool" "chktex" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -240,12 +245,14 @@ function main() {
   fi
 
   if [ ! -d "aclocal" ]; then mkdir aclocal; fi
+  run_libtoolize
   run_aclocal
-  run_autoconf
+  # run_autoheader
   run_automake
+  run_autoconf
   ./configure
   #./config.status
 }
 
 main
-
+ 
