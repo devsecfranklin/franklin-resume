@@ -45,8 +45,10 @@ resource "google_compute_firewall" "lab-ingress" {
     "52.151.200.153/32", # azure MTA 3
     "52.151.200.97/32",  # azure MTA 4
     "34.66.44.164/32",   # gke cluster
-    "35.185.72.81/32",   # gcp test fw
+    "35.232.129.131/32",   # gcp ps-devsecops-fw01
     "137.83.195.1/32",   # Palo Corp Global Protect
-    "137.83.195.1/32"    # Palo Corp Global Protect
+    "137.83.195.1/32",   # Palo Corp Global Protect
+    "20.238.77.180",     # azure testing - markel
+    "20.238.77.140"      # azure testing markel
   ]
 }

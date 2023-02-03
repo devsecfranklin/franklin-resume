@@ -195,6 +195,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
 // CN series firewall node pool
 // https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/cn-series-prerequisites
+
 resource "google_container_node_pool" "cn-series" {
   name       = "ps-east-cn-series"
   project    = var.project_id
@@ -227,13 +228,17 @@ resource "google_container_node_pool" "cn-series" {
       "https://www.googleapis.com/auth/compute",
     ]
     labels = {
-      env = "cn-series"
+      env = "cn-series-stateful"
       app = "ps-east-cn-series"
     }
     metadata = {
       disable-legacy-endpoints = "true"
     }
-    tags  = ["gke-node", "ps-east-gke"]
+    tags = [
+      "gke-node",
+      "ps-east-gke",
+      "lab-franklin"
+    ]
     taint = []
     shielded_instance_config {
       enable_integrity_monitoring = true

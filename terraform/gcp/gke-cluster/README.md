@@ -1,5 +1,9 @@
 # Terraform
 
+* [CN-Series Prerequisites](https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/cn-series-prerequisites)
+* [Deploy the CN-Series Firewall as a Kubernetes Service](https://docs.paloaltonetworks.com/cn-series/10-1/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/deploy-the-cn-series-firewalls/deploy-the-cn-series-firewall-as-a-service)
+* [CN-Series Performance and Scaling](https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/cn-series-firewall-for-kubernetes/cn-series-performance-and-scalability#idcbe72b25-f36b-4fc1-af30-108a324a387b)
+
 ## Google Cloud
 
 ```sh
