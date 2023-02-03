@@ -14,9 +14,9 @@ vmseries_common = {
     type                        = "dhcp-client"
     dhcp-accept-server-hostname = "yes"
     dhcp-accept-server-domain   = "yes"
-    panorama-server = "34.134.31.136" # this is Franklin lab Panorama
-    panorama-server-2 = "10.255.0.3"
-    vm-auth-key = "249960450218671"
+    panorama-server             = "34.134.31.136" # this is Franklin lab Panorama
+    panorama-server-2           = "10.255.0.3"
+    vm-auth-key                 = "249960450218671"
   }
   metadata = {
     block-projectssh-keys = "true"
