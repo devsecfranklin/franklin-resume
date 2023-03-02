@@ -201,15 +201,15 @@ resource "google_container_node_pool" "cn-series" {
   project    = var.project_id
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = 2
   node_locations = [
     "us-central1-b",
     "us-central1-c",
   ]
-  autoscaling {
-    min_node_count = 1
-    max_node_count = 36
-  }
+  //autoscaling {
+  //  min_node_count = 1
+  //  max_node_count = 36
+  //}
   node_config {
     image_type = "COS_CONTAINERD"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
@@ -228,8 +228,8 @@ resource "google_container_node_pool" "cn-series" {
       "https://www.googleapis.com/auth/compute",
     ]
     labels = {
-      env = "cn-series-stateful"
-      app = "ps-east-cn-series"
+      env      = "cn-series-stateful"
+      paloalto = "ps-east-cn-series"
     }
     metadata = {
       disable-legacy-endpoints = "true"

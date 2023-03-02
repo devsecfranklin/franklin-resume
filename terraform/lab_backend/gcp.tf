@@ -15,10 +15,10 @@ resource "google_compute_network" "vpc" {
   auto_create_subnetworks = "false"
 }
 
-/* who can talk to Panorama? 
+// add KDC here
 
-  Still using the old VPC name for now. Change to use above VPC
-*/
+// add airlock host here
+
 resource "google_compute_firewall" "lab-ingress" {
   name        = "franklin-lab-ingress"
   project     = var.project_id
@@ -31,11 +31,12 @@ resource "google_compute_firewall" "lab-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "443", "3978", "8443", "28769"]
+    ports    = ["22", "443", "2049", "3978", "8443", "28270", "28443", "28769"]
   }
 
   direction = "INGRESS"
   source_ranges = [
+    "174.160.179.231",   # Raneesh Nair
     "10.199.0.0/21",     # Azure common subnet
     "68.38.137.81/32",   # Franklin lab
     "174.160.179.231",   # Raneesh
@@ -46,7 +47,7 @@ resource "google_compute_firewall" "lab-ingress" {
     "52.151.200.153/32", # azure MTA 3
     "52.151.200.97/32",  # azure MTA 4
     "34.66.44.164/32",   # gke cluster
-    "35.232.129.131/32", # gcp ps-devsecops-fw01
+    "35.232.129.131/32", # gcp ps-devsecops-fw01 
     "137.83.195.1/32",   # Palo Corp Global Protect
     "137.83.195.1/32",   # Palo Corp Global Protect
     "137.83.195.96/32",  # Palo Corp Global Protect
@@ -60,3 +61,5 @@ resource "google_compute_firewall" "lab-ingress" {
     "68.219.104.166"     # Azure markel
   ]
 }
+
+

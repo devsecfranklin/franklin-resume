@@ -1,5 +1,8 @@
 # Lab Backend
 
+- lab-franklin-windows
+- ps-devsecops-fw01
+
 ## Terraform
 
 ```sh
