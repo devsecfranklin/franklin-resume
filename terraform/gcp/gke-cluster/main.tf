@@ -197,7 +197,7 @@ resource "google_container_node_pool" "primary_nodes" {
 // https://docs.paloaltonetworks.com/cn-series/10-2/cn-series-deployment/secure-kubernetes-workloads-with-cn-series/cn-series-prerequisites
 
 resource "google_container_node_pool" "cn-series" {
-  name       = "ps-east-cn-series"
+  name       = "security-nodes"
   project    = var.project_id
   location   = var.region
   cluster    = google_container_cluster.primary.name

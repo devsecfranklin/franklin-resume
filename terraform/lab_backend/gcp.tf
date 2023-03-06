@@ -34,6 +34,11 @@ resource "google_compute_firewall" "lab-ingress" {
     ports    = ["22", "443", "2049", "3978", "8443", "28270", "28443", "28769"]
   }
 
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
   direction = "INGRESS"
   source_ranges = [
     "174.160.179.231",   # Raneesh Nair
@@ -47,7 +52,7 @@ resource "google_compute_firewall" "lab-ingress" {
     "52.151.200.153/32", # azure MTA 3
     "52.151.200.97/32",  # azure MTA 4
     "34.66.44.164/32",   # gke cluster
-    "35.232.129.131/32", # gcp ps-devsecops-fw01 
+    "35.232.129.131/32", # gcp ps-devsecops-fw01
     "137.83.195.1/32",   # Palo Corp Global Protect
     "137.83.195.1/32",   # Palo Corp Global Protect
     "137.83.195.96/32",  # Palo Corp Global Protect
@@ -61,5 +66,4 @@ resource "google_compute_firewall" "lab-ingress" {
     "68.219.104.166"     # Azure markel
   ]
 }
-
 
