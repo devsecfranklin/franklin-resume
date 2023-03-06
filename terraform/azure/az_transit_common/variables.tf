@@ -6,9 +6,10 @@ variable "location" {
 
 variable "resource_group_name" {
   description = "Name of the Resource Group to create. If not provided, it will be auto-generated."
-  default     = "franklin-lab"
+  default     = "lab-franklin"
   type        = string
 }
+
 variable "address_space" {
   description = "The address space used by the virtual network. You can supply more than one address space."
   type        = list(string)

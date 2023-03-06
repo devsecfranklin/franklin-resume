@@ -5,7 +5,6 @@ resource "azurerm_resource_group" "franklin_lab" {
   tags     = var.tags
 }
 
-
 // import existing storage account like so:
 // terraform import azurerm_storage_account.tfstate /subscriptions/d47f1af8-9795-4e86-bbce-da72cfd0f8ec/resourceGroups/franklin-lab/providers/Microsoft.Storage/storageAccounts/franklin-tfstate
 resource "azurerm_storage_account" "tfstate" {
