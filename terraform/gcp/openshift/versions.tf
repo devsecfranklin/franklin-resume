@@ -8,9 +8,9 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket   = "ps-devsecops"
+    bucket   = "lab-franklin"
     prefix   = "openshift-tf"
-    location = "US"
+    //location = "EU"
     //credentials = "$GOOGLE_APPLICATION_CREDENTIALS"
   }
   //required_version = "~> 1.0"

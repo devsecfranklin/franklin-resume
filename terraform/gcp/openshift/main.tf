@@ -1,3 +1,13 @@
+// GCP backend storage bucket for Terraform
+resource "google_storage_bucket" "terraform_state" {
+  project  = var.project_id
+  name     = "lab-franklin"
+  location = var.region
+
+  force_destroy               = true
+  uniform_bucket_level_access = true
+}
+
 resource "google_compute_network" "vpc" {
   name                    = "${var.name}-vpc"
   project                 = var.project_id

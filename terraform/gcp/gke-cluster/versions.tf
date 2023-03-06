@@ -8,9 +8,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "ps-devsecops"
-    prefix = "dev-tf"
-    //credentials = "$GOOGLE_APPLICATION_CREDENTIALS"
+    bucket   = "lab-franklin"
+    prefix   = "gke-cluster"
   }
-  //required_version = "~> 1.0"
 }
