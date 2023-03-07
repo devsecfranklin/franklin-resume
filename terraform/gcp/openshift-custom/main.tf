@@ -22,7 +22,7 @@ resource "google_dns_record_set" "openshift" {
     "ns-cloud-b1.googledomains.com.",
     "ns-cloud-b2.googledomains.com.",
     "ns-cloud-b3.googledomains.com.",
-    "ns-cloud-b4.googledomains.com."]
+  "ns-cloud-b4.googledomains.com."]
   ttl = 300
 }
 

@@ -9,7 +9,8 @@ variable "prefix" {
 }
 
 variable "vmseries_rg" {
-  type = string
+  type    = string
+  default = "rg01"
 }
 
 variable "vmseries_vnet" {
@@ -37,5 +38,6 @@ variable "west_vnet" {
 }
 
 variable "ssh_key_path" {
-  type = string
+  type    = string
+  default = "~/.ssh/id_rsa_work.pub"
 }

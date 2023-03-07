@@ -8,8 +8,8 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket   = "lab-franklin"
-    prefix   = "openshift-tf"
+    bucket = "lab-franklin"
+    prefix = "openshift-tf"
     //location = "EU"
     //credentials = "$GOOGLE_APPLICATION_CREDENTIALS"
   }

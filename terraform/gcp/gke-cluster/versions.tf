@@ -8,7 +8,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket   = "lab-franklin"
-    prefix   = "gke-cluster"
+    bucket = "lab-franklin"
+    prefix = "gke-cluster"
   }
 }
