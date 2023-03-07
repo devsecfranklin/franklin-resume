@@ -37,6 +37,12 @@ resource "azurerm_storage_account" "tfstate" {
   tags = var.tags
 }
 
+resource "azurerm_storage_container" "tfstate_labinfra" {
+  name                  = "tfstatelabinfra"
+  storage_account_name  = azurerm_storage_account.tfstate.name
+  container_access_type = "private"
+}
+
 //************************ dont add anything new to these, prepare for deletion *********//
 
 
@@ -45,7 +51,7 @@ resource "azurerm_storage_account" "tfstate" {
 resource "azurerm_storage_account" "tfstate_old" {
   name                     = "franklintfstate"
   resource_group_name      = "franklin-lab"
-  location                 = var.location
+  location                 = "East US"
   account_tier             = "Standard"
   account_replication_type = "LRS"
 

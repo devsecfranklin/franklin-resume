@@ -10,7 +10,6 @@ terraform {
       version = "~> 3.0"
     }
   }
-  /* Comment out the back end, do a tf init, uncomment and migrate state */
   backend "azurerm" {
     resource_group_name  = "lab-franklin"
     storage_account_name = "labfraaztest123"

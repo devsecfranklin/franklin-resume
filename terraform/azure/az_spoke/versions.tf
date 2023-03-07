@@ -11,7 +11,7 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "franklin-lab"
+    resource_group_name  = "lab-franklin"
     storage_account_name = "custxxyz"
     container_name       = "tfstatespoke"
     key                  = "terraform-vm.tfstate"
