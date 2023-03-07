@@ -2,6 +2,7 @@
 
 - lab-franklin-windows
 - ps-devsecops-fw01
+- "10.252.0.0/25" mgmt
 
 ## Mac Terraform Setup
 
@@ -44,15 +45,6 @@ terraform import google_compute_network.vpc projects/gcp-gcs-pso/global/networks
 terraform import google_compute_firewall.lab-ingress projects/gcp-gcs-pso/global/firewalls/franklin-lab-ingress
 ```
 
-## Storage
-
-Storage buckets for TF state and other semi-permanent things.
-
-```sh
-terraform plan -out=franklin.plan
-terraform apply "franklin.plan"
-```
-
 ## Eve NG Virtualization
 
 - [Use the Community cookbook](https://www.eve-ng.net/index.php/documentation/community-cookbook/)
@@ -60,3 +52,19 @@ terraform apply "franklin.plan"
 ## Find Windows images
 
 `gcloud compute images list --filter 'family ~ windows'`
+
+## OpenShift - OKD
+
+### Set up the host Instance
+
+- Check for Ubuntu images like so `gcloud compute images list --filter 'family ~ ubuntu'`
+- `gcloud compute ssh --zone=europe-west2-a openshift-franklin`
+
+### Install OKD
+
+[Install OKD](https://www.okd.io/installation/)
+
+```sh
+terraform validate -json
+terraform plan -out franklin.plan
+```

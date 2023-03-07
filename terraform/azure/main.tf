@@ -1,5 +1,5 @@
 data "azurerm_resource_group" "lab_franklin" {
-  name     = var.resource_group_name # coalesce(var.resource_group_name, "${var.name_prefix}")
+  name = var.resource_group_name # coalesce(var.resource_group_name, "${var.name_prefix}")
 }
 
 

@@ -35,3 +35,9 @@ variable "region" {
   type        = string
   default     = "us-central1"
 }
+
+variable "openshift-region" {
+  description = "The region will be used to choose the default location for regional resources. Regional resources are spread across several zones."
+  type        = string
+  default     = "australia-southeast2"
+}
