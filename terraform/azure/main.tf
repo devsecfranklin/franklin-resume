@@ -1,9 +1,7 @@
-# import /subscriptions/d47f1af8-9795-4e86-bbce-da72cfd0f8ec/resourceGroups/lab-franklin
-resource "azurerm_resource_group" "lab_franklin" {
+data "azurerm_resource_group" "lab_franklin" {
   name     = var.resource_group_name # coalesce(var.resource_group_name, "${var.name_prefix}")
-  location = var.location
-  tags     = var.tags
 }
+
 
 resource "azurerm_network_security_group" "lab-franklin" {
   name                = coalesce("nsg", "${var.name_prefix}")

@@ -1,4 +1,3 @@
-
 resource "google_compute_firewall" "lab-ingress" {
   name        = "franklin-lab-ingress"
   project     = var.project_id

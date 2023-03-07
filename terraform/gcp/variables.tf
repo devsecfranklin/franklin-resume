@@ -6,7 +6,7 @@ variable "name" {
 
 variable "name_prefix" {
   type    = string
-  default = "lab-franklin-"
+  default = "lab-franklin"
 }
 
 variable "project_id" {

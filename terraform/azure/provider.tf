@@ -17,3 +17,7 @@ terraform {
     key                  = "terraform-test.tfstate"
   }
 }
+
+provider "azurerm" {
+  features {}
+}
