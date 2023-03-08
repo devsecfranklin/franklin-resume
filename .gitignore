@@ -4,6 +4,7 @@ __pycache__
 *_check_results_*.txt
 *.bkp
 key
+cred.json
 
 # This is a minimal list, OK to add things per repo
 # mac specific

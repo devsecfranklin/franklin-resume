@@ -5,13 +5,14 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: pan-cni
-  namespace: kube-system
+  namespace: pa-cn
   labels:
     k8s-app: pan-cni
 spec:
   selector:
     matchLabels:
       k8s-app: pan-cni
+      #paloalto: ps-east-cn-series
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -20,6 +21,7 @@ spec:
     metadata:
       labels:
         k8s-app: pan-cni
+        #paloalto: ps-east-cn-series
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,
         # marks the pod as a critical add-on, ensuring it gets
@@ -30,11 +32,14 @@ spec:
     spec:
       nodeSelector:
         beta.kubernetes.io/os: linux
+        #paloalto: ps-east-cn-series
       hostNetwork: true
       tolerations:
         # Make sure pan-cni gets scheduled on all nodes.
-        - effect: NoSchedule
-          operator: Exists
+        #- effect: NoSchedule
+        #  operator: Exists
+        #- key: app
+        #  operator: Exists
         # Mark the pod as a critical add-on for rescheduling.
         - key: CriticalAddonsOnly
           operator: Exists
@@ -49,7 +54,7 @@ spec:
         # This container installs the pan CNI binaries
         # and CNI network config file on each node.
         - name: install-pan-cni
-          image: <your-private-registry-image-path>
+          image: gcr.io/itp-ext-cnseries/10.2.3/pan_cni@sha256:a16ace4cafe4d95e1ef5ff3a51b5ea14a26f79439ea6b3cc5d462b158bceac5b
           imagePullPolicy: Always
           command: ["/install-pan-cni.sh", "main"]
           lifecycle:

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pan-ngfw-dep
-  namespace: kube-system
+  namespace: pa-cn
   labels:
       app: pan-ngfw
 spec:
@@ -13,6 +13,7 @@ spec:
   selector:
     matchLabels:
       app: pan-ngfw
+      paloalto: ps-east-cn-series
   # min replicas set to 2
   replicas: 2
   template:
@@ -48,10 +49,10 @@ spec:
         hostnames:
           - mgmt
       #nodeSelector:  
-      #  firewall: pan-ngfw-ds
+      #  cn-series: cn-series
       containers:
         - name: pan-ngfw-container
-          image: <your-private-registry-image-path>
+          image: gcr.io/itp-ext-cnseries/10.2.3/panos_cn_ngfw@sha256:bb90e070ae071971662e358b974685dff27271aa904faf8c7c4a33a305625fe7
           command: ["/sbin/pan_start","newnns","nspan-fw","eac8617ee91"]
           lifecycle:
             preStop:

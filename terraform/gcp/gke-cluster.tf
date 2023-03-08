@@ -6,8 +6,8 @@ resource "google_compute_subnetwork" "gke-subnet" {
   name                     = "${var.name_prefix}-gke-subnet"
   project                  = var.project_id
   region                   = var.region
-  network                  = google_compute_network.vpc.name
-  ip_cidr_range            = "10.12.0.0/24"
+  network                  = data.google_compute_network.mgmt-vpc.name
+  ip_cidr_range            = "10.249.0.0/25"
   private_ip_google_access = true
 
   /* A named secondary range is mandatory for a private cluster
@@ -21,11 +21,11 @@ resource "google_compute_subnetwork" "gke-subnet" {
   */
   secondary_ip_range = [
     {
-      ip_cidr_range = "10.181.0.0/16"
+      ip_cidr_range = "10.250.0.0/23"
       range_name    = "${var.name_prefix}-gke-pods-d45be269"
     },
     {
-      ip_cidr_range = "10.182.0.0/22"
+      ip_cidr_range = "10.248.0.0/23"
       range_name    = "${var.name_prefix}-gke-pods-d45ce269"
     },
   ]

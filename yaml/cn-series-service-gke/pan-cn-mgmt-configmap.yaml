@@ -2,21 +2,21 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: pan-mgmt-config
-  namespace: kube-system
+  namespace: pa-cn
 data:
   PAN_SERVICE_NAME: pan-mgmt-svc
   PAN_MGMT_SECRET: pan-mgmt-secret
 
   # Panorama settings
   PAN_PANORAMA_IP: "34.134.31.136"
-  PAN_DEVICE_GROUP: "CN-GKE-SERVICE"
-  PAN_TEMPLATE_STACK: "STK-CN-GKE-SERVICE"
+  PAN_DEVICE_GROUP: "CN-GKE-CNF"
+  PAN_TEMPLATE_STACK: "STK-CN-GKE-CNF"
   PAN_CGNAME: "CG-LAB-FRANKLIN" # log collector group
   PAN_CTNR_MODE_TYPE: "k8s-service"
 
 #Non-mandatory parameters
   # Recommended to have same name as the cluster name provided in Panorama Kubernetes plugin - helps with easier identification of pods if managing multiple clusters with same Panorama
-  #CLUSTER_NAME: "<Cluster name>"
+  CLUSTER_NAME: "ps-devsecops-gke"
 
   PAN_PANORAMA_IP2: "34.136.90.64"
 
