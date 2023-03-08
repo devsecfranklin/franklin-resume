@@ -13,7 +13,8 @@ resource "google_container_cluster" "primary" {
   node_locations = [
     "us-central1-a",
     "us-central1-b",
-    "us-central1-c"
+    "us-central1-c",
+    "us-central1-f"
   ]
 
   remove_default_node_pool    = true
@@ -130,6 +131,7 @@ resource "google_container_node_pool" "primary_nodes" {
     "us-central1-a",
     "us-central1-b",
     "us-central1-c",
+    "us-central1-f",
   ]
   autoscaling {
     min_node_count = 1
@@ -203,8 +205,10 @@ resource "google_container_node_pool" "cn-series" {
   cluster    = google_container_cluster.primary.name
   node_count = 2
   node_locations = [
+    "us-central1-a",
     "us-central1-b",
     "us-central1-c",
+    "us-central1-f",
   ]
   //autoscaling {
   //  min_node_count = 1

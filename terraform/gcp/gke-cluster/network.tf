@@ -50,6 +50,7 @@ resource "google_compute_subnetwork" "gke-subnet" {
   ]
 }
 
+/*
 resource "google_compute_router_nat" "nat_router" {
   name                               = "${var.name}-nat-router"
   router                             = google_compute_router.router.name
@@ -67,6 +68,7 @@ resource "google_compute_router_nat" "nat_router" {
     filter = "ERRORS_ONLY"
   }
 }
+*/
 
 // firewall changes require compute security admin role
 resource "google_compute_firewall" "allow-egress" {
@@ -100,13 +102,14 @@ resource "google_compute_firewall" "allow-corp" {
 
   direction = "INGRESS"
   source_ranges = [
+    "34.66.44.164/32",  # gke cluster
     "34.103.71.242/32", # Corporate
     "54.215.48.190/32", # Denver - DS 
     "156.146.51.68/32", # Palmer Lake
     "68.38.137.81/32",  # Franklin lab
     "34.134.31.136/32", # ps-devsecops-panorama-three-10-0-4 
     "34.136.90.64/32",  # ps-devsecops-panorama-two-10-0-4 
-    "34.66.44.164/32"   # gke cluster
+
   ]
 }
 
