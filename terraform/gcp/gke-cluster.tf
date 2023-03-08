@@ -21,13 +21,14 @@ resource "google_compute_subnetwork" "gke-subnet" {
   */
   secondary_ip_range = [
     {
-      ip_cidr_range = "10.250.0.0/23"
-      range_name    = "${var.name_prefix}-gke-pods-d45be269"
+      ip_cidr_range = "10.12.0.0/16"
+      range_name    = "gke-lab-franklin-gke-pods-f23f12d3"
     },
     {
-      ip_cidr_range = "10.248.0.0/23"
-      range_name    = "${var.name_prefix}-gke-pods-d45ce269"
+      ip_cidr_range = "10.13.0.0/22"
+      range_name    = "gke-lab-franklin-gke-services-f23f12d3"
     },
+
   ]
 }
 
@@ -147,3 +148,68 @@ resource "google_container_cluster" "primary" {
   }
 }
 
+resource "google_container_node_pool" "cn-series" {
+  name       = "security-nodes"
+  project    = var.project_id
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = 2
+  node_locations = [
+    "us-central1-a",
+    "us-central1-b",
+    "us-central1-c",
+    "us-central1-f",
+  ]
+  //autoscaling {
+  //  min_node_count = 1
+  //  max_node_count = 36
+  //}
+  node_config {
+    image_type = "COS_CONTAINERD"
+    #using pd-ssd's is recommended for pods that do any scratch disk operations.
+    disk_type         = "pd-ssd"
+    disk_size_gb      = 100
+    guest_accelerator = []
+    local_ssd_count   = 0
+    service_account   = "default"
+    preemptible       = false
+    machine_type      = "n1-standard-8"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/devstorage.read_write",
+      "https://www.googleapis.com/auth/compute",
+    ]
+    labels = {
+      env      = "cn-series-stateful"
+      paloalto = "ps-east-cn-series"
+    }
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+    tags = [
+      "gke-node",
+      "ps-east-gke",
+      "lab-franklin"
+    ]
+    taint = []
+    shielded_instance_config {
+      enable_integrity_monitoring = true
+      enable_secure_boot          = false
+    }
+    # Enable_gke_metadata_server is not supported on clusters that do not have Workload Identity enabled
+    #workload_metadata_config {
+    #  mode = "GKE_METADATA"
+    #}
+  }
+  upgrade_settings {
+    max_surge       = 1
+    max_unavailable = 0
+  }
+  # Fix broken nodes automatically and keep them updated with the control plane.
+  management {
+    auto_repair  = true
+    auto_upgrade = true
+  }
+}
