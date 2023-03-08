@@ -8,6 +8,16 @@ resource "google_storage_bucket" "terraform_state" {
   uniform_bucket_level_access = true
 }
 
+// GCP backend storage bucket for gke-terraform
+resource "google_storage_bucket" "gke_terraform_state" {
+  project  = var.project_id
+  name     = "lab-franklin"
+  location = var.region
+
+  force_destroy               = true
+  uniform_bucket_level_access = true
+}
+
 // lab-franklin vpc
 resource "google_compute_network" "mgmt-vpc" {
   name                    = "${var.name}-mgmt-vpc"
@@ -34,6 +44,7 @@ resource "google_compute_subnetwork" "mgmt-subnet" {
   }
 }
 
+// ****************************************** OpenShift
 // have to move this to a region that allows larger machines
 resource "google_compute_subnetwork" "aus_network_subnet" {
   name                     = "${var.name}-aus-mgmt-subnet"
@@ -46,3 +57,5 @@ resource "google_compute_subnetwork" "aus_network_subnet" {
     prevent_destroy = true
   }
 }
+
+// ****************************************** GKE

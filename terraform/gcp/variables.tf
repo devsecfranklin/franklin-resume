@@ -53,6 +53,12 @@ variable "access_list" {
   "174.160.179.231/32"]
 }
 
+variable "service_account_terraform" {
+  description = "https://tfsec.dev/docs/google/GCP012/"
+  type        = string
+  default     = "fdiaz-gke-bot@gcp-gcs-pso.iam.gserviceaccount.com"
+}
+
 // ***************************** OPENSHIFT
 variable "openshift-region" {
   description = "The region will be used to choose the default location for regional resources. Regional resources are spread across several zones."

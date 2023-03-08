@@ -47,3 +47,15 @@ gcloud container clusters update pso-automation-fdiaz-gke --region us-central1 \
       display_name = "kuba-remote"
     }
 ```
+
+## Import
+
+```sh
+4terraform import google_compute_network.vpc projects/gcp-gcs-pso/global/networks/ps-devsecops-vpc
+terraform import google_compute_route.egress_internet projects/gcp-gcs-pso/global/routes/ps-devsecops-egress-internet
+terraform import google_compute_router.router projects/gcp-gcs-pso/regions/us-central1/routers/ps-devsecops-router
+terraform import google_compute_subnetwork.gke-subnet projects/gcp-gcs-pso/regions/us-central1/subnetworks/ps-devsecops-gke-subnet
+terraform import google_compute_firewall.allow-egress projects/gcp-gcs-pso/global/firewalls/ps-devsecops-allow-egress
+terraform import google_compute_firewall.allow-corp projects/gcp-gcs-pso/global/firewalls/ps-devsecops-allow-corp
+terraform import google_compute_firewall.ps-devsecops-allow-tekton-webhook projects/gcp-gcs-pso/global/firewalls/ps-devsecops-allow-tekton-webhook
+```
