@@ -28,7 +28,7 @@ def main(request):
     token = my_gh_token.get_secret(project_id, secret_name)
 
     """Instantiate a GH object."""
-    #logger.info("We get secret: {}".format(token))
+    # logger.info("We get secret: {}".format(token))
     g = Github(token)
     my_gh_helper = github_util.GithubHelper()
     logger.info("Instantiate GH object with label {}".format(label_name))
@@ -60,9 +60,8 @@ def main(request):
         else:
             logger.info("This PR already has the %s label on it.", label_name)
 
-
         url = "http://10.11.0.109"
-        cloudbot_response = requests.post(url, json=request_json)
+        cloudbot_response = requests.post(url, json=request_json, timeout=10)
         logger.info(str(cloudbot_response))
 
         return request_json["message"]

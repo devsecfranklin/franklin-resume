@@ -103,9 +103,7 @@ class GithubHelper:
                 logger.debug("Found a matching label!")
 
         if action is False:
-            logger.info(
-                "Setting label {} on PR  {}".format(label_name, self.pr_number)
-            )
+            logger.info("Setting label {} on PR  {}".format(label_name, self.pr_number))
             pr.set_labels(str(label_name))
 
         return action
@@ -119,9 +117,7 @@ class GithubHelper:
             color = "a742f5"
             repo.create_label(label_name, color)
         except Exception as e:
-            logger.info(
-                "Unable to add label {} because:  {}".format(label_name, e)
-            )
+            logger.info("Unable to add label {} because:  {}".format(label_name, e))
 
     def get_pr_labels(self, g):
         """Get Pr labels."""
