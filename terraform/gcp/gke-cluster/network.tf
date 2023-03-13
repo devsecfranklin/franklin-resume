@@ -45,8 +45,6 @@ resource "google_compute_subnetwork" "gke-subnet" {
       ip_cidr_range = "10.172.0.0/22"
       range_name    = "gke-ps-devsecops-gke-services-d45be269"
     },
-
-
   ]
 }
 
