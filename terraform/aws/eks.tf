@@ -7,9 +7,7 @@ resource "aws_subnet" "first" {
   cidr_block        = "172.16.240.0/25"
   availability_zone = "eu-west-1b"
 
-  tags = {
-    Name = "first"
-  }
+  tags = var.tags
 }
 
 resource "aws_subnet" "second" {
@@ -17,16 +15,24 @@ resource "aws_subnet" "second" {
   cidr_block        = "172.16.240.128/25"
   availability_zone = "eu-west-1c"
 
-  tags = {
-    Name = "second"
-  }
+  tags = var.tags
 }
 
 resource "aws_eks_cluster" "lab-franklin-eks" {
-  name     = "lab-franklin-cluster"
-  role_arn = aws_iam_role.eks-iam-role.arn
+  name             = "lab-franklin-cluster"
+  role_arn         = aws_iam_role.eks-iam-role.arn
+  version          = "1.24"
+  enabled_cluster_log_types = []
+  tags             = {}
+
+  kubernetes_network_config {
+    ip_family         = "ipv4"
+    service_ipv4_cidr = "10.100.0.0/16"
+    #service_ipv6_cidr = (known after apply)
+  }
 
   vpc_config {
+    security_group_ids        = []
     subnet_ids = [aws_subnet.first.id, aws_subnet.second.id]
   }
 
@@ -45,11 +51,11 @@ resource "aws_eks_node_group" "dev-nodes" {
   ami_type        = "AL2_x86_64"
   disk_size       = 20
   labels          = {}
-  release_version = "1.23.13-20221112"
+  //release_version = "1.24"
 
   scaling_config {
-    desired_size = 1
-    max_size     = 1
+    desired_size = 2
+    max_size     = 6
     min_size     = 1
   }
 

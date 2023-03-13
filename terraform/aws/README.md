@@ -2,6 +2,17 @@
 
 ## AWS Setup
 
+[Install `eksctl` from this link](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html).
+
+```sh
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv eksctl /usr/local/bin
+terraform plan -out franklin.plan
+terraform apply franklin.plan
+eksctl get clusters --region eu-west-1 # you can also set region in .envrc
+eksctl get cluster lab-franklin-cluster
+```
+
 - Permissions issues:
 
 ```sh

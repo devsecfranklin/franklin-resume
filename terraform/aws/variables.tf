@@ -3,3 +3,8 @@ variable "region" {
   type    = string
 }
 
+variable "tags" {
+  description = "Map of tags to be associated with the virtual machines, their interfaces and public IP addresses."
+  default     = {}
+  type        = map(string)
+}
