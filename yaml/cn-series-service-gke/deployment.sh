@@ -24,7 +24,7 @@ NC='\033[0m' # No Color
 
 NAMESPACE="pa-cn"
 
-function deploy() {
+function deploy_cni() {
   echo -e "${LGREEN}create the service account${NC}"
   kubectl apply -f plugin-serviceaccount.yaml
   # cred.json will be uploaded to Panorama later
@@ -34,6 +34,34 @@ function deploy() {
   kubectl apply -f pan-cni-configmap.yaml
   kubectl apply -f pan-cn-ngfw-svc.yaml
   kubectl apply -f pan-cni.yaml -n pa-cn
+}
+
+function delete_cni(){
+  echo -e "${LGREEN}Deleting: daemonset pan-cni${NC}"
+  kubectl delete daemonset pan-cni -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: service pan-mgmt-sts ${NC}"
+  kubectl delete service pan-mgmt-sts -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: configmap pan-cni-config${NC}"
+  kubectl delete configmap pan-cni-config -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: pan-cni-config${NC}"
+  kubectl delete serviceaccount pan-cni-sa -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: clusterrolebinding pan-cni-sa${NC}"
+  kubectl delete clusterrolebinding pan-cni-sa -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: pan-cni-config${NC}"
+  kubectl delete serviceaccount pan-mgmt-sa -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: rolebinding pan-mgmt-rb-kube-system${NC}"
+  kubectl delete rolebinding pan-mgmt-rb-kube-system -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: role pan-mgmt-role${NC}"
+  kubectl delete role pan-mgmt-role -n ${NAMESPACE}
+  echo -e "${LGREEN}Deleting: clusterrolebinding pan-mgmt-crb-kube-system${NC}"
+  kubectl delete clusterrolebinding pan-mgmt-crb-kube-system -n ${NAMESPACE}
+  # kubectl delete secret pan-plugin-user-secret -n ${NAMESPACE}
+  # kubectl delete secret pan-plugin-cluster-mode-secret -n ${NAMESPACE}
+  # kubectl delete serviceaccount pan-plugin-user -n ${NAMESPACE}
+  # kubectl delete clusterrolebinding  pan-plugin-crb -n ${NAMESPACE}
+}
+
+function deploy_mgmt() {
   # management
   kubectl apply -f pan-cn-mgmt-configmap.yaml
   kubectl apply -f pan-cn-mgmt-slot-crd.yaml
@@ -67,6 +95,7 @@ function status() {
 
 function main() {
   status
+  #delete_cni
 }
 
 main

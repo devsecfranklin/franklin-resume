@@ -12,5 +12,5 @@ spec:
     name: panngfwsvc
   selector:
     app: pan-ngfw
-    paloalto: ps-east-cn-series
+    #paloalto: ps-east-cn-series
 

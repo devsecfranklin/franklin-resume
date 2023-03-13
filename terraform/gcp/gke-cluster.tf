@@ -153,7 +153,7 @@ resource "google_container_node_pool" "cn-series" {
   project    = var.project_id
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 2
+  node_count = 1
   node_locations = [
     "us-central1-a",
     "us-central1-b",

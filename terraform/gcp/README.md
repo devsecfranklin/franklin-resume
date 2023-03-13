@@ -68,3 +68,9 @@ terraform import google_compute_firewall.lab-ingress projects/gcp-gcs-pso/global
 terraform validate -json
 terraform plan -out franklin.plan
 ```
+
+## GKE Cluster
+
+```sh
+gcloud container clusters get-credentials lab-franklin-gke --region=us-central1
+```

@@ -62,6 +62,6 @@ data:
               "kubeconfig": "__KUBECONFIG_FILEPATH__",
               "cni_bin_dir": "/home/kubernetes/bin",
               "exclude_namespaces": [ ],
-              "security_namespaces": ["pa-cn"]
+              "security_namespaces": [ "pa-cn" ]
           }
         }
