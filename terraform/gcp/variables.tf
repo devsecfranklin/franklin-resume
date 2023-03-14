@@ -26,6 +26,12 @@ variable "zone" {
   default     = "us-central1-a"
 }
 
+variable "tags" {
+  description = "Map of tags to be associated with the virtual machines, their interfaces and public IP addresses."
+  type        = list(any)
+  default     = ["lab", "franklin", "ssh"]
+}
+
 variable "access_list" {
   type = list(any)
   default = [
@@ -57,6 +63,20 @@ variable "service_account_terraform" {
   description = "https://tfsec.dev/docs/google/GCP012/"
   type        = string
   default     = "fdiaz-gke-bot@gcp-gcs-pso.iam.gserviceaccount.com"
+}
+
+# gcloud compute images list --filter debian-cloud
+# The “PROJECT” and “FAMILY” columns are the two we need to combine to create the image name.
+variable "debian_11_sku" {
+  type        = string
+  description = "SKU for Debian 11"
+  default     = "debian-cloud/debian-11"
+}
+
+variable "linux_instance_type" {
+  type        = string
+  description = "VM instance type for Linux Server"
+  default     = "f1-micro"
 }
 
 // ***************************** OPENSHIFT
