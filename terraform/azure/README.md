@@ -3,6 +3,7 @@
 ## deploy
 
 ```sh
+az vm image terms accept --publisher paloaltonetworks --offer vmseries-flex --plan byol 
  az vm image accept-terms --offer vmseries-flex --publish paloaltonetworks --plan bundle2
 ```
 

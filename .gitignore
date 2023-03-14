@@ -30,6 +30,7 @@ cred.json
 .terraformrc
 **/.terraform/*
 .terraform.d
+.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 .idea

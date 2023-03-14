@@ -6,11 +6,13 @@ variable "name" {
 
 variable "tags" {
   description = "Map of tags to be associated with the virtual machines, their interfaces and public IP addresses."
-  default     = {}
-  type        = map(string)
+  default = {
+    lab = "franklin"
+  }
+  type = map(string)
 }
 
-// *********************** AZURE
+// *********************** AZURE *********************************
 variable "az_location" {
   description = "The Azure region to use."
   default     = "West US"
@@ -23,7 +25,7 @@ variable "resource_group_name" {
   type        = string
 }
 
-// *********************** GOOGLE
+// *********************** GOOGLE *********************************
 variable "project_id" {
   description = "The project indicates the default GCP project ID."
   type        = string
@@ -41,3 +43,5 @@ variable "openshift-region" {
   type        = string
   default     = "australia-southeast2"
 }
+
+// *********************** AWS *********************************

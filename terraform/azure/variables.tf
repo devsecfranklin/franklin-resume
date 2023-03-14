@@ -30,6 +30,8 @@ variable "name_prefix" {
 
 variable "tags" {
   description = "Map of tags to be associated with the virtual machines, their interfaces and public IP addresses."
-  default     = {}
-  type        = map(string)
+  default = {
+    lab = "franklin"
+  }
+  type = map(string)
 }

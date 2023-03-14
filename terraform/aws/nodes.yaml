@@ -1,0 +1,30 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: lab-franklin-cluster # This should be the name of the existing cluster.
+  region: ca-central-1 # This should be the Amazon region the cluster is in.
+
+vpc:
+  id: "vpc-0fb5173b15a588aa5"
+  securityGroup: "sg-00f0127fcb9c3f5f8"   # this is the ControlPlaneSecurityGroup
+  subnets:
+    private:
+      private1:
+          id: "subnet-08a9fc88dc28004f2"
+      private2:
+          id: "subnet-0f72cb91b7da7815e"
+    public:
+      public1:
+          id: "subnet-0fc157640202b2c9a"
+      public2:
+          id: "subnet-0a880d4249e745fe7"
+
+managedNodeGroups:
+  - name: ng-1-workers
+    labels: { role: cn-series }
+    instanceType: m5.xlarge
+    desiredCapacity: 10
+    volumeSize: 80
+    privateNetworking: true

@@ -3,6 +3,18 @@ provider "aws" {
   region  = var.region
 }
 
+/*
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+
+  config = {
+    region = "${var.vpc_state_region}"
+    bucket = "${var.vpc_bucket}"
+    key    = "${var.vpc_state_key}"
+  }
+}
+*/
+
 terraform {
   required_providers {
     aws = {
@@ -11,14 +23,10 @@ terraform {
     }
   }
 
-  /*
   backend "s3" {
-    key    = "global/s3/lab-franklin-aws-tfstate"
-    region = "us-west-1"
-    bucket = "ps-east-lab-franklin"
+    region = "ca-central-1"
+    bucket = "lab-franklin-tfstate"
+    key    = "lab-franklin-tfstate-key"
     //dynamodb_table = "franklin-terraform-state-locking"
   }
-  */
-
 }
-

@@ -13,6 +13,13 @@ eksctl get clusters --region eu-west-1 # you can also set region in .envrc
 eksctl get cluster lab-franklin-cluster
 ```
 
+in order to create nodegroups or managed nodegroups on a cluster which was not created by eksctl,
+[a config file containing VPC details must be provided](https://eksctl.io/usage/unowned-clusters/)
+
+```sh
+eksctl create nodegroup --config-file=nodes.yaml
+```
+
 - Permissions issues:
 
 ```sh

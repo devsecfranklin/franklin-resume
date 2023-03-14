@@ -1,29 +1,54 @@
-resource "aws_vpc" "lab-franklin" {
-  cidr_block = "172.16.240.0/20"
-}
-
+/*
 resource "aws_subnet" "first" {
   vpc_id            = aws_vpc.lab-franklin.id
   cidr_block        = "172.16.240.0/25"
-  availability_zone = "eu-west-1b"
+  availability_zone = "${var.region}b"
 
   tags = var.tags
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_subnet" "second" {
   vpc_id            = aws_vpc.lab-franklin.id
   cidr_block        = "172.16.240.128/25"
-  availability_zone = "eu-west-1c"
+  availability_zone = "${var.region}c"
 
   tags = var.tags
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_subnet" "third" {
+  vpc_id            = aws_vpc.lab-franklin.id
+  cidr_block        = "172.16.241.0/25"
+  availability_zone = "${var.region}b"
+
+  tags = var.tags
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_subnet" "fourth" {
+  vpc_id            = aws_vpc.lab-franklin.id
+  cidr_block        = "172.16.241.128/25"
+  availability_zone = "${var.region}c"
+
+  tags = var.tags
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_eks_cluster" "lab-franklin-eks" {
-  name             = "lab-franklin-cluster"
-  role_arn         = aws_iam_role.eks-iam-role.arn
-  version          = "1.24"
+  name                      = "lab-franklin-cluster"
+  role_arn                  = aws_iam_role.eks-iam-role.arn
+  version                   = "1.24"
   enabled_cluster_log_types = []
-  tags             = {}
+  tags                      = {}
 
   kubernetes_network_config {
     ip_family         = "ipv4"
@@ -32,16 +57,18 @@ resource "aws_eks_cluster" "lab-franklin-eks" {
   }
 
   vpc_config {
-    security_group_ids        = []
-    subnet_ids = [aws_subnet.first.id, aws_subnet.second.id]
+    security_group_ids = []
+    subnet_ids         = [aws_subnet.first.id, aws_subnet.second.id]
   }
 
   depends_on = [
     aws_iam_role.eks-iam-role,
   ]
 }
+*/
 
 // https://aws.amazon.com/premiumsupport/knowledge-center/resolve-eks-node-failures/
+/*
 resource "aws_eks_node_group" "dev-nodes" {
   cluster_name    = aws_eks_cluster.lab-franklin-eks.name
   node_group_name = "lab-franklin-dev-nodes"
@@ -65,3 +92,4 @@ resource "aws_eks_node_group" "dev-nodes" {
     #aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
 }
+*/

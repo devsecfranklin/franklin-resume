@@ -92,7 +92,7 @@ resolve_aws_alias = True
 include_path = True
 preferred_mfa_type = push
 remember_device = True
-aws_default_duration = 3600
+aws_default_duration = 28800
 device_token =
 output_format = export
 EOF
