@@ -3,14 +3,19 @@
 data "template_file" "linux-metadata" {
   template = <<EOF
 sudo apt-get update; 
-sudo apt-get install -y apache2;
-sudo systemctl start apache2;
-sudo systemctl enable apache2;
+sudo apt-get install -y neofetch automake gawk git;
 EOF
 }
 
+resource "google_compute_address" "airlock1_static" {
+  name = "${var.name_prefix}-ipv4-address"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 resource "google_compute_instance" "gcp_airlock" {
-  name         = "airlock1"
+  name         = "${var.name_prefix}-airlock1"
   machine_type = var.linux_instance_type
   zone         = var.zone
   //hostname     = "airlock1" #must be FQDN
@@ -24,6 +29,8 @@ resource "google_compute_instance" "gcp_airlock" {
   network_interface {
     network    = data.google_compute_network.mgmt-vpc.name
     subnetwork = data.google_compute_subnetwork.mgmt-subnetwork.name
-    access_config {}
+    access_config {
+      nat_ip = google_compute_address.airlock1_static.address
+    }
   }
 }

@@ -200,7 +200,6 @@ function install_debian() {
 function debian() {
   # sudo apt install gnuplot gawk libtool psutils make autopoint
   # run_autopoint
-  if [ ! -d "aclocal" ]; then mkdir aclocal; fi
   run_aclocal
   autoreconf -i
   run_automake
@@ -227,6 +226,7 @@ function redhat() {
 function main() {
   detect_os
   #check_installed doxygen
+  if [ ! -d "aclocal" ]; then mkdir aclocal; fi
   if [ ! -d "config/m4" ]; then mkdir -p config/m4; fi
 
 
