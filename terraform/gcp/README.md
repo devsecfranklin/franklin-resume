@@ -4,7 +4,11 @@
 - ps-devsecops-fw01
 - "10.252.0.0/25" mgmt
 
-`gcloud compute ssh --zone=us-central1-a airlock1`
+## Jump Box
+
+```sh
+gcloud compute ssh --zone=us-central1-a airlock1
+```
 
 ## Mac Terraform Setup
 

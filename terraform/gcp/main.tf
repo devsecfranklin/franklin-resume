@@ -20,6 +20,20 @@ data "google_compute_subnetwork" "aus-mgmt-subnetwork" {
   region = var.openshift-region
 }
 
+data "google_compute_subnetwork" "ps-devsecops-mgmt-subnetwork" {
+  name   = "ps-devsecops-mgmt"
+  region = var.region
+}
+
+data "google_compute_subnetwork" "ps-devsecops-untrust-subnetwork" {
+  name   = "ps-devsecops-untrust"
+  region = var.region
+}
+
+data "google_compute_subnetwork" "ps-devsecops-trust-subnetwork" {
+  name   = "ps-devsecops-trust"
+  region = var.region
+}
 
 // Legacy Management network for Panoramas - deprecated
 resource "google_compute_network" "vpc" {

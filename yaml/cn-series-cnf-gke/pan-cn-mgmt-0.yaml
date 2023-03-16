@@ -53,7 +53,7 @@ spec:
              topologyKey: "kubernetes.io/hostname"
       initContainers:
         - name: pan-mgmt-init
-          image: gcr.io/itp-ext-cnseries/10.2.3/panos_cn_mgmt
+          image: gcr.io/itp-ext-cnseries/10.2.3/pan_cn_mgmt_init@sha256:72afeafa1567aa9ce482bd57946cfeeb7a8fe7150ee45624e02c69df28138923
           command: ["/usr/bin/pan_start.sh"]
           imagePullPolicy: Always
           securityContext:
@@ -91,7 +91,7 @@ spec:
             value: pan-fw
       containers:
         - name: pan-mgmt
-          image: gcr.io/itp-ext-cnseries/10.2.3/panos_cn_mgmt
+          image: gcr.io/itp-ext-cnseries/10.2.3/panos_cn_mgmt@sha256:f7ed207459b50eaff36f30b808cc4987052eeafecb648cbedec1b92efdfdf923
           terminationMessagePolicy: FallbackToLogsOnError
           command: ["/sbin/pan_start"]
           lifecycle:

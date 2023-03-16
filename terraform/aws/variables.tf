@@ -3,6 +3,11 @@ variable "region" {
   type    = string
 }
 
+variable "name_prefix" {
+  type    = string
+  default = "lab-franklin"
+}
+
 variable "tags" {
   description = "Map of tags to be associated with the virtual machines, their interfaces and public IP addresses."
   default = {

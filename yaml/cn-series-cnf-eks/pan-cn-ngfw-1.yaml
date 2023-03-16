@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pan-ngfw-dep-0
+  name: pan-ngfw-dep-1
   namespace: kube-system
   labels:
       app: pan-ngfw
@@ -18,7 +18,7 @@ spec:
       labels:
         app: pan-ngfw
       annotations:
-          # net-attach list defines the interface mapping order. 
+          # net-attach list defines the interface mapping order.
           # Interfaces are mapped starting with eth1/1
           # If PAN_HA_SUPPORT=yes in pan-cn-mgmt-configmap-1.yaml then
           # add HA net attachment as the first item in the below list, to map HA2 to ethernet1/1.
@@ -51,7 +51,7 @@ spec:
         hostnames:
           - mgmt
       #nodeSelector:  
-      #  firewall: pan-ngfw-dep-0
+      #  firewall: pan-ngfw-dep-1
       # Turn on podAntiAffinity to schedule HA pair NGFW pods on separate nodes
       # Turn off podAntiAffinity, if you have nodeSelector setup
       affinity:
@@ -67,10 +67,8 @@ spec:
                  - key: "appname"
                    operator: In
                    values:
-                   - pan-mgmt-sts-1
+                   - pan-mgmt-sts-0
              topologyKey: "kubernetes.io/hostname"
-      nodeSelector:
-        env: cn-series
       containers:
         - name: pan-ngfw-container
           image: gcr.io/itp-ext-cnseries/10.2.3/panos_cn_ngfw@sha256:bb90e070ae071971662e358b974685dff27271aa904faf8c7c4a33a305625fe7
@@ -102,12 +100,12 @@ spec:
           resources:
             requests:
             # Enable hugepages for DPDK - Refer to the system requirements documentation to see the minimum value needed for different capacity profiles.
-            #  hugepages-2Mi: 4Gi
-              # configurable based on desired throughput, number of running pods
+            # hugepages-2Mi: 4Gi
+            # configurable based on desired throughput, number of running pods
               cpu: "1"
               memory: "4Gi"
             limits:
-            #  hugepages-2Mi: 4Gi
+              #hugepages-2Mi: 4Gi
               cpu: "1"
               memory: "4Gi"
           volumeMounts:
@@ -126,7 +124,7 @@ spec:
             name: sw-secret
           envFrom:
           - configMapRef:
-              name: pan-ngfw-config-0
+              name: pan-ngfw-config-1
           env:
             - name: CPU_REQUEST
               valueFrom:
@@ -176,7 +174,7 @@ spec:
       #Enable hugepages for DPDK
       #- name: hugepage
       #  emptyDir:
-      #    medium: HugePages
+      #   medium: HugePages
       - name: sys
         hostPath:
           path: /sys
@@ -193,4 +191,4 @@ spec:
         secret:
           # Don't change this. Needs to match PAN_DP_NAME in pan-cn-mgmt.yaml
           # followed by suffix "-sw". Also hard-coded in ipsec.conf
-          secretName: pan-fw-sw
+          secretName: pan-fw-1-sw
