@@ -70,8 +70,16 @@ spec:
         ctfd: nginx
         app: ctfd-nginx
     spec:
-      nodeSelector:
-        env: dev-node
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev-node 
       containers:
       - image: nginx:1.17
         imagePullPolicy: ""

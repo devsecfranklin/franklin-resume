@@ -9,7 +9,7 @@ metadata:
   name: ctf-pv-logs
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 200Gi
@@ -26,7 +26,7 @@ metadata:
   name: ctfd-pv-uploads
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 200Gi
@@ -51,45 +51,53 @@ spec:
         ctfd: ctfd
         app: ctfd
     spec:
-      nodeSelector:
-        env: dev-node
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: env
+                    operator: In
+                    values:
+                      - dev-node
       containers:
-      - env:
-        - name: ACCESS_LOG
-          value: '-'
-        - name: DATABASE_URL
-          value: mysql+pymysql://ctfd:ctfd@ctfd-mysql-db/ctfd
-        - name: ERROR_LOG
-          value: '-'
-        - name: LOG_FOLDER
-          value: /var/log/CTFd
-        - name: REDIS_URL
-          value: redis://ctfd-redis-cache:6379
-        - name: REVERSE_PROXY
-          value: "true"
-        - name: UPLOAD_FOLDER
-          value: /var/uploads
-        - name: WORKERS
-          value: "1"
-        image: rdctf/ctfd
-        imagePullPolicy: ""
-        name: ctfd
-        resources: {}
-        volumeMounts:
-        - mountPath: /var/log/CTFd
-          name: ctf-pv-logs
-        - mountPath: /var/uploads
-          name: ctfd-pv-uploads
+        - env:
+            - name: ACCESS_LOG
+              value: "-"
+            - name: DATABASE_URL
+              value: mysql+pymysql://ctfd:ctfd@ctfd-mysql-db/ctfd
+            - name: ERROR_LOG
+              value: "-"
+            - name: LOG_FOLDER
+              value: /var/log/CTFd
+            - name: REDIS_URL
+              value: redis://ctfd-redis-cache:6379
+            - name: REVERSE_PROXY
+              value: "true"
+            - name: UPLOAD_FOLDER
+              value: /var/uploads
+            - name: WORKERS
+              value: "1"
+          image: rdctf/ctfd
+          imagePullPolicy: ""
+          name: ctfd
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/log/CTFd
+              name: ctf-pv-logs
+            - mountPath: /var/uploads
+              name: ctfd-pv-uploads
       restartPolicy: Always
       serviceAccountName: ""
       automountServiceAccountToken: false
       volumes:
-      - name: ctf-pv-logs
-        persistentVolumeClaim:
-          claimName: ctf-pv-logs
-      - name: ctfd-pv-uploads
-        persistentVolumeClaim:
-          claimName: ctfd-pv-uploads
+        - name: ctf-pv-logs
+          persistentVolumeClaim:
+            claimName: ctf-pv-logs
+        - name: ctfd-pv-uploads
+          persistentVolumeClaim:
+            claimName: ctfd-pv-uploads
 ---
 apiVersion: v1
 kind: Service
@@ -100,10 +108,10 @@ metadata:
   name: ctfd
 spec:
   ports:
-  - name: ui
-    port: 8000
-    protocol: TCP
-    targetPort: 8000
+    - name: ui
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
   selector:
     app: ctfd
   type: ClusterIP

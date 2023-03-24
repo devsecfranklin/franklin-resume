@@ -22,18 +22,19 @@ CYAN='\033[0;36m'
 #YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-NAMESPACE="pa-cn"
+NAMESPACE="kube-system"
 
 function deploy_cni() {
   echo -e "${LGREEN}create the service account${NC}"
   kubectl apply -f plugin-serviceaccount.yaml
   # cred.json will be uploaded to Panorama later
-  kubectl -n pa-cn get secrets pan-plugin-user-secret -o json > cred.json
+  kubectl -n ${NAMESPACE} get secrets pan-plugin-user-secret -o json > cred.json
   kubectl apply -f pan-mgmt-serviceaccount.yaml
+  kubectl apply -f pan-cn-mgmt.yaml
   kubectl apply -f pan-cni-serviceaccount.yaml
   kubectl apply -f pan-cni-configmap.yaml
   kubectl apply -f pan-cn-ngfw-svc.yaml
-  kubectl apply -f pan-cni.yaml -n pa-cn
+  kubectl apply -f pan-cni.yaml
 }
 
 function delete_cni(){
@@ -62,6 +63,9 @@ function delete_cni(){
 }
 
 function deploy_mgmt() {
+  kubectl apply -f pan-cn-mgmt-slot-crd.yaml
+  kubectl apply -f pan-cn-ngfw-port-crd.yaml
+  kubectl apply -f pan-cn-storage-class.yaml
   # management
   kubectl apply -f pan-cn-mgmt-configmap.yaml
   kubectl apply -f pan-cn-mgmt-slot-crd.yaml
@@ -94,8 +98,13 @@ function status() {
 }
 
 function main() {
+  printf "\n# --- GKE Deploy Mgmt -------------------------------------------------\n"
+
+  deploy_mgmt
+  printf "\n# --- GKE CN Series Status --------------------------------------------\n"
+
   status
-  #delete_cni
+  # delete_cni
 }
 
 main

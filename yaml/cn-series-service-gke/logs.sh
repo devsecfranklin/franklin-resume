@@ -1,4 +1,7 @@
 #!/bin/bash
 
-kubectl logs -n pa-cn pan-mgmt-sts-0
-kubectl logs -n pa-cn pan-mgmt-sts-1
+NAMESPACE="kube-system"
+
+kubectl logs -n ${NAMESPACE} pan-mgmt-sts-0
+kubectl logs -n ${NAMESPACE} pan-mgmt-sts-1
+

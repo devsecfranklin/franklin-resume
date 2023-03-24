@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: pan-mgmt-svc
-  namespace: pa-cn
+  namespace: kube-system
   labels:
     app: pan-mgmt-svc
 spec:
@@ -17,12 +17,11 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: pan-mgmt-sts
-  namespace: pa-cn
+  namespace: kube-system
 spec:
   selector:
     matchLabels:
       appname: pan-mgmt-sts
-      paloalto: ps-east-cn-series
   serviceName: pan-mgmt-svc
   # Replicas are for fault-tolerance. Max 2 replicas supported.
   replicas: 2
@@ -38,6 +37,16 @@ spec:
           paloaltonetworks.com/app: pan-mgmt
           kubectl.kubernetes.io/default-container: pan-mgmt
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - cn-series-stateful
       serviceAccountName: pan-mgmt-sa
       priorityClassName: system-node-critical
       #terminationGracePeriodSeconds: 60 //for graceful exit of prestop hook
@@ -52,10 +61,6 @@ spec:
                    operator: In
                    values:
                    - pan-mgmt-sts
-                 - key: "paloalto"
-                   operator: In
-                   values:
-                   - ps-east-cn-series
              topologyKey: "kubernetes.io/hostname"
       initContainers:
         - name: pan-mgmt-init

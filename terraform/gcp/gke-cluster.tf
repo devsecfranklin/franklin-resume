@@ -40,8 +40,6 @@ resource "google_container_cluster" "primary" {
   subnetwork = "${var.name_prefix}-gke-subnet"
   // min_master_version = data.google_container_engine_versions.gke_version.latest_master_version
   node_locations = [
-    "us-central1-a",
-    "us-central1-b",
     "us-central1-c",
     "us-central1-f"
   ]
@@ -155,15 +153,13 @@ resource "google_container_node_pool" "cn-series" {
   cluster    = google_container_cluster.primary.name
   node_count = 1
   node_locations = [
-    "us-central1-a",
-    "us-central1-b",
     "us-central1-c",
     "us-central1-f",
   ]
-  //autoscaling {
-  //  min_node_count = 1
-  //  max_node_count = 36
-  //}
+  autoscaling {
+    min_node_count = 1
+    max_node_count = 2
+  }
   node_config {
     image_type = "COS_CONTAINERD"
     #using pd-ssd's is recommended for pods that do any scratch disk operations.
@@ -204,7 +200,7 @@ resource "google_container_node_pool" "cn-series" {
     #}
   }
   upgrade_settings {
-    max_surge       = 1
+    max_surge       = 2
     max_unavailable = 0
   }
   # Fix broken nodes automatically and keep them updated with the control plane.

@@ -38,8 +38,16 @@ spec:
         ctfd: redis
         app: ctfd-redis-cache
     spec:
-      nodeSelector:
-        env: dev-node
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev-node 
       containers:
       - image: redis:4
         imagePullPolicy: ""

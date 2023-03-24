@@ -24,7 +24,7 @@ NC='\033[0m' # No Color
 k=`which kubectl`
 
 # SETUP Tasks
-[ ! -d "`pwd`/yaml" ] && echo "${RED}run from top level of repo${NC}" && exit 1
+[ ! -d "`pwd`/yaml/ctfd" ] && echo "${RED}run from top level of repo${NC}" && exit 1
 command -v jq >/dev/null 2>&1 || { echo >&2 "${RED}Need to install jq.${NC}"; exit 1; }
 
 # Namespace
@@ -41,26 +41,26 @@ fi
 
 # Set up the storage class
 echo -e "${CYAN}Set up StorageClass${NC}"
-${k} apply -f yaml/ctfd-storage-class.yaml -n ctfd
+${k} apply -f yaml/ctfd/ctfd-storage-class.yaml -n ctfd
 
 # Deploy MySQL
 echo -e "${CYAN}Set up MySQL${NC}"
-${k} apply -f yaml/ctfd-mysql-deployment.yaml  -n ctfd
+${k} apply -f ctfd/yaml/ctfd-mysql-deployment.yaml  -n ctfd
 sleep 5
 
 # Deploy Redis
 echo -e "${CYAN}Set up Redis${NC}"
-${k} apply -f yaml/ctfd-redis-deployment.yaml -n ctfd
+${k} apply -f yaml/ctfd/ctfd-redis-deployment.yaml -n ctfd
 sleep 5
 
 # Deploy Application
 echo -e "${CYAN}Deploy CTFd${NC}"
-${k} apply -f yaml/ctfd-deployment.yaml -n ctfd
+${k} apply -f yaml/ctfd/ctfd-deployment.yaml -n ctfd
 sleep 5
 
 # Deploy NGiNX
 echo -e "${CYAN}Deploy NGiNx${NC}"
-${k} apply -f yaml/ctfd-ngnix-deployment.yaml -n ctfd
+${k} apply -f yaml/ctfd/ctfd-ngnix-deployment.yaml -n ctfd
 sleep 5
 
 # Status
