@@ -10,7 +10,7 @@ resource "google_compute_firewall" "lab-franklin-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "443", "2049", "3978", "8443", "28270", "28443", "28769"]
+    ports    = ["22", "443", "2049", "3978", "5000", "8443", "28270", "28443", "28769"]
   }
 
   allow {
@@ -34,7 +34,7 @@ resource "google_compute_firewall" "lab-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "443", "2049", "3978", "8443", "28270", "28443", "28769"]
+    ports    = ["22", "443", "2049", "3978", "5000", "8443", "28270", "28443", "28769"]
   }
 
   allow {

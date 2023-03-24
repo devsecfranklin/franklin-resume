@@ -40,6 +40,8 @@ resource "google_container_cluster" "primary" {
   subnetwork = "${var.name_prefix}-gke-subnet"
   // min_master_version = data.google_container_engine_versions.gke_version.latest_master_version
   node_locations = [
+    "us-central1-a",
+    "us-central1-b",
     "us-central1-c",
     "us-central1-f"
   ]
@@ -123,16 +125,6 @@ resource "google_container_cluster" "primary" {
 
   cluster_autoscaling {
     enabled = true
-    resource_limits {
-      resource_type = "memory"
-      minimum       = 2
-      maximum       = 64
-    }
-    resource_limits {
-      resource_type = "cpu"
-      minimum       = 2
-      maximum       = 16
-    }
     auto_provisioning_defaults {
       service_account = var.service_account_terraform
       oauth_scopes = [
@@ -200,7 +192,72 @@ resource "google_container_node_pool" "cn-series" {
     #}
   }
   upgrade_settings {
-    max_surge       = 2
+    max_surge       = 20
+    max_unavailable = 0
+  }
+  # Fix broken nodes automatically and keep them updated with the control plane.
+  management {
+    auto_repair  = true
+    auto_upgrade = true
+  }
+}
+
+resource "google_container_node_pool" "production" {
+  name       = "${var.name_prefix}-development"
+  project    = var.project_id
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = 1
+  node_locations = [
+    "us-central1-a",
+    "us-central1-b",
+    "us-central1-c",
+    "us-central1-f",
+  ]
+  autoscaling {
+    min_node_count = 2
+    max_node_count = 64
+  }
+  node_config {
+    image_type = "COS_CONTAINERD"
+    #using pd-ssd's is recommended for pods that do any scratch disk operations.
+    disk_type         = "pd-ssd"
+    disk_size_gb      = 100
+    guest_accelerator = []
+    local_ssd_count   = 0
+    service_account   = "default"
+    preemptible       = false
+    machine_type      = "n1-standard-8"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/devstorage.read_write",
+      "https://www.googleapis.com/auth/compute",
+    ]
+    labels = {
+      env = "dev-node"
+      lab = "franklin"
+    }
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+    tags = [
+      "gke-node",
+      "lab-franklin"
+    ]
+    taint = []
+    shielded_instance_config {
+      enable_integrity_monitoring = true
+      enable_secure_boot          = false
+    }
+    # Enable_gke_metadata_server is not supported on clusters that do not have Workload Identity enabled
+    #workload_metadata_config {
+    #  mode = "GKE_METADATA"
+    #}
+  }
+  upgrade_settings {
+    max_surge       = 20
     max_unavailable = 0
   }
   # Fix broken nodes automatically and keep them updated with the control plane.

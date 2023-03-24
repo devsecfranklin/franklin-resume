@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: cloudbot-build-pod
-  namespace: ci-build
+  namespace: cloudbot
   labels:
     app: cloudbot
 spec:
@@ -15,8 +15,16 @@ spec:
       labels:
         app: cloudbot
     spec:
-      nodeSelector:
-        env: build
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev-node 
       containers:
       - name: cloudbot
         image: gcr.io/gcp-gcs-pso/build-pod

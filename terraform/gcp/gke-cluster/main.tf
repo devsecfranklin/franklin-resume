@@ -96,16 +96,6 @@ resource "google_container_cluster" "primary" {
 
   cluster_autoscaling {
     enabled = true
-    resource_limits {
-      resource_type = "memory"
-      minimum       = 2
-      maximum       = 64
-    }
-    resource_limits {
-      resource_type = "cpu"
-      minimum       = 2
-      maximum       = 16
-    }
     auto_provisioning_defaults {
       service_account = var.service_account_terraform
       oauth_scopes = [
@@ -135,7 +125,7 @@ resource "google_container_node_pool" "primary_nodes" {
   ]
   autoscaling {
     min_node_count = 1
-    max_node_count = 36
+    max_node_count = 64
   }
 
   node_config {
@@ -205,8 +195,6 @@ resource "google_container_node_pool" "cn-series" {
   cluster    = google_container_cluster.primary.name
   node_count = 2
   node_locations = [
-    "us-central1-a",
-    "us-central1-b",
     "us-central1-c",
     "us-central1-f",
   ]
@@ -253,7 +241,7 @@ resource "google_container_node_pool" "cn-series" {
     }
   }
   upgrade_settings {
-    max_surge       = 1
+    max_surge       = 20
     max_unavailable = 0
   }
   # Fix broken nodes automatically and keep them updated with the control plane.

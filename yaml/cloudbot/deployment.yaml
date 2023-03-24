@@ -5,7 +5,7 @@ metadata:
   labels:
     app: cloudbot
   name: cloudbot-deployment
-  namespace: ci-build
+  namespace: cloudbot
 spec:
   replicas: 3
   selector:
@@ -18,8 +18,16 @@ spec:
       labels:
         app: cloudbot
     spec:
-      nodeSelector:
-        env: build
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev-node 
       containers:
       - name: cloudbot
         image: gcr.io/gcp-gcs-pso/build-pod
