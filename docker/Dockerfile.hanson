@@ -1,0 +1,26 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.11-slim-bullseye
+
+LABEL org.opencontainers.image.authors="Franklin D <devsecfranklin@duck.com>"
+LABEL org.opencontainers.image.source=https://github.com/devsecfranklin/lab-franklin
+LABEL org.opencontainers.image.description="Social networking"
+LABEL org.opencontainers.image.licenses=MIT
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+COPY src/hanson /app
+
+RUN apt-get update && \
+    apt-get install -y apt-utils wget curl
+
+COPY src/hanson/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Expose the Docker container for the application to run on port 5000
+EXPOSE 8082
+# The command required to run the Dockerized application
+CMD ["python", "/app/main.py"]

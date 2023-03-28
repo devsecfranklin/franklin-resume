@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hanson
+  namespace: hanson
+  labels:
+    app: hanson
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hanson
+  template:
+    metadata:
+      labels:
+        app: hanson
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev-node 
+      containers:
+        - name: mmmbot
+          image: gcr.io/gcp-gcs-pso/mmmbot:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+#          volumeMounts:
+#            - name: nfs-vol
+#              mountPath: "/mnt/data"
+#     volumes:
+#        - name: nfs-vol
+#          persistentVolumeClaim:
+#            claimName: flask-pvc

@@ -15,7 +15,7 @@ resource "google_project_service" "secretmanager" {
 
 data "archive_file" "cloudfunction" {
   type        = "zip"
-  source_dir  = "../../../src"
+  source_dir  = "../../../src/cloudbot"
   output_path = "${var.cloud_function_repo}/_build/${var.function_name}.zip"
 }
 

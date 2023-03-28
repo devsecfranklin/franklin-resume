@@ -13,7 +13,7 @@ AC_CONFIG_COMMANDS([franklin-build],
 AC_CONFIG_FILES([
  Makefile
  docker/Makefile
- docker/cloudbot/Makefile
+ src/nodebot/Makefile
 ])
 
 AC_CHECK_PROG(HAVE_NODE, [node], [node])

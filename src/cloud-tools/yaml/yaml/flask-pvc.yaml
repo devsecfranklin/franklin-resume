@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: flask-pvc
+  namespace: cloud-tools
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
+  volumeName: nfs-pv
+  resources:
+    requests:
+      storage: 5Gi

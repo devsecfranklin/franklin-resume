@@ -1,5 +1,8 @@
 # Set up the CTFd Instance in GKE
 
+- Do not use node selector, it will need a match on ALL labels.
+- You must set a public IP address with`gcloud compute addresses`
+
 ```sh
 kubectl create ns ctfd
 kubectl config set-context --current --namespace=ctfd

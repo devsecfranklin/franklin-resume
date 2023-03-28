@@ -1,0 +1,8 @@
+wheel
+Mastodon.py
+discord
+PyGithub
+python-dotenv
+pygit2
+#pygraphviz
+python_terraform

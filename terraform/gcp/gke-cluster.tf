@@ -33,12 +33,18 @@ resource "google_compute_subnetwork" "gke-subnet" {
 }
 
 resource "google_container_cluster" "primary" {
-  name       = "${var.name_prefix}-gke"
-  project    = var.project_id
-  location   = var.region
-  network    = data.google_compute_network.mgmt-vpc.name
-  subnetwork = "${var.name_prefix}-gke-subnet"
+  name               = "${var.name_prefix}-gke"
+  project            = var.project_id
+  location           = var.region
+  network            = data.google_compute_network.mgmt-vpc.name
+  subnetwork         = "${var.name_prefix}-gke-subnet"
+  logging_service    = "logging.googleapis.com/kubernetes"
+  monitoring_service = "monitoring.googleapis.com/kubernetes"
+  networking_mode    = "VPC_NATIVE"
+
   // min_master_version = data.google_container_engine_versions.gke_version.latest_master_version
+
+  // optional, creates a zonal cluster
   node_locations = [
     "us-central1-a",
     "us-central1-b",
@@ -51,6 +57,10 @@ resource "google_container_cluster" "primary" {
   enable_shielded_nodes       = true
   enable_intranode_visibility = true
 
+  workload_identity_config {
+    workload_pool = "gcp-gcs-pso.svc.id.goog"
+  }
+
   # https://github.com/hashicorp/terraform-provider-google/issues/5154
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/16"
@@ -59,10 +69,10 @@ resource "google_container_cluster" "primary" {
 
   private_cluster_config {
     enable_private_endpoint = false
-    enable_private_nodes    = true
+    enable_private_nodes    = true // only use private nodes, no public IP on nodes
     # This range must not overlap with any other ranges in use within 
     # the cluster's network, and it must be a /28 subnet. 
-    master_ipv4_cidr_block = "10.254.0.16/28"
+    master_ipv4_cidr_block = "10.254.0.16/28" // CIDR range for control plane since it is managed by google
   }
 
   master_auth {
@@ -110,16 +120,14 @@ resource "google_container_cluster" "primary" {
   }
 
   addons_config {
-    // Enable network policy (Calico) as an addon.
     network_policy_config {
-      disabled = false
+      disabled = false // Enable network policy (Calico) as an addon.
     }
     http_load_balancing {
-      disabled = false
+      disabled = true // we are using nginx ingress, not needed
     }
-    // Provide the ability to scale pod replicas based on real-time metrics
     horizontal_pod_autoscaling {
-      disabled = false
+      disabled = false // Provide the ability to scale pod replicas based on real-time metrics
     }
   }
 
