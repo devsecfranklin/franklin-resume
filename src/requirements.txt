@@ -5,4 +5,4 @@ tox
 Flask-WeasyPrint
 flask-login
 flask-sqlalchemy
-sqlalchemy==2.0.8
+sqlalchemy==2.0.9
