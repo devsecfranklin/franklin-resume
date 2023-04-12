@@ -22,4 +22,3 @@ Once the SSH config file is updated, add the private-key to the SSH agent:
 ```sh
 ssh-add -K ~/.ssh/id_ed25519
 ```
-

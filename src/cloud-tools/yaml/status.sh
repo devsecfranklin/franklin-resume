@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function create() {
   kubectl apply -f flask-pvc.yaml
