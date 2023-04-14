@@ -1,7 +1,7 @@
 terraform {
   required_version = ">= 0.13, < 2.0"
   required_providers {
-    random   = "~> 3.4.0"
+    random   = "~> 3.5.0"
     external = "~> 2.3.0"
   }
   backend "gcs" {
