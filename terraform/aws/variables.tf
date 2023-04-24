@@ -3,9 +3,24 @@ variable "region" {
   type    = string
 }
 
-variable "name_prefix" {
+variable "name" {
+  description = "Name prefix, no trailing dash"
+  type        = string
+  default     = "lab-franklin"
+}
+
+variable "kubeconfig_output_path" {
+  default = "~/.kube/config-eks"
   type    = string
-  default = "lab-franklin"
+}
+
+variable "availability_zones" {
+  description = "AZ to deploy to"
+  type        = list(any)
+  default = [
+    "ca-central-1c",
+    "ca-central-1d",
+  ]
 }
 
 variable "tags" {
@@ -16,25 +31,6 @@ variable "tags" {
   type = map(string)
 }
 
-/*
-variable "vpc_bucket" {
-  description = "Name of the bucket where vpc state is stored"
-  default     = "lab-franklin-tfstate"
-  type        = string
-}
-
-variable "vpc_state_key" {
-  description = "Key where the state file of the VPC is stored"
-  default     = "lab-franklin-tfstate-key"
-  type        = string
-}
-
-variable "vpc_state_region" {
-  description = "Region where the state file of the VPC is stored"
-  default     = "ca-central-1"
-  type        = string
-}
-*/
 
 variable "aws_security_group_cidr_blocks" {
   description = "List of CIDR to allow SSH from"
@@ -42,6 +38,7 @@ variable "aws_security_group_cidr_blocks" {
   default     = ["68.38.137.81/32", "34.134.31.136/32", "34.136.90.64/32"]
 }
 
+/*
 variable "aws_security_group_jump_tags" {
   description = "Set of tags to be added to the jump SG"
   type        = map(string)
@@ -69,3 +66,4 @@ variable "aws_instance_volume_size" {
   type        = string
   default     = "30"
 }
+*/

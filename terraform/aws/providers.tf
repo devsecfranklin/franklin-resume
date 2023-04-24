@@ -3,6 +3,11 @@ provider "aws" {
   region  = var.region
 }
 
+provider "aws" {
+  region = "ca-central-1"
+  alias  = "base"
+}
+
 /*
 data "terraform_remote_state" "vpc" {
   backend = "s3"
