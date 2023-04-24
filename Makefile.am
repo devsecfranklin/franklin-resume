@@ -14,7 +14,8 @@ python:
 	( \
 		source _build/bin/activate; \
 		_build/bin/python -m pip install --upgrade pip; \
-		_build/bin/python -m pip install -rsrc/cloudbot/requirements.txt; \
+		_build/bin/python -m pip install -r src/cloudbot/requirements.txt; \
+		_build/bin/python -m pip install -r terraform/requirements.txt; \
 	)
 
 test: 
