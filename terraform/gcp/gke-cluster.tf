@@ -139,6 +139,16 @@ resource "google_container_cluster" "primary" {
         "https://www.googleapis.com/auth/cloud-platform"
       ]
     }
+    resource_limits {
+      maximum       = 64
+      minimum       = 2
+      resource_type = "memory"
+    }
+    resource_limits {
+      maximum       = 16
+      minimum       = 2
+      resource_type = "cpu"
+    }
   }
 
   release_channel {
