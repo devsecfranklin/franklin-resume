@@ -2,6 +2,23 @@ data "google_container_engine_versions" "gke_version" {
   location = var.zone
 }
 
+resource "google_compute_router" "router" {
+  name    = "${var.name_prefix}-router"
+  project = var.project_id
+  region  = var.region
+  network = data.google_compute_network.mgmt-vpc.name
+}
+
+module "cloud-nat" {
+  source                             = "terraform-google-modules/cloud-nat/google"
+  version                            = "~> 2.0"
+  project_id                         = var.project_id
+  region                             = var.region
+  router                             = google_compute_router.router.name
+  name                               = "nat-config"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+}
+
 resource "google_compute_subnetwork" "gke-subnet" {
   name                     = "${var.name_prefix}-gke-subnet"
   project                  = var.project_id

@@ -45,3 +45,19 @@ resource "google_compute_firewall" "lab-ingress" {
   direction     = "INGRESS"
   source_ranges = var.access_list
 }
+
+// firewall changes require compute security admin role
+resource "google_compute_firewall" "allow-egress" {
+  name        = "${var.name_prefix}-egress"
+  project     = var.project_id
+  network     = data.google_compute_network.mgmt-vpc.name
+  description = "Default rule allow egress traffic"
+
+  allow {
+    protocol = "all"
+  }
+
+  direction          = "EGRESS"
+  destination_ranges = ["0.0.0.0/0"]
+}
+
