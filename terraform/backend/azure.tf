@@ -21,27 +21,24 @@ resource "azurerm_storage_container" "tfstate_labinfra" {
   container_access_type = "private"
 }
 
-//************************ dont add anything new to these, prepare for deletion *********//
-
-
-// import existing storage account like so:
-// 
-resource "azurerm_storage_account" "tfstate_old" {
-  name                     = "franklintfstate"
-  resource_group_name      = "franklin-lab"
-  location                 = "East US"
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-
-  tags = {
-    environment = "staging"
-  }
+// Temporary testing  Porto P-727477
+resource "azurerm_storage_container" "tfstate_portolog" {
+  name                  = "tfstateportoazlog"
+  storage_account_name  = azurerm_storage_account.tfstate.name
+  container_access_type = "private"
 }
-
-// import the container like so:
-// terraform import azurerm_storage_container.tfstate_common /subscriptions/d47f1af8-9795-4e86-bbce-da72cfd0f8ec/resourceGroups/lab-franklin/providers/Microsoft.Storage/storageAccounts/labfraaztest123/blobServices/default/containers/tfstatelabinfra
-resource "azurerm_storage_container" "tfstate_common" {
-  name                  = "tfstatecommon"
-  storage_account_name  = azurerm_storage_account.tfstate_old.name
+resource "azurerm_storage_container" "tfstate_portopano" {
+  name                  = "tfstateportopano"
+  storage_account_name  = azurerm_storage_account.tfstate.name
+  container_access_type = "private"
+}
+resource "azurerm_storage_container" "tfstate_portoinfra" {
+  name                  = "tfstateportoazinfra"
+  storage_account_name  = azurerm_storage_account.tfstate.name
+  container_access_type = "private"
+}
+resource "azurerm_storage_container" "tfstate_portodeploy" {
+  name                  = "tfstateportoazdeploy"
+  storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }
