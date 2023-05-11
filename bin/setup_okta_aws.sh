@@ -2,6 +2,7 @@
 
 # Tue Mar 30 09:40:40 AM EST 2021
 # Wed Jul 28 07:24:20 AM EDT 2021 :: Update on checking OKTA username
+# Tue May 09 10:55:37 AM EDT 2023 :: Change from default role to specific
 
 # fdiaz@paloaltonetworks.com
 
@@ -28,6 +29,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 MY_OS="unknown"
+APP_URL="https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272"
 
 # If your user name on this host does not match your okta user name, 
 # you can correct this by passing your username as an argument to this script
@@ -87,12 +89,12 @@ aws_rolename = all
 write_aws_creds = True
 cred_profile = default
 okta_username = ${OKTA_USER}
-app_url = "https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272"
+app_url = ${APP_URL}
 resolve_aws_alias = True
 include_path = True
 preferred_mfa_type = push
 remember_device = True
-aws_default_duration = 28800
+aws_default_duration = 14400
 device_token =
 output_format = export
 EOF
@@ -130,7 +132,7 @@ function main() {
     detect_os
     check_okta_user
     if [ -f "${HOME}/.okta_aws_login_config" ]; then 
-        echo -e "${CYAN}NOT overwriting your existing configuration file: ~/.okta_aws_login_config${NC}"
+        echo -e "${YELLOW}NOT overwriting your existing configuration file: ~/.okta_aws_login_config${NC}"
     else 
         write_config
     fi
@@ -157,7 +159,7 @@ function main() {
     if [ "${MY_OS}" == "mac" ]; then
         open "https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272"
         #venv/bin/python3 -m webbrowser -n https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272
-        echo -e "${CYAN}If your browser did not open, navigate to ${YELLOW}https://paloaltonetworks.okta.com/home/amazon_aws/0oae0k7sqyScYDeY31t7/272${CYAN} for AWS Universal IDP${NC}"
+        echo -e "${CYAN}If your browser did not open, navigate to ${YELLOW}${APP_URL}${CYAN} for AWS Universal IDP${NC}"
     fi
 
     if [ ! -d "/nix" ]; then
