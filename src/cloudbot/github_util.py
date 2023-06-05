@@ -1,3 +1,4 @@
+#from octokit import Octokit
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -7,8 +8,6 @@ logger.setLevel(logging.INFO)
 
 class GithubHelper:
     """Functions for interacting with GitHub."""
-
-    # Instance variables
     pr_number = ""
     user = ""
     repo = ""
@@ -165,7 +164,8 @@ class GithubHelper:
         """
         logger.info("Looking for string in comment:  {}".format(my_string))
         repo = g.get_repo(self.repo)
-        # pr = repo.get_pull(int(self.pr_number))
+        pr = repo.get_pull(int(self.pr_number))
+        logger.info("Comment on PR {} was {}".format(pr, my_string))
 
     def open_terraform_pr(self, g):
         """If there is a /terraform/modules/panorama directory, import the goodies.
