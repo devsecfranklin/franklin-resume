@@ -40,6 +40,18 @@ class PalmApiUtil:
 
         return completion.result
 
+    def improvements(self, prompt):
+        """make recommendations based on pR contents"""
+        pass
+
+    def security(self, prompt):
+        """Suggest enhancements to the PR based on the files being updated."""
+        pass
+
+    def tests(self, prompt):
+        """Create test cases based on the PR contents"""
+        pass
+
 
 """
 Authors:       Franklin D. <franklin@dead10c5.org>

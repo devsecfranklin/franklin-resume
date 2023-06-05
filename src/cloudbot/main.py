@@ -75,9 +75,9 @@ def main(request):
         else:  # this is probably a comment, let's check it out
             # my_gh_helper.check_pr_for_files(g)
 
-            my_gh_helper.check_comment_for_string(g, "/n0ctilucent")
-            my_gh_helper.check_comment_for_string(g, "/tests")
-            my_gh_helper.check_comment_for_string(g, "/prompt")
+            my_type, comment = my_gh_helper.check_comment_for_string(g)
+
+            # at this point we hand it off to the generative AI
 
         """
         # this is to post to GKE
@@ -85,8 +85,9 @@ def main(request):
         cloudbot_response = requests.post(url, json=request_json, timeout=10)
         logger.info(str(cloudbot_response))
         """
-        return request_json["message"]
         logger.info("success!")
+        return request_json["message"]
+        
     elif request.args and "message" in request.args:  # message not JSON
         logger.info("Please call again with msg in JSON format.")
         return request.args.get("message")  # Handle a non-JSON message

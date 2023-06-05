@@ -23,7 +23,6 @@ class GithubHelper:
         repo=None,
         ref=None,
         commit_sha=None,
-        comment=None,
     ):
         self.pr_number = ""
         self.resource_groups = ""
@@ -31,7 +30,6 @@ class GithubHelper:
         self.repo = ""
         self.ref = ""
         self.commit_sha = ""
-        self.comment = ""
 
     def check_json_fields(self, request_json):
         """Ensure all the JSON fields are present, etc."""
@@ -50,27 +48,32 @@ class GithubHelper:
             logger.info("Username found in commit:  {}".format(self.user))
         else:
             logger.info("No user found in request.")
+
         if "repo" in request_json:
             self.repo = str(request_json["repo"])
             logger.info("Github repo name found:  {}".format(self.repo))
         else:
             logger.info("No repo found in request.")
+
         if "ref" in request_json:
             self.ref = str(request_json["ref"])
             logger.info("ref:  {}".format(self.ref))
         else:
             logger.info("No ref found in request.")
+
         if "commit_sha" in request_json:
             self.commit_sha = str(request_json["commit_sha"])
             logger.info("Commit SHA found:  {}".format(self.commit_sha))
         else:
             logger.info("No commit_sha found in request.")
+
         if "comment" in request_json:
             self.comment = str(request_json["comment"])
-            logger.info("Comment found:  {}".format(self.comment))
-        else:
-            logger.info("No comment found in request.")
-
+            if len(self.comment) == 0:
+                logger.info("No comment found in request.")
+            else:
+                logger.info("Comment found:  {}".format(self.comment))
+        
         logger.info("Completed check JSON fields in GH msg.")
 
     def add_commit_comment(self, g, comment):
@@ -165,23 +168,18 @@ class GithubHelper:
             for file in files:
                 filename = file.filename
                 # contents = repo.get_contents(filename, ref=commit.sha).decoded_content
-                logger.info("Found filename: %s", str(filename))
+                logger.info("Found filename: {}".format(filename))
 
-    def check_comment_for_string(self, g, my_string):
+    def check_comment_for_string(self, g):
         """Check comment for string
 
         Args:
             g ([type]): [description]
-            string ([type]): [description]
         """
-        status = False
-        logger.info("Looking for string in comment:  {}".format(my_string))
-        repo = g.get_repo(self.repo)
-
-        # pr = repo.get_pull(int(self.pr_number))
-        # logger.info("Comment on PR {} was {}".format(pr, my_string))
-
-        return True
+        my_type = self.comment.split(" ", 1)[0]
+        comment = self.comment.split(" ", 1)[1]
+        logger.info("Type of comment: {}, value: {}".format(my_type, comment))
+        return my_type, comment
 
     def open_terraform_pr(self, g):
         """If there is a /terraform/modules/panorama directory, import the goodies.
