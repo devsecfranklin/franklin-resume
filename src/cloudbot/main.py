@@ -1,12 +1,12 @@
 import logging
 
-import requests
 from flask import Flask, request
 from github import Github
 
 import github_util
 import helpers
-import palm_api_util
+
+# import palm_api_util
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -47,31 +47,37 @@ def main(request):
         logger.info("Received JSON message: %s", str(request_json["message"]))
 
         my_gh_helper.check_json_fields(request_json)
-        my_result = my_gh_helper.check_pr_label(
-            g, label_name
-        )  # add label to the PR if missing
 
-        if my_result is False:
-            logger.info("Adding help to the commit.")
-            help_text = """
-            Hello {}, here are commands you can use with this PR:
-            
-            @tests - suggest test cases
-            @improvements - suggest code optimization
-            
-            """.format(
-                github_util.user
-            )
+        if my_gh_helper.pr_number is not None:
+            my_result = my_gh_helper.check_pr_label(
+                g, label_name
+            )  # add label to the PR if missing
 
-            my_gh_helper.add_commit_comment(g, help_text)
-            my_gh_helper.assign_pr(g)
+            if my_result is False:
+                logger.info("Adding help to the commit.")
+                help_text = """
+                Hello {}, I will assign this PR to you.
+                
+                Here are commands you can use with this PR:
+                
+                /tests - suggest test cases
+                /improvements - suggest code optimization
+                
+                """.format(
+                    my_gh_helper.user
+                )
 
-        else:
-            logger.info("This PR already has the %s label on it.", label_name)
+                my_gh_helper.add_commit_comment(g, help_text)
+                my_gh_helper.assign_pr(g)
+
+            else:
+                logger.info("This PR already has the %s label on it.", label_name)
+        else:  # this is probably a comment, let's check it out
             # my_gh_helper.check_pr_for_files(g)
-            my_gh_helper.check_comment_for_string(g, "@n0ctilucent")
-            my_gh_helper.check_comment_for_string(g, "@tests")
-            my_gh_helper.check_comment_for_string(g, "@prompt")
+
+            my_gh_helper.check_comment_for_string(g, "/n0ctilucent")
+            my_gh_helper.check_comment_for_string(g, "/tests")
+            my_gh_helper.check_comment_for_string(g, "/prompt")
 
         """
         # this is to post to GKE

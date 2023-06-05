@@ -14,6 +14,7 @@ class GithubHelper:
     repo = ""
     ref = ""
     commit_sha = ""
+    comment = ""
 
     def __init__(
         self,
@@ -22,6 +23,7 @@ class GithubHelper:
         repo=None,
         ref=None,
         commit_sha=None,
+        comment=None,
     ):
         self.pr_number = ""
         self.resource_groups = ""
@@ -29,6 +31,7 @@ class GithubHelper:
         self.repo = ""
         self.ref = ""
         self.commit_sha = ""
+        self.comment = ""
 
     def check_json_fields(self, request_json):
         """Ensure all the JSON fields are present, etc."""
@@ -36,9 +39,12 @@ class GithubHelper:
 
         if "pr_number" in request_json:
             self.pr_number = str(request_json["pr_number"])
-            logger.info("PR Number found in commit: {}".format(self.pr_number))
-        else:
-            logger.info("No pr_number found in request.")
+            if self.pr_number.isdigit():
+                logger.info("PR Number found in commit: {}".format(self.pr_number))
+            else:
+                logger.info("No PR Number found in request.")
+                self.pr_number = None
+
         if "user" in request_json:
             self.user = str(request_json["user"])
             logger.info("Username found in commit:  {}".format(self.user))
@@ -59,6 +65,11 @@ class GithubHelper:
             logger.info("Commit SHA found:  {}".format(self.commit_sha))
         else:
             logger.info("No commit_sha found in request.")
+        if "comment" in request_json:
+            self.comment = str(request_json["comment"])
+            logger.info("Comment found:  {}".format(self.comment))
+        else:
+            logger.info("No comment found in request.")
 
         logger.info("Completed check JSON fields in GH msg.")
 
@@ -166,8 +177,9 @@ class GithubHelper:
         status = False
         logger.info("Looking for string in comment:  {}".format(my_string))
         repo = g.get_repo(self.repo)
-        pr = repo.get_pull(int(self.pr_number))
-        logger.info("Comment on PR {} was {}".format(pr, my_string))
+
+        # pr = repo.get_pull(int(self.pr_number))
+        # logger.info("Comment on PR {} was {}".format(pr, my_string))
 
         return True
 
