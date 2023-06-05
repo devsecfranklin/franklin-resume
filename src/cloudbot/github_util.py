@@ -163,10 +163,13 @@ class GithubHelper:
             g ([type]): [description]
             string ([type]): [description]
         """
+        status = False
         logger.info("Looking for string in comment:  {}".format(my_string))
         repo = g.get_repo(self.repo)
         pr = repo.get_pull(int(self.pr_number))
         logger.info("Comment on PR {} was {}".format(pr, my_string))
+
+        return True
 
     def open_terraform_pr(self, g):
         """If there is a /terraform/modules/panorama directory, import the goodies.

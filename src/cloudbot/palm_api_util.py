@@ -1,5 +1,6 @@
-import google.generativeai as palm
 import logging
+
+import google.generativeai as palm
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
