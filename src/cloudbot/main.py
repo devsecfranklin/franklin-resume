@@ -4,6 +4,7 @@ from flask import Flask, request
 from github import Github
 import requests
 import github_util
+import palm_api_util
 import helpers
 
 logging.basicConfig(level=logging.INFO)
@@ -22,6 +23,7 @@ def main(request):
     project_id = config["required_options"]["project_id"]
     secret_name = config["required_options"]["secret_name"]
     label_name = config["required_options"]["label_name"]
+    palm_api_key = config["required_options"]["palm_key"]
 
     """Get the Github token from Secret Manager"""
     my_gh_token = helpers.SecretHelper()
@@ -32,6 +34,10 @@ def main(request):
     g = Github(token)
     my_gh_helper = github_util.GithubHelper()
     logger.info("Instantiate GH object with label {}".format(label_name))
+
+    """Instantiate a palm object."""
+    my_palm_util = palm_api_util.PalmApiUtil(palm_api_key)
+    logger.info("Instantiate PaLM Object")
 
     request_json = request.get_json()  # Receive and validate JSON requst.
 
@@ -76,7 +82,7 @@ if __name__ == "__main__":
 
 
 """
-Authors:       Franklin D. <devsecfranklin@duck.com>
+Authors:       Franklin D. <franklin@dead10c5.org>
 
 Description:
 

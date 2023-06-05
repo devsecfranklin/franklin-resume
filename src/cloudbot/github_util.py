@@ -1,4 +1,4 @@
-#from octokit import Octokit
+# from octokit import Octokit
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -8,6 +8,7 @@ logger.setLevel(logging.INFO)
 
 class GithubHelper:
     """Functions for interacting with GitHub."""
+
     pr_number = ""
     user = ""
     repo = ""

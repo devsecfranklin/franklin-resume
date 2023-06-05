@@ -4,4 +4,5 @@ google-cloud-secret-manager
 flask
 PyGithub
 numpy
-octokit
+#octokit
+google-generativeai
