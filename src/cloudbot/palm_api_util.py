@@ -10,8 +10,6 @@ logger.setLevel(logging.INFO)
 class PalmApiUtil:
     """Functions for interacting with PaLM API."""
 
-    PALM_API_KEY = ""
-
     def __init__(
         self,
         PALM_API_KEY=None,
@@ -19,42 +17,34 @@ class PalmApiUtil:
         self.PALM_API_KEY = ""
 
     def palm(self, prompt):
+        """Make call to PaLM API"""
         palm.configure(api_key=self.PALM_API_KEY)
 
-        models = [
-            m
-            for m in palm.list_models()
-            if "generateText" in m.supported_generation_methods
-        ]
-        model = models[0].name
-        logger.debug("Using model: {}".format(model))
-        logger.debug("Prompt: {}".format(prompt))
+        try:
+            models = [
+                m
+                for m in palm.list_models()
+                if "generateText" in m.supported_generation_methods
+            ]
+            model = models[0].name
+            logger.info("Using model: {}".format(model))
+            logger.info("Prompt: {}".format(prompt))
+        except Exception as e:
+            logger.error("Problem checking models: {}".format(e))
 
-        completion = palm.generate_text(
-            model=model,
-            prompt=prompt,
-            max_output_tokens=6000,  # The maximum length of the response
-        )
+        completion = None
 
-        logger.debug(completion.result)
+        try:
+            completion = palm.generate_text(
+                model="models/text-bison-001",
+                prompt=prompt,
+                max_output_tokens=800,  # The maximum length of the response
+            )
+            logger.info(completion.result)
+        except Exception as e:
+            logger.error("Problem generating text: {}".format(e))
 
         return completion.result
-
-    def documentation(self, prompt):
-        """make recommendations based on pR contents"""
-        pass
-
-    def improvements(self, prompt):
-        """make recommendations based on pR contents"""
-        pass
-
-    def security(self, prompt):
-        """Suggest enhancements to the PR based on the files being updated."""
-        pass
-
-    def tests(self, prompt):
-        """Create test cases based on the PR contents"""
-        pass
 
 
 """

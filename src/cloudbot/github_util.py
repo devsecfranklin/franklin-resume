@@ -176,18 +176,25 @@ class GithubHelper:
         Args:
             g ([type]): [description]
             string ([type]): [description]
-        """
-        logger.info("t:  {}".format(g))
-        repo = g.get_repo(self.repo)
-        pr = repo.get_pull(int(self.pr_number))
 
-        commits = pr.get_commits()
-        for commit in commits:
-            files = commit.files
-            for file in files:
-                filename = file.filename
-                # contents = repo.get_contents(filename, ref=commit.sha).decoded_content
-                logger.info("Found filename: {}".format(filename))
+
+            this is broken it's reading the cloud function filesystem
+        """
+        # logger.info("t:  {}".format(g))
+
+        try:
+            repo = g.get_repo(self.repo)
+            pr = repo.get_pull(int(self.pr_number))
+
+            commits = pr.get_commits()
+            for commit in commits:
+                files = commit.files
+                for file in files:
+                    filename = file.filename
+                    # contents = repo.get_contents(filename, ref=commit.sha).decoded_content
+                    logger.info("Found filename: {}".format(filename))
+        except:
+            logger.info("Something broken in check_pr_for_files")
 
     def check_comment_for_string(self, g):
         """Check comment for string
@@ -225,7 +232,7 @@ class GithubHelper:
 
 
 """
-Authors:      Franklin D
+Authors:      Franklin D. <franklin@dead10c5.org>
 
 Description:  Github helper functions
 

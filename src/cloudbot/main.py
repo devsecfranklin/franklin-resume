@@ -66,19 +66,36 @@ Here are some commands you can use with this PR:
 
             else:
                 logger.info("This PR already has the %s label on it.", label_name)
+            my_gh_helper.check_pr_for_files(
+                g
+            )  # use this with pull request, not comments
         else:  # we probably received a comment, let's check it out
-            # my_gh_helper.check_pr_for_files(g)
-            my_type, comment = my_gh_helper.check_comment_for_string(g)
+            my_type, prompt = my_gh_helper.check_comment_for_string(g)
 
             # at this point we hand it off to the generative AI
             palm_api_key = my_secret_helper.get_secret(project_id, "franklin-test-key")
             my_palm_util = palm_api_util.PalmApiUtil(palm_api_key)
             logger.info("Instantiate PaLM Object")
 
-            # GET /repos/:owner/:repo/pulls/:pull_number/files
+            """Now we want to use file data to formulate a "few shot" data prompt
+            
+            could we pull files like so: GET /repos/:owner/:repo/pulls/:pull_number/files
+             
+             For tests it's helpful to know:
+             
+             what languages are involved in the PR
+             is it code or documentation
+            """
+            my_result = None
+            if my_type == "/tests":
+                logger.info("Generate tests based on provided prompt")
+                my_result = my_palm_util.palm(prompt)
+
+            if my_result is not None:
+                my_gh_helper.add_commit_comment(g, my_result)
 
         """
-        # this is to post to GKE
+        # this is to test posting to a NodeJS web app in GKE cluster
         url = "http://10.11.0.109"
         cloudbot_response = requests.post(url, json=request_json, timeout=10)
         logger.info(str(cloudbot_response))
