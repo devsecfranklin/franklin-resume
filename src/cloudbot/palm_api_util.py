@@ -40,6 +40,10 @@ class PalmApiUtil:
 
         return completion.result
 
+    def documentation(self, prompt):
+        """make recommendations based on pR contents"""
+        pass
+
     def improvements(self, prompt):
         """make recommendations based on pR contents"""
         pass

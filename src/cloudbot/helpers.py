@@ -48,7 +48,11 @@ class SecretHelper:
 
     def get_secret(self, project_id, my_secret):
         """Pull the secret/token/password from the Secret Manager."""
-        logger.info("Pull secret from Secret Manager for project_id %s", project_id)
+        logger.info(
+            "Pull secret {} from Secret Manager for project_id {}".format(
+                my_secret, project_id
+            )
+        )
 
         password = ""
 
@@ -65,15 +69,17 @@ class SecretHelper:
             password = response.payload.data.decode("UTF-8")
         except Exception as e:
             logger.info("SecretHelper.get_secret() :: failure pulling password: %s", e)
-            return None  # This has to return none so we can try other Panorama.
+            return None
 
-        logger.info("Secret pulled successfully from GCP Secret Manager.")
+        logger.info(
+            "Secret {} pulled successfully from GCP Secret Manager.".format(my_secret)
+        )
 
         return password
 
 
 """
-Authors:       Franklin D. <thedevilsvoice@protonmail.ch>
+Authors:       Franklin D. <franklin@dead10c5.org>
 
 Description:
 

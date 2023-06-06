@@ -15,6 +15,8 @@ class GithubHelper:
     ref = ""
     commit_sha = ""
     comment = ""
+    issue_number = ""
+    html_url = ""
 
     def __init__(
         self,
@@ -73,7 +75,24 @@ class GithubHelper:
                 logger.info("No comment found in request.")
             else:
                 logger.info("Comment found:  {}".format(self.comment))
-        
+
+        if "issue_number" in request_json:
+            self.issue_number = str(request_json["issue_number"])
+            if self.issue_number.isdigit():
+                logger.info(
+                    "Issue Number found in commit: {}".format(self.issue_number)
+                )
+            else:
+                logger.info("No Issue Number found in request.")
+                self.issue_number = None
+
+        if "html_url" in request_json:
+            self.html_url = str(request_json["html_url"])
+            if len(self.html_url) == 0:
+                logger.info("No html_url found in request.")
+            else:
+                logger.info("html_url found:  {}".format(self.html_url))
+
         logger.info("Completed check JSON fields in GH msg.")
 
     def add_commit_comment(self, g, comment):

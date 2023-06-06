@@ -5,8 +5,7 @@ from github import Github
 
 import github_util
 import helpers
-
-# import palm_api_util
+import palm_api_util
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -35,12 +34,6 @@ def main(request):
     my_gh_helper = github_util.GithubHelper()
     logger.debug("Instantiate GH object with label {}".format(label_name))
 
-    """Instantiate a palm object.
-    palm_api_key = my_secret_helper.get_secret(project_id, palm_api_key)
-    my_palm_util = palm_api_util.PalmApiUtil(palm_api_key)
-    logger.info("Instantiate PaLM Object")
-    """
-
     request_json = request.get_json()  # Receive and validate JSON requst.
 
     if request_json and "message" in request_json:
@@ -56,13 +49,14 @@ def main(request):
             if my_result is False:
                 logger.info("Adding help to the commit.")
                 help_text = """
-                Hello {}, I will assign this PR to you.
-                
-                Here are commands you can use with this PR:
-                
-                /tests - suggest test cases
-                /improvements - suggest code optimization
-                
+Hello {}, I will assign this PR to you.
+
+Here are some commands you can use with this PR:
+
+/documentation - suggest documentation
+/improvements - suggest code optimization
+/security - suggest security enhancements for this PR
+/tests - suggest test cases
                 """.format(
                     my_gh_helper.user
                 )
@@ -72,12 +66,16 @@ def main(request):
 
             else:
                 logger.info("This PR already has the %s label on it.", label_name)
-        else:  # this is probably a comment, let's check it out
+        else:  # we probably received a comment, let's check it out
             # my_gh_helper.check_pr_for_files(g)
-
             my_type, comment = my_gh_helper.check_comment_for_string(g)
 
             # at this point we hand it off to the generative AI
+            palm_api_key = my_secret_helper.get_secret(project_id, "franklin-test-key")
+            my_palm_util = palm_api_util.PalmApiUtil(palm_api_key)
+            logger.info("Instantiate PaLM Object")
+
+            # GET /repos/:owner/:repo/pulls/:pull_number/files
 
         """
         # this is to post to GKE
@@ -87,7 +85,7 @@ def main(request):
         """
         logger.info("success!")
         return request_json["message"]
-        
+
     elif request.args and "message" in request.args:  # message not JSON
         logger.info("Please call again with msg in JSON format.")
         return request.args.get("message")  # Handle a non-JSON message
