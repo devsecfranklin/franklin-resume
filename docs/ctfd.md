@@ -6,33 +6,37 @@
 ```sh
 kubectl create ns ctfd
 kubectl config set-context --current --namespace=ctfd
-kubectl apply -f yaml/ctfd-mysql-deployment.yaml
-kubectl apply -f yaml/ctfd-redis-deployment.yaml
-kubectl apply -f yaml/ctfd-deployment.yaml
-kubectl apply -f yaml/ctfd-backend.yaml
-kubectl apply -f yaml/ctfd-ngnix-deployment.yaml
+kubectl apply -f ctfd-mysql-deployment.yaml
+kubectl apply -f ctfd-redis-deployment.yaml
+kubectl apply -f ctfd-deployment.yaml
+kubectl apply -f ctfd-backend.yaml
+kubectl apply -f ctfd-nginx-deployment.yaml
 ```
 
 - Checkout the setup so far:
 
 ```sh
-k get all
-kubectl describe deployments
-kubectl apply -f yaml/ctfd-backend.yaml
-kubectl apply -f yaml/ctfd-ngnix-deployment.yaml
+kubectl get all
+kubectl describe deployments -n ctfd
+validate-ctfd.sh
 ```
 
-- Test connection:
+## Test connection
+
+This check simply shows that everything is working correctly.
 
 ```sh
-kubectl port-forward service/ctfd-nginx
-kubectl port-forward service/ctfd-nginx 8080:8080 # this will make it so you can browse to the site
+kubectl port-forward service/ctfd-nginx -n ctfd
+kubectl port-forward service/ctfd-nginx 8080:8080 -n ctfd # this will make it so you can browse to the site
 ```
 
 - Navigate to `http://127.0.0.1:8080/setup`
 
-- Make it public:
+## Expose Service
+
+- Also apply the `ingress.yaml`, verify it like so: `kubectl get ingress -n ctfd`
+- Run the Terraform to provision the backend service.
 
 ```sh
-kubectl get svcneg
+kubectl get svcneg -n ctfd
 ```

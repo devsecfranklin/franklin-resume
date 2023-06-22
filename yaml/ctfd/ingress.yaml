@@ -8,6 +8,6 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: ctfd
+      name: ctfd-nginx
       port:
-        number: 8000
+        number: 8080

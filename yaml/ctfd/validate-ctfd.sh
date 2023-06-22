@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 03 Nov 2022 franklin
+# 03 Nov 2022 franklin@dead10c5.org
 
 #set -o nounset  # Treat unset variables as an error
 
@@ -24,4 +24,21 @@ NC='\033[0m' # No Color
 shopt -s expand_aliases
 alias k=$(which kubectl)
 
+echo -e "${CYAN}----- Showing CTFd pods -----${NC}"
 k get pods -n ctfd --output=wide | grep ctfd | cut -f1 -d' '
+
+echo -e "${CYAN}----- Showing CTFd svcs -----${NC}"
+kubectl get services -n ctfd
+
+echo -e "${CYAN}----- Showing CTFd deployments -----${NC}"
+kubectl get deployments -n ctfd
+
+echo -e "${CYAN}----- Showing CTFd Public IP -----${NC}"
+gcloud compute addresses list 2>&1 | grep ctfd 
+
+echo -e "${CYAN}----- Check the CTFd Ingress -----${NC}"
+#k get ingress -n ctfd
+kubectl describe ingress -n ctfd ctfd
+
+echo -e "${CYAN}----- Get the CTFd svcneg -----${NC}"
+kubectl get svcneg -n ctfd

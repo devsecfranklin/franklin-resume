@@ -6,6 +6,8 @@
 gcloud components install gke-gcloud-auth-plugin || sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 gke-gcloud-auth-plugin --version
 gcloud components update
+gcloud auth activate-service-account --key-file={$GOOGLE_APPLICATION_CREDENTIALS}
+
 ```
 
 ## Label Nodes

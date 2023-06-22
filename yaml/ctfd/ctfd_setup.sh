@@ -1,6 +1,6 @@
-#/bin/bash
+#!/usr/bin/env bash
 
-# 9/14/2022 franklin
+# 9/14/2022 franklin@dead10c5.org
 
 #set -o nounset  # Treat unset variables as an error
 
@@ -29,7 +29,7 @@ command -v jq >/dev/null 2>&1 || { echo >&2 "${RED}Need to install jq.${NC}"; ex
 
 # Namespace
 NAMESPACE=$(${k} get ns ctfd -o json | jq .status.phase -r)
-echo -e "${CYAN}Namespace: ${NAMESPACE}${NC}"
+echo -e "${CYAN}CTFD Namespace: ${NAMESPACE}${NC}"
 if [ ! "${NAMESPACE}" == "Active" ]; then
   kubectl create ns ctfd
   sleep 5
@@ -45,7 +45,7 @@ ${k} apply -f yaml/ctfd/ctfd-storage-class.yaml -n ctfd
 
 # Deploy MySQL
 echo -e "${CYAN}Set up MySQL${NC}"
-${k} apply -f ctfd/yaml/ctfd-mysql-deployment.yaml  -n ctfd
+${k} apply -f yaml/ctfd/ctfd-mysql-deployment.yaml  -n ctfd
 sleep 5
 
 # Deploy Redis
@@ -60,7 +60,7 @@ sleep 5
 
 # Deploy NGiNX
 echo -e "${CYAN}Deploy NGiNx${NC}"
-${k} apply -f yaml/ctfd/ctfd-ngnix-deployment.yaml -n ctfd
+${k} apply -f yaml/ctfd/ctfd-nginx-deployment.yaml -n ctfd
 sleep 5
 
 # Status

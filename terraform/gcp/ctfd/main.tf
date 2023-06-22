@@ -25,7 +25,10 @@ resource "google_compute_health_check" "default" {
 }
 
 /*
-Make sure the firewall ports are open between LB and NEG nodes. This can be achieved with the below command. Since I know I will be having only two targetPorts in services, which will be on 80 and 8080, I am exposing those ports only.gcloud compute firewall-rules create fw-allow-health-check-and-proxy \
+Make sure the firewall ports are open between LB and NEG nodes. This can be achieved with the below command.
+Since I know I will be having only two targetPorts in services, which will be on 80 and 8080, I am exposing those ports only.
+
+gcloud compute firewall-rules create fw-allow-health-check-and-proxy \
  --network=default \
  --action=allow \
  --direction=ingress \
