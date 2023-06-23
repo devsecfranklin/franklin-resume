@@ -2,53 +2,6 @@ data "google_container_engine_versions" "gke_version" {
   location = var.zone
 }
 
-resource "google_compute_router" "router" {
-  name    = "${var.name_prefix}-router"
-  project = var.project_id
-  region  = var.region
-  network = data.google_compute_network.mgmt-vpc.name
-}
-
-module "cloud-nat" {
-  source                             = "terraform-google-modules/cloud-nat/google"
-  version                            = "~> 4.0"
-  project_id                         = var.project_id
-  region                             = var.region
-  router                             = google_compute_router.router.name
-  name                               = "nat-config"
-  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-}
-
-resource "google_compute_subnetwork" "gke-subnet" {
-  name                     = "${var.name_prefix}-gke-subnet"
-  project                  = var.project_id
-  region                   = var.region
-  network                  = data.google_compute_network.mgmt-vpc.name
-  ip_cidr_range            = "10.249.0.0/25"
-  private_ip_google_access = true
-
-  /* A named secondary range is mandatory for a private cluster
-
-  While using a secondary IP range is recommended in order to to separate
-  cluster master and pod IPs, when using a network in the same project as
-  your GKE cluster you can specify a blank range name to draw alias IPs
-  from your subnetwork's primary IP range. If using a shared VPC network
-  (a network from another GCP project) using an explicit secondary range is
-  required.
-  */
-  secondary_ip_range = [
-    {
-      ip_cidr_range = "10.12.0.0/16"
-      range_name    = "gke-lab-franklin-gke-pods-f23f12d3"
-    },
-    {
-      ip_cidr_range = "10.13.0.0/22"
-      range_name    = "gke-lab-franklin-gke-services-f23f12d3"
-    },
-
-  ]
-}
-
 resource "google_container_cluster" "primary" {
   name               = "${var.name_prefix}-gke"
   project            = var.project_id
@@ -60,6 +13,13 @@ resource "google_container_cluster" "primary" {
   networking_mode    = "VPC_NATIVE"
 
   // min_master_version = data.google_container_engine_versions.gke_version.latest_master_version
+
+  # The maintenance policy to use for the cluster.
+  maintenance_policy {
+    daily_maintenance_window {
+      start_time = "03:00"
+    }
+  }
 
   // optional, creates a zonal cluster
   node_locations = [
@@ -299,5 +259,28 @@ resource "google_container_node_pool" "production" {
   management {
     auto_repair  = true
     auto_upgrade = true
+  }
+}
+
+resource "google_container_node_pool" "primary" {
+  //name       = "${var.cluster_name}-nodepool"
+  name       = "${var.name_prefix}-nodepool"
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = 3
+
+  autoscaling {
+    min_node_count = 0
+    max_node_count = 6
+  }
+  node_config {
+    preemptible  = var.use_preemtible_nodes
+    machine_type = var.machine_type
+
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    //service_account = google_service_account.default.email
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
   }
 }

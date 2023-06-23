@@ -25,20 +25,22 @@ k="/usr/bin/kubectl"
 
 k="/usr/bin/kubectl"
 
-${k} delete service ctfd
-${k} delete deployment ctfd
-${k} delete pvc ctfd-pv-uploads
-${k} delete pvc ctf-pv-logs
-${k} delete backendconfig ctf-backend
+${k} delete service ctfd -n ctfd
+${k} delete deployment ctfd -n ctfd
+${k} delete pvc ctfd-pv-uploads -n ctfd
+${k} delete pvc ctf-pv-logs -n ctfd
+${k} delete backendconfig ctf-backend -n ctfd 
 # Services
-${k} delete service ctfd-nginx
-${k} delete service ctfd-redis-cache
-${k} delete service ctfd-mysql-db
+${k} delete service ctfd-nginx -n ctfd
+${k} delete service ctfd-redis-cache -n ctfd 
+${k} delete service ctfd-mysql-db -n ctfd
 # Deployments
-${k} delete deployment ctfd-nginx
-${k} delete deployment ctfd-redis-cache
-${k} delete deployment ctfd-mysql-db
+${k} delete deployment ctfd-nginx -n ctfd 
+${k} delete deployment ctfd-redis-cache -n ctfd
+${k} delete deployment ctfd-mysql-db -n ctfd
 #
-${k} delete pvc ctfd-redis-cache-pv
-${k} delete pvc ctfd-mysql-db-pv
-${k} delete storageclass regionalpd-storageclass
+${k} delete pvc ctfd-redis-cache-pv -n ctfd
+${k} delete pvc ctfd-mysql-db-pv -n ctfd
+${k} delete storageclass regionalpd-storageclass # this is a cluster scoped resource
+
+${k} delete ingress ctfd -n ctfd

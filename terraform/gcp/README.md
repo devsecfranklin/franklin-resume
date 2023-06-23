@@ -80,3 +80,70 @@ terraform plan -out franklin.plan
 ```sh
 gcloud container clusters get-credentials lab-franklin-gke --region=us-central1
 ```
+
+Test Cloudflare API token
+
+```sh
+curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+     -H "Authorization: Bearer XXXYYYZZZ" \
+     -H "Content-Type:application/json"
+```
+
+## CTFd Scoreboard in GKE
+
+High availablity deployment of CTFd on Kubernetes.
+
+### Setup
+
+variables can be added easily with a .tfvars file. See terraform.tfvars
+
+```sh
+gcloud config set project europe-north1
+```
+
+Create Google Cloud Storage Bucket for Terraform State
+
+```sh
+export TERRAFORM_STATE_GCP_BUCKET=europe-north1-tf-state
+gsutil mb -b on -c standard -l europe-north1 gs://TERRAFORM_STATE_GCP_BUCKET
+```
+
+Create Terraform Service Account
+
+```sh
+gcloud iam service-accounts create terraform
+gcloud iam service-accounts keys create \
+  --iam-account terraform@$PROJECT.iam.gserviceaccount.com \
+  PROJECT.json
+gcloud projects add-iam-policy-binding PROJECT \
+  --member serviceAccount:terraform@PROJECT.iam.gserviceaccount.com \
+  --role roles/editor
+```
+
+Create Terraform Encryption Key
+
+```sh
+export GOOGLE_ENCRYPTION_KEY=$(openssl rand -base64 32)
+export GOOGLE_APPLICATION_CREDENTIALS=PROJECT.json
+export GOOGLE_CREDENTIALS=$(cat $GOOGLE_APPLICATION_CREDENTIALS | tr -d '\n')
+```
+
+### terraform.tfvars
+
+```sh
+cert_manager_enabled        = "false"
+cloudflare_api_token        = ""
+cloudflare_email            = ""
+cloudflare_zone_id          = ""
+cluster_name                = ""
+domain                      = ""
+google_project              = ""
+google_region               = ""
+google_zone                 = ""
+grafana_password            = ""
+kong_enabled                = true
+node_pool_name              = ""
+prometheus_blackbox_enabled = false
+prometheus_blackbox_targets = ""
+storage_bucket              = ""
+```

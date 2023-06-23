@@ -5,11 +5,14 @@ variable "region" {
 
 variable "zone" {
   description = "The zone will be used to choose location for zonal resources. Zonal resources exist in a single zone."
+  type        = string
+  default     = "us-central1-a"
 }
 
 variable "project_id" {
   description = "The project indicates the default GCP project ID"
   type        = string
+  default     = "gcp-gcs-pso"
 }
 
 variable "name" {
