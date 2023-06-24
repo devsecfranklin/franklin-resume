@@ -117,12 +117,12 @@ resource "google_container_cluster" "primary" {
       ]
     }
     resource_limits {
-      maximum       = 64
+      maximum       = 128
       minimum       = 2
       resource_type = "memory"
     }
     resource_limits {
-      maximum       = 16
+      maximum       = 64
       minimum       = 2
       resource_type = "cpu"
     }
@@ -270,7 +270,7 @@ resource "google_container_node_pool" "primary" {
   node_count = 3
 
   autoscaling {
-    min_node_count = 0
+    min_node_count = 1
     max_node_count = 6
   }
   node_config {

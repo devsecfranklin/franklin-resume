@@ -136,12 +136,12 @@ variable "cert_manager_enabled" {
 
 variable "cloudflare_api_token" {
   type    = string
-  default = "1234"
+  default = "O1vhChy2fZ6cUPy-ZnXQgo5fYdxLFfPHQEH9GBBv"
 }
 
 variable "cloudflare_email" {
   type    = string
-  default = "terraform@dead10c5.org"
+  default = "k8s@dead10c5.org"
 }
 
 variable "grafana_password" {

@@ -1,4 +1,3 @@
-/*
 module "external_dns" {
 
   source     = "./modules/external_dns"
@@ -6,7 +5,7 @@ module "external_dns" {
 
   external_dns_id            = "gke"
   external_dns_project       = var.project_id
-  external_dns_chart_version = "6.1.7"
+  external_dns_chart_version = "6.20.4"
   kubernetes_namespace       = kubernetes_namespace.external_dns.metadata.0.name
   cloudflare_email           = var.cloudflare_email
   cloudflare_api_key         = var.cloudflare_api_token
@@ -18,7 +17,6 @@ module "external_dns" {
     module.cert_manager
   ]
 }
-*/
 
 module "cert_manager" {
   source = "./modules/cert_manager"
@@ -28,7 +26,7 @@ module "cert_manager" {
   cert_manager_enabled       = var.cert_manager_enabled
   cert_manager_id            = "gke"
   cert_manager_project       = var.project_id
-  cert_manager_chart_version = "1.7.1"
+  cert_manager_chart_version = "1.12.2"
   domain                     = var.root_domain
   kubernetes_namespace       = kubernetes_namespace.cert_manager.metadata.0.name
 

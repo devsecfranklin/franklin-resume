@@ -67,7 +67,7 @@ metrics:
     prometheus.io/port: "9104"
 
   serviceMonitor:
-    enabled: true
+    enabled: false
     namespace: ${service_monitor_namespace}
     selector:
       prometheus: kube-prometheus
