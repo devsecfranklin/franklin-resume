@@ -5,7 +5,7 @@ locals {
 module "vmseries" {
   for_each = var.vmseries
   source   = "PaloAltoNetworks/vmseries-modules/aws//modules/vmseries"
-  version  = "0.4.1"
+  version  = "0.4.2"
 
   name             = "${var.name_prefix}${each.key}"
   vmseries_version = var.vmseries_version
