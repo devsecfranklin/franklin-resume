@@ -1,6 +1,8 @@
-#!/bin/bash
-
-# Author: Franklin Diaz
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <thedevilsvoice@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31

@@ -1,3 +1,4 @@
+/*
 resource "kubernetes_namespace" "ctfd" {
 
   metadata {
@@ -69,3 +70,4 @@ resource "kubernetes_namespace" "monitoring" {
     google_container_node_pool.primary
   ]
 }
+*/

@@ -1,3 +1,4 @@
+/*
 resource "kubernetes_network_policy" "mariadb" {
   metadata {
     name      = "mariadb-ingress-policy"
@@ -71,3 +72,4 @@ resource "kubernetes_network_policy" "redis" {
   }
   depends_on = [kubernetes_namespace.ctfd]
 }
+*/

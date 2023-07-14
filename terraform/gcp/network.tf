@@ -3,6 +3,7 @@ resource "google_compute_network" "blue_net" {
   name = "blue"
 }
 */
+
 resource "google_compute_router" "router" {
   name    = "${var.name_prefix}-router"
   project = var.project_id
@@ -50,8 +51,10 @@ resource "google_compute_subnetwork" "gke-subnet" {
   ]
 }
 
+/*
 module "nginx" {
   source              = "./modules/nginx"
   nginx_chart_version = "4.0.18"
   nginx_namespace     = kubernetes_namespace.nginx.metadata[0].name
 }
+*/

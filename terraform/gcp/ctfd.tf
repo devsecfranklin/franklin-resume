@@ -1,3 +1,4 @@
+/*
 module "ctfd" {
   source        = "./modules/ctfd"
   imageTag      = "mark-3.3.1"
@@ -19,3 +20,4 @@ module "ctfd" {
     //module.prometheus_stack,
   ]
 }
+*/

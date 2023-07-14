@@ -1,3 +1,4 @@
+/*
 module "redis" {
   source         = "./modules/redis"
   namespace      = kubernetes_namespace.ctfd.metadata.0.name
@@ -14,3 +15,4 @@ resource "random_string" "redis_password" {
   special          = false
   override_special = "/@£$"
 }
+*/

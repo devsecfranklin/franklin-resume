@@ -1,6 +1,6 @@
 dnl Process this file with autoconf
 AC_PREREQ([2.69])
-AC_INIT(lab-franklin, 0.3, devsecfranklin@duck.com, https://github.com/devsecfranklin/lab-franklin)
+AC_INIT(lab-franklin, 0.3, franklin@dead10c5.org, https://github.com/devsecfranklin/lab-franklin)
 AC_CONFIG_MACRO_DIR(config/m4)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(foreign)

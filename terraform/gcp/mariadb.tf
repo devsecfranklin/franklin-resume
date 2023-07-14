@@ -1,3 +1,4 @@
+/*
 module "mariadb" {
   source             = "./modules/mariadb"
   namespace          = kubernetes_namespace.ctfd.metadata.0.name
@@ -22,3 +23,4 @@ resource "random_string" "maria_db_password" {
   special          = false
   override_special = "/@£$"
 }
+*/

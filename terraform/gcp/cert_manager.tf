@@ -1,3 +1,4 @@
+/*
 module "external_dns" {
 
   source     = "./modules/external_dns"
@@ -37,3 +38,4 @@ module "cert_manager" {
     google_container_node_pool.primary
   ]
 }
+*/

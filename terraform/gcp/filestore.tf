@@ -1,3 +1,4 @@
+/*
 resource "google_filestore_instance" "filestore" {
   provider = google-beta
   name     = "ctfd"
@@ -64,3 +65,4 @@ resource "kubernetes_persistent_volume" "ctfd" {
     google_container_node_pool.primary
   ]
 }
+*/
