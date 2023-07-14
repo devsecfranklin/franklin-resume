@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import unittest
 import pytest
 
@@ -11,10 +15,3 @@ def test_404(client):
     request.form = ImmutableMultiDict([("submit_button", "Go Back to Resume")])
     response = client.get("/garbage")
     assert response.status_code == 404
-
-"""my_resume application
-
-  Test like so: python3 -m pytest tests/
-  :copyright:  © 2021 by Franklin Diaz
-  :license: MIT
-"""

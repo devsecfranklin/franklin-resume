@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import os
 
 from flask import Flask, render_template, request
@@ -45,10 +49,3 @@ if __name__ == "__main__":
     # create app(debug=True)
     app.run(host="127.0.0.1")
     # app.run(host="0.0.0.0", port="5000")
-
-
-"""my_resume application
-
-    __copyright__ = © 2021-2022 by Franklin Diaz
-    __license__   = MIT
-"""
