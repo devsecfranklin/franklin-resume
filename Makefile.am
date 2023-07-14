@@ -3,15 +3,6 @@ ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
 .PHONY: src tests
 
-app:
-	@if [ -f /.dockerenv ]; then echo "Don't run make app inside docker container" && exit 1; fi;
-	docker run -it -p 5000:5000 frank378:franklin_resume
-
-build:
-	@if [ -f /.dockerenv ]; then echo  "***> Don't run make build inside docker container <***" && exit 1; fi
-	@$(MAKE)
-	docker-compose -f docker-compose.yml build franklin_resume
-
 clean:
 	@for trash in aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in; do\
 		if [ -f $$trash ] || [ -d $$trash ]; then \
