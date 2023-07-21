@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # v0.1 02/25/2022 Maintainer script
 # v0.2 09/24/2022 Update this script
@@ -6,9 +10,7 @@
 # v0.4 11/10/2022 Add automake check
 # v0.5 11/15/2022 Handle Docker container builds
 
-# Author:  devsecfranklin@duck.com
-
-#set -eu
+set -eu
 
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31

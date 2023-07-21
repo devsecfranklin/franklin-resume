@@ -4,7 +4,7 @@ import setuptools
 NAME = 'franklin-resume'
 DESCRIPTION = 'Resume Application'
 URL = 'https://github.com/devsecfranklin/franklin-resume'
-EMAIL = 'devsecfranklin@duck.com'
+EMAIL = 'franklin@dead10c5.org'
 AUTHOR = 'Franklin Diaz'
 REQUIRES_PYTHON = '>=3.9.0'
 VERSION = '0.3'

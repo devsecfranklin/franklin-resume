@@ -2,7 +2,7 @@
 
 FROM python:3.11-bullseye
 
-LABEL org.opencontainers.image.authors="Franklin <devsecfranklin@duck.com>"
+LABEL org.opencontainers.image.authors="Franklin <franklin@dead10c5.org>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume"
 LABEL org.opencontainers.image.description="Resume as Code (RaC)"
 LABEL org.opencontainers.image.licenses=MIT
