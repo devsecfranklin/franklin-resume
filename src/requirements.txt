@@ -1,8 +1,8 @@
-tomli>=2.0.1
+tomli
 gunicorn
-flask==2.3.2
+flask
 tox
 Flask-WeasyPrint
 flask-login
 flask-sqlalchemy
-sqlalchemy==2.0.19
+sqlalchemy
