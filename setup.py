@@ -6,8 +6,8 @@ DESCRIPTION = 'Resume Application'
 URL = 'https://github.com/devsecfranklin/franklin-resume'
 EMAIL = 'franklin@dead10c5.org'
 AUTHOR = 'Franklin Diaz'
-REQUIRES_PYTHON = '>=3.9.0'
-VERSION = '0.3'
+REQUIRES_PYTHON = '>=3.10.0'
+VERSION = '0.4'
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
