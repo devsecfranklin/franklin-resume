@@ -8,3 +8,7 @@
 ```
 
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit) [![Tox Testing](https://github.com/devsecfranklin/franklin-resume/actions/workflows/tox.yml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/tox.yml) [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/devsecfranklin/franklin-resume/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=devsecfranklin%2Ffranklin-resume&benchmark=INFRASTRUCTURE+SECURITY) [![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master)
+
+## View My Resume
+
+* [Heroku Version](https://franklin-resume.herokuapp.com/) is running here. You probably want this.
