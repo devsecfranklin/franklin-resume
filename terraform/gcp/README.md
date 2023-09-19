@@ -7,7 +7,7 @@
 ## Jump Box
 
 ```sh
-gcloud compute ssh --zone=us-central1-a airlock1
+gcloud compute ssh --zone=us-central1-a lab-franklin-airlock1
 ```
 
 ## Mac Terraform Setup

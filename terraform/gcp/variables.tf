@@ -61,6 +61,7 @@ variable "access_list" {
     "3.233.53.199",
     "44.216.25.244",
     "34.206.152.182",
+    "24.8.186.84",
   "52.55.185.160"]
 }
 
@@ -81,7 +82,7 @@ variable "debian_11_sku" {
 variable "linux_instance_type" {
   type        = string
   description = "VM instance type for Linux Server"
-  default     = "f1-micro"
+  default     = "e2-standard-4"
 }
 
 // ***************************** OPENSHIFT
