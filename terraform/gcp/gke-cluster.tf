@@ -84,7 +84,7 @@ resource "google_container_cluster" "primary" {
       display_name = "panorama-two"
     }
     cidr_blocks {
-      cidr_block   = "156.146.51.68/32"
+      cidr_block   = "24.8.186.84/32"
       display_name = "franklin-denver"
     }
   }

@@ -29,7 +29,7 @@ variable "zone" {
 variable "tags" {
   description = "Map of tags to be associated with the virtual machines, their interfaces and public IP addresses."
   type        = list(any)
-  default     = ["lab", "franklin", "ssh"]
+  default     = ["lab", "franklin", "ssh", "http-server", "https-server"]
 }
 
 variable "access_list" {
