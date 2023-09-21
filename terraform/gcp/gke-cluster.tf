@@ -267,7 +267,7 @@ resource "google_container_node_pool" "primary" {
   name       = "${var.name_prefix}-nodepool"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 3
+  node_count = 1
 
   autoscaling {
     min_node_count = 1
