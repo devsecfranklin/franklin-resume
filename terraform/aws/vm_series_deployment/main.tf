@@ -1,6 +1,6 @@
 module "security_vpc" {
   source  = "PaloAltoNetworks/vmseries-modules/aws//modules/vpc"
-  version = "1.0.6"
+  version = "1.0.7"
 
   create_vpc              = var.create_vpc
   name                    = "${var.name_prefix}${var.security_vpc_name}"
@@ -29,7 +29,7 @@ module "security_subnet_sets" {
   # in a single AZ.
   for_each = toset(distinct([for _, v in var.security_vpc_subnets : v.set]))
   source   = "PaloAltoNetworks/vmseries-modules/aws//modules/subnet_set"
-  version  = "1.0.6"
+  version  = "1.0.7"
 
   name                = each.key
   vpc_id              = module.security_vpc.id
@@ -41,7 +41,7 @@ module "security_subnet_sets" {
 
 module "transit_gateway" {
   source  = "PaloAltoNetworks/vmseries-modules/aws//modules/transit_gateway"
-  version = "1.0.6"
+  version = "1.0.7"
 
   create = var.create_tgw
 
@@ -52,7 +52,7 @@ module "transit_gateway" {
 
 module "security_transit_gateway_attachment" {
   source  = "PaloAltoNetworks/vmseries-modules/aws//modules/transit_gateway_attachment"
-  version = "1.0.6"
+  version = "1.0.7"
 
   name                        = "${var.name_prefix}${var.security_vpc_tgw_attachment_name}"
   vpc_id                      = module.security_subnet_sets[var.security_subnet_transit_name].vpc_id
@@ -76,7 +76,7 @@ module "security_transit_gateway_attachment" {
 
 module "security_gwlb" {
   source  = "PaloAltoNetworks/vmseries-modules/aws//modules/gwlb"
-  version = "1.0.6"
+  version = "1.0.7"
 
   name    = "${var.name_prefix}${var.gwlb_name}"
   vpc_id  = module.security_subnet_sets[var.security_subnet_gwlb_name].vpc_id
@@ -87,7 +87,7 @@ module "security_gwlb" {
 
 module "gwlbe_eastwest" {
   source  = "PaloAltoNetworks/vmseries-modules/aws//modules/gwlb_endpoint_set"
-  version = "1.0.6"
+  version = "1.0.7"
 
   name              = "${var.name_prefix}${var.gwlb_endpoint_set_eastwest_name}"
   gwlb_service_name = module.security_gwlb.endpoint_service.service_name
@@ -97,7 +97,7 @@ module "gwlbe_eastwest" {
 
 module "gwlbe_outbound" {
   source  = "PaloAltoNetworks/vmseries-modules/aws//modules/gwlb_endpoint_set"
-  version = "1.0.6"
+  version = "1.0.7"
 
   name              = "${var.name_prefix}${var.gwlb_endpoint_set_outbound_name}"
   gwlb_service_name = module.security_gwlb.endpoint_service.service_name
@@ -177,7 +177,7 @@ locals {
 module "security_vpc_routes" {
   for_each = { for route in local.security_vpc_routes : "${route.subnet_key}_${route.to_cidr}" => route }
   source   = "PaloAltoNetworks/vmseries-modules/aws//modules/vpc_route"
-  version  = "1.0.6"
+  version  = "1.0.7"
 
   route_table_ids = module.security_subnet_sets[each.value.subnet_key].unique_route_table_ids
   to_cidr         = each.value.to_cidr
