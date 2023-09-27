@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "PaloAltoNetworks/vmseries-modules/google//modules/vpc"
-  version = "1.2.4"
+  version = "1.2.5"
 
   networks = [
     {
@@ -55,7 +55,7 @@ module "vpc" {
 module "vmseries_ingress" {
   for_each = var.vmseries.ingress
   source   = "PaloAltoNetworks/vmseries-modules/google//modules/vmseries"
-  version  = "1.2.4"
+  version  = "1.2.5"
 
   name = "${var.name_prefix}${each.key}"
   zone = each.value.zone
@@ -101,7 +101,7 @@ module "vmseries_ingress" {
 module "vmseries_egress" {
   for_each = var.vmseries.egress
   source   = "PaloAltoNetworks/vmseries-modules/google//modules/vmseries"
-  version  = "1.2.4"
+  version  = "1.2.5"
 
   name = "${var.name_prefix}${each.key}"
   zone = each.value.zone
@@ -140,7 +140,7 @@ module "vmseries_egress" {
 
 module "lb_external" {
   source  = "PaloAltoNetworks/vmseries-modules/google//modules/lb_http_ext_global/"
-  version = "1.2.4"
+  version = "1.2.5"
 
 
   name                  = "${var.name_prefix}${var.extlb_name}"
@@ -150,7 +150,7 @@ module "lb_external" {
 
 module "lb_internal" {
   source  = "PaloAltoNetworks/vmseries-modules/google//modules/lb_internal"
-  version = "1.2.4"
+  version = "1.2.5"
 
   name     = "${var.name_prefix}ilb"
   backends = { for k, v in module.vmseries_egress : k => v.instance_group_self_link }
