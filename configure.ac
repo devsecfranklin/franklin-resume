@@ -13,6 +13,9 @@ AC_CONFIG_COMMANDS([franklin-build],
 AC_CONFIG_FILES([
  Makefile
  docker/Makefile
+ docker/kerberos-containers/kdc-server/Makefile
+ docker/kerberos-containers/kdc-ssh-server/Makefile
+ docker/kerberos-containers/ssh-container/Makefile
  src/nodebot/Makefile
 ])
 

@@ -68,10 +68,6 @@ resource "google_container_cluster" "primary" {
       display_name = "corporate-net1"
     }
     cidr_blocks {
-      cidr_block   = "68.38.137.81/32"
-      display_name = "franklin-lab"
-    }
-    cidr_blocks {
       cidr_block   = "54.215.48.190/32"
       display_name = "denver-ds"
     }
@@ -86,6 +82,14 @@ resource "google_container_cluster" "primary" {
     cidr_blocks {
       cidr_block   = "24.8.186.84/32"
       display_name = "franklin-denver"
+    }
+    cidr_blocks {
+      cidr_block   = "134.238.141.180/32"
+      display_name = "franklin-corp-remote"
+    }
+    cidr_blocks {
+      cidr_block   = "104.199.1.97/32"
+      display_name = "cloud shell"
     }
   }
 
@@ -133,6 +137,7 @@ resource "google_container_cluster" "primary" {
   }
 }
 
+/*
 resource "google_container_node_pool" "cn-series" {
   name       = "security-nodes"
   project    = var.project_id
@@ -196,8 +201,10 @@ resource "google_container_node_pool" "cn-series" {
     auto_upgrade = true
   }
 }
+*/
 
-resource "google_container_node_pool" "production" {
+/*
+resource "google_container_node_pool" "development" {
   name       = "${var.name_prefix}-development"
   project    = var.project_id
   location   = var.region
@@ -261,6 +268,7 @@ resource "google_container_node_pool" "production" {
     auto_upgrade = true
   }
 }
+*/
 
 resource "google_container_node_pool" "primary" {
   //name       = "${var.cluster_name}-nodepool"
