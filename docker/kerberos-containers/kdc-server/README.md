@@ -16,3 +16,16 @@ stop when the container starts runnning.
 
 Once the container started, switch into the container `docker exec -it kdc-server_kdc-kadmin_1 /bin/bash`,
 and use `kadmin.local` for the KDC amdmin interafce. From there you can start adding principals and keytabs.
+
+## Slow
+
+* Build dev container
+
+```sh
+sudo sysctl -w net.ipv6.conf.all.forwarding=1 # Use when you have IPv6 network issues
+export CR_PAT=$(pass show ghcr)
+echo $CR_PAT | docker login ghcr.io -u devsecfranklin --password-stdin
+make push
+# or use this alternative to make push
+# docker-compose build kdc-server || docker build -t ghcr.io/devsecfranklin/kdc-server .
+```
