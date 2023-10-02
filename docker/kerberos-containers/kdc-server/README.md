@@ -15,4 +15,4 @@ stop when the container starts runnning.
 ## Usage
 
 Once the container started, switch into the container `docker exec -it kdc-server_kdc-kadmin_1 /bin/bash`,
-and use `kadmin.local` for the KDC amdmin interafce. From there you can start adding principals and keytabs. 
+and use `kadmin.local` for the KDC amdmin interafce. From there you can start adding principals and keytabs.
