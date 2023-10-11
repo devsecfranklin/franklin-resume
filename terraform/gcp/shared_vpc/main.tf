@@ -153,6 +153,7 @@ module "lb_internal" {
   version = "1.2.6"
 
   name     = "${var.name_prefix}ilb"
+  region   = var.region
   backends = { for k, v in module.vmseries_egress : k => v.instance_group_self_link }
   # ip_address = "10.250.64.40"
   subnetwork = module.vpc.subnetworks["${var.name_prefix}egress"].self_link
