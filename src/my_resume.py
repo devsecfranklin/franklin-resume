@@ -32,6 +32,12 @@ def build_pdf():
 
 
 @app.route("/bio")
+def render_bio():
+    """Render the HTML biography."""
+    return render_template("bio.html", title="Franklin Diaz Biography")
+
+
+@app.route("/biopdf")
 def build_bio():
     """Generate a PDF Biography file from HTML."""
     # css = ["src/static/css/new-style.css"]
