@@ -36,7 +36,9 @@ def build_bio():
     """Generate a PDF Biography file from HTML."""
     # css = ["src/static/css/new-style.css"]
     html = render_template("bio.html")
-    return render_pdf(HTML(string=html), download_filename="franklin_diaz_biography.pdf")
+    return render_pdf(
+        HTML(string=html), download_filename="franklin_diaz_biography.pdf"
+    )
 
 
 @app.errorhandler(404)
