@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM debian:12.1-slim
+FROM debian:12.2-slim
 
 LABEL maintainer="DE:AD:10:C5 <thedevilsvoice@dead10c5.org>"
 LABEL org.opencontainers.image.source=https://github.com/devsecfranklin/lab-franklin
