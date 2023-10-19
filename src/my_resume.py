@@ -48,13 +48,13 @@ def build_bio():
 
 
 @app.route("/palobio")
-def render_bio():
+def render_palo_bio():
     """Render the HTML biography."""
     return render_template("palo_bio.html", title="Franklin Diaz Palo Alto Biography")
 
 
 @app.route("/palobiopdf")
-def build_bio():
+def build_palo_bio():
     """Generate a PDF Biography file from HTML."""
     # css = ["src/static/css/new-style.css"]
     html = render_template("palo_bio.html")
