@@ -47,6 +47,22 @@ def build_bio():
     )
 
 
+@app.route("/palobio")
+def render_bio():
+    """Render the HTML biography."""
+    return render_template("palo_bio.html", title="Franklin Diaz Palo Alto Biography")
+
+
+@app.route("/palobiopdf")
+def build_bio():
+    """Generate a PDF Biography file from HTML."""
+    # css = ["src/static/css/new-style.css"]
+    html = render_template("palo_bio.html")
+    return render_pdf(
+        HTML(string=html), download_filename="franklin_diaz_palo_alto_biography.pdf"
+    )
+
+
 @app.errorhandler(404)
 def page_not_found(my_err):
     """Return a custom 404 error page."""
