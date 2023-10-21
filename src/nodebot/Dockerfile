@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:20-alpine
+FROM node:21-alpine
 
 LABEL maintainer="Franklin D <devsecfranklin@duck.com>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/lab-franklin"
