@@ -1,3 +1,5 @@
+tox==4.6.4
+wheel
 pytest
 pytest-flask
 coverage
