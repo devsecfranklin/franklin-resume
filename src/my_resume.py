@@ -4,7 +4,7 @@
 
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_weasyprint import HTML, render_pdf
 
 app = Flask(__name__)
@@ -15,6 +15,17 @@ def create_app(debug):
     app.debug = debug
     app.secret_key = os.urandom(12)
     return app
+
+
+@app.before_request
+def beforeRequest():
+    """https://stackoverflow.com/questions/15116312/redirect-http-to-https-on-flaskheroku
+
+    Returns:
+        _type_: _description_
+    """
+    if not request.url.startswith("https"):
+        return redirect(request.url.replace("http", "https", 1))
 
 
 @app.route("/")
