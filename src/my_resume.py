@@ -19,6 +19,11 @@ def create_app(debug):
 
 @app.before_request
 def beforeRequest():
+    """https://stackoverflow.com/questions/15116312/redirect-http-to-https-on-flaskheroku
+
+    Returns:
+        _type_: _description_
+    """
     if not request.url.startswith("https"):
         return redirect(request.url.replace("http", "https", 1))
 
