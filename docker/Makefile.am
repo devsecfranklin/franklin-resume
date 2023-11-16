@@ -1,13 +1,14 @@
 CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
-STALE :=  $(shell docker image ls | grep ghcr.io/devsecfranklin/franklin-resume | grep latest | sed -e's/  */ /g' | cut -d" " -f3)
+SHORT_NAME := $(shell docker image ls | grep ^franklin-resume | grep latest | sed -e's/  */ /g' | cut -d" " -f3)
+LONG_NAME :=  $(shell docker image ls | grep ghcr.io/devsecfranklin/franklin-resume | grep latest | sed -e's/  */ /g' | cut -d" " -f3)
 .check-env-vars:
 	@test $${CR_PAT?Push will fail. You need to export the CR_PAT token for GHCR}
 
 build:
-	@if [ ! -z $$STALE ]; then \
-		echo "Found stale image: $(STALE)" ;\
-		docker image rm -f $(STALE) ;\
+	@if [ "${LONG_NAME}" != "${SHORT_NAME}" ] && [ ! -z "${LONG_NAME}" ]; then \
+		echo "Found stale image: ${LONG_NAME}" ;\
+		docker image rm -f $(LONG_NAME) ;\
 	fi
 	docker-compose build franklin-resume
 	@echo "Tagging image:  $(shell docker images -q | head -1)"

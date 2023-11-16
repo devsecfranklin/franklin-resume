@@ -38,10 +38,9 @@ Now you are ready to rock. Type `make test` or do things the old fashioned way:
 ```sh
 source $HOME/.nix-profile/etc/profile.d/nix.sh
 # from top level of repo
-unset NIX_REMOTE || set -e NIX_REMOTE && if [ -f "gcp_tagging/requirements.txt"
- ]; then nix-shell; fi
+unset NIX_REMOTE || set -e NIX_REMOTE && if [ -f "src/requirements.txt" ]; then nix-shell; fi
 python3 -m pip install tox
-tox
+ tox -e py310
 exit
 nix-collect-garbage -d
 ```
