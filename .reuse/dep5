@@ -7,6 +7,6 @@ Files: .devcontainer/* .envrc .github/*  docs/* index.php .profile README.md run
 Copyright: 2023, DE:AD:10:C5 <thedevilsvoice@dead10c5.org>
 License: CC-BY-SA-4.0
 
-Files: .bandit .coverageac bin/* bootstrap.sh .dockerignore configure.ac docker/* images/* Makefile.am MANIFEST.in Procfile SECURITY.md tests/* .trivyignore .vscode/* .gitignore yaml/*
+Files: .bandit .coveragerc bin/* bootstrap.sh .dockerignore configure.ac docker/* images/* Makefile.am MANIFEST.in Procfile SECURITY.md tests/* .trivyignore .vscode/* .gitignore yaml/*
 Copyright: 2023, DE:AD:10:C5 <thedevilsvoice@dead10c5.org>
 License: GPL-3.0-or-later
