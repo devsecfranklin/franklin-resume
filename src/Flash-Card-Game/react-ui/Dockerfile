@@ -9,10 +9,9 @@ LABEL org.opencontainers.image.licenses=GPLv2
 
 ENV NODE_ENV=production
 
-COPY ["app.js", "package.json", "package-lock.json", "./"]
-
-RUN npm install --production
-
 COPY . .
 
-ENTRYPOINT ["node", "app.js"]
+# Set up postgresql
+RUN apk update; \
+  cd react-ui && npm install;\
+  npm start

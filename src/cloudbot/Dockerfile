@@ -2,8 +2,10 @@
 
 FROM python:3.11.4-slim-buster
 
-LABEL maintainer="Franklin D. <devsecfranklin@duck.com>"
-LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/lab-franklin"
+LABEL maintainer="DE:AD:10:C5 <thedevilsvoice@dead10c5.org>"
+LABEL org.opencontainers.image.source = "https://github.com/devsecfranklin/lab-franklin"
+LABEL org.opencontainers.image.description="lab-franklin"
+LABEL org.opencontainers.image.licenses=GPLv2
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONPATH=/usr/local/lib/python3.9.6/site-packages
