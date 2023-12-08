@@ -3,8 +3,10 @@ __pycache__
 .buildlog 
 *_check_results_*.txt
 *.bkp
+.cloudflare.ini
 key
 cred.json
+node_modules/
 
 # This is a minimal list, OK to add things per repo
 # mac specific

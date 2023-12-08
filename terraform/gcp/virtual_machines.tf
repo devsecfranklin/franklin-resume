@@ -3,7 +3,7 @@
 data "template_file" "linux-metadata" {
   template = <<EOF
 sudo apt-get update; 
-sudo apt-get install -y neofetch automake gawk git;
+sudo apt-get install -y neofetch automake gawk git rsyslog;
 EOF
 }
 
