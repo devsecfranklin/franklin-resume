@@ -43,6 +43,7 @@ resource "google_compute_instance" "gcp_airlock" {
 
 // *********** timecube ************ //
 
+/*
 resource "google_compute_address" "timecube_static" {
   name = "${var.name_prefix}-tc-ipv4-address"
   lifecycle {
@@ -70,3 +71,4 @@ resource "google_compute_instance" "gcp_timecube" {
     }
   }
 }
+*/

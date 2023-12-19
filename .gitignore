@@ -48,6 +48,8 @@ terraform.rc
 
 Makefile
 Makefile.in
+confdefs.h
+conftest.*
 configure
 configure~
 config/

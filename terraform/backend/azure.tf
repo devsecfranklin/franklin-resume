@@ -3,6 +3,9 @@ resource "azurerm_resource_group" "lab_franklin" {
   name     = var.resource_group_name # coalesce(var.resource_group_name, "${var.name_prefix}")
   location = var.az_location
   tags     = var.tags
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_storage_account" "tfstate" {
@@ -17,28 +20,6 @@ resource "azurerm_storage_account" "tfstate" {
 
 resource "azurerm_storage_container" "tfstate_labinfra" {
   name                  = "tfstatelabinfra"
-  storage_account_name  = azurerm_storage_account.tfstate.name
-  container_access_type = "private"
-}
-
-// Temporary testing  Porto P-727477
-resource "azurerm_storage_container" "tfstate_portolog" {
-  name                  = "tfstateportoazlog"
-  storage_account_name  = azurerm_storage_account.tfstate.name
-  container_access_type = "private"
-}
-resource "azurerm_storage_container" "tfstate_portopano" {
-  name                  = "tfstateportopano"
-  storage_account_name  = azurerm_storage_account.tfstate.name
-  container_access_type = "private"
-}
-resource "azurerm_storage_container" "tfstate_portoinfra" {
-  name                  = "tfstateportoazinfra"
-  storage_account_name  = azurerm_storage_account.tfstate.name
-  container_access_type = "private"
-}
-resource "azurerm_storage_container" "tfstate_portodeploy" {
-  name                  = "tfstateportoazdeploy"
   storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }
