@@ -140,7 +140,7 @@ resource "azurerm_subnet_route_table_association" "inside" {
 # The Outbound Load Balancer for handling the traffic from the private networks.
 module "inside_lb" {
   source  = "PaloAltoNetworks/vmseries-modules/azurerm//modules/loadbalancer"
-  version = "0.5.1"
+  version = "0.5.5"
 
   resource_group_name = var.resource_group_name
   location            = data.azurerm_resource_group.lab_franklin.location
@@ -168,7 +168,7 @@ module "inside_lb" {
 # The Inbound Load Balancer ( External ) for handling the traffic to the private networks.
 module "external_lb" {
   source  = "PaloAltoNetworks/vmseries-modules/azurerm//modules/loadbalancer"
-  version = "0.5.1"
+  version = "0.5.5"
 
   name                              = "${var.name_prefix}palo-elb"
   resource_group_name               = var.resource_group_name
