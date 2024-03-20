@@ -1,17 +1,9 @@
-// add airlock host here
-
 data "template_file" "linux-metadata" {
   template = <<EOF
 sudo apt-get update; 
-sudo apt-get install -y neofetch automake gawk git rsyslog;
+sudo apt-get install -y neofetch automake gawk git rsyslog nginx;
 EOF
 }
-
-/* ********* Airlock **********
-
-This one resolves as ctf.dead10c5.org
-
-*/
 
 resource "google_compute_address" "airlock1_static" {
   name = "${var.name_prefix}-ipv4-address"
@@ -38,6 +30,10 @@ resource "google_compute_instance" "gcp_airlock" {
     access_config {
       nat_ip = google_compute_address.airlock1_static.address
     }
+  }
+  network_interface {
+    network    = "ps-devsecops-mgmt"
+    subnetwork = "ps-devsecops-mgmt"
   }
 }
 

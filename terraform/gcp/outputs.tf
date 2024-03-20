@@ -16,6 +16,10 @@ output "airlock_external_ip" {
   value = google_compute_address.airlock1_static.address
 }
 
+output "airlock_old_ip" {
+  value = google_compute_instance.gcp_airlock.network_interface.1.network_ip
+}
+
 /*
 output "timecube_internal_ip" {
   value = google_compute_instance.gcp_timecube.network_interface.0.network_ip

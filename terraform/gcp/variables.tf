@@ -32,23 +32,28 @@ variable "tags" {
   default     = ["lab", "franklin", "ssh", "http-server", "https-server"]
 }
 
+# curl ifconfig.me to get the public IP
 variable "access_list" {
   type = list(any)
   default = [
     "3.233.53.199",     # AWS bh51pafwinb01p-mgmt1
+    "8.44.144.96",      # viktor
     "24.8.186.84",      # Home network
     "34.134.31.136/32", # GCP panorama one
     "34.136.90.64/32",  # GCP panorama two
     "34.206.152.182",   # AWS bh52pafwoew01p-mgmt1
+    "35.225.169.199/32",   # GCP fw 2
+    "34.29.168.210/32", # GCP fw 1
+    "34.30.191.153",
+    "34.173.2.219",
     "35.222.82.220/32", # GCP lab-franklin-airlock1
     "44.216.25.244",    # AWS bh51pafwinb02p-mgmt1
     "52.55.185.160",    # AWS bh52pafwoew02p-mgmt1)
     "134.238.141.178",  # corp network
     "134.238.141.180",  # corp network
     "134.238.163.160",  # corp network
-    "104.199.1.97",     # GCP cloud shell
     "174.16.149.41",    # viktor
-    "8.44.144.96"       # viktor
+    "192.168.0.0/24"    # old mgmt network
   ]
 }
 
