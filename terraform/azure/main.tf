@@ -145,8 +145,8 @@ module "inside_lb" {
   resource_group_name = var.resource_group_name
   location            = data.azurerm_resource_group.lab_franklin.location
   name                = "${var.name_prefix}${var.inside_lb_name}"
-  probe_name          = "${var.inside_lb_name}-probe"
-  backend_name        = "${var.inside_lb_name}-backend"
+  probe_name          = "${var.name_prefix}${var.inside_lb_name}-probe"
+  backend_name        = "${var.name_prefix}${var.inside_lb_name}-backend"
   enable_zones        = var.enable_zones
   avzones             = var.avzones
   frontend_ips = {
@@ -206,6 +206,7 @@ module "external_lb" {
   }
   backend_name = "external-lb-backend"
 }
+
 module "vmseries" {
   source = "PaloAltoNetworks/vmseries-modules/azurerm//modules/vmseries"
 

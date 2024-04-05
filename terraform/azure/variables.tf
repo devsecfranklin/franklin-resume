@@ -55,7 +55,7 @@ variable "mgmt_subnet" {
 
 variable "enable_zones" {
   description = "If false, all the VM-Series, load balancers and public IP addresses default to not to use Availability Zones (the `No-Zone` setting). It is intended for the regions that do not yet support Availability Zones."
-  default     = false
+  default     = true
   type        = bool
 }
 
