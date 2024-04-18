@@ -1,5 +1,5 @@
 tomli==2.0.1
-gunicorn==21.2.0
+gunicorn==22.0.0
 tox==4.14.2
 Flask==3.0.3
 Flask-Login==0.6.3
