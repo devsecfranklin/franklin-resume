@@ -34,9 +34,9 @@ resource "google_container_cluster" "primary" {
   enable_shielded_nodes       = true
   enable_intranode_visibility = true
 
-  workload_identity_config {
-    workload_pool = "gcp-gcs-pso.svc.id.goog"
-  }
+  # workload_identity_config {
+  #   workload_pool = "gcp-gcs-pso.svc.id.goog"
+  # }
 
   # https://github.com/hashicorp/terraform-provider-google/issues/5154
   ip_allocation_policy {
@@ -105,32 +105,32 @@ resource "google_container_cluster" "primary" {
       disabled = false // Enable network policy (Calico) as an addon.
     }
     http_load_balancing {
-      disabled = true // we are using nginx ingress, not needed
+      disabled = false
     }
-    horizontal_pod_autoscaling {
-      disabled = false // Provide the ability to scale pod replicas based on real-time metrics
-    }
+    # horizontal_pod_autoscaling {
+    #   disabled = true // Provide the ability to scale pod replicas based on real-time metrics
+    # }
   }
 
-  cluster_autoscaling {
-    enabled = true
-    auto_provisioning_defaults {
-      service_account = var.service_account_terraform
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ]
-    }
-    resource_limits {
-      maximum       = 128
-      minimum       = 2
-      resource_type = "memory"
-    }
-    resource_limits {
-      maximum       = 64
-      minimum       = 2
-      resource_type = "cpu"
-    }
-  }
+  # cluster_autoscaling {
+  #   enabled = true
+  #   auto_provisioning_defaults {
+  #     service_account = var.service_account_terraform
+  #     oauth_scopes = [
+  #       "https://www.googleapis.com/auth/cloud-platform"
+  #     ]
+  #   }
+  #   resource_limits {
+  #     maximum       = 128
+  #     minimum       = 2
+  #     resource_type = "memory"
+  #   }
+  #   resource_limits {
+  #     maximum       = 64
+  #     minimum       = 2
+  #     resource_type = "cpu"
+  #   }
+  # }
 
   release_channel {
     channel = "REGULAR" # [UNSPECIFIED RAPID REGULAR STABLE]

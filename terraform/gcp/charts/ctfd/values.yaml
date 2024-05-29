@@ -40,7 +40,6 @@ persistence:
     # existingClaim:
     # storageClass: "-"
 
-
 service:
   type: NodePort
   port: 80
@@ -49,7 +48,6 @@ service:
   # loadBalancerSourceRanges: []
   # loadBalancerIP: ""
 
-  
 probes:
   liveness:
     initialDelaySeconds: 5

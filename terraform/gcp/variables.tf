@@ -117,6 +117,8 @@ variable "cluster_name" {
   default = "lab-franklin-gke"
 }
 
+// ***************************** CTFd
+
 variable "root_domain" {
   type    = string
   default = "dead10c5.org"
@@ -134,7 +136,7 @@ variable "cloudflare_api_token" {
 
 variable "cloudflare_email" {
   type    = string
-  default = "k8s@dead10c5.org"
+  default = "ctfd@dead10c5.org"
 }
 
 variable "grafana_password" {

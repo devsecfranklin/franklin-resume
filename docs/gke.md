@@ -7,12 +7,12 @@ gcloud components install gke-gcloud-auth-plugin || sudo apt-get install google-
 gke-gcloud-auth-plugin --version
 gcloud components update
 gcloud auth activate-service-account --key-file={$GOOGLE_APPLICATION_CREDENTIALS}
-
 ```
 
 ## Label Nodes
 
 ```sh
+k cluster-info
 k get nodes
 kubectl label node gke-ps-devsecops-gke-build-pool-0ccb2515-yshf node-role.kubernetes.io/build="build"
 kubectl label node gke-ps-devsecops-gke-dev-test-6959817f-3oo1  node-role.kubernetes.io/dev-test="dev-test"

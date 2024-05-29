@@ -34,7 +34,7 @@ resource "google_compute_firewall" "lab-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "443", "2049", "3978", "5000", "8443", "28270", "28443", "28769"]
+    ports    = ["22", "80", "443", "2049", "3978", "5000", "8443", "28270", "28443", "28769"]
   }
 
   allow {
@@ -60,6 +60,22 @@ resource "google_compute_firewall" "allow-egress" {
   direction          = "EGRESS"
   destination_ranges = ["0.0.0.0/0"]
 }
+
+/*
+resource "google_compute_firewall" "allow-pub-priv" {
+  name        = "${var.name_prefix}-allow-public-cluster-to-private-cluster"
+  project     = var.project_id
+  network     = data.google_compute_network.mgmt-vpc.name
+  description = "Allow the public cluster to talk to the private pod range"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443", "8000", "8443"]
+  }
+
+  direction          = "INGRESS"
+  destination_ranges = ["10.12.0.0/16"]
+*/
 
 resource "google_compute_firewall" "all-pods-and-master-ipv4-cidrs" {
   name        = "${var.name_prefix}-all-pods"
