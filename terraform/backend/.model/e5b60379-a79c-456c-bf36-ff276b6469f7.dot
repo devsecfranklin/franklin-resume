@@ -1,0 +1,23 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  "aws_dynamodb_table.terraform_state_lock" [label="aws_dynamodb_table.terraform_state_lock"];
+  "aws_s3_bucket.terraform_state" [label="aws_s3_bucket.terraform_state"];
+  "aws_s3_bucket_versioning.terraform_state" [label="aws_s3_bucket_versioning.terraform_state"];
+  "azurerm_resource_group.lab_franklin" [label="azurerm_resource_group.lab_franklin"];
+  "azurerm_storage_account.tfstate" [label="azurerm_storage_account.tfstate"];
+  "azurerm_storage_container.tfstate_labinfra" [label="azurerm_storage_container.tfstate_labinfra"];
+  "azurerm_storage_container.tfstate_portodeploy" [label="azurerm_storage_container.tfstate_portodeploy"];
+  "azurerm_storage_container.tfstate_portoinfra" [label="azurerm_storage_container.tfstate_portoinfra"];
+  "azurerm_storage_container.tfstate_portolog" [label="azurerm_storage_container.tfstate_portolog"];
+  "azurerm_storage_container.tfstate_portopano" [label="azurerm_storage_container.tfstate_portopano"];
+  "google_compute_network.mgmt-vpc" [label="google_compute_network.mgmt-vpc"];
+  "google_compute_subnetwork.aus_network_subnet" [label="google_compute_subnetwork.aus_network_subnet"];
+  "google_compute_subnetwork.mgmt-subnet" [label="google_compute_subnetwork.mgmt-subnet"];
+  "google_storage_bucket.gke_terraform_state" [label="google_storage_bucket.gke_terraform_state"];
+  "google_storage_bucket.terraform_state" [label="google_storage_bucket.terraform_state"];
+  "aws_s3_bucket_versioning.terraform_state" -> "aws_s3_bucket.terraform_state";
+  "azurerm_storage_container.tfstate_labinfra" -> "azurerm_storage_account.tfstate";
+  "google_compute_subnetwork.aus_network_subnet" -> "google_compute_network.mgmt-vpc";
+  "google_compute_subnetwork.mgmt-subnet" -> "google_compute_network.mgmt-vpc";
+}
