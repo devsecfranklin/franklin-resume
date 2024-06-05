@@ -16,7 +16,7 @@ build:
 
 clean:
 	docker image rm -f $(STALE)
-	docker system prune -f
+	@docker system prune -yf
 
 push: .check-env-vars
 	docker push ghcr.io/devsecfranklin/franklin-resume:latest

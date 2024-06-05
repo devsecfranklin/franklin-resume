@@ -19,6 +19,7 @@ clean:
 	@find . -name '__pycache__' | xargs rm -rf
 	@if [ -f .buildlog ]; then rm .buildlog; fi
 	@if [ -d "/nix" ]; then nix-collect-garbage -d; fi
+	docker system prune -f
 
 python:
 	@$(PY39) -m venv _build
@@ -29,12 +30,12 @@ python:
 	)
 
 test:
-	@$(PY39) -m venv _build
+	@$(PY39) -m venv _test
 	( \
-		source _build/bin/activate; \
-		_build/bin/python -m pip install --upgrade pip; \
-		_build/bin/python -m pip install tox; \
-		_build/bin/python -m pip install -r tests/requirements-test.txt --no-warn-script-location; \
+		source _test/bin/activate; \
+		_test/bin/python -m pip install --upgrade pip; \
+		_test/bin/python -m pip install tox; \
+		_test/bin/python -m pip install -r tests/requirements-test.txt --no-warn-script-location; \
 	)
 
 security: 

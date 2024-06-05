@@ -19,6 +19,7 @@ MANIFEST
 coverage.xml
 htmlcov/
 _build/
+_test/
 
 Makefile
 Makefile.in
@@ -35,3 +36,5 @@ config.log
 COPYING
 INSTALL
 libtool
+/nbproject/
+/.ropeproject/
