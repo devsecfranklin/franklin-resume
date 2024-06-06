@@ -81,11 +81,11 @@ def page_not_found(my_err):
         if request.form["submit_button"] == "Go Back to Resume":
             return render_template("index.html", title="Franklin Diaz Resume")
     elif request.method == "GET":
-        return render_template('404.html', title='404'), 404
+        return render_template("404.html", title="404"), 404
     else:
         pass
     return my_err
-   
+
 
 if __name__ == "__main__":
     create_app(debug=False)

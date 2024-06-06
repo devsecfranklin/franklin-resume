@@ -25,8 +25,13 @@ docker-compose build franklin-resume || docker build -t ghcr.io/devsecfranklin/f
 docker inspect ghcr.io/devsecfranklin/franklin-resume
 ```
 
-* Run the container
+* Shell on the container
 
 ```sh
 docker run -it ghcr.io/devsecfranklin/franklin-resume:latest bash
 ```
+
+## Cloud Run Deployment
+
+[Quickstart: Deploy to Cloud Run](https://cloud.google.com/run/docs/quickstarts/deploy-container)
+
