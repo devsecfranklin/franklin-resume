@@ -195,7 +195,7 @@ function install_macos() {
 function install_debian() {
   # sudo apt install gnuplot gawk libtool psutils make autopoint
   #declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" "automake" )
-  declare -a Packages=( "git" "make" "automake" "libtool" "chktex" )
+  declare -a Packages=( "git" "make" "automake" "libtool" ) # "chktex" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then

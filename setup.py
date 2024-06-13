@@ -23,5 +23,5 @@ setuptools.setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    license="MIT",
+    license="CC-BY-SA-4.0",
 )
