@@ -6,7 +6,7 @@ on:
   pull_request:
 jobs:
   build:
-    name: build RHEL image
+    name: build Debian bullseye container
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
