@@ -7,7 +7,7 @@
 
 ```
 
-[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit) [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/devsecfranklin/franklin-resume/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=devsecfranklin%2Ffranklin-resume&benchmark=INFRASTRUCTURE+SECURITY) [![Coverage Status](https://coveralls.io/repos/github/theDevilsVoice/franklin-resume/badge.svg?branch=master)](https://coveralls.io/github/theDevilsVoice/franklin-resume?branch=master) [![REUSE](https://github.com/devsecfranklin/franklin-resume/actions/workflows/reuse.yml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/reuse.yml)
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
 ## View My Resume
 
