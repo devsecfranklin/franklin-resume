@@ -1,0 +1,31 @@
+FROM nginx:stable-alpine3.19-slim
+
+RUN KEY_SHA512="e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655" \
+  && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub \
+  && if echo "$KEY_SHA512 */tmp/nginx_signing.rsa.pub" | sha512sum -c -; then \
+    echo "key verification succeeded!"; \
+    mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/; \
+  else \
+    echo "key verification failed!"; \
+    exit 1; \
+  fi \
+  && cat cert.pem > /etc/apk/cert.pem \
+  && cat cert.key > /etc/apk/cert.key \
+  && apk add -X "https://pkgs.nginx.com/plus/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
+  && if [ -f "/etc/apk/keys/nginx_signing.rsa.pub" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi \
+  && if [ -f "/etc/apk/cert.key" ] && [ -f "/etc/apk/cert.pem" ]; then rm -f /etc/apk/cert.key /etc/apk/cert.pem; fi \
+# Bring in tzdata so users could set the timezones through the environment variables
+  && apk add --no-cache tzdata \
+# Bring in curl and ca-certificates to make registering on DNS SD easier
+  && apk add --no-cache curl ca-certificates \
+# Forward request and error logs to Docker log collector
+  && ln -sf /dev/stdout /var/log/nginx/access.log \
+  && ln -sf /dev/stderr /var/log/nginx/error.log
+
+EXPOSE 80
+
+STOPSIGNAL SIGQUIT
+
+CMD ["nginx", "-g", "daemon off;"]
+
+# vim:syntax=Dockerfile

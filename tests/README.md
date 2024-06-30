@@ -54,11 +54,11 @@ nix-collect-garbage -d
 
 ## Container
 
-* [Docker Hub: Latest Container Image](https://hub.docker.com/repository/docker/frank378/franklin-resume)
+- [Docker Hub: Latest Container Image](https://hub.docker.com/repository/docker/frank378/franklin-resume)
 
 ## Tox & Pytest w/Nix
 
-* Install nix-shell
+- Install nix-shell
 
 ```sh
 sudo install -d -m755 -o $(id -u) -g $(id -g) /nix
@@ -67,8 +67,8 @@ curl -L https://nixos.org/nix/install | sh
 
 Create Docker Instance to Log in and Run `pytest`
 
-* You must have Docker installed and running locally.
-* Type `make build` to build the container.
+- You must have Docker installed and running locally.
+- Type `make build` to build the container.
 
 ```sh
 source $HOME/.nix-profile/etc/profile.d/nix.sh
@@ -78,3 +78,7 @@ tox
 exit
 nix-collect-garbage -d
 ```
+
+## vscode devcontainer
+
+How did I do that, write it down.

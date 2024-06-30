@@ -7,9 +7,12 @@ LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/frankli
 LABEL org.opencontainers.image.description="Resume as Code (RaC)"
 LABEL org.opencontainers.image.licenses=MIT
 
-WORKDIR /workspace
-ENV MY_DIR /workspace
+RUN mkdir -p /home/franklin/workspace
+WORKDIR /home/franklin/workspace
+ENV MY_DIR /home/franklin/workspace
 COPY . ${MY_DIR}
+
+COPY docker/python3/files/bashrc /workspaces/franklin-resume/.bashrc
 
 ENV DEBIAN_FRONTEND noninteractive
 
