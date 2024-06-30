@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-if [ -f "/usr/local/bin/kubectl" ];then 
+if [ -f "/usr/local/bin/kubectl" ];then
   source <(kubectl completion bash)
   export PATH="/mnt/clusterfs/google-cloud-sdk/bin:/mnt/clusterfs/nvidia/opt/julia-1.7.2/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
