@@ -9,6 +9,11 @@
 ```sh
 gcloud compute ssh --zone=us-central1-a lab-franklin-airlock1
 gcloud compute ssh --zone=us-central1-a lab-franklin-timecube
+gcloud compute instances attach-disk lab-franklin-airlock1 --disk=lab-franklin-dev --device-name=lab-franklin-dev --zone=us-central1-a
+ls -l /dev/disk/by-id/google-*
+sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+sudo mkdir -p /mnt/development
+sudo mount -o discard,defaults /dev/sdb /mnt/development
 ```
 
 ## Mac Terraform Setup

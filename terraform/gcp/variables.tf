@@ -51,7 +51,7 @@ variable "access_list" {
     "134.238.141.180",  # corp network
     "134.238.163.160",  # corp network
     "174.16.149.41",    # viktor
-    "192.168.0.0/24",    # old mgmt network
+    "192.168.0.0/24",   # old mgmt network
     "8.44.144.96",      # viktor
     "165.85.137.128"    #corp network
   ]
