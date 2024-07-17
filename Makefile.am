@@ -24,6 +24,6 @@ test:
 		source _build/bin/activate; \
 		_build/bin/python -m pip install --upgrade pip; \
 		_build/bin/python -m pip install tox; \
-		_build/bin/python -m pip install -rtests/requirements-test.txt; \
-        _build/bin/python -m pip install -rtests/requirements-security.txt; \
+		_build/bin/python -m pip install -rtest/requirements-test.txt; \
+		_build/bin/python -m pip install -rtest/requirements-security.txt; \
 	)

@@ -23,7 +23,7 @@ AC_CHECK_PROG(HAVE_NODE, [node], [node])
 test -z "$HAVE_NODE"     && AC_MSG_ERROR([Could not find node.js. Please make sure you have it installed])
 
 dnl le python
-AM_PATH_PYTHON(3.8) # minimum version of Python
+AM_PATH_PYTHON(3.9) # minimum version of Python
 PY39="python$PYTHON_VERSION" # define the python interpreter
 dnl LDFLAGS="$LDFLAGS -l$PY39"
 AC_SUBST(PY39, python$PYTHON_VERSION)
