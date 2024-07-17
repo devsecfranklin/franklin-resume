@@ -4,6 +4,11 @@ variable "location" {
   type        = string
 }
 
+variable "subscription" {
+  default = "d47f1af8-9795-4e86-bbce-da72cfd0f8ec"
+  type        = string
+}
+
 variable "resource_group_name" {
   description = "Name of the Resource Group to create. If not provided, it will be auto-generated."
   default     = "lab-franklin"

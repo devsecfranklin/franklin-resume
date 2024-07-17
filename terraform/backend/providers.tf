@@ -4,6 +4,7 @@ provider "azurerm" {
   subscription_id            = var.subscription
 }
 
+
 provider "google" {
   project = var.project_id
   region  = var.region

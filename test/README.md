@@ -1,5 +1,12 @@
 # Testing
 
+Set up `direnv`
+
+```sh
+curl -sfL https://direnv.net/install.sh | bash
+eval "$(direnv hook bash)" # https://direnv.net/docs/hook.html
+```
+
 ## Call Cloud Function from external
 
 * Test with CURL from your local machine.
