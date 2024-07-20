@@ -1,7 +1,7 @@
 CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
-.PHONY: src tests
+.PHONY: src test
 
 clean:
 	@for trash in aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in; do\

@@ -11,7 +11,7 @@ build:
 		echo "Found stale image: ${LATEST}" ;\
 		docker image rm -f $(LATEST) ;\
 	fi
-	docker-compose build franklin-resume
+	docker compose build franklin-resume
 	@echo "Tagging image:  $(shell docker images -q | head -1)"
 	docker tag $(shell docker images -q | head -1) ghcr.io/devsecfranklin/franklin-resume:latest
 
