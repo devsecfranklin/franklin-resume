@@ -1,20 +1,18 @@
 name: Cloud Run Deployment
+    push:
+    branches:
+      - main #dev, release, etc.
 jobs:
   job_id:
     permissions:
       contents: 'read'
       id-token: 'write'
-
     steps:
-
-    # ...
-
     - uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
           #workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
         service_account: 'fdiaz-gke-bot@gcp-gcs-pso.iam.gserviceaccount.com'
-
     - uses: 'google-github-actions/deploy-cloudrun@v2'
       with:
         image: 'ghcr.io/devsecfranklin/franklin-resume-amd64:'
