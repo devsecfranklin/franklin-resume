@@ -1,0 +1,25 @@
+name: container AMD64
+on:
+  pull_request:
+jobs:
+  build:
+    name: build AMD64 image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build an image from Dockerfile
+        run: |
+          ./bootstrap.sh
+          ./configure
+          cd docker && make amd64
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: 'customer-build'
+      #     format: 'table'
+      #     exit-code: '1'
+      #     vuln-type: 'os,library'
+      #     severity: 'CRITICAL,HIGH'
+
