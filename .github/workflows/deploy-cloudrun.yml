@@ -1,4 +1,5 @@
 name: Cloud Run Deployment
+  on:
     push:
     branches:
       - main #dev, release, etc.
