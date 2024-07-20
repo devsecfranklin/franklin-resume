@@ -1,7 +1,7 @@
 FROM yobasystems/alpine:3.20.0-amd64
 
-ARG BUILD_DATE
-ARG VCS_REF
+#ARG BUILD_DATE
+#ARG VCS_REF
 
 LABEL maintainer="Franklin <franklin@dead10c5.org>" \
   architecture="amd64/x86_64" \
@@ -15,9 +15,9 @@ LABEL maintainer="Franklin <franklin@dead10c5.org>" \
   org.opencontainers.image.version="1.25.5" \
   org.opencontainers.image.url="https://ghcr.io/devsecfranklin/franklin-resume" \
   org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume" \
-  org.opencontainers.image.base.name="docker.io/yobasystems/alpine:3.19.1" \
-  org.opencontainers.image.revision=$VCS_REF \
-  org.opencontainers.image.created=$BUILD_DATE
+  org.opencontainers.image.base.name="docker.io/yobasystems/alpine:3.19.1"
+  #org.opencontainers.image.revision=$VCS_REF \
+  #org.opencontainers.image.created=$BUILD_DATE
 
 ENV REPO="https://yobasystems@bitbucket.org/yobasystems/default-index.git"
 ENV NGINX_VERSION=1.25.5
@@ -74,13 +74,15 @@ RUN \
   adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx && \
   rm -rf /tmp/* && \
   apk del ${build_pkgs} && \
-  rm -rf /var/cache/apk/* && \
-  rm -rf /etc/nginx/html/*
+  rm -rf /var/cache/apk/*
+  # && rm -rf /etc/nginx/html/*
 
 COPY docker/amd64/files/nginx.conf /etc/nginx/nginx.conf
 COPY docker/amd64/files/run.sh /run.sh
 
-COPY
+# copy in my files
+COPY src/templates/* /etc/nginx/html
+COPY src/static/css /etc/nginx/html
 
 RUN chmod +x /run.sh && \
   apk --no-cache add openssh
