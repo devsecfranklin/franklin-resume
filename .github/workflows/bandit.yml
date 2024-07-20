@@ -1,9 +1,6 @@
 name: Bandit Python Security Check
 on:
   pull_request:
-  push:
-    branches:
-      - main #dev, release, etc.
   release:
     types:
       - created

@@ -8,7 +8,7 @@ LATEST :=  $(shell docker image ls | grep ghcr.io/devsecfranklin/franklin-resume
 
 .PHONY: amd64
 amd64:
-	docker-compose build amd64
+	docker compose build amd64
 	@echo "Tagging image:  $(shell docker images -q | head -1)"
 	docker tag $(shell docker images -q | head -1) ghcr.io/devsecfranklin/franklin-resume-amd64:latest
 
