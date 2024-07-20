@@ -27,6 +27,7 @@ clean:
 
 push: .check-env-vars
 	docker push ghcr.io/devsecfranklin/franklin-resume:latest
+	docker push ghcr.io/devsecfranklin/franklin-resume-amd64:latest
 
 run:
 	docker run -it ghcr.io/devsecfranklin/franklin-resume:latest bash

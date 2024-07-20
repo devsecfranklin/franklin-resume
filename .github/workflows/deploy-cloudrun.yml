@@ -17,5 +17,5 @@ jobs:
 
     - uses: 'google-github-actions/deploy-cloudrun@v2'
       with:
-        image: 'ghcr.io/devsecfranklin/franklin-resume'
+        image: 'ghcr.io/devsecfranklin/franklin-resume-amd64:'
         service: 'franklin-test'
