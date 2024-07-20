@@ -7,7 +7,7 @@
 
 ```
 
-[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit) [![build container](https://github.com/devsecfranklin/franklin-resume/actions/workflows/trivy.yaml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/trivy.yaml)
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit) [![build container](https://github.com/devsecfranklin/franklin-resume/actions/workflows/container.yml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/container.yml)
 
 ## View My Resume
 

@@ -1,4 +1,4 @@
-# Docker
+# 🐳 Docker
 
 ## Install Docker
 
@@ -17,7 +17,9 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 ```
 
-## Fast
+## Building
+
+### Fast Build
 
 ```sh
 make build
@@ -25,7 +27,7 @@ make latex
 make push
 ```
 
-## Slow
+### Slow Build
 
 * Build dev container
 
@@ -48,7 +50,6 @@ docker inspect ghcr.io/devsecfranklin/franklin-resume
 docker run -it ghcr.io/devsecfranklin/franklin-resume:latest bash
 ```
 
-## Cloud Run Deployment
+## ✨ Cloud Run Deployment
 
 [Quickstart: Deploy to Cloud Run](https://cloud.google.com/run/docs/quickstarts/deploy-container)
-

@@ -4,13 +4,24 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+# ChangeLog:
+#
 # v0.1 02/25/2022 Maintainer script
 # v0.2 09/24/2022 Update this script
 # v0.3 10/19/2022 Add tool functions
 # v0.4 11/10/2022 Add automake check
-# v0.5 11/15/2022 Handle Docker container builds
+# v0.5 11/16/2022 Handle Docker container builds
+# v0.6 07/13/2023 Add required_files and OpenBSD support
+# v0.7 04/22/2024 More OpenBSD support
+# v0.8 07/10/2024 Updates for RHEL8 and MacOS
 
-set -eu
+#set -euo pipefail
+set -o errexit  # abort on nonzero exitstatus
+set -o nounset  # abort on unbound variable
+
+# The special shell variable IFS determines how Bash
+# recognizes word boundaries while splitting a sequence of character strings.
+#IFS=$'\n\t'
 
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31
@@ -31,14 +42,60 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 MY_OS="unknown"
+OS_RELEASE=""
 CONTAINER=false
 DOCUMENTATION=false
 
 # Check if we are inside a docker container
 function check_docker() {
   if [ -f /.dockerenv ]; then
-    echo -e "${LGREEN}Building in container...${NC}"
+    echo -e "${CYAN}Containerized build environment...${NC}"
     CONTAINER=true
+  else
+    echo -e "${CYAN}NOT a containerized build environment...${NC}"
+  fi
+}
+
+function detect_os() {
+  # check for the /etc/os-release file
+  if [ -f "/etc/os-release" ]; then
+    OS_RELEASE=`cat /etc/os-release | grep "^ID=" | cut -d"=" -f2`
+  fi
+
+  if [ -n "${OS_RELEASE}" ]; then
+    echo -e "${CYAN}Found /etc/os-release file: ${OS_RELEASE}${NC}"
+  fi
+
+  # Check uname (Linux, OpenBSD, Darwin)
+  MY_UNAME=`uname`
+  if [ -n "${OS_RELEASE}" ]; then
+    echo -e "${CYAN}Found uname: ${MY_UNAME}${NC}"
+  fi
+
+
+  if [ "${MY_UNAME}" == "OpenBSD" ]
+  then
+    echo -e "${CYAN}Detected OpenBSD${NC}"
+    MY_OS="openbsd"
+  elif [ "${MY_UNAME}" == "Darwin" ]
+  then
+    echo -e "${CYAN}Detected MacOS${NC}"
+    MY_OS="mac"
+  elif [ -f "/etc/redhat-release" ]
+  then
+    echo -e "${CYAN}Detected Red Hat/CentoOS/RHEL${NC}"
+    MY_OS="rh"
+  elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]
+  then
+    echo -e "${CYAN}Detected Debian/Ubuntu/Mint${NC}"
+    MY_OS="deb"
+  elif grep -q Microsoft /proc/version
+  then
+    echo -e "${CYAN}Detected Windows pretending to be Linux${NC}"
+    MY_OS="win"
+  else
+    echo -e "${YELLOW}Unrecongnized architecture.${NC}"
+    exit 1
   fi
 }
 
@@ -51,151 +108,139 @@ function run_autopoint() {
   echo "    $ver"
 
   case $ap_maj in
-      0)
-          if test $ap_min -lt 14 ; then
-              echo "You must have gettext >= 0.14.0 but you seem to have $ver"
-              exit 1
-          fi
-          ;;
+    0)
+      if test $ap_min -lt 14 ; then
+        echo "You must have gettext >= 0.14.0 but you seem to have $ver"
+        exit 1
+      fi
+    ;;
   esac
   echo "Running autopoint..."
   autopoint --force || exit 1
 }
 
 function run_libtoolize() {
-  MY_LIBTOOL="libtoolize"
-  if [ "$MY_OS" == "mac" ]; then
-    MY_LIBTOOL="glibtoolize"
-  fi
-  echo "Checking ${MY_LIBTOOL} version..."
-  ${MY_LIBTOOL} --version 2>&1 > /dev/null
+  echo "Checking libtoolize version..."
+  libtoolize --version 2>&1 > /dev/null
   rc=$?
   if test $rc -ne 0 ; then
-      echo "Could not determine the version of ${MY_LIBTOOL} on your machine"
-      echo "${MY_LIBTOOL} --version produced:"
-      ${MY_LIBTOOL} --version
-      exit 1
+    echo "Could not determine the version of libtool on your machine"
+    echo "libtool --version produced:"
+    libtool --version
+    exit 1
   fi
-  lt_ver=`${MY_LIBTOOL} --version | awk '{print $NF; exit}'`
+  lt_ver=`libtoolize --version | awk '{print $NF; exit}'`
   lt_maj=`echo $lt_ver | sed 's;\..*;;g'`
   lt_min=`echo $lt_ver | sed -e 's;^[0-9]*\.;;g'  -e 's;\..*$;;g'`
   lt_teeny=`echo $lt_ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g'`
   echo "    $lt_ver"
 
   case $lt_maj in
-      0)
-          echo "You must have libtool >= 1.4.0 but you seem to have $lt_ver"
-          exit 1
+    0)
+      echo "You must have libtool >= 1.4.0 but you seem to have $lt_ver"
+      exit 1
     ;;
 
-      1)
-          if test $lt_min -lt 4 ; then
-              echo "You must have libtool >= 1.4.0 but you seem to have $lt_ver"
-              exit 1
-          fi
-          ;;
+    1)
+      if test $lt_min -lt 4 ; then
+        echo "You must have libtool >= 1.4.0 but you seem to have $lt_ver"
+        exit 1
+      fi
+    ;;
 
-      2)
-          ;;
+    2)
+    ;;
 
-      *)
-          echo "You are running a newer libtool than gerbv has been tested with."
-    echo -e "${YELLOW}It will probably work, but this is a warning that it may not.${NC}"
+    *)
+      echo "You are running a newer libtool than gerbv has been tested with."
+      echo "It will probably work, but this is a warning that it may not."
     ;;
   esac
-  echo -e "${CYAN}Running ${MY_LIBTOOL}...${NC}"
-  ${MY_LIBTOOL} --force --copy --automake || exit 1
+  echo "Running libtoolize..."
+  libtoolize --force --copy --automake || exit 1
 }
 
 function run_aclocal() {
-  echo -e "${LBLUE}Checking aclocal version...${NC}"
-  acl_ver=`aclocal --version | awk '{print $NF; exit}'`
-  echo -e "${CYAN}    $acl_ver${NC}"
+  if [ "${MY_OS}" != "openbsd" ]; then
+    echo -e "${LBLUE}Checking aclocal version...${NC}"
+    acl_ver=`aclocal --version | awk '{print $NF; exit}'`
+    echo "    $acl_ver"
 
-  echo -e "${CYAN}Running aclocal...${NC}"
-  #aclocal -I m4 $ACLOCAL_FLAGS || exit 1
-  aclocal -I config || exit 1
+    echo -e "${CYAN}Running aclocal...${NC}"
+    #aclocal -I m4 $ACLOCAL_FLAGS || exit 1
+    aclocal -I config || exit 1
+  else
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 aclocal -I config || exit 1
+  fi
   echo -e "${CYAN}.. done with aclocal.${NC}"
 }
 
 function run_autoheader() {
-  echo -e "${CYAN}Checking autoheader version...${NC}"
+  echo "Checking autoheader version..."
   ah_ver=`autoheader --version | awk '{print $NF; exit}'`
-  echo -e "${CYAN}    $ah_ver${NC}"
+  echo "    $ah_ver"
 
-  echo -e "${CYAN}Running autoheader...${NC}"
+  echo "Running autoheader..."
   autoheader || exit 1
-  echo -e "${CYAN}... done with autoheader.${NC}"
+  echo "... done with autoheader."
 }
 
 function run_automake() {
-  echo -e "${CYAN}Checking automake version...${NC}"
-  am_ver=`automake --version | awk '{print $NF; exit}'`
-  echo -e "${CYAN}    $am_ver${NC}"
+  if [ "${MY_OS}" != "openbsd" ]; then
+    echo "Checking automake version..."
+    am_ver=`automake --version | awk '{print $NF; exit}'`
+    echo "    $am_ver"
 
-  echo -e "${CYAN}Running automake...${NC}"
-  automake -a -c --add-missing || exit 1
-  #automake --force --copy --add-missing || exit 1
-  echo -e "${CYAN}... done with automake.${NC}"
+    echo "Running automake..."
+    automake -a -c --add-missing || exit 1
+    #automake --force --copy --add-missing || exit 1
+  else
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 automake -a -c --add-missing || exit 1
+  fi
+  echo "... done with automake."
 }
 
 function run_autoconf() {
-  echo -e "${CYAN}Checking autoconf version...${NC}"
-  ac_ver=`autoconf --version | awk '{print $NF; exit}'`
-  echo -e "${CYAN}    $ac_ver${NC}"
-
-  echo -e "${CYAN}Running autoconf...${NC}"
-  autoreconf -i || exit 1
-  echo -e "${CYAN}... done with autoconf.${NC}"
+  if [ "${MY_OS}" != "openbsd" ]; then
+    echo -e "${LGREEN}Checking autoconf version...${NC}"
+    ac_ver=`autoconf --version | awk '{print $NF; exit}'`
+    echo -e "${LGREEN}Autoconf version: $ac_ver${NC}"
+    echo "Running autoconf..."
+    autoreconf -i || exit 1
+  else
+    # this is for OpenBSD systems
+    ac_ver="2.71"
+    echo "Running autoconf..."
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 autoreconf -i || exit 1
+  fi
+  echo "... done with autoconf."
 }
 
 function check_installed() {
   if ! command -v ${1} &> /dev/null
   then
-    echo -e "${CYAN}${1} could not be found${NC}"
+    echo "${1} could not be found"
     exit
   fi
 }
 
-function detect_os() {
-    if [ "$(uname)" == "Darwin" ]
-    then
-        echo -e "${CYAN}Detected MacOS${NC}"
-        MY_OS="mac"
-    elif [ -f "/etc/redhat-release" ]
-    then
-        echo -e "${CYAN}Detected Red Hat/CentoOS/RHEL${NC}"
-        MY_OS="rh"
-    elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]
-    then
-        echo -e "${CYAN}Detected Debian/Ubuntu/Mint${NC}"
-        MY_OS="deb"
-    elif grep -q Microsoft /proc/version
-    then
-        echo -e "${CYAN}Detected Windows pretending to be Linux${NC}"
-        MY_OS="win"
-    else
-        echo -e "${YELLOW}Unrecongnized architecture.${NC}"
-        exit 1
-    fi
-}
-
 function install_macos() {
   echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
+  declare -a Packages=( "git" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" )
   brew cleanup
   brew upgrade
 
-  echo -e "${CYAN}Setting up autools for MacOS (this may take a while...)${NC}"
-  brew install libtool
-  brew install automake
-  brew install gawk
-  # brew install pass # not sure if we need this
+  for i in ${Packages[@]};
+  do
+    brew install ${i}
+  done
 }
 
 function install_debian() {
   # sudo apt install gnuplot gawk libtool psutils make autopoint
   #declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" "automake" )
-  declare -a Packages=( "git" "make" "automake" "libtool" ) # "chktex" )
+  # sudo apt install gnuplot gawk libtool psutils make autoconf automake texlive-latex-extra fig2dev
+  declare -a Packages=( "git" "make" "automake" "libtool" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -220,16 +265,42 @@ function install_debian() {
 }
 
 function install_redhat() {
-  # Container package installs will fail unless you do an initial update, the upgrade is optional
-  if [ "${CONTAINER}" = true ]; then
-    sudo yum update
-  fi 
+  echo -e "${CYAN}RedHat 8 setup${NC}"
+  dnf upgrade -y
+  yum -y --disableplugin=subscription-manager update
+  dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+  declare -a Packages=( "make" "automake" "autoconf" "libtool" )
+  for i in ${Packages[@]};
+  do
+    dnf install -y ${i} --skip-broken
+  done
 }
+
+function required_files()
+{
+  declare -a required_files=("AUTHORS" "ChangeLog" "NEWS")
+
+  for xx in ${required_files[@]};
+  do
+    if [ ! -f "${xx}" ]; then
+      echo -e "${LGREEN}Creating required file ${xx} since it is not found.${NC}"
+      #touch "${xx}"
+      ln -s README.md ${xx}
+    else
+      echo -e "${LBLUE}Found required file ${xx}.${NC}"
+    fi
+  done
+
+  if [ ! -d "config/m4" ]; then mkdir -p config/m4; fi
+}
+
 
 function main() {
   check_docker
   detect_os
   #check_installed doxygen
+  required_files
 
   if [ ! -d "config/m4" ]; then mkdir -p config/m4; fi
 
@@ -247,14 +318,11 @@ function main() {
   fi
 
   if [ ! -d "aclocal" ]; then mkdir aclocal; fi
-  run_libtoolize
   run_aclocal
-  # run_autoheader
-  run_automake
   run_autoconf
+  run_automake
   ./configure
   #./config.status
 }
 
-main
- 
+main "$@"
