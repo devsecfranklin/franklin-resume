@@ -8,7 +8,7 @@ LATEST :=  $(shell docker image ls | grep ghcr.io/devsecfranklin/franklin-resume
 
 .PHONY: amd64
 amd64:
-	docker-compose build amd64
+	docker compose build amd64
 	@echo "Tagging image:  $(shell docker images -q | head -1)"
 	docker tag $(shell docker images -q | head -1) ghcr.io/devsecfranklin/franklin-resume-amd64:latest
 
@@ -17,7 +17,7 @@ build:
 		echo "Found stale image: ${LATEST}" ;\
 		docker image rm -f $(LATEST) ;\
 	fi
-	docker-compose build franklin-resume
+	docker compose build franklin-resume
 	@echo "Tagging image:  $(shell docker images -q | head -1)"
 	docker tag $(shell docker images -q | head -1) ghcr.io/devsecfranklin/franklin-resume:latest
 
@@ -27,6 +27,7 @@ clean:
 
 push: .check-env-vars
 	docker push ghcr.io/devsecfranklin/franklin-resume:latest
+	docker push ghcr.io/devsecfranklin/franklin-resume-amd64:latest
 
 run:
 	docker run -it ghcr.io/devsecfranklin/franklin-resume:latest bash

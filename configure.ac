@@ -1,5 +1,5 @@
 dnl Process this file with autoconf
-AC_PREREQ([2.71])
+AC_PREREQ([2.69])
 AC_INIT(franklin-resume, 0.4, franklin@dead10c5.org, https://github.com/devsecfranklin/franklin-resume)
 AC_CONFIG_MACRO_DIR(config/m4)
 AC_CONFIG_AUX_DIR(config)

@@ -1,8 +1,5 @@
-name: build container
+name: container build
 on:
-  push:
-    branches:
-      - main
   pull_request:
 jobs:
   build:
@@ -15,4 +12,4 @@ jobs:
         run: |
           ./bootstrap.sh
           ./configure
-          cd docker && make build
+          cd docker && make build 

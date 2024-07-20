@@ -1,7 +1,7 @@
 CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
-.PHONY: src tests
+.PHONY: src test
 
 clean:
 	@for trash in aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in; do\
@@ -47,7 +47,7 @@ test:
                         --index-url http://storage1.lab.bitsmasher.net/pypi \
                         --extra-index-url https://pypi.org/simple \
                         --trusted-host storage1.lab.bitsmasher.net --upgrade pip; \
-		_test/bin/python -m pip install -r tests/requirements-test.txt --no-warn-script-location \
+		_test/bin/python -m pip install -r test/requirements-test.txt --no-warn-script-location \
                         --index-url http://storage1.lab.bitsmasher.net/pypi \
                         --extra-index-url https://pypi.org/simple \
                         --trusted-host storage1.lab.bitsmasher.net --upgrade pip; \
@@ -61,7 +61,7 @@ security:
                         --index-url http://storage1.lab.bitsmasher.net/pypi \
                         --extra-index-url https://pypi.org/simple \
                         --trusted-host storage1.lab.bitsmasher.net --upgrade pip; \
-		_security/bin/python -m pip install -r tests/requirements-security.txt\
+		_security/bin/python -m pip install -r test/requirements-security.txt\
                         --index-url http://storage1.lab.bitsmasher.net/pypi \
                         --extra-index-url https://pypi.org/simple \
                         --trusted-host storage1.lab.bitsmasher.net --upgrade pip; \
