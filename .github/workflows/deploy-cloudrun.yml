@@ -1,8 +1,8 @@
 name: Cloud Run Deployment
-  on:
-    push:
-    branches:
-      - main #dev, release, etc.
+on:
+  push:
+  branches:
+    - main #dev, release, etc.
 jobs:
   job_id:
     permissions:
