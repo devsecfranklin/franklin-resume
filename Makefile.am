@@ -4,7 +4,7 @@ ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 .PHONY: src test
 
 clean:
-	@for trash in aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in; do\
+	@for trash in AUTHORS NEWS ChangeLog aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in; do\
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\
@@ -53,7 +53,7 @@ test:
                         --trusted-host storage1.lab.bitsmasher.net --upgrade pip; \
 	)
 
-security: 
+security:
 	@$(PY39) -m venv _security
 	( \
 		source _build/bin/activate; \

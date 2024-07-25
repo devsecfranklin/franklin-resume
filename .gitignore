@@ -21,6 +21,8 @@ htmlcov/
 _build/
 _test/
 
+AUTHORS
+ChangeLog
 confdefs.h
 configure
 configure~
@@ -42,6 +44,7 @@ install-sh
 libtool
 Makefile
 Makefile.in
+NEWS
 stamp-h1
 
 /nbproject/
