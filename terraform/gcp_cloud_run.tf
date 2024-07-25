@@ -1,3 +1,4 @@
+/*
 resource "google_cloud_run_service" "default" {
   name     = "${prefix}-resume"
   location = var.region
@@ -16,3 +17,4 @@ resource "google_cloud_run_service" "default" {
     latest_revision = true
   }
 }
+*/
