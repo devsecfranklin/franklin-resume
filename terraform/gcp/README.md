@@ -3,6 +3,7 @@
 - lab-franklin-windows
 - ps-devsecops-fw01
 - "10.252.0.0/25" mgmt
+- [Use IAP Desktop to access the VPC via Cloud NAT](https://github.com/GoogleCloudPlatform/iap-desktop)
 
 ## Jump Box
 

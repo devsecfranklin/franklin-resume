@@ -105,3 +105,14 @@ resource "google_compute_firewall" "ctfd-on-airlock" {
   direction     = "INGRESS"
   source_ranges = ["0.0.0.0/0"]
 }
+
+/* 
+use IAP Desktop to access the VPC via Cloud NAT
+https://github.com/GoogleCloudPlatform/iap-desktop
+
+resource "google_project_iam_member" "franklin" {
+  project = var.project_id
+  role    = "roles/iap.tunnelResourceAccessor"
+  member  = "serviceAccount:terraform-demo-aft@tcb-project-371706.iam.gserviceaccount.com"
+}
+*/

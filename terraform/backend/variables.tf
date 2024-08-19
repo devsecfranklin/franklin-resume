@@ -27,7 +27,7 @@ variable "resource_group_name" {
 
 variable "subscription" {
   default = "d47f1af8-9795-4e86-bbce-da72cfd0f8ec"
-  type        = string
+  type    = string
 }
 
 // *********************** GOOGLE *********************************

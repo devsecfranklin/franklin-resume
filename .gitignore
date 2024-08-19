@@ -1,4 +1,5 @@
-_build
+_build/
+_test/
 __pycache__
 .buildlog 
 *_check_results_*.txt

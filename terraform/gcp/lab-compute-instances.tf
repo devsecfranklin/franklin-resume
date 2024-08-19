@@ -35,6 +35,11 @@ resource "google_compute_instance" "gcp_airlock" {
     network    = "ps-devsecops-mgmt"
     subnetwork = "ps-devsecops-mgmt"
   }
+  attached_disk {
+    device_name = "${var.name_prefix}-dev"
+    mode        = "READ_WRITE"
+    source      = "https://www.googleapis.com/compute/v1/projects/gcp-gcs-pso/zones/us-central1-a/disks/lab-franklin-dev"
+  }
 }
 
 // *********** timecube ************ //

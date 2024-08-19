@@ -10,3 +10,5 @@
 Add the "no stop" tags, or else your licenses will get messed up after a few days.
 
 ## Firewalls
+
+- [Renew home lab licenses](https://panservicedesk.service-now.com/esp?id=kb_article&sysparm_article=KB00140900)

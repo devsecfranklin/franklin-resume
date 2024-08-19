@@ -170,7 +170,7 @@ function macos() {
   brew upgrade
   echo -e "${CYAN}Setting up autools for MacOS (this may take a while...)${NC}"
   # brew install libtool
-  brew install gawk
+  brew install gawk gsed
   if [ ! -f "./config.status" ]; then
     echo -e "${CYAN}Running libtool/autoconf/automake...${NC}"
     # glibtoolize
