@@ -28,7 +28,7 @@ def ssh_command(username, password, cmd, hostname=HOSTNAME, port=PORT):
         port (_type_, optional): _description_. Defaults to PORT.
     """
     ssh_client = paramiko.SSHClient()
-    #ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.load_system_host_keys()
     ssh_client.connect(hostname, port, username=username, password=password)
     remote_conn = ssh_client.invoke_shell()

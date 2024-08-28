@@ -82,6 +82,16 @@ function deploy_firewall() {
 }
 
 function main() {
+  read -p "Is the auth key ${AUTHKEY} valid? (yes/no) " yn
+
+  `case $yn in 
+    yes ) echo "ok, we will proceed";;
+    no ) echo "Generate from Panorama CLI like so: request bootstrap vm-auth-key generate lifetime 8760";
+      exit 1;;
+    * ) echo invalid response;
+      exit 1;;
+  esac`
+
   directory_setup
   # check if subnets exist
 

@@ -217,6 +217,8 @@ function get_panorama_serial() {
 
   # Testing JSON output for ingestion into other tools
   JSON_STRING=$(jq -n --arg ip "${PAN_IP}" --arg se "${PAN_SERIAL}" '{IP: $ip, serial: $se}')
+  # https://stackoverflow.com/questions/49632521/how-to-add-a-field-to-a-json-object-with-the-jq-command
+
   echo ${JSON_STRING} >${DATA_DIR}/${PAN_SERIAL}/panorama_${PAN_SERIAL}.json
 
   # dump the system state

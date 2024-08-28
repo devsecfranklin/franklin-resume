@@ -3,6 +3,12 @@
 ## Management Configuration
 
 ```sh
+set system setting mgmt-interface-swap enable yes
+request license info
+request license fetch
+```
+
+```sh
 set deviceconfig system hostname lab-franklin-gcp-fw-three # set the hostname
 set deviceconfig system timezone America/New_York # set the time zone
 set deviceconfig system dns-setting servers primary 8.8.8.8
@@ -70,7 +76,28 @@ set rulebase security rules PRIVATE-TO-PUBLIC from private
 set rulebase security rules PRIVATE-TO-PUBLIC source 10.236.20.16/29
 set rulebase security rules PRIVATE-TO-PUBLIC destination any
 set rulebase nat rules OUTBOUND-NAT description EGRESS from private to public service any source 10.236.20.16/29 destination any source-translation dynamic-ip-and-port interface-address interface ethernet1/2 
+set rulebase nat rules OUTBOUND-NAT tag OUTBOUND 
 # delete rulebase nat rules OUTBOUND-NAT
+```
+
+## Cloud Identity Engine
+
+[How to troubleshoot gRPC connections failure between Firewall and ACE Application Cloud Engine/Content Cloud
+](https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA14u000000g1DOCAY)
+
+```sh
+show device-certificate status
+request license info # Check that the SaaS Security Inline license is present and Valid.
+show cloud-appid connection-to-cloud  
+traceroute host kcs.ace.tpcloud.paloaltonetworks.com
+show netstat numeric-hosts yes numeric-ports yes | match 34.120.110.215
+show log system subtype equal app-cloud-engine direction equal backward
+debug cloud-appid reset connection-to-cloud
+show ctd-agent status security-client
+traceroute host ace.hawkeye.services-edge.paloaltonetworks.com
+show netstat numeric-hosts yes numeric-ports yes | match 34.111.222.75 # Where 34.11.222.75 would be the IP address of the Content Cloud server resolved by the DNS server in previous step
+show log system subtype equal ctd-agent-connection direction equal backward
+debug software restart process ctd-agent # Restarting ctd-agent will reset the connection between Firewall DP and the Content Cloud server.
 ```
 
 ## Show and Test
@@ -81,16 +108,21 @@ Show the current config
 show deviceconfig system dns-setting servers
 show network interface ethernet
 show network virtual-router default
+show network profiles 
 show rulebase
-show running nat-policy 
+show running nat-policy
+show panorama-status
+show ntp
 ```
 
 Test the current config
 
 ```sh
-set network profiles interface-management-profile mgmt ping yes
-set network interface ethernet ethernet1/1 layer3 interface-management-profile mgmt
-set network interface ethernet ethernet1/2 layer3 interface-management-profile mgmt
+set network profiles interface-management-profile mgmt ping yes # profile to allow ICMP
+set network interface ethernet ethernet1/1 layer3 interface-management-profile mgmt # apply profile to thie interface
+set network interface ethernet ethernet1/2 layer3 interface-management-profile mgmt # apply profile to thie interface
+show network profiles # see the ICMP profile
+show network interface # confirm the profile is applied to the interface
 ```
 
 ## Cleanup
