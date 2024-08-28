@@ -1,18 +1,3 @@
-/*
-resource "google_compute_network" "blue_net" {
-  name = "blue"
-}
-*/
-
-## Create Cloud Router
-resource "google_compute_router" "router" {
-  name    = "${var.name_prefix}-router"
-  project = var.project_id
-  region  = var.region
-  network = data.google_compute_network.mgmt-vpc.name
-}
-
-
 /* Cloud NAT
 
 - The could nat should allow egress from mgmt and public subnets
@@ -36,7 +21,7 @@ module "cloud_router" {
   region  = var.region
 
   nats = [{
-    name                               = "${var.name_prefix}-nat-gateway"
+    name                               = "${var.name_prefix}-cloud-nat"
     source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   }]
 }
