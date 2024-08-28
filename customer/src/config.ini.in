@@ -1,0 +1,6 @@
+[required_options]
+panorama_primary = 156.134.194.147
+working_directory = @WORKDIR@
+
+[optional]
+panorama_secondary =
