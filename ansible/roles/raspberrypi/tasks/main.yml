@@ -1,0 +1,36 @@
+---
+- name: Test for raspberry pi /proc/cpuinfo
+  ansible.builtin.command: grep -E "Raspberry Pi|BCM2708|BCM2709|BCM2835|BCM2836" /proc/cpuinfo
+  register: grep_cpuinfo_raspberrypi
+  failed_when: false
+  changed_when: false
+
+- name: Test for raspberry pi /proc/device-tree/model
+  ansible.builtin.command: grep -E "Raspberry Pi" /proc/device-tree/model
+  register: grep_device_tree_model_raspberrypi
+  failed_when: false
+  changed_when: false
+
+- name: Set raspberry_pi fact to true
+  ansible.builtin.set_fact:
+    raspberry_pi: true
+  when:
+    grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
+
+- name: "Set detected_distribution to Raspbian"
+  ansible.builtin.set_fact:
+    detected_distribution: Raspbian
+  when: >
+    raspberry_pi|default(false) and
+    ( ansible_facts.lsb.id|default("") == "Raspbian" or
+      ansible_facts.lsb.description|default("") is match("[Rr]aspbian.*") )
+
+- name: "Execute OS related tasks on the Raspberry Pi"
+  ansible.builtin.include_tasks: Raspbian.yml
+  when:
+    - raspberry_pi|default(false)
+
+- name: "Install packages"
+  ansible.builtin.include_tasks: packages.yml
+  when:
+    - detected_distribution | default("") == "Raspbian"

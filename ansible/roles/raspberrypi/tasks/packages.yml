@@ -1,0 +1,77 @@
+---
+- name: "Copy /etc/apt/sources.list"
+  ansible.builtin.copy:
+    src: sources.list
+    dest: /etc/apt/sources.list
+    mode: 0644
+
+- name: "Add Ubuntu apt key 1"
+  command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5
+
+- name: "Add Ubuntu apt key 2"
+  command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+
+- name: "Install Packages on Cluster"
+  ansible.builtin.apt:
+    pkg:
+      - git
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - python3-pip
+      - lvm2
+    state: latest
+    autoclean: true
+    autoremove: true
+    force_apt_get: false
+    update_cache: true
+  tags: admin
+
+- name: 'Install python3-setuptools'
+  ansible.builtin.apt:
+    name: python3-setuptools
+    state: latest
+  ignore_errors: true
+  when:
+    - raspberry_pi|default(false)
+
+- name: 'Install python3-pip'
+  ansible.builtin.apt:
+    name: python3-pip
+    state: latest
+  ignore_errors: true
+  when:
+    - raspberry_pi|default(false)
+
+# sudo apt-get --purge wolfram-engine libreoffice* scratch -y
+- name: 'Remove extra junk from Raspberry Pi'
+  ansible.builtin.apt:
+    purge: true
+    package: [
+      'wolfram-engine',
+      'scratch',
+      'bluej',
+      'greenfoot',
+      'nodered',
+      'minecraft-pi',
+      'task-desktop',
+      'gnome-desktop',
+      'xserver-common',
+      'xserver-xorg-core']
+    state: absent
+  tags: admin
+
+- name: Remove useless packages from the cache
+  ansible.builtin.apt:
+    autoclean: true
+  tags: admin
+
+- name: Remove dependencies that are no longer required
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  tags: admin
+
+#  sudo apt-get remove --purge x11-common
+# sudo apt-get --purge remove "x11-*"
+# sudo apt-get --purge autoremove

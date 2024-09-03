@@ -1,0 +1,33 @@
+---
+- name: Grab the credentials from ansible-vault
+  include_vars: 'firewall-secrets.yml'
+  #no_log: 'yes'
+
+- name: Include user include_vars
+  include_vars: main.yml
+
+- name: 'Get system state'
+  panos_op:
+    provider: '{{ provider }}'
+    cmd: 'show system state'
+  register: system_state
+
+- name: 'Convert XML output'
+  xml:
+    xmlstring: "{{ system_state.stdout_xml }}"
+    xpath: "./result"
+    content: text
+  register: system_state_output
+
+#- name: 'View system state'
+#  debug: msg="{{ system_state_output.matches[0].result.split('\n') }}"
+
+- name: Get the system info
+  paloaltonetworks.panos.panos_op:
+    provider: '{{ device }}'
+    cmd: 'show system info'
+  register: res
+
+- name: Show the system info
+  ansible.builtin.debug:
+    msg: '{{ res.stdout }}'

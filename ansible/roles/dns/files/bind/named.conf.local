@@ -1,0 +1,36 @@
+# MANAGED BY ANSIBLE
+# /etc/bind/named.conf.local
+
+# --- Lab ------------------------------------
+zone "lab.bitsmasher.net" IN {
+  type master;
+  file "/etc/bind/db.home.lab";
+};
+
+zone "10.10.in-addr.arpa" {
+  type master;
+  file "/etc/bind/db.rev.0.10.10.in-addr.arpa";
+};
+
+# --- Internal -------------------------------
+#zone "internal.bitsmasher.net" IN {
+#  type master;
+#  file "/etc/bind/db.home.internal";
+#};
+
+#zone "10.10.in-addr.arpa" {
+#  type master;
+#  file "/etc/bind/db.rev.internal.in-addr.arpa";
+#};
+
+# --- DMZ ------------------------------------
+
+#zone "dmz.bitsmasher.net" IN {
+#  type master;
+#  file "/etc/bind/db.home.dmz";
+#};
+
+#zone "10.10.in-addr.arpa" {
+#  type master;
+#  file "/etc/bind/db.rev.dmz.in-addr.arpa";
+#};

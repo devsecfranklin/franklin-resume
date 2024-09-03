@@ -1,0 +1,45 @@
+---
+- name: "Setup munge"
+  ansible.builtin.include_tasks: munge.yml
+
+# - name: "Setup NHC"
+#   ansible.builtin.include_tasks: nhc.yml
+
+- name: "Configure AUKS on cluster nodes"
+  ansible.builtin.include_tasks: auks.yml
+  when:
+    - "'node' in inventory_hostname"
+
+- name: "Install SLURM on the head node"
+  ansible.builtin.include_tasks: slurm-controller.yml
+  when: "'head' in inventory_hostname"
+
+- name: "Install SLURM on the worker node"
+  ansible.builtin.include_tasks: slurm-client.yml
+  when: "'node' in inventory_hostname"
+
+#- name: "Install MPICH on workers"
+#  include: mpich_client.yml
+#  when: "'node90' in inventory_hostname"
+
+- name: 'Ensure munge is started'
+  service:
+    name: munge
+    state: started
+    enabled: true
+  tags: cluster
+
+- name: 'Ensure slurmd is started'
+  service:
+    name: slurmd
+    state: started
+    enabled: true
+  tags: cluster
+
+- name: 'Ensure slurmctld is started'
+  service:
+    name: slurmctld
+    state: started
+    enabled: true
+  tags: cluster
+  when: "'head' in inventory_hostname"

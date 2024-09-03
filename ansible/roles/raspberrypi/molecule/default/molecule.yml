@@ -1,0 +1,34 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: homelab
+    hostname: node0
+    image: debian:buster
+    privileged: true
+provisioner:
+  name: ansible
+  log: true
+  env:
+    HOMELAB_MOLECULE_TEST: true
+scenario:
+  # become: true
+  test_sequence:
+    - destroy
+    - create
+    - prepare
+    - converge
+    - test
+    - destroy
+verifier:
+  name: testinfra
+  env:
+    PYTHONWARNINGS: "ignore:.*U.*mode is deprecated:DeprecationWarning"
+lint: |
+  # [ -n "$BASH" ] ;then set -e; fi
+  export ANSIBLE_ROLES_PATH=${MOLECULE_PROJECT_DIRECTORY}/..
+  yamllint .
+  ansible-lint
+  flake8

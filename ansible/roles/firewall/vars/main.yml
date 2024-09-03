@@ -1,0 +1,5 @@
+---
+provider:
+    ip_address: '10.10.15.253'
+    username: '{{ username }}'
+    password: '{{ password }}'

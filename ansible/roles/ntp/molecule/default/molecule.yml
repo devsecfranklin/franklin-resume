@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+platforms:
+  - name: molecule-ubuntu
+    image: ubuntu:18.04
+verifier:
+  name: testinfra
+  env:
+    PYTHONWARNINGS: "ignore:.*U.*mode is deprecated:DeprecationWarning"
+lint: |
+  set -e
+  export ANSIBLE_ROLES_PATH="${MOLECULE_PROJECT_DIRECTORY}/.."
+  yamllint .
+  ansible-lint

@@ -1,0 +1,3 @@
+---
+container_reg_dir: /mnt/clusterfs/container-registry
+html_dir: /var/www/html

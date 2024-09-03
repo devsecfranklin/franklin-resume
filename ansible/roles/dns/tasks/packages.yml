@@ -1,0 +1,6 @@
+---
+- name: Install DNS admin tools
+  apt:
+      package: ['bind9', 'bind9utils', 'dnsutils']
+      state: latest
+  tags: admin

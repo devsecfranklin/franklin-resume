@@ -1,0 +1,18 @@
+---
+# this should be a soft link top /mnt/clusterfs/bin on the cluster
+# - name: "Create /home/franklin/bin"
+#   file:
+#     path: "/home/franklin/bin"
+#     owner: "franklin"
+#     state: directory
+
+- name: "Copy update_motd.sh script"
+  copy:
+    src: "scripts/git_cleanup.sh"
+    dest: /usr/local/bin/git_cleanup.sh
+    owner: "franklin"
+    mode: 0755
+
+# This is good for Debian hosts
+- name: "Update shell scripts on Debian"
+  ansible.builtin.include_tasks: scripts.yml

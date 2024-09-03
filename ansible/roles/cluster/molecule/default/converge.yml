@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    HOMELAB_MOLECULE_TEST: "true"
+  tasks:
+    - name: Set up
+      import_role:
+        name: common
+    - name: Set up pi
+      import_role:
+        name: pi
+    - name: Set up cluster
+      import_role:
+        name: cluster

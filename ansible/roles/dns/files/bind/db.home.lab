@@ -1,0 +1,65 @@
+$TTL    10800
+@ IN SOA server1.lab.bitsmasher.net. root.lab.bitsmasher.net (
+        2024080301 ; serial
+        8H ; refresh
+        4H ; retry
+        4W ; expire
+        1D ; minimum
+        ) ;
+;Name Server Information
+@               IN NS server1.lab.bitsmasher.net.
+
+;IP address of Your Domain Name Server(DNS)
+server1       IN A 10.10.12.12
+
+;A Record for Host names
+dream-machine   IN A 10.10.8.1
+netlab1		IN A 10.10.8.3
+snowy           IN A 10.10.8.11
+node0           IN A 10.10.12.0
+node1           IN A 10.10.12.1
+node2           IN A 10.10.12.2
+node3           IN A 10.10.12.3
+edge-t		IN A 10.10.12.4
+lanparty        IN A 10.10.12.7
+grimoire        IN A 10.10.12.8
+labbench        IN A 10.10.12.11
+server2      	IN A 10.10.12.13
+storage1        IN A 10.10.12.14
+blowfish	IN A 10.10.12.15
+thelio          IN A 10.10.12.17
+head1		IN A 10.10.12.18
+media01         IN A 10.10.12.20
+media02		IN A 10.10.12.21
+node900         IN A 10.10.12.90
+node901         IN A 10.10.12.91
+node902		IN A 10.10.12.92
+node903		IN A 10.10.12.93
+odroid-c1       IN A 10.10.12.254
+server3         IN A 10.10.13.1
+bbb1		IN A 10.10.13.10
+pa220           IN A 10.10.15.253
+labgate         IN A 10.10.15.254
+
+;CNAME Record
+gateway          IN CNAME dream-machine.lab.bitsmasher.net.
+ns1              IN CNAME server1.lab.bitsmasher.net.
+ns2              IN CNAME server3.lab.bitsmasher.net.
+ldap1            IN CNAME server3.lab.bitsmasher.net.
+kdc1             IN CNAME odroid-c1.lab.bitsmasher.net.
+kerberos1        IN CNAME server2.lab.bitsmasher.net.
+
+;KERBEROS Records
+$ORIGIN lab.bitsmasher.net.
+_kerberos               TXT     "LAB.BITSMASHER.NET"
+_kerberos._udp          SRV     0 0 88 kdc1
+_kerberos-master._udp   SRV     0 0 88 kdc1
+_kerberos-adm._tcp      SRV     0 0 749 kdc1
+_kpasswd._udp           SRV     0 0 464 kdc1
+_kerberos               URI    10 1 "krb5srv:m:tcp:odroid-c1.lab.bitsmasher.net"
+; Jan  1 10:49:56 server1 named[10942]: zone lab.bitsmasher.net/IN: _kerberos-adm._tcp.lab.bitsmasher.net/SRV 'kdc1.lab.bitsmasher.net' is a CNAME (illegal)
+ 
+
+;LDAP Records
+_ldap._tcp		IN SRV 10 50 389 server3
+

@@ -1,0 +1,13 @@
+---
+- command: which python3
+  register: result
+
+- debug:
+    var: result.stdout
+
+- debug:
+    msg: |-
+      {% for i in _vars %}
+      {{ i }}:
+        {{ lookup('vars', i)|to_nice_yaml|indent(2) }}
+      {% endfor %}

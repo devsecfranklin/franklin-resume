@@ -1,0 +1,4 @@
+---
+
+# sudo sysctl -a | grep disable_ipv6 | grep "^net."
+# ip -6 route

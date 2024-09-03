@@ -1,0 +1,18 @@
+---
+- name: 'Ansible Playbook for Nvidia Cluster'
+  hosts: nvidia_nodes
+  become: true
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+  roles:
+    - python
+    - nfs
+    - common
+    - cluster
+    - dns
+    - ldap
+    - kerberos
+    - ssh
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+

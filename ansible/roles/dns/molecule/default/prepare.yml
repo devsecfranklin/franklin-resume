@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  vars:
+    molecule_no_log: false
+  tasks:
+    - name: "Create /etc/ssh/sshd_config"
+      file:
+        path: "/etc/ssh/sshd_config"
+        state: touch
+        mode: '0644'

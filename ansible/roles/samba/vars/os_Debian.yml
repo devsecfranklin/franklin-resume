@@ -1,0 +1,40 @@
+# roles/samba/vars/os_Debian.yml
+---
+
+samba_packages:
+  - acl
+  - attr
+  - chrony
+  - dnsutils
+  - libpam-winbind
+  - libnss-winbind
+  - libpam-krb5
+  - krb5-config
+  - krb5-user
+  - net-tools
+  - samba-dsdb-modules
+  - samba-vfs-modules
+  - samba-common
+  - samba
+  - samba-client
+  - smbclient
+  - winbind
+
+
+samba_vfs_packages:
+  - samba-vfs-modules
+
+samba_selinux_packages: []
+samba_selinux_booleans: []
+
+samba_configuration_dir: /etc/samba
+samba_configuration: "{{ samba_configuration_dir }}/smb.conf"
+samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
+
+# The name of the Samba service in older releases (Ubuntu 14.04,
+# Debian <8) is "samba".
+samba_services:
+  - smbd
+  - nmbd
+
+samba_www_documentroot: /var/www

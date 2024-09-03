@@ -1,0 +1,25 @@
+---
+# We can just modify single lines rather than try to replace a whole file
+# that can change with releases, operating systems, etc.
+#- name: "Install /etc/ssh/sshd_config on Debian/Raspbian"
+#  ansible.builtin.copy:
+#    src: sshd_config_deb
+#    dest: /etc/ssh/sshd_config
+#    mode: 0664
+#  when: 
+#    - ansible_facts['os_distribution'] == "Raspbian"
+
+#- name:
+#  ansible.builtin.copy:
+#    src: sshd_config_nvidia
+#    dest: /etc/ssh/sshd_config
+#    mode: 0664
+#  when:
+#    - ansible_facts['os_family'] == 'Ubunutu'
+
+- name: "kerberize sshd server"
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: "GSSAPIAuthentication yes"
+    insertafter: "#GSSAPIAuthentication no"
+  notify: "reload sshd"

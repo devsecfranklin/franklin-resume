@@ -1,0 +1,3 @@
+---
+ntp_service: ntp # this is for Debian, diff on other OS
+ntp_configuration_file: ntp.conf

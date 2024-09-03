@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# updates
+lynis update info # grep for "Outdated" and update if needed
+
+# During the security audit, Lynis attempts to assign two identifiers to the system.
+# They can be compared as fingerprints and can be used in other tools and to link data to an existing system.
+
+# The first identifier is named hostid and has a length of 40 characters. The MAC address of
+# the system is typically used its data input. The second identifier is hostid2. It is 64 characters long and
+# typically uses a public SSH key a data input.
+lynis show hostids >> {{ lynis_dir }}/reports/hostids.txt
+
+cd {{ lynis_dir }}/reports && \
+  ksu -e lynis audit system --quick --auditor "franklin"
+
+# scan the system for Dockerfiles and audit them

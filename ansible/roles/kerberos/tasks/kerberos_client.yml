@@ -1,0 +1,54 @@
+---
+- name: "Create /var/log/kerberos folder"
+  ansible.builtin.file:
+    path: "/var/log/kerberos"
+    owner: "root"
+    state: directory
+    mode: "0755"
+
+# this is where the ca cert goes in SSL play
+- name: "Create /etc/krb5 folder"
+  ansible.builtin.file:
+    path: /etc/krb5
+    owner: "root"
+    state: directory
+
+- name: "Copy /etc/krb5.conf to Debian"
+  ansible.builtin.copy:
+    src: krb5.conf-debian
+    dest: /etc/krb5.conf
+    owner: "root"
+    mode: "0664"
+  when:
+    - ansible_facts['distribution'] == "Debian"
+  #- ansible_facts.ansible_architecture is "aarch64"
+
+# this is where the ca cert goes in SSL play
+- name: "Create /etc/heimdal folder on OpenBSD"
+  ansible.builtin.file:
+    path: /etc/heimdal
+    owner: "root"
+    state: directory
+  when:
+    - ansible_facts['distribution'] == "OpenBSD"
+
+- name: "Copy /etc/krb5.conf to OpenBSD"
+  ansible.builtin.copy:
+    src: krb5.conf-openbsd
+    dest: /etc/heimdal/krb5.conf
+    mode: 0664
+  when:
+    - ansible_facts['distribution'] == "OpenBSD"
+
+- name: "Create /etc/keytab folder"
+  ansible.builtin.file:
+    path: "/etc/keytab"
+    owner: "root"
+    state: directory
+    mode: "0755"
+
+- name: "Copy /root/.k5login"
+  ansible.builtin.copy:
+    src: k5login
+    dest: /root/.k5login
+    mode: 0600

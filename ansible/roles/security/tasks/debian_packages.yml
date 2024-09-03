@@ -1,0 +1,11 @@
+---
+- name: "Install Security Packages"
+  apt:
+    package: [
+      "lynis",
+      "pass",
+      "tiger",
+    ]
+    state: latest
+  tags: admin
+

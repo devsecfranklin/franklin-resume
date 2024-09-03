@@ -1,0 +1,8 @@
+---
+- name: Install fbi
+  apt:
+    name: fbi
+    state: latest
+
+# display a single image with FBI 
+# sudo fbi -a --noverbose -T 1 image.jpg

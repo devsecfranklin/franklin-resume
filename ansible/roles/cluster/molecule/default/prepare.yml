@@ -1,0 +1,21 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  vars:
+    molecule_no_log: false
+  tasks:
+
+    - name: install some packages
+      apt:
+        name:
+          - python3-dev
+          - python3-pip
+          - python3-apt
+        force_apt_get: true
+        update_cache: true
+
+    - name: "Create /etc/docker folder"
+      file:
+        path: "/etc/docker"
+        state: directory

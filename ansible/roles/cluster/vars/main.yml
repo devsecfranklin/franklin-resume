@@ -1,0 +1,12 @@
+---
+auks_build_dir: /tmp/auks
+auks__packages_names:
+  name:
+    - git
+    - flex
+    - bison
+    - byacc
+    - autoconf
+    - automake
+    - zlib1g-dev
+nhc_build_dir: /tmp/nhc

@@ -1,0 +1,60 @@
+---
+- name: "Create /etc/krb5kdc folder"
+  file:
+    path: "/etc/krb5kdc"
+    owner: root
+    state: directory
+
+- name: 'Copy /etc/krb5kdc/kdc.conf'
+  template:
+    src: kdc.conf.j2
+    dest: /etc/krb5kdc/kdc.conf
+    mode: 0644
+
+# Add PKINIT configuration
+- name: "Create /etc/krb5 folder"
+  file:
+    path: "/etc/krb5"
+    owner: "root"
+    state: directory
+
+- name: 'Add extensions.kdc file'
+  copy:
+    src: extensions.kdc
+    dest: /etc/krb5kdc/extensions.kdc
+    mode: 0644
+
+- name: 'Add krb5-kdc.service to allow logging to /var/log/kerberos'
+  copy:
+    src: krb5-kdc.service
+    dest: /usr/lib/systemd/system/krb5-kdc.service
+    owner: "root"
+    mode: 0644
+
+- name: 'Add extensions.client file'
+  copy:
+    src: extensions.client
+    dest: /etc/krb5kdc/extensions.client
+    mode: 0644
+
+- name: 'Copy /usr/local/sbin/kdc_check.sh'
+  copy:
+    src: kdc_check.sh
+    dest: /usr/local/bin/kdc_check.sh
+    mode: 0755
+
+- name: 'Copy /usr/local/sbin/kdc_backup.sh'
+  copy:
+    src: kdc_backup.sh
+    dest: /usr/local/sbin/kdc_backup.sh
+    mode: 0755
+
+- name: 'Ensure krb5-kdc is running'
+  service:
+    name: krb5-kdc
+    state: started
+
+- name: 'Ensure krb5-admin-server is running'
+  service:
+    name: krb5-admin-server
+    state: started

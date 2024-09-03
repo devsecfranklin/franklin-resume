@@ -1,0 +1,22 @@
+#
+# LDAP Defaults
+#
+
+# See ldap.conf(5) for details
+# This file should be world readable but not world writable.
+
+BASE	dc=lab,dc=bitsmasher,dc=net
+#URI	ldap://ldap.bitsmasher.net ldap://ldap-master.bitsmasher.net:666
+#URI	ldap://10.10.12.254/
+URI	ldap://{{ ldap_uri }}
+
+#SIZELIMIT	12
+#TIMELIMIT	15
+#DEREF		never
+
+# TLS certificates (needed for GnuTLS)
+TLS_REQCERT allow
+TLS_CACERT {{ my_crt }}
+
+SASL_MECH GSSAPI
+SASL_REALM LAB.BITSMASHER.NET

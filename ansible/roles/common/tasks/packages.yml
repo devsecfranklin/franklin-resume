@@ -1,0 +1,17 @@
+---
+- name: "install common packages"
+  ansible.builtin.apt:
+    pkg:
+      - pass
+      - git
+      - python3-pip
+      - tightvncserver
+      - neofetch
+      - gawk
+      - build-essential
+    state: latest
+    autoclean: true
+    autoremove: true
+    force_apt_get: false
+    update_cache: true
+  tags: admin

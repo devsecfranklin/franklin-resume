@@ -1,0 +1,13 @@
+---
+- name: "Install LDAP and SASL dependency packages on LDAP server"
+  ansible.builtin.apt:
+    name:
+      - ntp
+      - tzdata
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - ntp
+    - timezone
+  when: 
+  - ansible_facts['distribution'] == "Debian"

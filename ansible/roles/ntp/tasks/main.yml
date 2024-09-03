@@ -1,0 +1,15 @@
+---
+- name: "Install packages"
+  ansible.builtin.include_tasks: packages.yml
+
+- name: Install timezone information
+  ansible.builtin.package:
+    name: tzdata
+    state: present
+
+- name: Set timezone to {{ ntp_timezone }}
+  community.general.timezone:
+    name: "{{ ntp_timezone }}"
+      
+- name: "Setup NTP"
+  ansible.builtin.include_tasks: ntp.yml

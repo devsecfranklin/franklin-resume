@@ -1,0 +1,6 @@
+---
+lynis_dir: /usr/share/lynis
+sec_user: security
+sec_group: security
+sec_uid: 8899
+sec_gid: 8899

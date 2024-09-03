@@ -1,0 +1,34 @@
+---
+- name: 'Install packages for NFS server'
+  ansible.builtin.apt:
+    pkg:
+      - nfs-kernel-server
+      - nfs-common
+      - rpcbind
+    state: latest
+    autoclean: true
+    autoremove: true
+    force_apt_get: false
+    update_cache: true
+  tags: admin
+
+- name: "Ensure directories to export exist"
+  ansible.builtin.file:
+    path: "{{ item.strip().split()[0] }}"
+    state: directory
+  with_items: "{{ snowy_nfs_exports }}"
+
+- name: Copy exportfs file.
+  template:
+    src: exports_snowy.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart exportfs
+
+- name: "Ensure NFS is started."
+  service:
+    name: nfs-kernel-server
+    state: started
+    enabled: true

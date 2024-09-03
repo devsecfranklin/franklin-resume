@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    FRANKLIN_MOLECULE_TEST: "true"
+  tasks:
+    - name: Set up
+      import_role:
+        name: common
+    - name: Set up DNS Server
+      import_role:
+        name: dns
+    - name: Set up Kerberos KDC & OpenLDAP Server
+      import_role:
+        name: kerb_ldap

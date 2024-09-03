@@ -1,0 +1,52 @@
+---
+- name: 'install server mpi/slurm dependencies'
+  ansible.builtin.apt:
+    name:
+      - gfortran
+      - slurm-wlm
+      - slurmctld
+    force_apt_get: true
+    update_cache: true
+  tags: cluster
+
+- name: 'install slurm.conf'
+  ansible.builtin.template:
+    src: slurm.conf.j2
+    dest: /etc/slurm-llnl/slurm.conf
+    mode: 0644
+    owner: root
+    group: root
+  tags: cluster
+
+# This is causing the daemon to fail
+#- name: 'Set NodeName in /etc/slurm-llnl/slurm.conf'
+#  lineinfile:
+#    path: /etc/slurm-llnl/slurm.conf
+#    regexp: '^NodeName=server'
+#    line: "NodeName={{ ansible_hostname }} CPUs=4 State=UNKNOWN"
+#  tags: cluster
+
+- name: 'install cgroup.conf for slurm'
+  copy:
+    src: cgroup.conf
+    dest: /etc/slurm-llnl/cgroup.conf
+    mode: 0644
+  notify: "restart slurmd service"
+  tags: cluster
+
+- name: 'install cgroup_allowed_devices_file.conf for slurm'
+  copy:
+    src: cgroup_allowed_devices_file.conf
+    dest: /etc/slurm-llnl/cgroup_allowed_devices_file.conf
+    mode: 0644
+  notify:
+    - 'restart munge service'
+    - 'restart slurmd service'
+    - 'restart slurmctld service'
+  tags: cluster
+
+- name: Change slurm file ownership, group and permissions
+  ansible.builtin.file:
+    path: /etc/slurm-llnl
+    owner: slurm
+    group: slurm

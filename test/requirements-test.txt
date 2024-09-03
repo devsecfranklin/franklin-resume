@@ -4,4 +4,7 @@ pytest==6.2.5
 coverage==6.1.2
 isort==5.10.1
 black==24.3.0
-trivy
+mdformat
+pre-commit
+pdoc3
+pre-commit-update 

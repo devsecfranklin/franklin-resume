@@ -1,0 +1,13 @@
+---
+- name: "Install Packages on Cluster"
+  apt:
+    package: [
+      "ti-tidl",
+      "ti-pru-cgt-installer",
+      "build-essential",
+      "git-core",
+      "neofetch"
+    ]
+    state: latest
+  tags: admin
+

@@ -34,6 +34,12 @@ provider "helm" {
   }
 }
 
+provider "aws" {
+  alias   = "dev"
+  profile = "dev"
+  region  = "us-east-1"
+}
+
 provider "template" {}
 
 data "google_client_config" "current" {}

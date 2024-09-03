@@ -1,0 +1,31 @@
+---
+
+- name: Generate new keytab on remote KDC
+  # noqa 305
+  shell: '{{ kerberos_client__keytab_deploy_remote_genkey_command }}'
+  changed_when: true
+  delegate_to: '{{ kerberos_client__keytab_deploy_remote_host }}'
+  no_log: kerberos_client__keytab_deploy_remote_genkey_nolog
+
+- name: Fetch keytab from remote KDC
+  fetch:
+    src: '{{ kerberos_client__keytab_deploy_tmp_file }}'
+    dest: '{{ kerberos_client__keytab_deploy_tmp_file }}'
+    flat: true
+    fail_on_missing: true
+  delegate_to: '{{ kerberos_client__keytab_deploy_remote_host }}'
+
+- name: Secure erase keytab on remote KDC
+  command: '/usr/bin/env shred -u {{ kerberos_client__keytab_deploy_tmp_file }}'
+  changed_when: true
+  delegate_to: '{{ kerberos_client__keytab_deploy_remote_host }}'
+
+- name: Copy keytab to final host
+  copy:
+    src: '{{ kerberos_client__keytab_deploy_tmp_file }}'
+    dest: '{{ kerberos_client__keytab_path }}'
+
+- name: Secure erase keytab on Ansible executor
+  command: '/usr/bin/env shred -u {{ kerberos_client__keytab_deploy_tmp_file }}'
+  changed_when: true
+  delegate_to: localhost

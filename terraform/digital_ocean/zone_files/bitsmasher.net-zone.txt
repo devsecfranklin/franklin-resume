@@ -1,0 +1,20 @@
+$ORIGIN bitsmasher.net.
+$TTL 1800
+bitsmasher.net. IN SOA ns1.digitalocean.com. hostmaster.bitsmasher.net. 1611181168 10800 3600 604800 1800
+bitsmasher.net. 1800 IN NS ns1.digitalocean.com.
+bitsmasher.net. 1800 IN NS ns2.digitalocean.com.
+bitsmasher.net. 1800 IN NS ns3.digitalocean.com.
+bitsmasher.net. 1800 IN A 178.62.60.55
+bitsmasher.net. 1800 IN TXT protonmail-verification=61f4835bee8424d6668cf2384ff3da85ba5731a4
+protonmail._domainkey.bitsmasher.net. 1800 IN TXT v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCppN6zgQi+/c5XjYZveFnVtBO1g3SIiVSfR1qJLaOsN6MzNydnIzKtaR+qPCvmpz5cy5+rTY9wdyiB9CjhrCp1DjBR4ko5OKl50WF8In3po0k46dhJ5EgVk9w/NcVn0JWgr+MhcTaJh+bqysuNIXvyKYA8/aMWeakBsZ6eof2/wwIDAQAB
+bitsmasher.net. 1800 IN TXT v=spf1 include:_spf.protonmail.ch mx ~all
+_dmarc.bitsmasher.net. 1800 IN TXT v=DMARC1; p=none; rua=mailto:franklin@bitsmasher.net
+bitsmasher.net. 14400 IN MX 10 mail.protonmail.ch.
+minecraft.bitsmasher.net. 3600 IN A 159.203.166.26
+www.bitsmasher.net. 3600 IN A 178.62.60.55
+www.bitsmasher.net. 3600 IN AAAA 2a03:b0c0:1:d0::30b:7001
+gopher.bitsmsher.net. 3600 CNAME www.bitsmsher.net.
+protonmail._domainkey 3600 CNAME protonmail.domainkey.d7wob6rd7ydwemp7nuog2slag3bngwjhtb2ne5re6r4af7h7i56pq.domains.proton.ch.
+protonmail2._domainkey 3600 CNAME protonmail2.domainkey.d7wob6rd7ydwemp7nuog2slag3bngwjhtb2ne5re6r4af7h7i56pq.domains.proton.ch. 
+protonmail3._domainkey 3600 CNAME protonmail3.domainkey.d7wob6rd7ydwemp7nuog2slag3bngwjhtb2ne5re6r4af7h7i56pq.domains.proton.ch. 
+bitsmasher.net. 1800 IN TXT google-site-verification=Y2VHPkWr404k4tGcBbXiFCDX8929NzpummmfTm1xpd4

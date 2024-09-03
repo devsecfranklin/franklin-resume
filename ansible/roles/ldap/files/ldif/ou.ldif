@@ -1,0 +1,12 @@
+dn: ou=People,dc=lab,dc=bitsmasher,dc=net
+ou: People
+objectClass: organizationalUnit
+
+dn: ou=Group,dc=lab,dc=bitsmasher,dc=net
+ou: Group
+objectClass: organizationalUnit
+
+dn: cn=engr,ou=groups,dc=lab,dc=bitsmasher,dc=net
+objectClass: posixGroup
+cn: engr
+gidNumber: 9001

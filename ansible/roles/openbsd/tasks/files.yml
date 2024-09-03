@@ -1,0 +1,82 @@
+---
+- name: "Create a symbolic link to /mnt/clusterfs"
+  ansible.builtin.file:
+    src: /mnt/clusterfs
+    dest: /home/franklin/clusterfs
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to Documents"
+  ansible.builtin.file:
+    src: /mnt/storage1/Documents
+    dest: /home/franklin/Documents
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to Downloads"
+  ansible.builtin.file:
+    src: /mnt/storage1/Downloads
+    dest: /home/franklin/Downloads
+    owner: franklin
+    group: franklin
+
+# this is meant to replace /mnt/clusterfs
+- name: "Create a symbolic link to LAB"
+  ansible.builtin.file:
+    src: /mnt/storage1/LAB
+    dest: /home/franklin/LAB
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to Music"
+  ansible.builtin.file:
+    src: /mnt/storage1/Music
+    dest: /home/franklin/Music
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to Pictures"
+  ansible.builtin.file:
+    src: /mnt/storage1/Pictures
+    dest: /home/franklin/Pictures
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to Videos"
+  ansible.builtin.file:
+    src: /mnt/storage1/Videos
+    dest: /home/franklin/Videos
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to bin"
+  ansible.builtin.file:
+    src: mnt/backup1/franklin/bin
+    dest: /home/franklin/bin
+    owner: franklin
+    group: franklin
+
+- name: "Create a symbolic link to workspace"
+  ansible.builtin.file:
+    src: /mnt/storage1/workspace
+    dest: /home/franklin/workspace
+    owner: franklin
+    group: franklin
+
+# - name: "Copy files to /home/franklin/bin"
+#   copy:
+#     src: "{{ item }}"
+#     dest: "/home/franklin/bin"
+#     owner: "franklin"
+#     mode: 0755
+#   with_fileglob:
+#     - "files/home/bin/*"
+
+# - name: "Copy files to /home/franklin"
+#   copy:
+#     src: "{{ item }}"
+#     dest: "/home/franklin"
+#     owner: "franklin"
+#     mode: 0755
+#   with_fileglob:
+#     - "files/home/*"

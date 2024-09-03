@@ -1,0 +1,66 @@
+---
+- name: execute OS related tasks on the Raspberry Pi
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - "{{ detected_distribution }}-{{ detected_distribution_major_version }}.yml"
+    - "{{ detected_distribution }}.yml"
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "raspi.yml"
+  when:
+    - raspberry_pi|default(false)
+  
+- name: 'Check if swap is configured'
+  stat:
+    path: /etc/dphys-swapfile
+  register: xx
+
+- name: 'Disable swap on node'
+  shell: |
+    dphys-swapfile swapoff
+    dphys-swapfile uninstall
+    update-rc.d dphys-swapfile remove
+    apt purge -y dphys-swapfile
+  when:
+    - raspberry_pi|default(false)
+    - xx.stat.exists
+    - HOMELAB_MOLECULE_TEST is not defined
+
+- name: "Create {{ rancher_dir }} folder"
+  file:
+    path: "{{ rancher_dir }}"
+    owner: "root"
+    mode: 0755
+    state: directory
+
+# https://docs.k3s.io/installation/private-registry
+#- name: 'Copy registries.yaml to {{ rancher_dir }}'
+#  copy:
+#    src: registries.yaml
+#    dest: "{{ rancher_dir }}/registries.yaml"
+#    mode: 0644
+
+- name: Activating cgroup support
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^((?!.*\bcgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory\b).*)$'
+    line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
+    backrefs: true
+  notify: reboot
+
+- name: Flush iptables before changing to iptables-legacy
+  iptables:
+    flush: true
+  changed_when: false   # iptables flush always returns changed
+
+- name: Changing to iptables-legacy
+  alternatives:
+    path: /usr/sbin/iptables-legacy
+    name: iptables
+  register: ip4_legacy
+
+- name: Changing to ip6tables-legacy
+  alternatives:
+    path: /usr/sbin/ip6tables-legacy
+    name: ip6tables
+  register: ip6_legacy

@@ -1,0 +1,67 @@
+# group_vars/all.yml
+# Variables visible to all nodes
+---
+all:
+  hosts:
+    # Use only IP addresses here!
+    node0:
+      ansible_host: 10.10.12.0
+    node1:
+      ansible_host: 10.10.12.1
+    node2:
+      ansible_host: 10.10.12.2
+    node3:
+      ansible_host: 10.10.12.3
+  children:
+    k3s_master:
+      hosts:
+        # Only one master!
+    k3s_worker:
+      hosts:
+    k8s_master:
+      hosts:
+        # Only one master!
+        node3: {}
+    k8s_worker:
+      hosts:
+        node1: {}
+        node2: {}
+        node0: {}
+    raspberry_pi:
+      hosts:
+        node1: {}
+        node2: {}
+        node0: {}
+    raspbian:
+      hosts:
+        node5: {}
+      vars:
+        ansible_ssh_user: pi
+        ansible_python_interpreter: /usr/bin/python3
+        boot_directory: /boot
+        docker_apt_repository: "deb http://archive.raspberrypi.org/debian/ buster main ui"
+        docker_version: "5:18.09.0~3-0~raspbian-stretch"
+    ubuntu:
+      hosts:
+        node1: {}
+        node2: {}
+        node3: {}
+        node0: {}
+      vars:
+        ansible_ssh_user: ubuntu
+        boot_directory: /boot/firmware
+  vars:
+    ansible_become: true
+    ansible_python_interpreter: /usr/bin/python3
+    #containerd_version: 1.2.6-3
+    # Make sure to match the `no_proxy` pattern or otherwise expect Docker images to be proxied twice:
+    #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
+    #docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
+    #k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
+    #k8s_version: 1.15.3-00
+    #kuberneted_cni_version: 0.7.5-00
+    # Make sure to match all nodes and the `docker_registry_mirror_url`:
+    #no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
+    # Make sure to use an IP address, not a hostname, or otherwise expect the Kubernetes setup to fail:
+    #proxy_url: http://10.0.0.1:3128/
+    #remove_docker_directory: yes

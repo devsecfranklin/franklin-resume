@@ -1,0 +1,15 @@
+---
+- name: Configure /etc/{{ ntp_configuration_file }}
+  ansible.builtin.template:
+    src: "{{ ntp_configuration_file }}.j2"
+    dest: /etc/{{ ntp_configuration_file }}
+    mode: "0644"
+  notify:
+    - Restart ntp
+  when: HOMELAB_MOLECULE_TEST is not defined
+ 
+- name: Manage {{ ntp_service }}
+  ansible.builtin.service:
+    name: "{{ ntp_service }}"
+    state: "{{ ntp_state }}"
+    enabled: "{{ ntp_enabled }}"

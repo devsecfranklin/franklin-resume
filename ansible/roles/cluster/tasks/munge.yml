@@ -1,0 +1,28 @@
+---
+- name: "install munge via apt-get"
+  ansible.builtin.apt:
+    name:
+      - munge
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - cluster
+
+- name: 'Ensure group "munge" exists'
+  ansible.builtin.group:
+    name: munge
+    state: present
+  tags:
+    - cluster
+
+- name: 'add munge user'
+  ansible.builtin.user:
+    name: munge
+    shell: /bin/bash
+    groups: munge
+    append: yes
+  tags:
+    - cluster
+
+# what is this directory for:
+# /usr/local/etc/munge/

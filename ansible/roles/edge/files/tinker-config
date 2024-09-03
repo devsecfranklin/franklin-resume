@@ -1,0 +1,436 @@
+#!/bin/sh
+# tinker-config http://github.com/mikerr/tinker-config
+
+INTERACTIVE=True
+ASK_TO_REBOOT=0
+CMDLINE=/boot/extlinux/extlinux.conf
+CONFIG=/boot/hw_intf.conf
+
+calc_wt_size() {
+  # NOTE: it's tempting to redirect stderr to /dev/null, so supress error 
+  # output from tput. However in this case, tput detects neither stdout or 
+  # stderr is a tty and so only gives default 80, 24 values
+  WT_HEIGHT=17
+  WT_WIDTH=$(tput cols)
+
+  if [ -z "$WT_WIDTH" ] || [ "$WT_WIDTH" -lt 60 ]; then
+    WT_WIDTH=80
+  fi
+  if [ "$WT_WIDTH" -gt 178 ]; then
+    WT_WIDTH=120
+  fi
+  WT_MENU_HEIGHT=$(($WT_HEIGHT-7))
+}
+
+do_about() {
+  whiptail --msgbox "\
+This tool provides a straight-forward way of doing initial
+configuration of the Asus Tinkerboard. Although it can be run
+at any time, some of the options may have difficulties if
+you have heavily customised your installation.\
+" 20 70 1
+}
+
+do_expand_rootfs() {
+
+  ROOT_PART=$(mount | sed -n 's|^/dev/\(.*\) on / .*|\1|p')
+  resize2fs /dev/$ROOT_PART
+
+  PART_NUM=${ROOT_PART#mmcblk0p}
+
+
+  SD_SIZE=$(parted /dev/mmcblk0 -ms  p | grep mmcblk0 | cut -f 2 -d:)
+  PART_SIZE=$( parted /dev/mmcblk0 -ms  p | grep ^$PART_NUM | cut -f 3 -d:)
+
+  if [ $SD_SIZE = $PART_SIZE ]; then
+	  whiptail --msgbox "SD size is $SD_SIZE and root partition is $PART_SIZE \n\nNo resize needed !" 20 60 2
+	  return 0
+  fi
+
+# Get the starting offset of the root partition
+  PART_START=$(parted /dev/mmcblk0 -ms unit s p | grep "^${PART_NUM}" | cut -f 2 -d: | sed 's/[^0-9]//g')
+  [ "$PART_START" ] || return 1
+  # Return value will likely be error for fdisk as it fails to reload the
+  # partition table because the root fs is mounted
+  fdisk /dev/mmcblk0 <<EOF
+p
+d
+$PART_NUM
+n
+p
+$PART_NUM
+$PART_START
+
+w
+EOF
+  ASK_TO_REBOOT=1
+
+ whiptail --msgbox "The root partition has been resized to $SD_SIZE \n\n The filesystem will be resized after a reboot" 20 60 2
+}
+
+do_change_pass() {
+  whiptail --msgbox "You will now be asked to enter a new password for the linaro user" 20 60 1
+  passwd linaro &&
+  whiptail --msgbox "Password changed successfully" 20 60 1
+}
+
+do_configure_keyboard() {
+  dpkg-reconfigure keyboard-configuration &&
+  printf "Reloading keymap. This may take a short while\n" &&
+  invoke-rc.d keyboard-setup start
+}
+
+do_change_locale() {
+  dpkg-reconfigure locales
+}
+
+do_change_timezone() {
+  dpkg-reconfigure tzdata
+}
+
+do_change_hostname() {
+  whiptail --msgbox "\
+Please note: RFCs mandate that a hostname's labels \
+may contain only the ASCII letters 'a' through 'z' (case-insensitive), 
+the digits '0' through '9', and the hyphen.
+Hostname labels cannot begin or end with a hyphen. 
+No other symbols, punctuation characters, or blank spaces are permitted.\
+" 20 70 1
+
+  CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
+  NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)
+  if [ $? -eq 0 ]; then
+    echo $NEW_HOSTNAME > /etc/hostname
+    sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
+    ASK_TO_REBOOT=1
+  fi
+}
+
+do_wifi() {
+
+wifidevice=wlan0
+WPAFILE=/etc/wpa_supplicant/wpa_supplicant.conf
+
+{
+iwlist $wifidevice scan | grep 'ESSID' | sed -e 's/.*ESSID:"\([^"]\+\)".*/  \1/' > /tmp/ap_list.txt 
+} | whiptail --gauge "Scanning Wifi, please wait" 5 50 10
+
+echo "whiptail --title \"Choose SSID, or enter manually\" \\" > /tmp/choose_ap.sh
+echo "--radiolist \"Choose SSID\" \\" >> /tmp/choose_ap.sh
+
+LINES=`wc -l < /tmp/ap_list.txt`
+LINES=$((${LINES}+1))
+echo "10 60 ${LINES} \\" >> /tmp/choose_ap.sh
+for LINE in `cat /tmp/ap_list.txt`
+    do
+  	echo "$LINE '' off \\" >> /tmp/choose_ap.sh
+    done
+echo "Enter\ manually '' on 2>/tmp/ssid.ans" >>/tmp/choose_ap.sh
+    
+chmod 777 /tmp/choose_ap.sh
+. /tmp/choose_ap.sh
+	  	
+if [ $? -ne 0 ]; then return 0; fi
+
+SSID=`cat /tmp/ssid.ans`
+if [ "$SSID" = "Enter manually" ]; then
+  		SSID=$(whiptail --inputbox "SSID Name" 20 70 3>&1 1>&2 2>&3)
+		if [ -z $SSID ]; then return 0 ; fi
+fi
+
+ENCRYPTION=$(whiptail --title "Encryption" --menu "Encryption for network: $SSID " $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT --cancel-button Back --ok-button Select \
+          "1" "WPA/WPA2" \
+          "2" "WEP (hex)" \
+          "3" "WEP (ascii)" \
+          "4" "None" \
+    	  3>&1 1>&2 2>&3)
+
+if [ $? -ne 0 ]; then return 0; fi
+
+WPANEW=/tmp/wpanew.conf
+WPATMP=/tmp/wpa.conf
+
+case $ENCRYPTION in
+		'1')
+  			PASSPHRASE=$(whiptail --inputbox "WPA Passphrase for $SSID" 20 70 3>&1 1>&2 2>&3)
+  			if [ $? -ne 0 ]; then return 0; fi
+	 		CRYPTPASS=$(wpa_passphrase $SSID $PASSPHRASE | grep -v "^#" | grep -v "#psk=")
+			PASSERROR="Passphrase must be 8..63 characters"
+  			if [ "$CRYPTPASS" != "$PASSERROR" ]; then 
+				echo "$CRYPTPASS" > $WPANEW
+			else
+				whiptail --msgbox "ERROR: $PASSERROR" 20 70 1
+				return 0;
+			fi
+		;;
+		'2')
+  			PASSPHRASE=$(whiptail --inputbox "WEP key (Hex)" 20 70 3>&1 1>&2 2>&3)
+  			if [ $? -ne 0 ]; then return 0; fi
+
+	                echo "network={
+                         	ssid=\"$SSID\"
+                        	key_mgmt=NONE
+                          	wep_key0=$PASSPHRASE
+                          	}" > $WPANEW
+		;;
+		'3')
+  			PASSPHRASE=$(whiptail --inputbox "WEP key (ascii)" 20 70 3>&1 1>&2 2>&3)
+  			if [ $? -ne 0 ]; then return 0; fi
+
+		 	echo "network={
+		               ssid=\"$SSID\"
+		               key_mgmt=NONE
+		               wep_key0=\"$PASSPHRASE\"
+		               }" > $WPANEW
+		;;
+		'4')
+			echo "network={
+		               ssid=\"$SSID\"
+		               key_mgmt=NONE
+		               }" > $WPANEW
+		;;
+esac
+# Remove previous matching SSID config first
+perl -00 -pe "s/network=\{[^}]*ssid=\"$SSID\"*[^}]*\}//g" $WPAFILE > $WPATMP
+# append /merge new config at end of config file
+cat $WPATMP $WPANEW > $WPAFILE
+
+whiptail --msgbox "Wifi settings updated for SSID: $SSID" 20 60 1
+
+# connect right now ?
+wpa_supplicant -B -i$wifidevice -c $WPAFILE
+dhclient $wifidevice -1 
+
+}
+do_display() {
+  RESOLUTION=$(whiptail --inputbox "Set a fixed screen resolution if autoconfig isn't working. \
+  Please enter a screen resolution, e.g. 800x600" 20 60 "800x600" 3>&1 1>&2 2>&3)
+  if [ $? -eq 0 ]; then
+    MONITORFILE=/usr/share/X11/xorg.conf.d/50-resolution.conf
+    echo "Section \"Monitor\"" > $MONITORFILE
+    echo "Identifier \"HDMI-1\"">> $MONITORFILE
+    echo "Option \"PreferredMode\" \"$RESOLUTION\"" >> $MONITORFILE
+    echo "EndSection" >> $MONITORFILE
+    ASK_TO_REBOOT=1
+  fi
+}
+do_ssh() {
+  if [ -e /var/log/regen_ssh_keys.log ] && ! grep -q "^finished" /var/log/regen_ssh_keys.log; then
+    whiptail --msgbox "Initial ssh key generation still running. Please wait and try again." 20 60 2
+    return 1
+  fi
+  whiptail --yesno "Would you like the SSH server enabled or disabled?" 20 60 2 \
+    --yes-button Enable --no-button Disable
+  RET=$?
+  if [ $RET -eq 0 ]; then
+    update-rc.d ssh enable &&
+    invoke-rc.d ssh start &&
+    whiptail --msgbox "SSH server enabled" 20 60 1
+  elif [ $RET -eq 1 ]; then
+    update-rc.d ssh disable &&
+    whiptail --msgbox "SSH server disabled" 20 60 1
+  else
+    return $RET
+  fi
+}
+
+do_spi() {
+  printf "spi\n" 
+}
+
+do_i2c() {
+  printf "i2c\n" 
+}
+
+do_serial() {
+  CURRENT_STATUS="yes" # assume ttyAMA0 output enabled
+  if ! grep -q "^T.*:.*:respawn:.*ttyAMA0" /etc/inittab; then
+    CURRENT_STATUS="no"
+  fi
+
+  whiptail --yesno "Would you like a login shell to be accessible over serial?" 20 60 2
+  RET=$?
+  if [ $RET -eq 1 ]; then
+    sed -i /etc/inittab -e "s|^.*:.*:respawn:.*ttyAMA0|#&|"
+    sed -i /boot/cmdline.txt -e "s/console=ttyAMA0,[0-9]\+ //"
+    whiptail --msgbox "Serial is now disabled" 20 60 1
+  elif [ $RET -eq 0 ]; then
+    sed -i /etc/inittab -e "s|^#\(.*:.*:respawn:.*ttyAMA0\)|\1|"
+    if ! grep -q "^T.*:.*:respawn:.*ttyAMA0" /etc/inittab; then
+      printf "T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100\n" >> /etc/inittab
+    fi
+    if ! grep -q "console=ttyAMA0" /boot/cmdline.txt; then
+      sed -i /boot/cmdline.txt -e "s/root=/console=ttyAMA0,115200 root=/"
+    fi
+    whiptail --msgbox "Serial is now enabled" 20 60 1
+  else
+    return $RET
+  fi
+}
+
+do_logging() {
+  whiptail --yesno "Would you like to show logging messages on screen during bootup ?" 20 60 2
+  RET=$?
+  if [ $RET -eq 1 ]; then
+      sed -i $CMDLINE -e "s/console=tty[^ ]\+ /console=ttyS1 /"
+      whiptail --msgbox "Log messages are now disabled (silent boot)" 20 60 1
+  elif [ $RET -eq 0 ]; then
+      sed -i $CMDLINE -e "s/console=tty[^ ]\+ /console=tty0 /"
+      whiptail --msgbox "Log messages are now enabled" 20 60 1
+    fi
+}
+do_boot_behaviour() {
+  BOOTOPT=$(whiptail --menu "Chose boot option" 20 60 10 \
+    "Console" "Text console, requiring login" \
+    "Desktop" "Log in to the graphical desktop (default)" \
+    3>&1 1>&2 2>&3)
+  if [ $? -eq 0 ]; then
+    case "$BOOTOPT" in
+      Console)
+        systemctl set-default multi-user.target
+	;;
+      Desktop)
+        systemctl set-default graphical.target
+        ;;
+      *)
+        whiptail --msgbox "Programmer error, unrecognised boot option" 20 60 2
+        return 1
+        ;;
+    esac
+    ASK_TO_REBOOT=1
+  fi
+}
+
+do_audio() {
+  AUDIO_OUT=$(whiptail --menu "Choose the audio output" 20 60 10 \
+    "0" "Auto" \
+    "1" "Force 3.5mm ('headphone') jack" \
+    "2" "Force HDMI" \
+    3>&1 1>&2 2>&3)
+  if [ $? -eq 0 ]; then
+    amixer cset numid=3 "$AUDIO_OUT"
+  fi
+}
+
+do_finish() {
+  if [ $ASK_TO_REBOOT -eq 1 ]; then
+    whiptail --yesno "Would you like to reboot now?" 20 60 2
+    if [ $? -eq 0 ]; then # yes
+      sync
+      reboot
+    fi
+  fi
+  exit 0
+}
+
+# $1 = filename, $2 = key name
+get_json_string_val() {
+  sed -n -e "s/^[[:space:]]*\"$2\"[[:space:]]*:[[:space:]]*\"\(.*\)\"[[:space:]]*,$/\1/p" $1
+}
+
+#
+# Command line options for non-interactive use
+#
+for i in $*
+do
+  case $i in
+  --expand-rootfs)
+    INTERACTIVE=False
+    do_expand_rootfs
+    exit 0
+    ;;
+  *)
+    # unknown option
+    ;;
+  esac
+done
+
+# Everything else needs to be run as root
+if [ $(id -u) -ne 0 ]; then
+  printf "Script must be run as root. Try 'sudo tinker-config'\n"
+  exit 1
+fi
+
+do_internationalisation_menu() {
+  FUN=$(whiptail --title "Asus Tinker Board Software Configuration Tool (tinker-config)" --menu "Internationalisation Options" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT --cancel-button Back --ok-button Select \
+    "I1 Change Locale" "Set up language and regional settings to match your location" \
+    "I2 Change Timezone" "Set up timezone to match your location" \
+    "I3 Change Keyboard Layout" "Set the keyboard layout to match your keyboard" \
+    3>&1 1>&2 2>&3)
+  RET=$?
+  if [ $RET -eq 1 ]; then
+    return 0
+  elif [ $RET -eq 0 ]; then
+    case "$FUN" in
+      I1\ *) do_change_locale ;;
+      I2\ *) do_change_timezone ;;
+      I3\ *) do_configure_keyboard ;;
+      *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
+    esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
+  fi
+}
+
+do_advanced_menu() {
+  FUN=$(whiptail --title "Asus Tinker Board Software Configuration Tool (tinker-config)" --menu "Advanced Options" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT --cancel-button Back --ok-button Select \
+    "A1 Overscan" "You may need to configure overscan if black bars are present on display" \
+    "A2 Hostname" "Set the visible name for this Tinkerboard on a network" \
+    "A3 SSH" "Enable/Disable remote command line access to your Tinkerboard using SSH" \
+    "A4 SPI" "Enable/Disable automatic loading of SPI kernel module" \
+    "A5 I2C" "Enable/Disable automatic loading of I2C kernel module" \
+    "A6 Serial" "Enable/Disable shell and kernel messages on the serial connection" \
+    "A7 Audio" "Force audio out through HDMI or 3.5mm jack" \
+    3>&1 1>&2 2>&3)
+  RET=$?
+  if [ $RET -eq 1 ]; then
+    return 0
+  elif [ $RET -eq 0 ]; then
+    case "$FUN" in
+      A1\ *) do_overscan ;;
+      A2\ *) do_change_hostname ;;
+      A3\ *) do_ssh ;;
+      A4\ *) do_spi ;;
+      A5\ *) do_i2c ;;
+      A6\ *) do_serial ;;
+      A7\ *) do_audio ;;
+      *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
+    esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
+  fi
+}
+
+
+#
+# Interactive use loop
+#
+calc_wt_size
+while true; do
+  FUN=$(whiptail --title "Asus Tinker Board Software Configuration Tool (tinker-config)" --menu "Setup Options" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT --cancel-button Finish --ok-button Select \
+    "1 Expand Filesystem" "Ensures that all of the SD card storage is available to the OS" \
+    "2 Change User Password" "Change password for the default user (linaro)" \
+    "3 Enable Boot Messages" "Show logging messages on startup" \
+    "4 Enable Boot to CLI/Desktop" "Choose whether to boot into a desktop environment,  or the command-line" \
+    "5 Internationalisation Options" "Set up language and regional settings to match your location" \
+    "6 Setup WiFi " "Configure WiFi settings" \
+    "7 Display Options" "Configure display settings" \
+    "8 Advanced Options" "Configure advanced settings" \
+    "9 About tinker-config" "Information about this configuration tool" \
+    3>&1 1>&2 2>&3)
+  RET=$?
+  if [ $RET -eq 1 ]; then
+    do_finish
+  elif [ $RET -eq 0 ]; then
+    case "$FUN" in
+      1\ *) do_expand_rootfs ;;
+      2\ *) do_change_pass ;;
+      3\ *) do_logging ;;
+      4\ *) do_boot_behaviour ;;
+      5\ *) do_internationalisation_menu ;;
+      6\ *) do_wifi ;;
+      7\ *) do_display ;;
+      8\ *) do_advanced_menu ;;
+      9\ *) do_about ;;
+      *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
+    esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
+  else
+    exit 1
+  fi
+done

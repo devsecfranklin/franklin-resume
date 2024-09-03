@@ -9,7 +9,7 @@ clean:
 		fi ; \
 	done
 
-python: 
+python:
 	@$(PY39) -m venv _build
 	( \
 		source _build/bin/activate; \
@@ -18,12 +18,12 @@ python:
 		_build/bin/python -m pip install -r terraform/requirements.txt; \
 	)
 
-test: 
+.PHONY: test
+test:
 	@$(PY39) -m venv _test
 	( \
 		source _test/bin/activate; \
 		_test/bin/python -m pip install --upgrade pip; \
-		_test/bin/python -m pip install tox; \
 		_test/bin/python -m pip install -rtest/requirements-test.txt; \
 		_test/bin/python -m pip install -rtest/requirements-security.txt; \
 	)
