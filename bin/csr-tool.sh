@@ -24,14 +24,14 @@ spec:
   - client auth
 EOF
 
-echo 
+echo
 echo "Approving singing request."
 kubectl certificate approve ${csr_name}
 
-echo 
+echo
 echo "Downloading certificate."
-kubectl get csr ${csr_name} -o jsonpath='{.status.certificate}' \
-  | base64 --decode > $(basename ${csr} .csr).crt 
+kubectl get csr ${csr_name} -o jsonpath='{.status.certificate}' |
+  base64 --decode >$(basename ${csr} .csr).crt
 
 echo
 echo "Cleaning up."

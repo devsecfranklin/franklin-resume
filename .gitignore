@@ -5,6 +5,7 @@ __pycache__
 *_check_results_*.txt
 *.bkp
 .cloudflare.ini
+.env
 .tox/
 
 key

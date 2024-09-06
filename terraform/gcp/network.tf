@@ -52,7 +52,6 @@ resource "google_compute_subnetwork" "gke-subnet" {
       ip_cidr_range = "10.13.0.0/22"
       range_name    = "gke-lab-franklin-gke-services-f23f12d3"
     },
-
   ]
 }
 

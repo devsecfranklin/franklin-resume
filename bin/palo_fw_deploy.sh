@@ -24,8 +24,8 @@ export FW_ZONE="us-central1-a"
 export INSTANCE_TYPE="n2-standard-4"
 export DISK_SIZE="60GB"
 export DISK_TYPE="pd-ssd"
-export INSTANCE_PROJECT="paloaltonetworksgcp-public" # do not change this value
-export IMAGE="vmseries-flex-byol-1023" # search for images in the preceding project
+export INSTANCE_PROJECT="paloaltonetworksgcp-public"           # do not change this value
+export IMAGE="vmseries-flex-byol-1023"                         # search for images in the preceding project
 export TAGS="lab-franklin,allow-icmp,http-server,https-server" # edit these, comma separate?
 export PANORAMA1="192.168.0.3"
 export PANORAMA2="192.168.0.4"
@@ -42,17 +42,16 @@ export KEY="admin:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCu+5vKjTtTWZwlDlm7AlmQdW
 # change "no-address" to "address" tog et a public IP
 echo "Deploying firewall: ${FW_NAME}"
 gcloud compute instances create $FW_NAME \
---zone=$FW_ZONE \
---machine-type=$INSTANCE_TYPE \
---boot-disk-size=$DISK_SIZE \
---boot-disk-type=$DISK_TYPE \
---network-interface subnet=$UNTRUST_SUBNET,address \
---network-interface subnet=$MGMT_SUBNET,address \
---network-interface subnet=$TRUST_SUBNET,no-address \
---image-project=$INSTANCE_PROJECT \
---image=$IMAGE \
---maintenance-policy=MIGRATE \
- --can-ip-forward \
---tags=$TAGS \
---metadata="block-project-ssh-keys=true,ssh-keys=$KEY,serial-port-enable=false,mgmt-interface-swap=enable,type=dhcp-client,panorama-server=$PANORAMA1,panorama-server-2=$PANORAMA2,tplname=$TEMPLATE,dgname=$DEVICEGROUP,hostname=$FW_NAME,dns-primary=$DNS,vm-auth-key=$AUTHKEY,dhcp-accept-server-hostname=yes,dhcp-accept-server-domain=yes"
-	
+  --zone=$FW_ZONE \
+  --machine-type=$INSTANCE_TYPE \
+  --boot-disk-size=$DISK_SIZE \
+  --boot-disk-type=$DISK_TYPE \
+  --network-interface subnet=$UNTRUST_SUBNET,address \
+  --network-interface subnet=$MGMT_SUBNET,address \
+  --network-interface subnet=$TRUST_SUBNET,no-address \
+  --image-project=$INSTANCE_PROJECT \
+  --image=$IMAGE \
+  --maintenance-policy=MIGRATE \
+  --can-ip-forward \
+  --tags=$TAGS \
+  --metadata="block-project-ssh-keys=true,ssh-keys=$KEY,serial-port-enable=false,mgmt-interface-swap=enable,type=dhcp-client,panorama-server=$PANORAMA1,panorama-server-2=$PANORAMA2,tplname=$TEMPLATE,dgname=$DEVICEGROUP,hostname=$FW_NAME,dns-primary=$DNS,vm-auth-key=$AUTHKEY,dhcp-accept-server-hostname=yes,dhcp-accept-server-domain=yes"

@@ -2,12 +2,21 @@ CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
 clean:
-	@for trash in _build aclocal aclocal.m4 autom4te.cache config config.log config.status configure configure~ libtool Makefile Makefile.in docker/cloudbot/Makefile docker/cloudbot/Makefile.in; do\
+	rm -rf _build *.egg-info
+	find . -name '*.pyc' | xargs rm -rf
+	find . -name '__pycache__' | xargs rm -rf
+	for trash in AUTHORS ChangeLog _collect _build aclocal aclocal.m4 autom4te.cache config config.log _viz\
+        	config.status configure configure~ libtool Makefile Makefile.in po\
+			docker/cloudbot/Makefile docker/cloudbot/Makefile.in\
+        	customer/Makefile customer/Makefile.in docker/rhel8/Makefile.in docker/rhel8/Makefile\
+			docker/Makefile docker/Makefile.in _test;
+	do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\
 		fi ; \
 	done
+	docker system prune -f
 
 python:
 	@$(PY39) -m venv _build
@@ -26,4 +35,6 @@ test:
 		_test/bin/python -m pip install --upgrade pip; \
 		_test/bin/python -m pip install -rtest/requirements-test.txt; \
 		_test/bin/python -m pip install -rtest/requirements-security.txt; \
+		_test/bin/python -m pip install -rcustomer/test/requirements-test.txt; \
 	)
+	@echo "Found Python version $(PY39)"

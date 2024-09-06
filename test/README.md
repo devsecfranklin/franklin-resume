@@ -1,5 +1,7 @@
 # Testing
 
+## BUILD
+
 Set up `direnv`
 
 ```sh
@@ -7,7 +9,7 @@ curl -sfL https://direnv.net/install.sh | bash
 eval "$(direnv hook bash)" # https://direnv.net/docs/hook.html
 ```
 
-## Call Cloud Function from external
+### Call Cloud Function from external
 
 * Test with CURL from your local machine.
 * Your [service account must be a valid "invoker"](https://cloud.google.com/functions/docs/securing/authenticating) for the Cloud Function.
@@ -18,7 +20,7 @@ gcloud auth login
 curl -X POST https://us-central1-gcp-gcs-pso.cloudfunctions.net/cloudbot-franklin  -H "Content-Type:application/json"  -d '{"message":"franklin"}' -H "Authorization: Bearer $(gcloud auth print-identity-token)"
 ```
 
-## Test with nix-shell
+### Test with nix-shell
 
 ```sh
 nix-shell
@@ -27,7 +29,7 @@ tox -e flake8
 tox -e py38
 ```
 
-## security test
+### security test
 
 ```sh
 bandit --configfile .bandit -x .tox,docs,.coveragerc,.dockerignore,_build -s B101,B105,B108,B320,B410,B501 -r src/
@@ -36,7 +38,7 @@ safety check -r tests/requirements-test.txt
 safety check -r test/requirements-security.txt
 ```
 
-## Container Image
+### Container Image
 
 * Type `make` to build the docker image.
   * Type `docker image ls` to see it in your list.
@@ -45,3 +47,18 @@ safety check -r test/requirements-security.txt
   * Use personal access token as pass since 2fa is enabled.
 * Push the tagged image to dockerhub
   * Example: `docker push frank378/cloudbot:dev_franklin_cloudbot`
+
+## TRAFFIC
+
+### Google Cloud
+
+```sh
+gcloud network-management connectivity-tests list
+gcloud network-management connectivity-tests create TRUST \
+    --source-instance=SOURCE_INSTANCE \
+    --source-ip-address=SOURCE_IP_ADDRESS \
+    --destination-instance=DESTINATION_INSTANCE \
+    --destination-ip-address=DESTINATION_IP_ADDRESS \
+    --destination-port=DESTINATION_PORT \
+    --protocol=PROTOCOL
+```

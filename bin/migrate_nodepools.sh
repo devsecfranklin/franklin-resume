@@ -5,15 +5,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # [START gke_node_find_non_containerd_nodepools]
-for project in  $(gcloud projects list --format="value(projectId)")
-do
+for project in $(gcloud projects list --format="value(projectId)"); do
   echo "ProjectId:  $project"
-  for clusters in $( \
+  for clusters in $(
     gcloud container clusters list \
       --project $project \
-      --format="csv[no-heading](name,location,autopilot.enabled,currentMasterVersion,autoscaling.enableNodeAutoprovisioning,autoscaling.autoprovisioningNodePoolDefaults.imageType)")
-  do
-    IFS=',' read -r -a clustersArray <<< "$clusters"
+      --format="csv[no-heading](name,location,autopilot.enabled,currentMasterVersion,autoscaling.enableNodeAutoprovisioning,autoscaling.autoprovisioningNodePoolDefaults.imageType)"
+  ); do
+    IFS=',' read -r -a clustersArray <<<"$clusters"
     cluster_name="${clustersArray[0]}"
     cluster_zone="${clustersArray[1]}"
     cluster_isAutopilot="${clustersArray[2]}"
@@ -29,7 +28,7 @@ do
       echo "  Cluster: $cluster_name (zone: $cluster_zone)"
 
       if [ "$cluster_autoprovisioning" = "True" ]; then
-        if [ "$cluster_minorVersion"  \< "1.20" ]; then
+        if [ "$cluster_minorVersion" \< "1.20" ]; then
           echo "    Node autoprovisioning is enabled, and new node pools will have image type 'COS'."
           echo "    This settings is not configurable on the current version of a cluster."
           echo "    Please upgrade you cluster and configure the default node autoprovisioning image type."
@@ -51,14 +50,14 @@ do
         fi
       fi
 
-      for nodepools in $( \
+      for nodepools in $(
         gcloud container node-pools list \
           --project $project \
           --cluster $cluster_name \
           --zone $cluster_zone \
-          --format="csv[no-heading](name,version,config.imageType)")
-      do
-        IFS=',' read -r -a nodepoolsArray <<< "$nodepools"
+          --format="csv[no-heading](name,version,config.imageType)"
+      ); do
+        IFS=',' read -r -a nodepoolsArray <<<"$nodepools"
         nodepool_name="${nodepoolsArray[0]}"
         nodepool_version="${nodepoolsArray[1]}"
         nodepool_imageType="${nodepoolsArray[2]}"
@@ -81,7 +80,7 @@ do
           suggestedImageType="WINDOWS_SAC_CONTAINERD"
         fi
 
-        tab=$'\n      ';
+        tab=$'\n      '
         nodepool_message="$tab Please update the nodepool to use Containerd."
         nodepool_message+="$tab Make sure to consult with the list of known issues https://cloud.google.com/kubernetes-engine/docs/concepts/using-containerd#known_issues."
         nodepool_message+="$tab Run the following command to upgrade:"
@@ -91,10 +90,10 @@ do
 
         # see https://cloud.google.com/kubernetes-engine/docs/concepts/node-images
         if [ "$nodepool_imageType" = "COS_CONTAINERD" ] || [ "$nodepool_imageType" = "UBUNTU_CONTAINERD" ] ||
-           [ "$nodepool_imageType" = "WINDOWS_LTSC_CONTAINERD" ] || [ "$nodepool_imageType" = "WINDOWS_SAC_CONTAINERD" ]; then
+          [ "$nodepool_imageType" = "WINDOWS_LTSC_CONTAINERD" ] || [ "$nodepool_imageType" = "WINDOWS_SAC_CONTAINERD" ]; then
           nodepool_message="$tab Nodepool is using Containerd already"
-        elif ( [ "$nodepool_imageType" = "WINDOWS_LTSC" ] || [ "$nodepool_imageType" = "WINDOWS_SAC" ] ) &&
-               !( [ "$(printf '%s\n' "$windowsGkeMinVersion" "$minorVersionWithRev" | sort -V | head -n1)" = "$windowsGkeMinVersion" ] ); then
+        elif ([ "$nodepool_imageType" = "WINDOWS_LTSC" ] || [ "$nodepool_imageType" = "WINDOWS_SAC" ]) &&
+          !( [ "$(printf '%s\n' "$windowsGkeMinVersion" "$minorVersionWithRev" | sort -V | head -n1)" = "$windowsGkeMinVersion" ] ); then
           nodepool_message="$tab Upgrade nodepool to the version that supports Containerd for Windows"
         elif !( [ "$(printf '%s\n' "$linuxGkeMinVersion" "$minorVersionWithRev" | sort -V | head -n1)" = "$linuxGkeMinVersion" ] ); then
           nodepool_message="$tab Upgrade nodepool to the version that supports Containerd"

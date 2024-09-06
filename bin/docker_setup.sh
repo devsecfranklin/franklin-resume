@@ -15,4 +15,3 @@ sudo chgrp docker /usr/libexec/docker/
 sudo chmod g+w /usr/libexec/docker
 #export DOCKER_CONFIG="~/.docker/cli-plugins"
 chmod +x ${DOCKER_CONFIG}/cli-plugins/docker-compose
-
