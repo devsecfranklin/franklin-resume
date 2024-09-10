@@ -1,0 +1,24 @@
+## setup
+
+- allow ICMP by setting the tag on the VM page in gcloud console by adding the "allow-icmp" network tag
+- set ingress FW rule on TRUST
+- set ingress FW rule on UNTRUST to point to 10.236.20.25 (cloud nat IP/defaul GW of UNTRUST subnet)
+
+## Connect
+
+gcloud compute ssh --zone=us-central1-f lab-franklin-test-vm
+
+sudo apt -y install bind9-dnsutils whois
+nslookup github.com
+sudo route add -host 140.82.112.4 gw 10.236.20.18
+sudo route add -host 140.82.113.3 gw 10.236.20.18
+sudo route add -host 140.82.114.4 gw 10.236.20.18
+
+fdiaz_paloaltonetworks_com@lab-franklin-test-vm:~$ netstat -nr | grep 140
+140.82.113.3    10.236.20.18    255.255.255.255 UGH       0 0          0 ens5
+
+
+sudo ip address add  10.236.20.18/29 dev ens5
+sudo ip address del  10.236.20.18/32 dev ens5
+sudo route del net 10.236.20.16 gw 0.0.0.0
+sudo route del net 10.236.20.16 gw 10.236.20.17

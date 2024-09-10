@@ -7,4 +7,4 @@ black==24.3.0
 mdformat
 pre-commit
 pdoc3
-pre-commit-update 
+pre-commit-update

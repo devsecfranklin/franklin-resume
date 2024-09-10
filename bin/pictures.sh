@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Date: 01/20/2023
+# franklin@dead10c5.org
+
 # copy in the pictures
 
 # /mnt/passport/Pictures
@@ -23,3 +26,7 @@ awk -F/ '{print tolower($NF)}' $file |
 # show number of suspected dupes
 
 # change file permissions to 644
+
+# convert picture file extensions to lower case
+find . -name '*.*' -exec sh -c 'a=$(echo "$0" | sed -r "s/([^.]*)\$/\L\1/"); [ "$a" != "$0" ] && mv "$0" "$a" ' {} \;
+#rename 's/\.([^.]+)$/.\L$1/' *

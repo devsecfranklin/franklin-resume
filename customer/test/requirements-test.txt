@@ -1,5 +1,0 @@
-black
-isort
-mdformat
-pre-commit
-pdoc3

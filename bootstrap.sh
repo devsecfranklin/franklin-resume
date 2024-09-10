@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: © 2022-2024 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -211,7 +211,7 @@ function run_autoconf() {
 function check_installed() {
   if ! command -v ${1} &>/dev/null; then
     echo "${1} could not be found"
-    exit
+    exit 1
   fi
 }
 

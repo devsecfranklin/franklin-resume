@@ -14,7 +14,6 @@ AC_CONFIG_COMMANDS([franklin-build],
  [mypkgname=$PACKAGE_NAME])
 AC_CONFIG_FILES([
  Makefile
- customer/Makefile
  docker/Makefile
  docker/kerberos-containers/kdc-server/Makefile
  docker/kerberos-containers/kdc-ssh-server/Makefile

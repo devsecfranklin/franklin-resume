@@ -9,8 +9,7 @@ clean:
         	config.status configure configure~ libtool Makefile Makefile.in po\
 			docker/cloudbot/Makefile docker/cloudbot/Makefile.in\
         	customer/Makefile customer/Makefile.in docker/rhel8/Makefile.in docker/rhel8/Makefile\
-			docker/Makefile docker/Makefile.in _test;
-	do \
+			docker/Makefile docker/Makefile.in _test;do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\
