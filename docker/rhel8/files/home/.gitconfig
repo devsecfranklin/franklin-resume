@@ -1,0 +1,15 @@
+[user]
+# Please adapt and uncomment the following lines:
+name = Franklin
+email = fdiaz@paloaltonetworks.com
+signingkey = 0EEA5B5E29145D73
+
+[gpg]
+program = /usr/bin/gpg
+
+[init]
+defaultBranch = main
+[url "git@github.com:"]
+        insteadOf = https://github.com/
+[url "git@gitlab.com:"]
+        insteadOf = https://gitlab.com/

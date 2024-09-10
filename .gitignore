@@ -28,7 +28,7 @@ ansible_collections
 .cache
 #  may contain gcloud files
 .config
-.gitconfig
+# .gitconfig # this just has my email address in it
 .local
 # .netrc contains secrets for service tokens
 .netrc

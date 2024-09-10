@@ -77,3 +77,18 @@ Use the [Azure Public Cloud plugin compatibility matrix](https://docs.paloaltone
 - After configuring the agent, make sure to [Authenticate the Agent and the Cloud Identity Engine](https://docs.paloaltonetworks.com/content/techdocs/en_US/cloud-identity/cloud-identity-engine-getting-started/choose-directory-type/configure-an-on-premises-directory/authenticate-cloud-identity-agent-and-the-cloud-identity-engine.html#id17CKFM00EIA) to enable communication between the agent and the Cloud Identity Engine.
 
 - For a comprehensive user identity and authentication solution, learn how to [Authenticate Users with the Cloud Identity Engine](https://docs.paloaltonetworks.com/content/techdocs/en_US/cloud-identity/cloud-identity-engine-getting-started/authenticate-users-with-the-cloud-identity-engine.html#id05626c4b-2f90-47b4-b9f4-c72fce41de02)
+
+```sh
+show device-certificate status
+request license info # Check that the SaaS Security Inline license is present and Valid.
+show cloud-appid connection-to-cloud  
+traceroute host kcs.ace.tpcloud.paloaltonetworks.com
+show netstat numeric-hosts yes numeric-ports yes | match 34.120.110.215
+show log system subtype equal app-cloud-engine direction equal backward
+debug cloud-appid reset connection-to-cloud
+show ctd-agent status security-client
+traceroute host ace.hawkeye.services-edge.paloaltonetworks.com
+show netstat numeric-hosts yes numeric-ports yes | match 34.111.222.75 # Where 34.11.222.75 would be the IP address of the Content Cloud server resolved by the DNS server in previous step
+show log system subtype equal ctd-agent-connection direction equal backward
+debug software restart process ctd-agent # Restarting ctd-agent will reset the connection between Firewall DP and the Content Cloud server.
+```

@@ -216,9 +216,10 @@ function check_installed() {
 }
 
 function install_macos() {
-  echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
+  #declare -a Packages=("ac")
   declare -a Packages=("git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
 
+  echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
   brew update
 
   for i in ${Packages[@]}; do
@@ -229,8 +230,9 @@ function install_macos() {
       brew install ${i}
     fi
   done
-  $HOME/homebrew/bin/gcloud components update
-  brew cleanup
+
+  echo -e "${CYAN}Updating Google gcloud for MacOS (this may take a while...)${NC}"
+  (yes || true) |  $HOME/homebrew/bin/gcloud components update 
 
   if [ ! -f "./config.status" ]; then
     echo -e "${CYAN}Running libtool/autoconf/automake...${NC}"
@@ -238,12 +240,23 @@ function install_macos() {
     aclocal -I config
     autoreconf -i
     automake -a -c --add-missing
-    #brew install az
   else
     echo -e "${CYAN}Your system is already configured. (Delete config.status to reconfigure)${NC}"
     ./config.status
   fi
   echo -e "${CYAN}HINT: now type \"./configure\"${NC}"
+
+  # https://github.com/kreuzwerker/m1-terraform-provider-helper/blob/main/README.md
+  brew install kreuzwerker/taps/m1-terraform-provider-helper
+  brew tap hashicorp/tap
+  brew install hashicorp/tap/terraform
+  m1-terraform-provider-helper activate
+  #m1-terraform-provider-helper install hashicorp/template -v v2.2.0 # DEPRECATED
+  #terraform providers lock -platform=darwin_arm64
+  #terraform providers lock -platform=linux_amd64
+
+  echo -e "${CYAN}Running brew cleanup...${NC}"
+  brew cleanup
 }
 
 function install_debian() {
@@ -305,7 +318,6 @@ function redhat() {
   if [ ! -f "./config.status" ]; then
     # libtoolize
     if [ ! -d "aclocal" ]; then mkdir aclocal; fi
-    mkdir aclocal
     #aclocal -I config
     run_aclocal
     autoreconf -i
@@ -375,7 +387,6 @@ function main() {
   if [ ! -f "./config.status" ]; then
     # libtoolize
     if [ ! -d "aclocal" ]; then mkdir aclocal; fi
-    mkdir aclocal
     #aclocal -I config
     run_aclocal
     autoreconf -i
