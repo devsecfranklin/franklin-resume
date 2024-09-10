@@ -42,17 +42,18 @@ resource "google_compute_subnetwork" "gke-subnet" {
   from your subnetwork's primary IP range. If using a shared VPC network
   (a network from another GCP project) using an explicit secondary range is
   required.
-  */
+
   secondary_ip_range = [
-    {
-      ip_cidr_range = "10.12.0.0/16"
-      range_name    = "gke-lab-franklin-gke-pods-f23f12d3"
-    },
-    {
-      ip_cidr_range = "10.13.0.0/22"
-      range_name    = "gke-lab-franklin-gke-services-f23f12d3"
-    },
+  {
+    ip_cidr_range = "10.12.0.0/16"
+    range_name    = "gke-lab-franklin-gke-pods-f23f12d3"
+  },
+  {
+    ip_cidr_range = "10.13.0.0/22"
+    range_name    = "gke-lab-franklin-gke-services-f23f12d3"
+  },
   ]
+    */
 }
 
 /*

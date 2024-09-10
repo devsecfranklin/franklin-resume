@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function install_packages {
   sudo apt get install neopfetch moonmoji npm direnv automake

@@ -1,21 +1,11 @@
-#!/bin/bash -
-#===============================================================================
+#!/usr/bin/env bash
 #
-#          FILE: git_cleanup.sh
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
-#         USAGE: ./git_cleanup.sh
-#
-#   DESCRIPTION:
-#
-#       OPTIONS: ---
-#  REQUIREMENTS: ---
-#          BUGS: ---
-#         NOTES: ---
-#        AUTHOR: Franklin (),
-#  ORGANIZATION:
-#       CREATED: 02/06/2021 13:17
-#      REVISION:  ---
-#===============================================================================
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# v0.1 02/06/2021 franklin@dead10c5.org
+
 set -o nounset # Treat unset variables as an error
 
 #Black        0;30     Dark Gray     1;30

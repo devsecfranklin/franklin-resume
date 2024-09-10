@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: © 2022-2024 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -13,6 +13,7 @@
 # v0.5 11/16/2022 Handle Docker container builds
 # v0.6 07/13/2023 Add required_files and OpenBSD support
 # v0.7 04/22/2024 More OpenBSD support
+# v0.8 09/06/2024 Support GCP Linux
 
 set -euo pipefail
 
@@ -210,7 +211,7 @@ function run_autoconf() {
 function check_installed() {
   if ! command -v ${1} &>/dev/null; then
     echo "${1} could not be found"
-    exit
+    exit 1
   fi
 }
 
@@ -250,7 +251,7 @@ function install_debian() {
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
-    echo "Upgrading container packages"
+    echo -e "${LBLUE}Upgrading container packages${NC}"
     apt-get update && apt-get upgrade -y
   fi
 
@@ -287,7 +288,7 @@ function install_az_cli() {
   # Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
   # sudo apt-get update
   # sudo apt-get install azure-cli
-  pass
+  echo " "
 }
 
 function debian() {

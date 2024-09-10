@@ -1,1 +1,1 @@
-../../docs/ctfd.md
+../../docs/markdown/ctfd.md

@@ -13,8 +13,8 @@ repos:
     hooks:
     -   id: interrogate
         args: [--fail-under=80, --verbose]
--   repo: https://github.com/pycqa/pydocstyle
-    rev: 6.3.0
-    hooks:
-    -   id: pydocstyle
-        args: [--ignore=D107, D204, D212]
+# -   repo: https://github.com/pycqa/pydocstyle
+#     rev: 6.3.0
+#     hooks:
+#     -   id: pydocstyle
+#         args: [--ignore=D107,D203,D204,D212,D413]

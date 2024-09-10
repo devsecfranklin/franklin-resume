@@ -15,3 +15,23 @@
     force_apt_get: false
     update_cache: true
   tags: admin
+
+# sudo apt-get --purge wolfram-engine libreoffice* scratch -y
+- name: 'Remove extra junk paclages'
+  ansible.builtin.apt:
+    purge: true
+    package: [
+      'libreoffice-l10n*']
+    state: absent
+  tags: admin
+
+- name: Remove useless packages from the cache
+  ansible.builtin.apt:
+    autoclean: true
+  tags: admin
+
+- name: Remove dependencies that are no longer required
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  tags: admin

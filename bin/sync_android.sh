@@ -1,9 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
-# Date: 01/20/2023
-# devsecfranklin@duck.com
+# v0.1 01/20/2023 franklin@dead10c5.org
 
-#set -eu
+set -eu
 
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31
@@ -23,7 +26,8 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-BASE_DIR="/var/run/user/$(id -u)/gvfs/mtp:host=SAMSUNG_SAMSUNG_Android_R5CR50W2HYL/Internal\ storage"
+BASE_DIR="/var/run/user/9001/gvfs/mtp:host=SAMSUNG_SAMSUNG_Android_R5CW72QACHT/Internal\ storage"
+#BASE_DIR="/var/run/user/$(id -u)/gvfs/mtp:host=SAMSUNG_SAMSUNG_Android_R5CR50W2HYL/Internal\ storage"
 declare -a TARGET_DIRS=("/home/franklin/Pictures/Phone/Download" "/home/franklin/Pictures/Phone/Pictures" "/home/franklin/Pictures/Phone/DCIM/Camera" "/home/franklin/Pictures/Phone/DCIM/Screenshots" "/home/franklin/Videos/Phone/DCIM/Camera" "/home/franklin/Videos/Phone/DCIM/Videocaptures" "/home/franklin/Videos/Phone/Movies")
 
 function create_target_dirs() {
@@ -40,7 +44,7 @@ function copy_music() {
   echo -e "${LGREEN}Copying Music - START${NC}\n"
   # Copy Internal storage/Music to ${HOME}/Music
   eval ls "${BASE_DIR}/Music"
-  eval cp "${BASE_DIR}/Music/*" /home/franklin/Music
+  eval cp -R "${BASE_DIR}/Music/*" /home/franklin/Music
   echo -e "\n${LGREEN}Copying Music - COMPLETE${NC}\n"
 }
 
@@ -53,7 +57,7 @@ function copy_pictures() {
 
   # copy DCIM/Screenshots .jpg files
   eval ls "${BASE_DIR}/DCIM/Screenshots/*"
-  eval cp "${BASE_DIR}/DCIM/Screenshots/*" /home/franklin/Pictures/Phone/DCIM/Screenshots
+  eval cp -R "${BASE_DIR}/DCIM/Screenshots/*" /home/franklin/Pictures/Phone/DCIM/Screenshots
 
   # copy /Internal storage/Pictures .jpg .gif and sub folders
   eval ls "${BASE_DIR}/Pictures/*"
