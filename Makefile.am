@@ -9,7 +9,7 @@ clean:
         	config.status configure configure~ libtool Makefile Makefile.in po\
 			docker/cloudbot/Makefile docker/cloudbot/Makefile.in\
         	customer/Makefile customer/Makefile.in docker/rhel8/Makefile.in docker/rhel8/Makefile\
-			docker/Makefile docker/Makefile.in _test;do \
+			docker/Makefile docker/Makefile.in _test NEWS;do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\
@@ -34,6 +34,5 @@ test:
 		_test/bin/python -m pip install --upgrade pip; \
 		_test/bin/python -m pip install -rtest/requirements-test.txt; \
 		_test/bin/python -m pip install -rtest/requirements-security.txt; \
-		_test/bin/python -m pip install -rcustomer/test/requirements-test.txt; \
 	)
 	@echo "Found Python version $(PY39)"

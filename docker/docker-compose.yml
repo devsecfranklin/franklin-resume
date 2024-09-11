@@ -1,10 +1,9 @@
-version: '3'
 services:
   mmmbot:
     image: mmmbot
     build:
       context: ..
-      dockerfile: docker/Dockerfile.hanson
+      dockerfile: docker/hanson/Dockerfile
     container_name: hanson
     volumes:
       - ./src/hanson:/workspaces/hanson
