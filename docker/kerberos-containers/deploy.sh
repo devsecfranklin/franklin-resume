@@ -30,7 +30,7 @@ ns="kerberos"
 
 function namespace() {
     kubectl get po -n ${ns} | grep 'Running\|Completed'
-    
+
     # below command to check the pods that are failed,terminated, error etc.
     kubectl get po -n ${ns} | grep -v Running | grep -v Completed
 }
@@ -38,22 +38,22 @@ function namespace() {
 function main() {
 
     # prepare the namespace
-    namespace 
+    namespace
 
     kubectl create deployment kdc-server --image=ghcr.io/devsecfranklin/kdc-server:latest -n ${ns}
-    
+
     # scale to 3 replicas
     kubectl scale deployment kdc-server --replicas=3 -n ${ns}
-    
+
     # Create a HorizontalPodAutoscaler resource for your Deployment.
     kubectl autoscale deployment kdc-server --cpu-percent=80 --min=1 --max=5 -n ${ns}
-    
+
     kubectl expose deployment kdc-server --name=kdc-server-svc --type=LoadBalancer --port 749 -n ${ns}
     kubectl expose deployment kdc-server --name=kdc-server-svc --type=LoadBalancer --port 88 --protocol=UDP -n ${ns}
-    
+
     # show the external IP of the new service
     echo -e "${CYAN}Sleeping for 60 seconds to allow public IP assignment${NC}"
-    
+
     sleep 60
     kubectl get service -n ${ns} kdc-server-svc
 }
