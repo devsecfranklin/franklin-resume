@@ -282,6 +282,11 @@ function install_debian() {
       fi
     fi
   done
+
+  if check_installed dircolors && [ ! -f "~/.dircolors" ]; then
+    dircolors -b > ~/.dircolors
+  fi
+
 }
 
 function install_az_cli() {
