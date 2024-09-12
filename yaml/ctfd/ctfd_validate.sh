@@ -1,1 +1,0 @@
-../../bin/ctfd_validate.sh

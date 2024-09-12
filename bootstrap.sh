@@ -15,7 +15,7 @@
 # v0.7 04/22/2024 More OpenBSD support
 # v0.8 09/06/2024 Support GCP Linux
 
-set -euo pipefail
+#set -euo pipefail
 
 # The special shell variable IFS determines how Bash
 # recognizes word boundaries while splitting a sequence of character strings.
@@ -232,7 +232,7 @@ function install_macos() {
   done
 
   echo -e "${CYAN}Updating Google gcloud for MacOS (this may take a while...)${NC}"
-  (yes || true) |  $HOME/homebrew/bin/gcloud components update 
+  (yes || true) | $HOME/homebrew/bin/gcloud components update
 
   if [ ! -f "./config.status" ]; then
     echo -e "${CYAN}Running libtool/autoconf/automake...${NC}"
@@ -269,7 +269,7 @@ function install_debian() {
   fi
 
   for i in ${Packages[@]}; do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i} | grep "install ok installed") &>/dev/null
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i} | grep "${i} installed") &>/dev/null
     echo -e "${LBLUE}Status ${i}: ${PKG_OK}${NC}"
     if [ "" = "${PKG_OK}" ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
@@ -284,7 +284,8 @@ function install_debian() {
   done
 
   if check_installed dircolors && [ ! -f "~/.dircolors" ]; then
-    dircolors -b > ~/.dircolors
+    dircolors -p >~/.dircolors
+    echo -e "${LBLUE}Updating the dircolors configuration.${NC}"
   fi
 
 }

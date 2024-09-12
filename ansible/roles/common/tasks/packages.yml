@@ -2,13 +2,15 @@
 - name: "install common packages"
   ansible.builtin.apt:
     pkg:
-      - pass
+      - build-essential
+      - coreutils
+      - gawk
       - git
+      - neofetch
+      - pass
       - python3-pip
       - tightvncserver
-      - neofetch
-      - gawk
-      - build-essential
+
     state: latest
     autoclean: true
     autoremove: true

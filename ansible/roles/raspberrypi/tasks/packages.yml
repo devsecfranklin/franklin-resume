@@ -50,6 +50,7 @@
     package: [
       'wolfram-engine',
       'scratch',
+      'cups',
       'bluej',
       'greenfoot',
       'nodered',

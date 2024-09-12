@@ -79,7 +79,7 @@ spec:
               - key: env
                 operator: In
                 values:
-                - dev-node 
+                - dev-node
       containers:
       - image: nginx:1.17
         imagePullPolicy: ""

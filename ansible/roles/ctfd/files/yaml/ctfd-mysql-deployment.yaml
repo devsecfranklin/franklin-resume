@@ -47,7 +47,7 @@ spec:
               - key: env
                 operator: In
                 values:
-                - dev-node 
+                - dev-node
       containers:
       - args:
         - mysqld

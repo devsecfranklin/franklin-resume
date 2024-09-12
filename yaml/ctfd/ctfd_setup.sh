@@ -1,1 +1,0 @@
-../../bin/ctfd_setup.sh

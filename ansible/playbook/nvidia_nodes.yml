@@ -8,11 +8,9 @@
     - python
     - nfs
     - common
-    - cluster
     - dns
     - ldap
     - kerberos
     - ssh
   environment:
     DEBIAN_FRONTEND: noninteractive
-

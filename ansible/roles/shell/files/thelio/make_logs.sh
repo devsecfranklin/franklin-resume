@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 
 echo "Creating Logs"
 mkdir -p ~/system76/apt
@@ -23,5 +28,3 @@ upower -d > ~/system76/upower
 [ -f /usr/bin/sensors ] && sensors > ~/system76/sensors.log
 tar cvzf ~/system76-log.tgz ~/system76/
 rm -rf ~/system76/
-
-

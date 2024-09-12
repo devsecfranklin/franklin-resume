@@ -272,12 +272,29 @@ function verify_disk() {
   XML_RESPONSE=$(${CURL_COMMAND} "https://${PANORAMA_IP}/api?type=op&cmd=<show><system><disk-space></disk-space></system></show>&key=${XML_API_KEY}")
   echo ${XML_RESPONSE} >${XML_OUTPUT_FILE}
   echo ${XML_RESPONSE} >>${RAW_OUTPUT}
+
 }
 
 function verify_logging() {
   # check for last traffic logs received on primary and secondary Panorama
   # check if logs are being written
   # https://docs.paloaltonetworks.com/strata-logging-service/administration/planning/ports-and-fqdns
+
+  # watch vldmgr process
+  # tail follow yes mp-log vld-1-0.log
+  # tail follow yes mp-log vld-2-0.log
+
+  # show system disk-space
+
+  # less mp-log vldmgr.log
+  # less mp-log logd.log
+  # less mp-log configd.log | match Error
+
+  # show logging-status all
+  # show system software status | match "elasticsearch\|es-"
+  # show system raid detail
+  # debug log-collector log-collection-stats show incoming-logs
+  # request log-fwd-ctrl device 010108010490 action start-from-lastack
 
   echo -e "\n------------------------ ${LGREEN}Check logging on Panorama: ${LCYAN}${PANORAMA_IP}${NC} ------------------------\n" | tee -a "${RAW_OUTPUT}"
 
