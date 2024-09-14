@@ -40,9 +40,13 @@ NC='\033[0m' # No Color
 
 # --- Some config Variables ----------------------------------------
 DATA_DIR="/tmp/palo/data"
-DOCS_DIR="/tmp/palo/data"
+DOCS_DIR="/tmp/palo/docs"
+HTML_DIR="${DOCS_DIR}/html"
+LATEX_DIR="${DOCS_DIR}/latex/customer"
 LOGGING_DIR="/tmp/palo/log"
+MARKDOWN_DIR="${DOCS_DIR}/markdown"
 MY_DATE=$(date '+%Y-%m-%d-%H')
+PDF_DIR="${DOCS_DIR}/pdf"
 RAW_OUTPUT="${LOGGING_DIR}/generate_pdf_docs_${MY_DATE}.txt" # log file name
 
 function directory_setup() {
@@ -69,31 +73,36 @@ function directory_setup() {
   echo -e "${LGREEN}Doc build directory is: ${LCYAN}${DOCS_DIR}${NC}" | tee -a "${RAW_OUTPUT}"
 }
 
-function generate_customer_pdf() {
-  echo "Generate the PDF documentation for this project"
-  if [ ! -d "docs/pdf" ]; then
-    echo -e "${LRED}Did not find documentation directory: ${LCYAN}docs/pdf${NC}"
-    exit 1
-  fi
-  if [ ! -d "${DOCS_DIR}/pdf" ]; then mkdir -p ${DOCS_DIR}/pdf; fi
-  pandoc --toc -f markdown-implicit_figures docs/markdown/customer.md -t pdf -o docs/pdf/customer.pdf
-  cp docs/pdf/customer.pdf ${DOCS_DIR}/pdf
+function markdown() {
+  echo -e "${CYAN}Copy markdown files.${NC}"
+  if [ ! -d "${MARKDOWN_DIR}" ]; then mkdir -p ${MARKDOWN_DIR}; fi
+  cp -Rp docs/markdown ${DOCS_DIR} # copy the whole markdown folder to tmp
+  cp ${MARKDOWN_DIR}/customer.md ${MARKDOWN_DIR}/customer_fixed.md
+  sed -i -e "s/docs\/images\/customer//g" ${MARKDOWN_DIR}/customer_fixed.md # fix image directory from markdown
 }
 
 function generate_html() {
-  if [ ! -d "/tmp/palo/docs/html" ]; then mkdir -p /tmp/palo/docs/html; fi
-  #echo "Generate the HTML documentation for this project"
-  pandoc docs/markdown/customer.md -s -o /tmp/palo/docs/html/customer.html
+  echo -e "${CYAN}Generate the HTML documentation for this project.${NC}"
+  if [ ! -d "${HTML_DIR}" ]; then mkdir -p ${HTML_DIR}; fi
+  pandoc ${MARKDOWN_DIR}/customer.md -s -o ${HTML_DIR}/customer.html
 }
 
 function generate_latex() {
-  echo "Generate the LaTeX documentation for this project"
-  LATEX_DIR="${DOCS_DIR}/latex/customer"
-  if [ ! -d "${LATEX_DIR}/images/" ]; then mkdir -p ${LATEX_DIR}/images; fi
+  echo -e "${CYAN}Generate the LaTeX documentation for this project${NC}"
+  if [ ! -d "${LATEX_DIR}/images/" ]; then mkdir -p ${LATEX_DIR}/images; fi # check latex and image dir in one shot
+  cp -Rp docs/latex/customer/*.tex ${LATEX_DIR}
   cp -Rp docs/images/customer/*.png ${LATEX_DIR}/images
-  pandoc --toc -f markdown-implicit_figures -t latex docs/markdown/customer.md -o ${LATEX_DIR}/customer_pre.tex
-  cat docs/latex/customer/header.tex docs/latex/customer/customer_pre.tex docs/latex/customer/footer.tex >${LATEX_DIR}/customer.tex
-  sed -i -e "s/includegraphics{docs\/customer\/images/includegraphics{\/tmp\/palo\/docs\/latex\/customer\/images/g" ${LATEX_DIR}/customer.tex # fix image directory
+  pandoc --toc -f markdown-implicit_figures -t latex ${MARKDOWN_DIR}/customer_fixed.md -o ${LATEX_DIR}/customer_pre.tex
+  cat ${LATEX_DIR}/header.tex ${LATEX_DIR}/customer_pre.tex ${LATEX_DIR}/footer.tex >${LATEX_DIR}/customer.tex
+
+}
+
+function generate_customer_pdf() {
+  echo -e "${CYAN}Generate the PDF documentation for this project${NC}"
+  if [ ! -d "docs/pdf" ]; then echo -e "${LRED}Did not find documentation directory: ${LCYAN}docs/pdf${NC}" && exit 1; fi
+  if [ ! -d "${PDF_DIR}" ]; then mkdir -p ${PDF_DIR}; fi
+  pandoc --toc -f markdown-implicit_figures ${MARKDOWN_DIR}/customer.md -t pdf -o ${PDF_DIR}/customer.pdf
+  cp -r ${PDF_DIR}/customer.pdf docs/pdf/customer.pdf # copy the results back to repo
 }
 
 function main() {
@@ -103,9 +112,12 @@ function main() {
   fi
 
   directory_setup
-  generate_customer_pdf
+  markdown
   generate_html
   generate_latex
+  generate_customer_pdf
+
 }
 
 main "@"
+

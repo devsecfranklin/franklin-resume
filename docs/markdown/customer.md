@@ -244,25 +244,25 @@ CentOS / RHEL 7: Install GCC (C and C++ Compiler) and Development Tools - nixCra
 
 ### GCP Production
 
-![gcp-prod](docs/images/diagram1-GCP-PROD.png)
+![gcp-prod](docs/images/customer/diagram1-GCP-PROD.png)
 
 ### GCP Testnet
 
-![gcp-test](docs/images/diagram1-GCP-TESTNET.png)
+![gcp-test](docs/images/customer/diagram1-GCP-TESTNET.png)
 
 ### SSO Testing in GCP
 
-![gcp-sand](docs/images/diagram1-sandbox.png)
+![gcp-sand](docs/images/customer/diagram1-sandbox.png)
 
 ## PROD and TESTNET
 
 ### New Jersey
 
-![prod-newjersey](docs/images/diagram1-New\ Jersey.png)
+![prod-newjersey](docs/images/customer/diagram1-New\ Jersey.png)
 
 ### Georgia
 
-![prod-georgia](docs/images/diagram1-Georgia.png)
+![prod-georgia](docs/images/customer/diagram1-Georgia.png)
 
 ## Github
 
@@ -288,7 +288,7 @@ show device-certificate info
 
 ## Logging
 
-![an image showing the logging infra](docs/images/diagram1-logging.png "Logging Infrastructure")
+![an image showing the logging infra](docs/images/customer/diagram1-logging.png "Logging Infrastructure")
 
 ### QRadar
 

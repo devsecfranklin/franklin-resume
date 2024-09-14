@@ -260,7 +260,7 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=("make" "gcc" "git" "automake" "libtool" "doxygen" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  declare -a Packages=( "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -269,9 +269,7 @@ function install_debian() {
   fi
 
   for i in ${Packages[@]}; do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i} | grep "${i} installed") &>/dev/null
-    echo -e "${LBLUE}Status ${i}: ${PKG_OK}${NC}"
-    if [ "" = "${PKG_OK}" ]; then
+    if [ $(dpkg-query -W -f='${Status}' ${i} 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
 
       # If we are in a container there is no sudo in Debian
@@ -307,7 +305,7 @@ function install_az_cli() {
   # Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
   # sudo apt-get update
   # sudo apt-get install azure-cli
-  echo " "
+  echo "" #pass
 }
 
 function debian() {
@@ -391,6 +389,7 @@ function main() {
   fi
 
   if [ ! -f "./config.status" ]; then
+    echo "no config.status"
     # libtoolize
     if [ ! -d "aclocal" ]; then mkdir aclocal; fi
     #aclocal -I config
