@@ -1,6 +1,11 @@
 CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
+check: DOCKER-exists
+PYTHON-exists: ; @which python > /dev/null
+mytarget: check
+.PHONY: check PYTHON-exists
+
 clean:
 	rm -rf _build *.egg-info
 	find . -name '*.pyc' | xargs rm -rf
@@ -15,7 +20,9 @@ clean:
 			rm -rf $$trash ;\
 		fi ; \
 	done
+if HAS_DOCKER
 	docker system prune -f
+endif
 
 python:
 	@$(PY39) -m venv _build

@@ -210,8 +210,11 @@ function run_autoconf() {
 
 function check_installed() {
   if ! command -v ${1} &>/dev/null; then
-    echo "${1} could not be found"
-    exit 1
+    echo -e "${LRED}${1} could not be found${NC}"
+    return 1
+  else
+    echo -e "${LPURP}Found command: ${1}${NC}"
+    return 0
   fi
 }
 
@@ -260,7 +263,7 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=( "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  declare -a Packages=("libxml2-utils" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -271,7 +274,6 @@ function install_debian() {
   for i in ${Packages[@]}; do
     if [ $(dpkg-query -W -f='${Status}' ${i} 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
-
       # If we are in a container there is no sudo in Debian
       if [ "${CONTAINER}" = true ]; then
         apt-get --yes install ${i}
@@ -339,7 +341,7 @@ function install_redhat() {
   yum -y --disableplugin=subscription-manager update
   dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
-  declare -a Packages=("make" "automake" "autoconf" "libtool")
+  declare -a Packages=("make" "automake" "autoconf" "libtool" "texlive")
   for i in ${Packages[@]}; do
     dnf install -y ${i} --skip-broken
   done

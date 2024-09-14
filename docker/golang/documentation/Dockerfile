@@ -33,6 +33,4 @@ RUN apk add --no-cache \
 #        && cd ${GOPATH}/pkg/mod/github.com/accurics/terrascan* \
 #        && CGO_ENABLED=0 GO111MODULE=on go build -o ${GOROOT}/bin/terrascan cmd/terrascan/main.go
 
-HEALTHCHECK --interval=5m --timeout=3s \
-  #CMD echo "Dont forget to do the thing."
-  CMD curl -f http://0.0.0.0:8080/ || exit 1
+RUN bin/generate_docs.sh

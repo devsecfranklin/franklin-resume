@@ -29,11 +29,14 @@ PY39="python$PYTHON_VERSION" # define the python interpreter
 dnl LDFLAGS="$LDFLAGS -l$PY39"
 AC_SUBST(PY39, python$PYTHON_VERSION)
 
-AC_CHECK_PROG(HAVE_NODE, [node], [node])
+AC_CHECK_PROG(HAVE_NODE, [node], [found], [not-found])
 test -z "$HAVE_NODE"     && AC_MSG_ERROR([Could not find node.js. Please make sure you have it installed])
 
 AC_CHECK_PROG( [HAS_CURL], [curl], [found], [not-found])
 test -z "$HAS_CURL"     && AC_MSG_ERROR([Could not find curl. Please make sure you have it installed.])
+
+AC_CHECK_PROG( [HAS_DOCKER], [docker], [found], [not-found])
+test -z "$HAS_DOCKER"     && AC_MSG_ERROR([Could not find docker installed. This is OK for testing.])
 
 AC_CHECK_PROG( [HAS_GPG], [gpg], [found], [not-found])
 AC_CHECK_PROG( [HAS_XMLLINT], [xmllint], [found], [not-found])
@@ -86,5 +89,6 @@ esac
 AM_CONDITIONAL([LINUX], [test "$build_linux" = "yes"])
 AM_CONDITIONAL([WINDOWS], [test "$build_windows" = "yes"])
 AM_CONDITIONAL([OSX], [test "$build_mac" = "yes"])
+AM_CONDITIONAL(HAS_DOCKER, [test "docker" = "found"])
 
 AC_OUTPUT

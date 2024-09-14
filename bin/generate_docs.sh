@@ -60,14 +60,13 @@ function directory_setup() {
   echo -e "${LGREEN}Log file path is: ${LCYAN}${RAW_OUTPUT}${NC}" | tee -a "${RAW_OUTPUT}"
 
   if [ ! -d "${DATA_DIR}" ]; then
-    echo -e "${LRED}Did not find data dir: ${LCYAN}${DATA_DIR}${NC}"
-    #DATA_DIR="."
+    echo -e "${LRED}Did not find data dir, creating: ${LCYAN}${DATA_DIR}${NC}"
     mkdir -p ${DATA_DIR}
   fi
   echo -e "${LGREEN}Data directory is: ${LCYAN}${DATA_DIR}${NC}" | tee -a "${RAW_OUTPUT}"
 
   if [ ! -d "${DOCS_DIR}" ]; then
-    echo -e "${LRED}Did not find documentation directory: ${LCYAN}${DOCS_DIR}${NC}"
+    echo -e "${LRED}Did not find documentation directory, creating: ${LCYAN}${DOCS_DIR}${NC}"
     mkdir -p ${DOCS_DIR}
   fi
   echo -e "${LGREEN}Doc build directory is: ${LCYAN}${DOCS_DIR}${NC}" | tee -a "${RAW_OUTPUT}"
@@ -84,7 +83,12 @@ function markdown() {
 function generate_html() {
   echo -e "${CYAN}Generate the HTML documentation for this project.${NC}"
   if [ ! -d "${HTML_DIR}" ]; then mkdir -p ${HTML_DIR}; fi
-  pandoc ${MARKDOWN_DIR}/customer.md -s -o ${HTML_DIR}/customer.html
+  if check_installed pandoc; then
+    echo -e "${CYAN}Running pandoc to generate PDF.${NC}"
+    pandoc ${MARKDOWN_DIR}/customer.md -s -o ${HTML_DIR}/customer.html
+  else
+    echo -e "${YELLOW}Unable to generate PDF from markdown files. Is pandoc installed?${NC}"
+  fi
 }
 
 function generate_latex() {
@@ -92,17 +96,46 @@ function generate_latex() {
   if [ ! -d "${LATEX_DIR}/images/" ]; then mkdir -p ${LATEX_DIR}/images; fi # check latex and image dir in one shot
   cp -Rp docs/latex/customer/*.tex ${LATEX_DIR}
   cp -Rp docs/images/customer/*.png ${LATEX_DIR}/images
-  pandoc --toc -f markdown-implicit_figures -t latex ${MARKDOWN_DIR}/customer_fixed.md -o ${LATEX_DIR}/customer_pre.tex
-  cat ${LATEX_DIR}/header.tex ${LATEX_DIR}/customer_pre.tex ${LATEX_DIR}/footer.tex >${LATEX_DIR}/customer.tex
-
+  if check_installed pandoc; then
+    echo -e "${CYAN}Running pandoc to generate PDF.${NC}"
+    pandoc --toc -f markdown-implicit_figures -t latex ${MARKDOWN_DIR}/customer_fixed.md -o ${LATEX_DIR}/customer_pre.tex
+    cat ${LATEX_DIR}/header.tex ${LATEX_DIR}/customer_pre.tex ${LATEX_DIR}/footer.tex >${LATEX_DIR}/customer.tex
+  else
+    echo -e "${YELLOW}Unable to generate PDF from markdown files. Is pandoc installed?${NC}"
+  fi
 }
 
 function generate_customer_pdf() {
-  echo -e "${CYAN}Generate the PDF documentation for this project${NC}"
+  echo -e "${CYAN}Generate the PDF documentation for this project.${NC}"
+
   if [ ! -d "docs/pdf" ]; then echo -e "${LRED}Did not find documentation directory: ${LCYAN}docs/pdf${NC}" && exit 1; fi
   if [ ! -d "${PDF_DIR}" ]; then mkdir -p ${PDF_DIR}; fi
-  pandoc --toc -f markdown-implicit_figures ${MARKDOWN_DIR}/customer.md -t pdf -o ${PDF_DIR}/customer.pdf
-  cp -r ${PDF_DIR}/customer.pdf docs/pdf/customer.pdf # copy the results back to repo
+
+  if check_installed pandoc; then
+    echo -e "${CYAN}Running pandoc to generate PDF.${NC}"
+    pandoc --toc -f markdown-implicit_figures ${MARKDOWN_DIR}/customer.md -t pdf -o ${PDF_DIR}/customer_pandoc.pdf
+  else
+    echo -e "${YELLOW}Unable to generate PDF from markdown files. Is pandoc installed?${NC}"
+  fi
+
+  if check_installed latexmk; then
+    latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape customer
+    echo -e "${LBLUE}Running latexmk to generate PDF.${NC}"
+  else
+    echo -e "${YELLOW}Unable to generate PDF from LaTeX files. Is latexmk installed?${NC}"
+  fi
+
+  if [ -f "${PDF_DIR}/customer.pdf" ]; then cp -r ${PDF_DIR}/customer.pdf docs/pdf/customer.pdf; fi # copy the results back to repo
+}
+
+function check_installed() {
+  if ! command -v ${1} &>/dev/null; then
+    echo -e "${LRED}${1} could not be found${NC}"
+    return 1
+  else
+    echo -e "${LPURP}Found command: ${1}${NC}"
+    return 0
+  fi
 }
 
 function main() {
@@ -120,4 +153,3 @@ function main() {
 }
 
 main "@"
-

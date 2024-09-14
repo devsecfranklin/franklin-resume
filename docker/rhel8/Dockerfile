@@ -37,7 +37,8 @@ RUN subscription-manager register --username ${RHEL_USER} --password ${RHEL_PASS
   && subscription-manager refresh \
   && subscription-manager attach --auto
 
-RUN yum -y install make git gnupg2 postfix \
+########## DEVELOPMENT TOOLS ##########
+RUN yum -y install make git gnupg2 xmlstarlet \
     && yum clean all; \
     curl -sfL https://direnv.net/install.sh | bash; \
     cd /tmp && git clone https://git.zx2c4.com/password-store \
@@ -45,18 +46,24 @@ RUN yum -y install make git gnupg2 postfix \
     dnf install -y python3.11 python3.11-pip; \
     yum update -y ca-certificates
 
-# Terraform
+########## Terraform ##########
 RUN yum install -y yum-utils; \
     yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo; \
     yum -y install terraform
 
-# Update Cron
-#RUN dnf install -y crond && chkconfig crond on
+# Update Cron and Email
+#RUN dnf install -y crond; \
+#  yum install -y postfix
+#  chkconfig crond on
 
 RUN cd ${APP_ROOT} \
   && make clean \
-  && ${APP_ROOT}/bootstrap.sh \
-  && bin/generate_docs.sh
+  && ${APP_ROOT}/bootstrap.sh
+
+########## DOCUMENTATION ##########
+# RUN wget https://github.com/jgm/pandoc/releases/latest -O /tmp/pandoc.tgz; \
+#   tar zxvf /tmp/pandoc.tgz --strip-components 1 -C /usr/local/; \
+#   bin/generate_docs.sh
 
 # USER 9001
 VOLUME ${APP_ROOT}/logs ${APP_ROOT}/data
