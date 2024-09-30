@@ -6,6 +6,12 @@ Common files and stuff for all architectures.
 
 * /mnt/clusterfs has to be mounted
 
+## OpenMPI
+
+```sh
+wget https://download.open-mpi.org/release/open-mpi/v5.0/openmpi-5.0.5.tar.bz2
+```
+
 ## Auks
 
 * [AUKS repo](https://github.com/cea-hpc/auks)

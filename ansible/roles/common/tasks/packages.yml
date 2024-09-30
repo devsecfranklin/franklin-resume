@@ -19,7 +19,7 @@
   tags: admin
 
 # sudo apt-get --purge wolfram-engine libreoffice* scratch -y
-- name: 'Remove extra junk paclages'
+- name: 'Remove extra junk packages'
   ansible.builtin.apt:
     purge: true
     package: [

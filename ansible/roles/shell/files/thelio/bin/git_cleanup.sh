@@ -32,7 +32,7 @@ function check_if_root {
   if [[ `id -u` -eq 0 ]]; then echo -e "${RED}Do not run his script as root.${NC}" && exit 1; fi
 }
 
-function check_repo { 
+function check_repo {
   if [ ! -d "./.git" ]; then
     echo -e "${RED}ERROR: ${YELLOW}Run script from top level of your Git repo${NC}"
     exit 1

@@ -1,4 +1,14 @@
 ---
+- name: "Create {{ software_dir }}"
+  ansible.builtin.file:
+    path: '{{ software_dir }}'
+    owner: '{{ engr_user }}'
+    group: '{{ engr_group }}'
+    state: directory
+  when:
+    - "'node' in inventory_hostname"
+    - "'head' in inventory_hostname"
+
 - name: "Setup munge"
   ansible.builtin.include_tasks: munge.yml
 

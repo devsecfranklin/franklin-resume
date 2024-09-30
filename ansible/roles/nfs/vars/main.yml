@@ -1,6 +1,13 @@
+---
 ldap_ip_addr: 10.10.13.1
 basedn: dc=lab,dc=bitsmasher,dc=net
 krb5_server_ip: 10.10.12.254
 krb5_realm: LAB.BITSMASHER.NET
 min_id_sssd: 10000
 max_id_sssd: 20000
+
+software_dir: /opt/software/bin
+engr_user: operator
+engr_group: engr
+engr_uid: 37
+engr_gid: 9001

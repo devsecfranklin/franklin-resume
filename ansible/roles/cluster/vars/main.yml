@@ -10,3 +10,9 @@ auks__packages_names:
     - automake
     - zlib1g-dev
 nhc_build_dir: /tmp/nhc
+
+software_dir: /opt/software
+engr_user: operator
+engr_group: engr
+engr_uid: 37
+engr_gid: 9001

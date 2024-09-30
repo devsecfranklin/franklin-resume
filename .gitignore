@@ -5,8 +5,10 @@ __pycache__
 *_check_results_*.txt
 *.bkp
 .cloudflare.ini
+*.deb
 .env
 .tox/
+*.zip
 
 key
 cred.json

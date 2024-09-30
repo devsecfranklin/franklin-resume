@@ -1,15 +1,31 @@
 ---
-- name: "Install packages"
-  ansible.builtin.include_tasks: packages.yml
+- name: "Install Debian packages"
+  ansible.builtin.include_tasks: packages-debian.yml
+  when:
+  - ansible_facts['distribution'] == "Debian"
 
-- name: Install timezone information
+- name: "Install timezone information"
   ansible.builtin.package:
     name: tzdata
     state: present
+  when:
+  - ansible_facts['distribution'] == "Debian"
 
-- name: Set timezone to {{ ntp_timezone }}
-  community.general.timezone:
-    name: "{{ ntp_timezone }}"
-      
-- name: "Setup NTP"
-  ansible.builtin.include_tasks: ntp.yml
+# - name: "Set timezone to {{ ntp_timezone }}"
+#   community.general.timezone:
+#     name: "{{ ntp_timezone }}"
+
+- name: "Configure /etc/{{ ntp_configuration_file }}"
+  ansible.builtin.template:
+    src: "{{ ntp_configuration_file }}.j2"
+    dest: /etc/{{ ntp_configuration_file }}
+    mode: "0644"
+  notify:
+    - Restart ntp
+  when: HOMELAB_MOLECULE_TEST is not defined
+
+- name: "Manage {{ ntp_service }}"
+  ansible.builtin.service:
+    name: "{{ ntp_service }}"
+    state: "{{ ntp_state }}"
+    enabled: "{{ ntp_enabled }}"

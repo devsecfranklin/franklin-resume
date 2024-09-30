@@ -4,14 +4,17 @@
 
 ## Setup
 
-```sh
+```bash
 export ANSIBLE_ROLES_PATH="${PWD}/roles" # from Ansible directory
 ansible-galaxy install -r collections/requirements.yml --ignore-errors
 sudo apt install -y ansible sshpass
 if [ ! -d "/etc/ansible" ]; then
   sudo mkdir /etc/ansible
 fi
+# ansible-config init --disabled > ansible.cfg # generate a default config
 sudo cp ansible.cfg hosts /etc/ansible
+sudo ln -s $PWD/roles /etc/ansible/roles
+sudo ln -s $PWD/group_vars /etc/ansible/group_vars
 ```
 
 ```fish
@@ -43,7 +46,7 @@ ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspa
 ```sh
 ansible raspi_nodes -a 'apt update' -b -i ./hosts
 ansible raspi_nodes -a 'apt -y upgrade' -b -i ./hosts
-ansible-playbook playbook/playbook.yml -i ./hosts -b 
+ansible-playbook playbook/playbook.yml -i ./hosts -b
 ```
 
 ## Palo Alto Firewall

@@ -1,13 +1,13 @@
 ---
 - name: "Configure security on cluster nodes"
   ansible.builtin.include_tasks: security.yml
-  when: 
+  when:
   - ansible_facts['distribution'] == "Debian"
   - ansible_facts['architecture'] == "aarch64"
   - "'node' in inventory_hostname"
 
 - name: Install packages
-  ansible.builtin.include_tasks: debian_packages.yml
+  ansible.builtin.include_tasks: packages-debian.yml
   when:
   - ansible_facts['distribution'] == "Debian"
 

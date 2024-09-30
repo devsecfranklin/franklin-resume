@@ -7,4 +7,3 @@
 route add -net 10.10.8.0/21 gw 10.0.0.70
 
 #route delete -net 10.10.8.0/21
-

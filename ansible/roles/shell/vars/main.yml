@@ -1,0 +1,9 @@
+---
+software_dir: /opt/software
+
+engr_user: operator
+engr_group: engr
+engr_uid: 37
+engr_gid: 9001
+
+ssh_dir: .ssh

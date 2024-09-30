@@ -1,13 +1,14 @@
 ---
-- name: "Install LDAP and SASL dependency packages on LDAP server"
+- name: "Install NTP packages"
   ansible.builtin.apt:
     name:
       - ntp
       - tzdata
+      - systemd-timesyncd
     force_apt_get: true
     update_cache: true
   tags:
     - ntp
     - timezone
-  when: 
+  when:
   - ansible_facts['distribution'] == "Debian"

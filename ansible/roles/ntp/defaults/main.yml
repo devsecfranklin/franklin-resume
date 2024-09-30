@@ -1,6 +1,4 @@
 ---
-# defaults file for ntp
-
 # The state of the NTP service.
 ntp_state: started
 
@@ -24,5 +22,4 @@ ntp_pool:
 #     options:
 #       - iburst
 
-# The timezone.
-ntp_timezone: America/Denver
+ntp_timezone: "America/Denver"
