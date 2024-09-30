@@ -5,6 +5,9 @@
 
 ## Install
 
+* add the `RHEL_PASS` and `RHEL_USER` vars to the github action.
+  * `pass show red-hat-container`
+
 ### Debian 12 Bookworm
 
 * [Install Docker Engine on Debian](https://docs.docker.com/engine/install/debian/)
