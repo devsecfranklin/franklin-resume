@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+dynamic = ["version"]
+name = "spam-eggs"
+readme = "README.md"
+requires-python = ">=3.8, <4"
+authors = [
+    { name = "franklin", email = "franklin@dead10c5.org" },
+]
+
+[project.urls]
+Homepage = "https://github.com/devsecfranklin/lab-franklin"
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "pytest",
+]
+dev = [
+]
+
+[tool.hatch.version]
+path = "src/cloudbot/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src",
+]

@@ -2,8 +2,8 @@
 
 FROM registry.access.redhat.com/ubi8/ubi:latest
 
-LABEL org.opencontainers.image.authors="Franklin Diaz <fdiaz@paloaltonetworks.com>" \
-      org.opencontainers.image.source="https://github.com/devsecfranklin/customer" \
+LABEL org.opencontainers.image.authors="franklin <fdiaz@paloaltonetworks.com>" \
+      org.opencontainers.image.source="https://github.com/devsecfranklin/lab-franklin/docker/rhel8" \
       org.opencontainers.image.description="customer project" \
       org.opencontainers.image.licenses=MIT
 

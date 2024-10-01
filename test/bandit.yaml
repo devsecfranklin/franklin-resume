@@ -92,7 +92,9 @@ exclude_dirs:
 
 # (optional) list skipped test IDs here, eg '[B101, B406]':
 # B320 and B410 have been fixed in lxml but we should switch to defusedxml just in case.
-skips: [ 'B101', 'B105', 'B108', 'B311', 'B320', 'B410', 'B501' ]
+# B301 and B403 are issues with pickle in the music tools
+# B311 is in the music cog for the bot
+skips: [ 'B101', 'B105', 'B108', 'B301', 'B311', 'B320', 'B403', 'B501' ]
 
 ### (optional) plugin settings - some test plugins require configuration data
 ### that may be given here, per-plugin. All bandit test plugins have a built in
@@ -402,4 +404,3 @@ weak_cryptographic_key:
   weak_key_size_ec_medium: 224
   weak_key_size_rsa_high: 1024
   weak_key_size_rsa_medium: 2048
-

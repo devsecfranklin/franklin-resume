@@ -1,1 +1,3 @@
-"""GCP Cloud Function - Github Events Listener."""
+"""Testing."""
+
+__version__ = "0.1"
