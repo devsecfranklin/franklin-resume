@@ -263,7 +263,7 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=("libxml2-utils" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  declare -a Packages=("libxml2-utils" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then

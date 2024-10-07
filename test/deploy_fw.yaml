@@ -1,0 +1,19 @@
+fw1:
+  FW_NAME: "lab-franklin-gcp-two"
+  UNTRUST_SUBNET: lab-franklin-untrust
+  MGMT_SUBNET: ps-devsecops-mgmt
+  TRUST_SUBNET: lab-franklin-trust
+  FW_ZONE: us-central1-a
+  DISK:
+    SIZE: 60GB
+    TYPE: pd-ssd
+  INSTANCE:
+    PROJECT: paloaltonetworksgcp-public
+    TYPE: n2-standard-4
+  IMAGE: vmseries-flex-byol-1023
+  TAGS: lab-franklin,allow-icmp,http-server,https-server
+  PANORAMA1: 192.168.0.3
+  PANORAMA2: 192.168.0.4
+  TEMPLATE: STK-Google
+  DEVICEGROUP: DG-google-lab
+  DNS: 8.8.4.4
