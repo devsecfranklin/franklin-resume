@@ -2,9 +2,28 @@
 
 Deploy a Palo FW to Google Cloud
 
-## Example YAML file
+1. Prepare the AUTH key from the Panorama.
+2. Edit the YAML file. You can also create a new YAML file if you update the variable in the tool.
+3. Run the tool. You will see output as below.
 
-Be sure to remove the comments before you use this.
+* NOTE: You cannot use the new type SSH keys, `id_ed25519.pub` for example does not work with Palo FW yet. Be sure the public SSH key is correct or you will have to tear it down and start over.
+* NOTE: You must be sure the names of the STACK and DEVICE GROUP are correct, and exist on the target Panorama.
+
+```sh
+Generate auth key from Panorama CLI like so: request bootstrap vm-auth-key generate lifetime 8760
+Enter your auth key:
+asdf
+Deploying firewall: fw8
+Created [https://www.googleapis.com/compute/v1/projects/project/zones/us-central1-a/instances/lab-franklin-gcp-eight].
+NAME                    ZONE           MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP                             EXTERNAL_IP                  STATUS
+lab-franklin-gcp-eight  us-central1-a  n2-standard-4               10.2.20.29,92.18.0.6,10.2.2.1  35.202.2.227,34.2.21.1  RUNNING
+(_test) sa_116805149644468504027@lab-franklin-airlock1:~/workspace/lab-franklin/test$
+```
+
+## Original YAML file
+
+* This is saved here for historical purposes.
+* Be sure to remove the comments before you use this.
 
 ```yaml
 fw1:

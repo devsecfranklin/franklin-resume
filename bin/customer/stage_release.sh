@@ -348,7 +348,7 @@ function main() {
   MY_FILE=''
   verbose='false'
 
-  logging # log related setup
+  directory_setup # log related setup
 
   while getopts 'hf:ipr:tu:v' flag; do
     case "${flag}" in
