@@ -45,6 +45,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # --- Some config Variables ----------------------------------------
+declare -a fw_names
 declare -A my_arr
 DATA_DIR="/tmp/palo/data"
 LOGGING_DIR="/tmp/palo/log"
@@ -104,7 +105,7 @@ function parse_yaml {
       fi
       i=$((i+1))
     done)
-    echo $doo_doo
+    echo ${doo_doo} # this line is needed so we can capture the output from the child process
 }
 
 function deploy_firewall() {
@@ -117,7 +118,7 @@ function deploy_firewall() {
     --network-interface subnet=${my_arr["UNTRUST_SUBNET"]},address \
     --network-interface subnet=${my_arr["MGMT_SUBNET"]},address \
     --network-interface subnet=${my_arr["TRUST_SUBNET"]},no-address \
-    --image-project=$${my_arr["INSTANCE_PROJECT"]} \
+    --image-project=${my_arr["INSTANCE_PROJECT"]} \
     --image=${my_arr["IMAGE"]} \
     --maintenance-policy=MIGRATE \
     --can-ip-forward \
@@ -144,11 +145,20 @@ function test_array() {
 }
 
 function main() {
-  directory_setup
+  directory_setup # the logging directory
+
+  # load the YAML file
   if [ ! -f "${YAML_FILE}" ]; then
     echo -e "${LRED}Unable to find YAML file: ${YAML_FILE}${NC}" | tee -a "${RAW_OUTPUT}"
     exit 1
   else
+    if ! command -v yamllint 2>&1 >/dev/null; then
+      echo -e "${LRED}yamllint could not be found, skipping YAML validation${NC}" | tee -a "${RAW_OUTPUT}"
+    else
+      echo -e "${LGREEN}Validating YAML file: ${LCYAN}${YAML_FILE}${NC}" | tee -a "${RAW_OUTPUT}"
+      yamllint ${YAML_FILE}
+    fi
+    echo -e "${LGREEN}Loading YAML file: ${LCYAN}${YAML_FILE}${NC}" | tee -a "${RAW_OUTPUT}"
     result=$(parse_yaml ${YAML_FILE})
   fi
 
@@ -157,21 +167,30 @@ function main() {
     fixed=$(echo ${first} | cut -f1 -d" " | cut -f1 -d":" ) # trailing colon?
     printf -v key "$fixed"
     val=$(echo $first | cut -f2 -d" ")
-    eval my_arr["$key"]+="${val}"
+    if [ "${key}:" != "$val" ];
+    then
+       eval my_arr["$key"]+="${val}"
+    else
+      echo -e "${LGREEN}Found firewall: ${LCYAN}${key}${NC}"
+      if [ "${key}:" != "DISK:" ] && [ "${key}:" != "INSTANCE:" ];
+      then
+        eval fw_names+=("${key}")
+      fi
+    fi
   done < ${YAML_FILE}
 
-  #test_array
+  #test_array # validate the YAML file
 
   # example auth key: 2:9KD16LjLR_OSGlJKUAU0Mq3uSVu1k0K1pfLkNCZ9zLCkPl-Oe7m64WzQtXLswbcGVMyorgc_5CO3mO5w8FKx8g
-  echo "Generate auth key from Panorama CLI like so: request bootstrap vm-auth-key generate lifetime 8760" | tee -a "${RAW_OUTPUT}"
-  read -p "Enter your auth key: "
-
+  echo -e "${LGREEN}Generate auth key from Panorama CLI like so: ${LPURP}request bootstrap vm-auth-key generate lifetime 8760${NC}" | tee -a "${RAW_OUTPUT}"
+  echo -e "${LGREEN}Enter your auth key: ${NC}"
+  read -p ""
+echo ${fw_names[*]}
   # add check to be sure subnets exist
 
-  exit 0
-  for key in "${FW_NAMES[@]}"; do
-    FW_NAME="${key}"
-    echo "Deploying firewall: ${FW_NAME}" | tee -a "${RAW_OUTPUT}"
+  for k in "${fw_names[@]}"; do
+    echo -e "${YELLOW}Deploying firewall: ${k}${NC}" | tee -a "${RAW_OUTPUT}"
+    FW_NAME="${k}"
     deploy_firewall
   done
 }
