@@ -58,7 +58,8 @@ RUN yum install -y yum-utils; \
 
 RUN cd ${APP_ROOT} \
   && make clean \
-  && ${APP_ROOT}/bootstrap.sh
+  && ${APP_ROOT}/bootstrap.sh \
+  && make test
 
 ########## DOCUMENTATION ##########
 # RUN wget https://github.com/jgm/pandoc/releases/latest -O /tmp/pandoc.tgz; \

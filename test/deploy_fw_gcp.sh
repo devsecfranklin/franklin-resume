@@ -152,7 +152,6 @@ function deploy_firewall() {
 }
 
 function test_array() {
-
   # check to make sure the fields all exist in the YAML
   declare -a my_fields=( "KEY" )
   for i in "${!my_arr[@]}"

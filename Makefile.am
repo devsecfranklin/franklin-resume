@@ -41,7 +41,7 @@ test:
 		_test/bin/python -m pip install --upgrade pip; \
 		_test/bin/python -m pip install -rtest/requirements-test.txt; \
 		_test/bin/python -m pip install -rtest/requirements-security.txt; \
-		bandit -c test/bandit.yaml -r .; \
-		shellcheck test/deploy_fw_gcp.sh; \
+		./bootstrap.sh \
 	)
 	@echo "Found Python version $(PY39)"
+
