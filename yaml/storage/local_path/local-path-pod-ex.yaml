@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: local-path-test
+  namespace: storage
+spec:
+  containers:
+    - name: local-path-test
+      image: nginx:stable-alpine
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: local-path-pvc
+          mountPath: /data
+      ports:
+        - containerPort: 80
+  volumes:
+    - name: local-path-pvc
+      persistentVolumeClaim:
+        claimName: local-path-pvc

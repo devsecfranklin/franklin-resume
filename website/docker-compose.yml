@@ -1,0 +1,10 @@
+version: '3'
+services:
+  website:
+    image: website
+    build:
+      context: ..
+      dockerfile: website/Dockerfile
+    container_name: website
+    volumes:
+      - ./src/website:/workspaces/website
