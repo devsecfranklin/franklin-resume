@@ -248,7 +248,7 @@ EOF
       echo -e "${LGREEN}Found firewall: ${LCYAN}${key}${NC}"
       if [ "${key}:" != "DISK:" ] && [ "${key}:" != "INSTANCE:" ];
       then
-        eval fw_names+=("${key}")
+        eval fw_names+="${key}"
       fi
     fi
   done < ${YAML_FILE}

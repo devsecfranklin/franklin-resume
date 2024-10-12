@@ -24,11 +24,12 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-ETC_DIR="/etc/ansible"
+#ETC_DIR="/etc/ansible"
+PLAYBOOK_DIR="collections/ansible_collections/lab/franklin/playbooks"
 WORKDIR="/home/franklin/workspace/LAB/lab-home/ansible"
 
 function directories() {
-  # /etc/ansible/group_vars -> /home/franklin/workspace/LAB/lab-franklin/ansible/group_vars
+  # ${ETC_DIR}/group_vars -> /home/franklin/workspace/LAB/lab-franklin/ansible/group_vars
   # /etc/ansible/roles -> /home/franklin/workspace/LAB/lab-franklin/ansible/roles
   # /etc/ansible/hosts -> /home/franklin/workspace/LAB/lab-franklin/ansible/hosts
   pass
@@ -43,31 +44,31 @@ echo -e "|_.__/|_|\__|___/_| |_| |_|\__,_|___/_| |_|\___|_|(_)_| |_|\___|\__|${N
 
 # Debian: snowy
 echo -e "${CYAN}RUNNING DEBIAN PLAYBOOK${ID}${NC}"
-ansible-playbook playbook/debian.yml -i ${WORKDIR}/hosts -b
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/debian.yml" -i "${WORKDIR}/hosts" -b
 
 # storage1
 echo -e "${CYAN}RUNNING STORAGE PLAYBOOK${ID}${NC}"
-ansible-playbook playbook/storage.yml -i ${WORKDIR}/hosts -b
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/storage.yml" -i "${WORKDIR}/hosts" -b
 
 # server1 server2 server3
 echo -e "${CYAN}RUNNING SERVER PLAYBOOK${ID}${NC}"
-ansible-playbook playbook/servers.yml -i ${WORKDIR}/hosts -b -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/servers.yml" -i "${WORKDIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
 
 # node0 node1 node2 node3
 echo -e "${CYAN}RUNNING RASPI CLUSTER PLAYBOOK${ID}${NC}"
-ansible-playbook playbook/raspi_nodes.yml -i ${WORKDIR}/hosts -b -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/raspi_nodes.yml" -i "${WORKDIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
 
 # node900 node901 node902 node903
 echo -e "${CYAN}RUNNING NVIDIA CLUSTER PLAYBOOK${ID}${NC}"
-ansible-playbook playbook/nvidia_nodes.yml -i ${WORKDIR}/hosts -b
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/nvidia_nodes.yml" -i "${WORKDIR}/hosts" -b
 
 # openbsd
 echo -e "${CYAN}RUNNING OPENBSD PLAYBOOK${NC}"
-ansible-playbook playbook/openbsd.yml -i ${WORKDIR}/hosts -b
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/openbsd.yml" -i "${WORKDIR}/hosts" -b
 
 # odroid-c1
 echo -e "${CYAN}RUNNING UBUNTU PLAYBOOK${ID}${NC}"
-ansible-playbook playbook/ubuntu.yml -i ${WORKDIR}/hosts -b
+ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/ubuntu.yml" -i "${WORKDIR}/hosts" -b
 }
 
 main "$@"

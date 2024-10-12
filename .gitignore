@@ -1,5 +1,6 @@
 _build/
 _test/
+_security/
 __pycache__
 .buildlog
 *_check_results_*.txt
@@ -18,7 +19,9 @@ ansible/venv_molecule/
 ansible/roles/firewall/vars/firewall-secrets.yml
 ansible/roles/firewall/vars/panorama-secrets.yml
 ansible/roles/paloaltonetworks.paloaltonetworks
-ansible_collections
+ansible/collections/ansible_collections/ansible
+ansible/collections/ansible_collections/community
+aansible/collections/ansible_collections/paloaltonetworks
 
 
 # This is a minimal list, OK to add things per repo

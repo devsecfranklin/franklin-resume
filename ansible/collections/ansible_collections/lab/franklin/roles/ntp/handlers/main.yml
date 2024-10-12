@@ -1,0 +1,12 @@
+---
+# - name: Restart openntpd
+#   service:
+#     name: "{{ openntpd_service }}"
+#     state: restarted
+
+- name: Restart ntp
+  ansible.builtin.service:
+    name: "{{ ntp_service }}"
+    state: restarted
+  when:
+    - ntp_state == "started"

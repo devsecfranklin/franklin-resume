@@ -1,7 +1,0 @@
----
-- name: 'Install Kerberos Server Packages'
-  apt:
-    package: [ 'krb5-kdc', 'krb5-admin-server', 'krb5-pkinit', 'krb5-kpropd' ]
-    state: latest
-  tags: admin
-

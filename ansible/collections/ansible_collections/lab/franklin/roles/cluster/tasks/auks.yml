@@ -1,0 +1,51 @@
+---
+- name: "install auks dependency packages"
+  ansible.builtin.apt:
+    name:
+      - git
+      - flex
+      - bison
+      - byacc
+      - autoconf
+      - automake
+      - zlib1g-dev
+      - libkrb5-dev
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - cluster
+
+# this one uses the file vars/Debian.yml
+# - name: "Install auks packages"
+#   package:
+#     name: "{{ auks__packages_names|list }}"
+#     state: present
+
+- name: 'Clone the auks repo'
+  ansible.builtin.git:
+   repo: https://github.com/cea-hpc/auks.git
+   dest: '{{ auks_build_dir }}'
+
+- name: "autoreconf AUKS"
+  ansible.builtin.command: autoreconf -fi
+  args:
+    chdir: '{{ auks_build_dir }}'
+
+- name: "configure AUKS"
+  ansible.builtin.command: ./configure
+  args:
+    chdir: '{{ auks_build_dir }}'
+
+- name: "Build the default AUKS target"
+  community.general.make:
+    chdir: '{{ auks_build_dir }}'
+
+- name: "Make install AUKS"
+  community.general.make:
+    chdir: '{{ auks_build_dir }}'
+    target: install
+
+- name: 'add /usr/local/lib to /etc/ld.so.conf'
+  lineinfile:
+    path: /etc/ld.so.conf
+    line: '/usr/local/lib'

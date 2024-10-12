@@ -1,0 +1,13 @@
+---
+- name: "Create ~/.ssh folder"
+  ansible.builtin.file:
+    path: "/root/.ssh"
+    owner: "root"
+    mode: 0700
+    state: directory
+
+- name: 'Copy ssh authorized_keys'
+  ansible.builtin.copy:
+    src: authorized_keys
+    dest: /root/.ssh/authorized_keys
+    mode: 0644

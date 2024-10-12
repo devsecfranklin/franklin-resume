@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include acme.security"
-      include_role:
-        name: "acme.security"

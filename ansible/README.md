@@ -1,13 +1,62 @@
 # Ansible
 
-## Set up Ansible Server
+## AUTHENTICATION
 
-## Setup
+* The kerberos tickets work but it is flaky. So we still use SSH too.
+* Use Kerberos auth with my own user instead of "pi" user.
 
 ```bash
+ssh-agent bash && ssh-add ~/.ssh/id_ed25519
+kinit -f franklin # generate a forwardable ticket
+make test
+. _test/bin/activate
+```
+
+## Set up Ansible Server
+
+The recommended approach to install molecule is using the ansible-dev-tools package.
+Ansible Development Tools aims to streamline the setup and usage of several tools
+needed in order to create Ansible content. It combines critical Ansible development
+packages into a unified Python package.
+
+```sh
+# This also installs ansible-core if it is not already installed
+pip3 install ansible-dev-tools
+#python3 -m pip install molecule ansible-core
+```
+
+Molecule does not include ansible-lint (nor does the lint extra), but is easily installed separately:
+
+```sh
+python3 -m pip install molecule ansible-lint
+#python3 -m pip install -U git+https://github.com/ansible-community/molecule
+```
+
+Molecule uses the \"delegated\" driver by default. Other drivers can be installed
+separately from PyPI, most of them being included in molecule-plugins package. If you
+would like to use podman as the molecule driver, the installation command would look like
+this:
+
+```sh
+python3 -m pip install "molecule-plugins[podman]"
+```
+
+If you upgrade molecule from previous versions, make sure to remove previously installed
+drivers like for instance molecule-podman or molecule-vagrant since those are now available
+in the molecule-plugins package.
+
+Installing molecule package also installed its main script molecule, usually in PATH. Users
+should know that molecule can also be called as a python module, using python3 -m molecule ....
+This alternative method has some benefits:
+
+* allows to explicitly control which Python interpreter is used by molecule
+* allows molecule installation at the user level without even needing to have the script in PATH.
+
+```bash
+make test
 export ANSIBLE_ROLES_PATH="${PWD}/roles" # from Ansible directory
 ansible-galaxy install -r collections/requirements.yml --ignore-errors
-sudo apt install -y ansible sshpass
+sudo apt install -y sshpass
 if [ ! -d "/etc/ansible" ]; then
   sudo mkdir /etc/ansible
 fi
@@ -23,14 +72,70 @@ env ANSIBLE_CONFIG=/etc/ansible/ansible.cfg ansible-galaxy install -r requiremen
 env ANSIBLE_CONFIG=/etc/ansible/ansible.cfg ansible-galaxy collection install paloaltonetworks.panos
 ```
 
-## AUTHENTICATION
+### Ansible Directory Structure
 
-Use Kerberos auth with my own user instead of "pi" user.
+```sh
+production                # inventory file for production servers
+staging                   # inventory file for staging environment
 
-```bash
-ssh-agent bash
-ssh-add ~/.ssh/id_rsa
-kinit -f franklin # generate a forwardable ticket
+group_vars/
+   group1.yml             # here we assign variables to particular groups
+   group2.yml
+host_vars/
+   hostname1.yml          # here we assign variables to particular systems
+   hostname2.yml
+
+library/                  # if any custom modules, put them here (optional)
+module_utils/             # if any custom module_utils to support modules, put them here (optional)
+filter_plugins/           # if any custom filter plugins, put them here (optional)
+
+site.yml                  # master playbook
+webservers.yml            # playbook for webserver tier
+dbservers.yml             # playbook for dbserver tier
+
+roles/
+    common/               # this hierarchy represents a "role"
+        tasks/            #
+            main.yml      #  <-- tasks file can include smaller files if warranted
+        handlers/         #
+            main.yml      #  <-- handlers file
+        templates/        #  <-- files for use with the template resource
+            ntp.conf.j2   #  <------- templates end in .j2
+        files/            #
+            bar.txt       #  <-- files for use with the copy resource
+            foo.sh        #  <-- script files for use with the script resource
+        vars/             #
+            main.yml      #  <-- variables associated with this role
+        defaults/         #
+            main.yml      #  <-- default lower priority variables for this role
+        meta/             #
+            main.yml      #  <-- role dependencies
+        library/          # roles can also include custom modules
+        module_utils/     # roles can also include custom module_utils
+        lookup_plugins/   # or other types of plugins, like lookup in this case
+
+    webtier/              # same kind of structure as "common" was above, done for the webtier role
+    monitoring/           # ""
+    fooapp/               # ""
+```
+
+## Collections
+
+One of the recommended ways to create a collection is to place it under a
+collections/ansible_collections directory. If you don't put your collection into
+a directory named ansible_collections, molecule won't be able to find your role.
+
+```sh
+ansible-galaxy collection init lab.franklin # create the new collection if needed
+ANSIBLE_HOME=${PWD} sudo ansible-galaxy collection init lab.franklin -vvv
+```
+
+### Collection: Palo Alto Firewall
+
+[Examples](https://github.com/PaloAltoNetworks/ansible-pan/tree/master/examples)
+
+```sh
+ansible-playbook -i firewalls playbook/firewalls.yml --ask-vault-pass -e 'ansible_python_interpreter=/usr/bin/python3'
 ```
 
 ## Operation
@@ -47,14 +152,6 @@ ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspa
 ansible raspi_nodes -a 'apt update' -b -i ./hosts
 ansible raspi_nodes -a 'apt -y upgrade' -b -i ./hosts
 ansible-playbook playbook/playbook.yml -i ./hosts -b
-```
-
-## Palo Alto Firewall
-
-[Examples](https://github.com/PaloAltoNetworks/ansible-pan/tree/master/examples)
-
-```sh
-ansible-playbook -i firewalls playbook/firewalls.yml --ask-vault-pass -e 'ansible_python_interpreter=/usr/bin/python3'
 ```
 
 ## Managing Roles

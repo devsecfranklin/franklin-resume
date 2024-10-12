@@ -1,0 +1,15 @@
+[Unit]
+Description = Route from engr to lab network
+After=sysinit.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=no
+RemainAfterExit=yes
+User=root
+WorkingDirectory=/root/bin
+ExecStart=/root/bin/routes_thelio.sh
+
+[Install]
+WantedBy=multi-user.target

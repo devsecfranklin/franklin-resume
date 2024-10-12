@@ -1,0 +1,42 @@
+---
+- name: "Create {{ apt_mirror }} folder"
+  file:
+    path: "{{ apt_mirror }}"
+    owner: "root"
+    state: directory
+    mode: 0755
+
+- name: "Create {{ apt_mirror }}/mirror folder"
+  file:
+    path: "{{ apt_mirror }}/mirror"
+    owner: "root"
+    state: directory
+    mode: 0755
+
+- name: "Copy mirror.list to /etc/apt"
+  copy:
+    src: "mirror.list"
+    dest: /etc/apt
+    mode: 0644
+
+- name: "Copy backup-mirror.list to /etc/apt"
+  copy:
+    src: "backup-mirror.list"
+    dest: /etc/apt
+    mode: 0644
+
+- name: "Create symbolic link in {{ html_dir }}"
+  file:
+    dest: "{{ html_dir }}/raspbian"
+    src: "{{ apt_mirror }}/mirror/archive.raspbian.org/raspbian"
+    state: link
+
+- name: 'Update the Raspbian apt-mirror'
+  shell: 'apt-mirror'
+  args:
+    executable: /bin/bash
+  register: apt_mirror_update
+  ignore_errors: yes
+  become: true
+  become_user: apt-mirror
+  become_method: su

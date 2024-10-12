@@ -1,0 +1,26 @@
+---
+- name: "Install SSL packages"
+  apt:
+    package:
+      [
+        "python3-openssl",
+        "libssl-dev",
+        "openssl",
+      ]
+    state: latest
+  tags: TLS
+
+- name: 'Install certificate'
+  include: ssl_client.yml
+
+- name: "Copy in site CA cert"
+  copy:
+    src: ca.crt
+    dest: "{{ cert }}"
+    mode: 0444
+
+- name: 'Copy cacert.pem in /etc/krb5'
+  copy:
+    src: ca.crt
+    dest: /etc/krb5/cacert.pem
+    mode: 0644

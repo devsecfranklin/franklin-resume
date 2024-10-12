@@ -1,0 +1,58 @@
+---
+- name: 'Install packages for NFS server'
+  ansible.builtin.apt:
+    pkg:
+      - nfs-kernel-server
+      - nfs-common
+      - rpcbind
+    state: latest
+    autoclean: true
+    autoremove: true
+    force_apt_get: false
+    update_cache: true
+  tags: admin
+
+- name: check if we are installing
+  stat:
+    path: /etc/exports
+  register: exports
+
+- name: "Check for /etc/default/nfs-kernel-server"
+  stat:
+    path: /etc/default/nfs-kernel-server
+  register: nfs_kern
+
+- name: "Copy /etc/default/nfs-kernel-server"
+  ansible.builtin.copy:
+    src: nfs-kernel-server
+    dest: /etc/default/nfs-kernel-server
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - nfs_kern.stat.exists
+
+- name: "Ensure directories to export exist"
+  ansible.builtin.file:
+    path: "{{ item.strip().split()[0] }}"
+    state: directory
+  with_items: "{{ nfs_exports }}"
+
+- name: "Copy /etc/exports file"
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart exportfs
+
+#- name: Ensure nfs is running.
+#  service: "name={{ nfs_server_daemon }} state=started enabled=yes"
+#  when: nfs_exports|length
+
+- name: "Ensure NFS is started."
+  service:
+    name: nfs-kernel-server
+    state: started
+    enabled: true

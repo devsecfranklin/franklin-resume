@@ -1,0 +1,30 @@
+---
+- name: "Install LDAP and SASL dependency packages on LDAP server"
+  ansible.builtin.apt:
+    name:
+      - sasl2-bin
+      - libsasl2-2
+      - libsasl2-modules
+      - libsasl2-modules-gssapi-mit
+      - slapd
+      - schema2ldif
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - cluster
+  when:
+  - ansible_facts['distribution'] == "Debian"
+  - ansible_facts['hostname'] == "server3"
+
+- name: 'Install LDAP Client Packages on Debian/Ubuntu'
+  ansible.builtin.apt:
+    name:
+      - ldap-utils
+      - libnss-ldap
+      - libpam-ldap
+      - nscd
+      - libsasl2-modules-gssapi-mit
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - cluster

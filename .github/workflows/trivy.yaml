@@ -9,14 +9,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build an image from Dockerfile
+      - name: Build an image from Containerfile
         env:
           RHEL_USER: '${{ secrets.RHEL_USER }}'
           RHEL_PASS: '${{ secrets.RHEL_PASS }}'
         run: |
           ./bootstrap.sh
           ./configure
-          cd docker && make rhel
+          cd container && make rhel
       # - name: Run Trivy vulnerability scanner
       #   uses: aquasecurity/trivy-action@master
       #   with:

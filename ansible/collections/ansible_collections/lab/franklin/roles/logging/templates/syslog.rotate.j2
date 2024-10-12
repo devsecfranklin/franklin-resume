@@ -1,0 +1,9 @@
+{{ logging_directory }}/{{ ansible_hostname }}.log {
+        rotate 7
+        size 500k
+        notifempty
+        compress
+        postrotate
+                invoke-rc.d rsyslog rotate > /dev/null
+        endscript
+}

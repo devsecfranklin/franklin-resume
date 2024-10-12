@@ -1,0 +1,76 @@
+# Builds community-ansible-dev-tools-container-base image which provides
+# container-in-container support and all installs all binary dependencies
+# cspell:ignore minrate,opencontainers,cffi,ruamel,subuid,subgid,workdir,chgrp,mountopt,microdnf,makecache,setcaps,pylibssh,chsh,nodev,overlayfs,libssh,markupsafe,additionalimage,USERNS
+FROM community-ansible-dev-tools-base:latest
+LABEL org.opencontainers.image.source=https://github.com/ansible/ansible-dev-tools
+LABEL org.opencontainers.image.authors="Ansible DevTools"
+LABEL org.opencontainers.image.vendor="Red Hat"
+LABEL org.opencontainers.image.licenses="GPL-3.0"
+LABEL org.opencontainers.image.description="An execution environment targeted for Ansible content creators."
+
+USER root
+
+RUN --mount=type=bind,target=. --mount=type=cache,dst=/var/cache/dnf --mount=type=cache,dst=/root/.cache/pip ./setup.sh
+
+
+ARG _REPO_URL="https://raw.githubusercontent.com/containers/image_build/main/podman"
+ADD $_REPO_URL/containers.conf /etc/containers/containers.conf
+
+RUN chmod 644 /etc/containers/containers.conf
+
+# Copy & modify the defaults to provide reference if runtime changes needed.
+# Changes here are required for running with fuse-overlay storage inside container.
+RUN sed -e 's|^#mount_program|mount_program|g' \
+              -e '/additionalimage.*/a "/var/lib/shared",' \
+              -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' \
+              /usr/share/containers/storage.conf \
+              > /etc/containers/storage.conf
+
+# Note VOLUME options must always happen after the chown call above
+# RUN commands can not modify existing volumes
+VOLUME /var/lib/containers
+
+RUN mkdir -p /var/lib/shared/overlay-images \
+                /var/lib/shared/overlay-layers \
+                /var/lib/shared/vfs-images \
+                /var/lib/shared/vfs-layers && \
+        touch /var/lib/shared/overlay-images/images.lock && \
+        touch /var/lib/shared/overlay-layers/layers.lock && \
+        touch /var/lib/shared/vfs-images/images.lock && \
+        touch /var/lib/shared/vfs-layers/layers.lock
+
+ENV _CONTAINERS_USERNS_CONFIGURED=""
+ENV ANSIBLE_DEV_TOOLS_CONTAINER=1
+ENV PIP_ROOT_USER_ACTION=ignore
+
+
+# In OpenShift, container will run as a random uid number and gid 0. Make sure things
+# are writeable by the root group.
+RUN for dir in \
+      /tmp/dist \
+      /home/runner \
+      /home/runner/.ansible \
+      /home/runner/.ansible/tmp \
+      /runner \
+      /home/runner \
+      /runner/env \
+      /runner/inventory \
+      /runner/project \
+      /runner/artifacts ; \
+    do mkdir -m 0775 -p $dir ; chmod -R g+rwx $dir ; chgrp -R root $dir ; done && \
+    for file in \
+      /home/runner/.ansible/galaxy_token \
+      /etc/passwd \
+      /etc/group ; \
+    do touch $file ; chmod g+rw $file ; chgrp root $file ; done
+
+# base ansible-dev-tools setup
+
+COPY dist/*.whl /tmp/dist
+RUN sh -ec -o pipefail "ls -1 /tmp/dist/*.whl | xargs -I '{}' python3 -m pip install --no-cache-dir '{}[server,lock]' && rm -rf /tmp/dist"
+
+RUN --mount=type=bind,target=. --mount=type=cache,dst=/var/cache/dnf --mount=type=cache,dst=/root/.cache/pip ./setup2.sh
+
+WORKDIR /workdir
+ENTRYPOINT ["/opt/builder/bin/entrypoint", "dumb-init"]
+CMD ["zsh"]

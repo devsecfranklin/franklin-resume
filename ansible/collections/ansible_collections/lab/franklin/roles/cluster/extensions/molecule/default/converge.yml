@@ -1,0 +1,13 @@
+---
+# - name: Include a playbook from a collection
+#   ansible.builtin.import_playbook: lab.franklin.cluster
+
+- name: Include a role from a collection
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Testing role
+      ansible.builtin.include_role:
+        name: lab.franklin.cluster
+        tasks_from: main.yml

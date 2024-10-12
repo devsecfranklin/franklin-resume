@@ -1,5 +1,0 @@
----
-# tasks file for beagleboard
-- name: Install packages
-  ansible.builtin.include_tasks:  packages.yml
-

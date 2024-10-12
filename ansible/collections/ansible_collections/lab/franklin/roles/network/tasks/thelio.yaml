@@ -1,0 +1,24 @@
+---
+- name: "Copy bootstrap.sh"
+  ansible.builtin.copy:
+    src: thelio.service
+    owner: "root"
+    dest: /etc/systemd/system/thelio.service
+    mode: 0644
+  when:
+    - "'thelio' in inventory_hostname"
+
+- name: "Make sure thelio service unit is running"
+  ansible.builtin.systemd_service:
+    state: started
+    name: thelio
+  when:
+    - "'thelio' in inventory_hostname"
+
+- name: "Enable service thelio and ensure it is not masked"
+  ansible.builtin.systemd_service:
+    name: thelio
+    enabled: true
+    masked: no
+  when:
+    - "'thelio' in inventory_hostname"

@@ -1,0 +1,21 @@
+---
+- name: reboot
+  reboot:
+
+- name: restart slurmd
+  service:
+    name: slurmd
+    state: restarted
+  listen: 'restart slurmd service'
+
+- name: 'restart slurmctld'
+  service:
+    name: slurmctld
+    state: restarted
+  listen: 'restart slurmctld service'
+
+- name: 'restart munge'
+  service:
+    name: munge
+    state: restarted
+  listen: 'restart munge service'

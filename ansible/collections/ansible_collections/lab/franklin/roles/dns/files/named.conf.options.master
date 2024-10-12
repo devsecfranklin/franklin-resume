@@ -1,0 +1,37 @@
+options{
+  directory "/var/cache/bind";
+
+  forward only;
+  forwarders {
+      10.10.13.1;
+      1.1.1.1;
+      8.8.4.4;
+      208.67.222.222;
+      208.67.220.220;
+  };
+
+
+  auth-nxdomain no;    # conform to RFC1035
+
+  // Listen on local interfaces only(IPV4)
+  listen-on-v6 { none; };
+  listen-on port 53 { 127.0.0.53; 10.10.12.12; };
+
+  allow-transfer { 10.10.13.1; };
+
+  #dnssec-enable yes; # option 'dnssec-enable' no longer exists
+  dnssec-validation yes;
+
+  // Accept requests for internal network only
+  allow-query { localhost; 10.0.0.0/8; };
+
+  // Allow recursive queries to the local hosts
+  recursion yes;
+};
+
+logging {
+        channel default_debug {
+                file "named.log";
+                severity dynamic;
+        };
+};

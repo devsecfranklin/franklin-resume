@@ -1,0 +1,10 @@
+---
+- name: "Include NTP role from lab.franklin collection"
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Testing role
+      ansible.builtin.include_role:
+        name: lab.franklin.ntp
+        tasks_from: main.yml

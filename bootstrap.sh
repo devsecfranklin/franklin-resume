@@ -225,17 +225,17 @@ function install_macos() {
   echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
   brew update
 
-  for i in ${Packages[@]}; do
+  for i in "${Packages[@]}"; do
     if brew list ${i} &>/dev/null; then
       echo -e "${LGREEN}${i} is already installed${NC}"
-      brew upgrade ${i}
+      brew upgrade "${i}"
     else
-      brew install ${i}
+      brew install "${i}"
     fi
   done
 
   echo -e "${CYAN}Updating Google gcloud for MacOS (this may take a while...)${NC}"
-  (yes || true) | $HOME/homebrew/bin/gcloud components update
+  (yes || true) | "${HOME}/homebrew/bin/gcloud" components update
 
   if [ ! -f "./config.status" ]; then
     echo -e "${CYAN}Running libtool/autoconf/automake...${NC}"
@@ -263,7 +263,7 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=("libxml2-utils" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  declare -a Packages=( "ansible" "libonig-dev" "tox" "sshpass" "libxml2-utils" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -271,19 +271,19 @@ function install_debian() {
     apt-get update && apt-get upgrade -y
   fi
 
-  for i in ${Packages[@]}; do
+  for i in "${Packages[@]}"; do
     if [ $(dpkg-query -W -f='${Status}' ${i} 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
       # If we are in a container there is no sudo in Debian
       if [ "${CONTAINER}" = true ]; then
-        apt-get --yes install ${i}
+        apt-get --yes install "${i}"
       else
-        sudo apt-get install ${i} -y
+        sudo apt-get install "${i}" -y
       fi
     fi
   done
 
-  if check_installed dircolors && [ ! -f "~/.dircolors" ]; then
+  if check_installed dircolors && [ ! -f "${HOME}/.dircolors" ]; then
     dircolors -p >~/.dircolors
     echo -e "${LBLUE}Updating the dircolors configuration.${NC}"
   fi
@@ -342,8 +342,8 @@ function install_redhat() {
   dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
   declare -a Packages=("make" "automake" "autoconf" "libtool" "texlive")
-  for i in ${Packages[@]}; do
-    dnf install -y ${i} --skip-broken
+  for i in "${Packages[@]}"; do
+    dnf install -y "${i}" --skip-broken
   done
 }
 
@@ -351,7 +351,7 @@ function required_files() {
   echo "Check for presence of required GNU autotools files"
   declare -a required_files=("AUTHORS" "ChangeLog" "NEWS")
 
-  for xx in ${required_files[@]}; do
+  for xx in "${required_files[@]}"; do
     #echo "check $xx"
     if [ ! -f "${xx}" ]; then
       echo -e "${LGREEN}Creating required file ${xx} since it is not found.${NC}"

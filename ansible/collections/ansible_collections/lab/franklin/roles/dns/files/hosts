@@ -1,0 +1,39 @@
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+127.0.0.1	localhost
+::1		localhost ip6-localhost ip6-loopback
+ff02::1		ip6-allnodes
+ff02::2		ip6-allrouters
+
+10.0.0.1   xfinity.engr.bitsmasher.net xfinity
+10.0.0.44  thelio.engr.bitsmasher.net thelio
+10.0.0.70  dream-machine.engr.bitsmasher.net
+10.0.0.205 femputer.engr.bitsmasher.net femputer
+
+10.10.8.1  dream-machine.lab.bitsmasher.net dream-machine
+10.10.8.3  netlab1.lab.bitsmasher.net netlab1
+10.10.8.4  netlab2.lab.bitsmasher.net netlab2
+10.10.8.11 snowy.lab.bitsmasher.net snowy
+10.10.8.12 pa220.lab.bitsmasher.net pa220
+10.10.12.0 node0.lab.bitsmasher.net node0
+10.10.12.1 node1.lab.bitsmasher.net node1
+10.10.12.2   node2.lab.bitsmasher.net node2
+10.10.12.3   node3.lab.bitsmasher.net node3
+10.10.12.4   edge-t.lab.bitsmasher.net edge-t
+10.10.12.12  server1.lab.bitsmasher.net server1
+10.10.12.13  server2.lab.bitsmasher.net server2
+10.10.12.14  storage1.lab.bitsmasher.net storage1
+10.10.12.15  blowfish.lab.bitsmasher.net blowfish
+#10.10.12.17  thelio.lab.bitsmasher.net thelio
+10.10.12.18  head1.lab.bitsmasher.net head1
+10.10.12.20  media01.lab.bitsmasher.net media1
+10.10.12.21  media02.lab.bitsmasher.net media2
+10.10.12.90  node900.lab.bitsmasher.net node900
+10.10.12.91  node901.lab.bitsmasher.net node901
+10.10.12.92  node902.lab.bitsmasher.net node902
+10.10.12.93  node903.lab.bitsmasher.net node903
+10.10.12.254 odroid-c1.lab.bitsmasher.net odroid-c1 kdc1.lab.bitsmasher.net kdc1
+10.10.13.1   server3.lab.bitsmasher.net server3
+10.10.13.10  bbb1.lab.bitsmasher.net bbb1

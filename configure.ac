@@ -14,10 +14,11 @@ AC_CONFIG_COMMANDS([franklin-build],
  [mypkgname=$PACKAGE_NAME])
 AC_CONFIG_FILES([
  Makefile
- docker/Makefile
- docker/kerberos-containers/kdc-server/Makefile
- docker/kerberos-containers/kdc-ssh-server/Makefile
- docker/kerberos-containers/ssh-container/Makefile
+ ansible/Makefile
+ container/Makefile
+ container/kerberos-containers/kdc-server/Makefile
+ container/kerberos-containers/kdc-ssh-server/Makefile
+ container/kerberos-containers/ssh-container/Makefile
  src/nodebot/Makefile
 ])
 
@@ -37,6 +38,9 @@ test -z "$HAS_CURL"     && AC_MSG_ERROR([Could not find curl. Please make sure y
 
 AC_CHECK_PROG( [HAS_DOCKER], [docker], [found], [not-found])
 test -z "$HAS_DOCKER"     && AC_MSG_ERROR([Could not find docker installed. This is OK for testing.])
+
+AC_CHECK_PROG( [HAS_ANSIBLE], [ansible], [found], [not-found])
+test -z "$HAS_ANSIBLE"     && AC_MSG_ERROR([Could not find ansible installed.])
 
 AC_CHECK_PROG( [HAS_GPG], [gpg], [found], [not-found])
 AC_CHECK_PROG( [HAS_XMLLINT], [xmllint], [found], [not-found])
