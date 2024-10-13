@@ -1,0 +1,30 @@
+---
+- name: "Converge:: test nfs_client from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: "Testing nfs_client"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_client.yml
+
+- name: "Converge:: test nfs_server from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: "Testing nfs_server"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_server.yml
+
+- name: "Converge:: test nfs_server_snowy from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: "Testing nfs_server_snowy"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_server_snowy.yml

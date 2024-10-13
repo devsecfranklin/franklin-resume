@@ -5,11 +5,9 @@ jobs:
   tfsec:
     name: tf security
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
       pull-requests: write
-
     steps:
       - name: Clone repo
         uses: actions/checkout@master

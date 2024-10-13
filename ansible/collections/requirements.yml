@@ -1,8 +1,0 @@
----
-collections:
-
-- name: paloaltonetworks.panos
-
-- name: community.general
-
-- name: ansible.posix

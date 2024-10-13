@@ -7,7 +7,7 @@ min_id_sssd: 10000
 max_id_sssd: 20000
 
 software_dir: /opt/software/bin
-engr_user: operator
+engr_user: sys
 engr_group: engr
-engr_uid: 37
+engr_uid: 3
 engr_gid: 9001

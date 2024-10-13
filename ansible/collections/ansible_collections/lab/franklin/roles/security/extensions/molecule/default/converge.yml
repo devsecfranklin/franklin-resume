@@ -7,7 +7,7 @@
   become: true
   gather_facts: false
   tasks:
-    - name: Testing role kerberos
+    - name: "Testing role security"
       ansible.builtin.include_role:
-        name: lab.franklin.kerberos
+        name: lab.franklin.security
         tasks_from: main.yml

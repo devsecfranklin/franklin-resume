@@ -1,8 +1,73 @@
 ---
+- name: Fail if molecule group is missing
+  hosts: localhost
+  tasks:
+    - name: Print some info
+      ansible.builtin.debug:
+        msg: "{{ groups }}"
+
+    - name: Assert group existence
+      ansible.builtin.assert:
+        that: "'molecule' in groups"
+        fail_msg: |
+          molecule group was not found inside inventory groups: {{ groups }}
+
 - name: Converge
-  hosts: all
+  hosts: molecule
+  # We disable gather facts because it would fail due to our container not
+  # having python installed. This will not prevent use from running 'raw'
+  # commands. Most molecule users are expected to use containers that already
+  # have python installed in order to avoid notable delays installing it.
   gather_facts: false
   tasks:
-    - name: Replace this task with one that validates your content
-      ansible.builtin.debug:
-        msg: "This is the effective test"
+    - name: Check uname
+      ansible.builtin.raw: uname -a
+      register: result
+      changed_when: false
+
+    - name: Print some info
+      ansible.builtin.assert:
+        that: result.stdout | regex_search("^Linux")
+
+- name: "Converge:: update packages"
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Update apt cache (on Debian).
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_os_family == 'Debian'
+
+# - name: Include a playbook from a collection
+#   ansible.builtin.import_playbook: lab.franklin.nfs
+
+- name: "Converge:: test nfs_client from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: "Testing nfs_client"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_client.yml
+
+- name: "Converge:: test nfs_server from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: "Testing nfs_server"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_server.yml
+
+- name: "Converge:: test nfs_server_snowy from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: "Testing nfs_server_snowy"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_server_snowy.yml

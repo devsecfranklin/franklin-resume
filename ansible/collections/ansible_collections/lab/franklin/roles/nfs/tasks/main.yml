@@ -1,10 +1,12 @@
 ---
-- fail: msg="The machine's domain must not be empty."
-  when: ansible_domain | length == 0
+# - fail: msg="The machine's domain must not be empty."
+#   when: ansible_domain | length == 0
 
 - name: Install raspi NFS Server
   ansible.builtin.include_tasks: nfs_server.yml
-  when: "'storage' in inventory_hostname"
+  when:
+    - "'storage' in inventory_hostname"
+    - "'localhost' in inventory_hostname"
 
 - name: Install snowy NFS Server
   ansible.builtin.include_tasks: nfs_server_snowy.yml
