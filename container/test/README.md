@@ -8,3 +8,7 @@
 
 * XML
 * markdown
+
+```sh
+yamllint -c .yamllintrc -f auto tasks
+```

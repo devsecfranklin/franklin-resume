@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name:
       - gfortran
+      - libpmix-dev
       - slurm-wlm
       - slurmctld
     force_apt_get: true
@@ -27,17 +28,9 @@
 #  tags: cluster
 
 - name: 'install cgroup.conf for slurm'
-  copy:
+  ansible.builtin.copy:
     src: cgroup.conf
     dest: /etc/slurm-llnl/cgroup.conf
-    mode: 0644
-  notify: "restart slurmd service"
-  tags: cluster
-
-- name: 'install cgroup_allowed_devices_file.conf for slurm'
-  copy:
-    src: cgroup_allowed_devices_file.conf
-    dest: /etc/slurm-llnl/cgroup_allowed_devices_file.conf
     mode: 0644
   notify:
     - 'restart munge service'

@@ -1,7 +1,7 @@
 ---
 - name: "Install Slurm scheduler on Raspi Cluster worker node"
   ansible.builtin.apt:
-    package: ["slurmd", "slurm-client"]
+    package: ["slurmd", "slurm-client", "libpmix-dev"]
     state: latest
   tags: cluster
 

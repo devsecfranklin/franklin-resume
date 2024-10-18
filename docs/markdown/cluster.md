@@ -32,6 +32,11 @@ as down or offline so as to prevent jobs from being scheduled or run on them.
 This helps increase the reliability and throughput of a cluster by reducing
 preventable job failures due to misconfiguration, hardware failure, etc.
 
+## Tools
+
+* `apt install pssh` # parallel shell toolkit
+
 ## References
 
 * [building a raspberry pi cluster](https://medium.com/@glmdev/building-a-raspberry-pi-cluster-784f0df9afbd)
+* [How to build a Raspberry Pi cluster](https://www.raspberrypi.com/tutorials/cluster-raspberry-pi-tutorial/)

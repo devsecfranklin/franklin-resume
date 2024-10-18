@@ -36,8 +36,8 @@ test -z "$HAVE_NODE"     && AC_MSG_ERROR([Could not find node.js. Please make su
 AC_CHECK_PROG( [HAS_CURL], [curl], [found], [not-found])
 test -z "$HAS_CURL"     && AC_MSG_ERROR([Could not find curl. Please make sure you have it installed.])
 
-AC_CHECK_PROG( [HAS_DOCKER], [docker], [found], [not-found])
-test -z "$HAS_DOCKER"     && AC_MSG_ERROR([Could not find docker installed. This is OK for testing.])
+AC_CHECK_PROG( [HAS_PODMAN], [podman], [found], [not-found])
+test -z "$HAS_PODMAN"     && AC_MSG_ERROR([Could not find podman installed. This is OK for testing.])
 
 AC_CHECK_PROG( [HAS_ANSIBLE], [ansible], [found], [not-found])
 test -z "$HAS_ANSIBLE"     && AC_MSG_ERROR([Could not find ansible installed.])

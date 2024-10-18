@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2022-2024 DE:AD:10:C5 <franklin@dead10c5.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 ###############################################################################
 #                 Sample configuration file for SLURM 18.08
 ###############################################################################
@@ -78,7 +82,7 @@ StateSaveLocation=/var/lib/slurm-llnl/slurmctld
 SwitchType=switch/none
 #TaskEpilog=
 TaskPlugin=task/affinity
-TaskPluginParam=Sched
+#TaskPluginParam=Sched
 #TaskProlog=
 #TopologyPlugin=topology/tree
 #TmpFS=/tmp
@@ -143,7 +147,7 @@ SelectTypeParameters=CR_Core
 AccountingStorageType=accounting_storage/none
 #AccountingStorageUser=
 AccountingStoreJobComment=YES
-ClusterName=nvidia.lab.bitsmasher.net
+ClusterName=bramble.lab.bitsmasher.net
 #DebugFlags=
 #JobCompHost=
 #JobCompLoc=

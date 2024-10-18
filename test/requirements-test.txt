@@ -11,3 +11,4 @@ pre-commit-update
 ansible-dev-tools
 molecule
 molecule-plugins[podman]
+podman-compose
