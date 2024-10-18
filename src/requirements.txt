@@ -1,6 +1,6 @@
 tomli==2.0.2
 gunicorn==23.0.0
-tox==4.21.2
+tox==4.23.0
 Flask==3.0.3
 Flask-Login==0.6.3
 Flask-SQLAlchemy==3.1.1
