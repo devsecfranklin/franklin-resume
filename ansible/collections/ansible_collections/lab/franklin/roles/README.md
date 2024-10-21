@@ -1,5 +1,9 @@
 # roles
 
-* To create a new role, use `molecule init role acme.ROLENAME`
-  * example: `molecule init role testko-role --driver-name podman`
-  * example: `molecule init role ipv6 --driver-name docker'
+Example of adding a new role:
+
+```sh
+ansible-galaxy role init thelio
+cd thelio && mkdir extensions && cd extensions
+molecule init scenario # create the default test files
+```

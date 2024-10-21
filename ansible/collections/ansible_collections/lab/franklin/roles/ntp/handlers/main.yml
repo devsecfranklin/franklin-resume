@@ -4,7 +4,7 @@
 #     name: "{{ openntpd_service }}"
 #     state: restarted
 
-- name: Restart ntp
+- name: Restart timesyncd
   ansible.builtin.service:
     name: "{{ ntp_service }}"
     state: restarted

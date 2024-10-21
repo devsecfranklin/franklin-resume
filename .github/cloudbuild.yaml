@@ -1,0 +1,29 @@
+# In this example I've synced a nexus image present in my Sonatype Nexus docker repo to GCP Artifact Registry using a private worker pool of Cloud Build to connect to on-prem network and Secret Manager to avoid any secret leaks during the job execution (log included)
+steps:
+
+- id: access remote docker registry
+  name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker login 10.1.0.5:5000 --username=$$USERNAME --password=$$PASSWORD']
+  secretEnv: ['USERNAME', 'PASSWORD']
+
+- id: sync repo
+  name: quay.io/skopeo/stable
+  args:
+  - sync
+  - --src=docker
+  - --src-tls-verify=false
+  - --dest=docker
+  - 10.1.0.5:5000/sonatype/nexus3:latest
+  - europe-docker.pkg.dev/$PROJECT_ID/container-registry-eu
+
+availableSecrets:
+    secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/on-prem-docker-pass/versions/latest
+      env: 'PASSWORD'
+    - versionName: projects/$PROJECT_ID/secrets/on-prem-docker-user/versions/latest
+      env: 'USERNAME'
+
+options:
+  pool:
+    name: 'projects/$PROJECT_ID/locations/europe-west1/workerPools/pool01'

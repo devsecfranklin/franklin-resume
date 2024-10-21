@@ -1,6 +1,6 @@
 $TTL    10800
 @ IN SOA server1.lab.bitsmasher.net. root.lab.bitsmasher.net (
-        2024080301 ; serial
+        2024101801 ; serial
         8H ; refresh
         4H ; retry
         4W ; expire
@@ -20,8 +20,9 @@ node0           IN A 10.10.12.0
 node1           IN A 10.10.12.1
 node2           IN A 10.10.12.2
 node3           IN A 10.10.12.3
-edge-t		IN A 10.10.12.4
-lanparty        IN A 10.10.12.7
+node4           IN A 10.10.12.4
+node5           IN A 10.10.12.5
+node6           IN A 10.10.12.6
 grimoire        IN A 10.10.12.8
 labbench        IN A 10.10.12.11
 server2      	IN A 10.10.12.13
@@ -31,6 +32,7 @@ thelio          IN A 10.10.12.17
 head1		IN A 10.10.12.18
 media01         IN A 10.10.12.20
 media02		IN A 10.10.12.21
+edge-t		IN A 10.10.12.30
 node900         IN A 10.10.12.90
 node901         IN A 10.10.12.91
 node902		IN A 10.10.12.92

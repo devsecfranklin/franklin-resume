@@ -1,8 +1,14 @@
 ---
+# - name: "Install timezone information"
+#   ansible.builtin.package:
+#     name: tzdata
+#     state: present
+#   when:
+#   - ansible_facts['distribution'] == "Debian"
+
 - name: "Install NTP packages"
   ansible.builtin.apt:
     name:
-      - ntp
       - tzdata
       - systemd-timesyncd
     force_apt_get: true

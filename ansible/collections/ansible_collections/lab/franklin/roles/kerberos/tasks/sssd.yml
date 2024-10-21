@@ -1,5 +1,5 @@
 ---
-- name: install sssd-krb5
+- name: "sssd | install sssd-krb5"
   apt:
     name:
       - sssd-krb5
@@ -7,7 +7,7 @@
       - sssd-tools     ##  sss_cache -U -G
     state: latest
 
-- name: provide identities from directory
+- name: "sssd | provide identities from directory"
   template:
     src: sssd.conf.j2
     dest: /etc/sssd/sssd.conf

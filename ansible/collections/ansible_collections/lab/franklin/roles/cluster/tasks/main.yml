@@ -1,55 +1,47 @@
 ---
-- name: "Create {{ software_dir }}"
+- name: "cluster | Create {{software_dir}}"
   ansible.builtin.file:
-    path: '{{ software_dir }}'
-    owner: '{{ engr_user }}'
-    group: '{{ engr_group }}'
+    path: "{{software_dir}}"
+    owner: "{{engr_user}}"
+    group: "{{engr_group}}"
+    mode: "0775"
     state: directory
   when:
-    - "'node' in inventory_hostname"
+    - ("'node' in inventory_hostname") or ("'head' in inventory_hostname")
+
+- name: "cluster | Setup munge"
+  ansible.builtin.include_tasks: munge.yml
+  when:
+    - ("'node' in inventory_hostname") or ("'head' in inventory_hostname")
+
+- name: "cluster | Build NHC"
+  ansible.builtin.include_tasks: nhc.yml
+  when:
     - "'head' in inventory_hostname"
 
-- name: "Setup munge"
-  ansible.builtin.include_tasks: munge.yml
-
-# - name: "Setup NHC"
-#   ansible.builtin.include_tasks: nhc.yml
-
-- name: "Configure AUKS on cluster nodes"
+- name: "cluster | Configure AUKS on cluster nodes"
   ansible.builtin.include_tasks: auks.yml
   when:
     - "'node' in inventory_hostname"
 
-- name: "Install SLURM on the head node"
-  ansible.builtin.include_tasks: slurm-controller.yml
-  when: "'head' in inventory_hostname"
-
-- name: "Install SLURM on the worker node"
-  ansible.builtin.include_tasks: slurm-client.yml
-  when: "'node' in inventory_hostname"
+- name: "cluster | Install SLURM"
+  ansible.builtin.include_tasks: slurm.yml
+  when:
+    - ("'node' in inventory_hostname") or ("'head' in inventory_hostname")
 
 #- name: "Install MPICH on workers"
 #  include: mpich_client.yml
 #  when: "'node90' in inventory_hostname"
 
-- name: 'Ensure munge is started'
-  service:
-    name: munge
-    state: started
-    enabled: true
-  tags: cluster
+# moved these somewhere else
+# - name: "cluster | Install Debian packages"
+#   ansible.builtin.include_tasks: packages-debian.yml
 
-- name: 'Ensure slurmd is started'
-  service:
-    name: slurmd
-    state: started
-    enabled: true
-  tags: cluster
-
-- name: 'Ensure slurmctld is started'
-  service:
-    name: slurmctld
-    state: started
-    enabled: true
-  tags: cluster
-  when: "'head' in inventory_hostname"
+- name: "cluster | Installing Packages"
+  ansible.builtin.apt:
+    pkg:
+      - clustershell
+      - munge
+      - pssh
+    state: present
+  become: true

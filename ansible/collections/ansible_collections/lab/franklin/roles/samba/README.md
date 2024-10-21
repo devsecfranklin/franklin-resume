@@ -3,6 +3,12 @@ Role Name
 
 A brief description of the role goes here.
 
+```sh
+testparm -v /etc/samba/smb.conf 10.10.8.11
+testparm -v /etc/samba/smb.conf thelio 10.0.0.67
+testparm -v /etc/samba/smb.conf snowy 10.10.8.11
+```
+
 Requirements
 ------------
 
@@ -23,9 +29,11 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
+```yaml
     - hosts: servers
       roles:
          - { role: username.rolename, x: 42 }
+```
 
 License
 -------

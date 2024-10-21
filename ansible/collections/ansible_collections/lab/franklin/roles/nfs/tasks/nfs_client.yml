@@ -1,5 +1,5 @@
 ---
-- name: 'Ensure NFS utilities are installed on client'
+- name: "nfs_client | Ensure NFS utilities are installed on client"
   ansible.builtin.apt:
     pkg:
       - nfs-common
@@ -9,18 +9,20 @@
     autoremove: true
     force_apt_get: false
     update_cache: true
-  tags: admin
+  tags:
+    - nfs
+    - storage
   # when:
   # - ansible_facts['distribution'] == "Debian"
   # - ansible_facts['architecture'] == "aarch64"
   # - "'node' in inventory_hostname"
 
-- name: "Check for /etc/default/nfs-common"
+- name: "nfs_client | Check for /etc/default/nfs-common"
   ansible.builtin.stat:
     path: /etc/default/nfs-common
   register: nfs_common
 
-- name: "Copy /etc/default/nfs-common"
+- name: "nfs_client | Copy /etc/default/nfs-common"
   ansible.builtin.copy:
     src: nfs-common
     dest: /etc/default/nfs-common
@@ -30,12 +32,12 @@
   when:
     - nfs_common.stat.exists
 
-- name: "Check for /etc/idmapd.conf"
+- name: "nfs_client | Check for /etc/idmapd.conf"
   ansible.builtin.stat:
     path: /etc/idmapd.conf
   register: idmapd
 
-- name: "Copy /etc/idmapd.conf"
+- name: "nfs_client | Copy /etc/idmapd.conf"
   ansible.builtin.copy:
     src: idmapd.conf
     dest: /etc/idmapd.conf
@@ -47,13 +49,13 @@
     - ansible_facts['distribution'] != "OpenBSD"
     - idmapd.stat.exists
 
-- name: "Force systemd to re-execute itself (2.8 and above)"
+- name: "nfs_client | Force systemd to re-execute itself (2.8 and above)"
   systemd:
     daemon_reload: true
   #when: idmapd.stat.exists or nfs_common.stat.exists
 
 # the user who does the mount w/krb5 will own it
-- name: "Create /mnt/clusterfs directory"
+- name: "nfs_client | Create /mnt/clusterfs directory"
   ansible.builtin.file:
     path: "/mnt/clusterfs"
     #owner: nobody
@@ -62,7 +64,7 @@
     state: directory
   when: "'storage' not in inventory_hostname"
 
-- name: "Create /mnt/backup1 directory"
+- name: "nfs_client | Create /mnt/backup1 directory"
   ansible.builtin.file:
     path: "/mnt/backup1"
     owner: nobody
@@ -71,7 +73,7 @@
     state: directory
   when: "'storage' not in inventory_hostname"
 
-- name: "Create /mnt/storage1 directory"
+- name: "nfs_client | Create /mnt/storage1 directory"
   ansible.builtin.file:
     path: "/mnt/storage1"
     owner: nobody
@@ -80,33 +82,33 @@
     state: directory
   when: "'snowy' not in inventory_hostname"
 
-- name: 'Update /etc/fstab with /mnt/clusterfs'
-  lineinfile:
+- name: "nfs_client |  Update /etc/fstab with /mnt/clusterfs"
+  ansible.builtin.lineinfile:
     path: /etc/fstab
-    line: 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0'
+    line: "storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0"
   when: "'storage' not in inventory_hostname"
   register: clusterfs_mount
 
-- name: 'Update /etc/fstab with /mnt/backup1'
-  lineinfile:
+- name: "nfs_client |  Update /etc/fstab with /mnt/backup1"
+  ansible.builtin.lineinfile:
     path: /etc/fstab
-    line: 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0'
+    line: "storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0"
   when: "'storage' not in inventory_hostname"
   register: backup1_mount
 
-- name: 'Update /etc/fstab with /mnt/storage1'
-  lineinfile:
+- name: "nfs_client | Update /etc/fstab with /mnt/storage1"
+  ansible.builtin.lineinfile:
     path: /etc/fstab
-    line: 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0'
+    line: "snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0"
   when: "'snowy' not in inventory_hostname"
   register: storage1_mount
 
-- name: "Force systemd to re-execute itself (2.8 and above)"
+- name: "nfs_client | Force systemd to re-execute itself (2.8 and above)"
   ansible.builtin.systemd_service:
     daemon_reload: true
   when: clusterfs_mount.changed or backup1_mount.changed or storage1_mount.changed
 
-- name: "Mount /mnt/backup1"
+- name: "nfs_client | Mount /mnt/backup1"
   ansible.posix.mount:
     src: storage1:/mnt/backup1
     path: /mnt/backup1
@@ -116,7 +118,7 @@
     - HOMELAB_MOLECULE_TEST is not defined
     - "'storage' not in inventory_hostname"
 
-- name: "Mount /mnt/clusterfs"
+- name: "nfs_client | Mount /mnt/clusterfs"
   ansible.posix.mount:
     src: "storage1:/mnt/clusterfs"
     path: "/mnt/clusterfs"
@@ -127,7 +129,7 @@
     - HOMELAB_MOLECULE_TEST is not defined
     - "'storage' not in inventory_hostname"
 
-- name: "Mount /mnt/storage1"
+- name: "nfs_client | Mount /mnt/storage1"
   ansible.posix.mount:
     src: "snowy:/mnt/storage1"
     path: "/mnt/storage1"

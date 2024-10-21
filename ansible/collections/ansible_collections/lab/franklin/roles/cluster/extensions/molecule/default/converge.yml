@@ -11,3 +11,6 @@
       ansible.builtin.include_role:
         name: lab.franklin.cluster
         tasks_from: main.yml
+    - name: Print all available facts
+      ansible.builtin.debug:
+        var: ansible_facts

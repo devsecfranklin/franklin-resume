@@ -141,8 +141,8 @@ ansible-playbook -i firewalls playbook/firewalls.yml --ask-vault-pass -e 'ansibl
 ## Operation
 
 ```sh
-ansible -i ./hosts -b --list-hosts nodes
-ansible nodes -m ping -b -i ./hosts
+ansible -i /etc/ansible/hosts -b --list-hosts nodes
+ansible nodes -m ping -b -i /etc/ansible/hosts
 ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspace/LAB/lab-home/ansible/hosts # check dists
 ```
 

@@ -8,21 +8,42 @@
   tags:
     - cluster
 
-- name: 'Ensure group "munge" exists'
+- name: "munge | Ensure group {{munge_group}} exists"
   ansible.builtin.group:
-    name: munge
+    name: "{{munge_group}}"
     state: present
   tags:
     - cluster
 
-- name: 'add munge user'
+- name: "munge | add munge user"
   ansible.builtin.user:
-    name: munge
+    name: "{{munge_user}}"
     shell: /bin/bash
-    groups: munge
+    groups: "{{munge_group}}"
     append: yes
   tags:
     - cluster
 
-# what is this directory for:
-# /usr/local/etc/munge/
+- name: "munge | Create /run/munge directory"
+  ansible.builtin.file:
+    path: "/run/munge"
+    owner: "{{munge_user}}"
+    group: "{{munge_group}}"
+    mode: "0755"
+    state: directory
+
+- name: "munge | Create /var/log/munge directory"
+  ansible.builtin.file:
+    path: "/var/log/munge"
+    owner: "{{munge_user}}"
+    group: "{{munge_group}}"
+    mode: "0755"
+    state: directory
+
+# daemon is same on head and nodes
+- name: "munge | Ensure munge is started"
+  service:
+    name: munge
+    state: started
+    enabled: true
+  tags: cluster

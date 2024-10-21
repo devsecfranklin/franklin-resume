@@ -1,7 +1,7 @@
 ---
 - name: 'Ansible Playbook for NFSv4/Storage'
   hosts: storage
-  become: yes
+  become: true
   vars:
     nfs_server_daemon: nfs-kernel-server
     ldap_ip_addr: 10.10.13.1

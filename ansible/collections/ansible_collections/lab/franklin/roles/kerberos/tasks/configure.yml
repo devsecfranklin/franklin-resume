@@ -1,6 +1,6 @@
 ---
 
-- name: Check presence of keytab
+- name: "configure | Check presence of keytab"
   stat:
     path: '{{ kerberos_client__keytab_path }}'
   register: _kerberos_client__keytab_status

@@ -3,12 +3,12 @@ import sys
 import os
 import csv
 import logging
-import xmltodict
 from rich.console import Console
 from rich.table import Table
 from multiprocessing import Process
 from multiprocessing.dummy import Pool as ThreadPool
 from multiprocessing import cpu_count
+import xmltodict
 import requests
 import webbrowser
 import argparse
@@ -29,7 +29,8 @@ import networkx as nx
 from termcolor import colored
 import pyfiglet
 
-requests.packages.urllib3.disable_warnings()
+from requests.packages import urllib3
+urllib3.disable_warnings()
 
 # fonts = pyfiglet.FigletFont.getFonts()
 print(

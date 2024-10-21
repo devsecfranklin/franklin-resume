@@ -1,0 +1,27 @@
+---
+- name: "Ansible Playbook for Raspi Cluster"
+  hosts: raspi_nodes
+  collections:
+    - community.general
+    - ansible.posix
+  become: true
+  become_user: root
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+  roles:
+    - common
+    - python
+    - ldap
+    - kerberos
+    - ssh
+    - security
+    - cluster
+    - ntp
+    - dns
+    - raspberrypi
+    - nfs
+    - golang
+    - shell
+  environment:
+    DEBIAN_FRONTEND: noninteractive

@@ -4,6 +4,7 @@
     pkg:
       - build-essential
       - coreutils
+      - direnv
       - gawk
       - git
       - neofetch

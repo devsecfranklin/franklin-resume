@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2022-2024 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: © 2022-2024 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -98,8 +98,12 @@ TaskPlugin=task/affinity
 #CompleteWait=0
 #EpilogMsgTime=2000
 #GetEnvTimeout=2
+
+# NHC/Slurm Integration
+# https://github.com/mej/nhc?tab=readme-ov-file#slurm-integration
 HealthCheckProgram=/usr/sbin/nhc
 HealthCheckInterval=300
+
 InactiveLimit=0
 KillWait=30
 #MessageTimeout=10

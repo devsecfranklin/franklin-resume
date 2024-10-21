@@ -1,5 +1,10 @@
 # Collection
 
+```sh
+ansible-galaxy collection install community.general # add colelction
+ansible-galaxy collection install community.general --upgrade
+```
+
 ## Structure
 
 * [Collection structure](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html#collection-structure)
@@ -37,7 +42,7 @@ collection/
 ```sh
 cd ansible/collections/ansible_collections/lab/franklin/roles/cluster
 mkdir extensions && cd extensions
-molecule init scenario
+molecule init scenario # creates the default dir
 molecule test # The full test lifecycle sequence
 molecule converge # runs the same steps as molecule test for the default scenario, but will stop after the converge action.
 ```

@@ -1,7 +1,7 @@
 ---
-- name: 'Ansible Playbook for Raspi Servers'
+- name: "Ansible Playbook for Raspi Servers"
   hosts: raspi_servers
-  become: yes
+  become: true
   vars:
     ansible_python_interpreter: "/usr/bin/python3"
     isc_dhcp_scopes:

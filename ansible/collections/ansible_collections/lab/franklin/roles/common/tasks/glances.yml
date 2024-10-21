@@ -1,15 +1,15 @@
 ---
 # https://linuxconfig.org/building-a-raspberry-pi-cluster-part-iv-monitoring
 # install glances on the server nodes
-- name: 'Install glances with pip'
+- name: "Install glances with pip"
   pip:
-    name: 'glances[action,browser,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,web,wifi]'
+    name: "glances[action,browser,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,web,wifi]"
     state: present
-    executable: 'pip3'
+    executable: "pip3"
   when: "'server' in inventory_hostname"
 
 # install on the clients
-- name: 'install common packages'
+- name: "install common packages"
   apt:
     name:
       - glances

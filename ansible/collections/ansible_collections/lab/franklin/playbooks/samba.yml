@@ -1,0 +1,24 @@
+---
+- name: "Ansible Playbook for Samba"
+  hosts: samba
+  collections:
+    - community.general
+    - ansible.posix
+  become: true
+  become_user: root
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3.11"
+  roles:
+    - python
+    - ntp
+    - common
+    - ldap
+    - kerberos
+    - ssh
+    - samba
+    - nfs
+    - shell
+    - security
+  environment:
+    DEBIAN_FRONTEND: noninteractive

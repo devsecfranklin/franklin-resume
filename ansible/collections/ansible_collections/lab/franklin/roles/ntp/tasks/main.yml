@@ -4,13 +4,6 @@
   when:
   - ansible_facts['distribution'] == "Debian"
 
-- name: "Install timezone information"
-  ansible.builtin.package:
-    name: tzdata
-    state: present
-  when:
-  - ansible_facts['distribution'] == "Debian"
-
 # - name: "Set timezone to {{ ntp_timezone }}"
 #   community.general.timezone:
 #     name: "{{ ntp_timezone }}"
@@ -21,7 +14,7 @@
     dest: /etc/{{ ntp_configuration_file }}
     mode: "0644"
   notify:
-    - Restart ntp
+    - Restart timesyncd
   when: HOMELAB_MOLECULE_TEST is not defined
 
 - name: "Manage {{ ntp_service }}"

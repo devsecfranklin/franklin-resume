@@ -18,10 +18,11 @@ node_modules/
 ansible/venv_molecule/
 ansible/roles/firewall/vars/firewall-secrets.yml
 ansible/roles/firewall/vars/panorama-secrets.yml
-ansible/roles/paloaltonetworks.paloaltonetworks
+ansible/collections/ansible_collections/ansible
+ansible/collections/ansible_collections/community*
+ansible/collections/ansible_collections/containers*
+ansible/collections/ansible_collections/paloaltonetworks
 
-ansible/collections/ansible_collections/
-!ansible/collections/ansible_collections/lab
 
 
 # This is a minimal list, OK to add things per repo

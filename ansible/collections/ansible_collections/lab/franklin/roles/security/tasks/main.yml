@@ -1,52 +1,52 @@
 ---
-- name: "Configure security on cluster nodes"
+- name: "security | Configure security on cluster nodes"
   ansible.builtin.include_tasks: security.yml
   when:
-  - ansible_facts['distribution'] == "Debian"
-  - ansible_facts['architecture'] == "aarch64"
-  - "'node' in inventory_hostname"
+    - ansible_facts['distribution'] == "Debian"
+    - ansible_facts['architecture'] == "aarch64"
+    - "'node' in inventory_hostname"
 
-- name: Install packages
+- name: "security | Install packages"
   ansible.builtin.include_tasks: packages-debian.yml
   when:
-  - ansible_facts['distribution'] == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
-- name: Ensure group "security" exists with correct gid
+- name: "security | Ensure group {{sec_group}} exists with correct gid {{sec_gid}}"
   ansible.builtin.group:
-    name: '{{ sec_group }}'
+    name: "{{ sec_group }}"
     state: present
-    gid: '{{ sec_gid }}'
+    gid: "{{ sec_gid }}"
 
-- name: Add the user 'security' with a specific uid and a primary group of 'security'
+- name: "security | Add the user 'security' with a specific uid and a primary group of {{sec_group}}"
   ansible.builtin.user:
-    name: '{{ sec_user }}'
+    name: "{{ sec_user }}"
     comment: watching you so behave
-    uid: '{{ sec_uid }}'
-    group: '{{ sec_group }}'
+    uid: "{{ sec_uid }}"
+    group: "{{ sec_group }}"
 
-- name: "Create {{ lynis_dir }}/plugins"
+- name: "security | Create {{lynis_dir}}/plugins"
   ansible.builtin.file:
-    path: '{{ lynis_dir }}/plugins'
-    owner: '{{ sec_user }}'
-    group: '{{ sec_group }}'
+    path: "{{lynis_dir}}/plugins"
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
     state: directory
 
-- name: "Create {{ lynis_dir }}/reports"
+- name: "security | Create {{lynis_dir}}/reports"
   ansible.builtin.file:
-    path: '{{ lynis_dir }}//reports'
-    owner: '{{ sec_user }}'
-    group: '{{ sec_group }}'
+    path: "{{lynis_dir}}//reports"
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
     state: directory
 
-- name: "Copy security_scan.sh script"
+- name: "security | Copy security_scan.sh script"
   ansible.builtin.template:
     src: security_scan.sh.j2
-    owner: '{{ sec_user }}'
-    group: '{{ sec_group }}'
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
     dest: /usr/local/bin/security_scan.sh
     mode: 0755
 
-- name: "Security scan script add to crontab"
+- name: "security | Security scan script add to crontab"
   ansible.builtin.cron:
     name: "lynis scan"
     minute: "13"

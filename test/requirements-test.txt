@@ -8,7 +8,7 @@ mdformat
 pre-commit
 pdoc3
 pre-commit-update
-ansible-dev-tools
+#ansible-dev-tools
 molecule
 molecule-plugins[podman]
 podman-compose

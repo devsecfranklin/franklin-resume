@@ -1,13 +1,15 @@
 ---
-- command: which python3
+- name: "python | check if python3 is installed"
+  ansible.builtin.command: which python3
   register: result
 
-- debug:
+- name: "python | python3 status"
+  ansible.builtin.debug:
     var: result.stdout
 
-- debug:
-    msg: |-
-      {% for i in _vars %}
-      {{ i }}:
-        {{ lookup('vars', i)|to_nice_yaml|indent(2) }}
-      {% endfor %}
+# - debug:
+#     msg: |-
+#       {% for i in _vars %}
+#       {{ i }}:
+#         {{ lookup('vars', i)|to_nice_yaml|indent(2) }}
+#       {% endfor %}
