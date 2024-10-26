@@ -1,5 +1,5 @@
 ---
-software_dir: /opt/software
+software_dir: /mnt/storage1/workspace/build
 
 auks_build_dir: "{{ software_dir }}/auks"
 auks__packages_names:

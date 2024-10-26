@@ -12,12 +12,12 @@
     update_cache: true
   tags: admin
 
-- name: "Create {{ software_dir }}"
-  ansible.builtin.file:
-    path: '{{ software_dir }}'
-    owner: '{{ engr_user }}'
-    group: '{{ engr_group }}'
-    state: directory
+# - name: "Create {{ software_dir }}"
+#   ansible.builtin.file:
+#     path: '{{ software_dir }}'
+#     owner: '{{ engr_user }}'
+#     group: '{{ engr_group }}'
+#     state: directory
 
 - name: "Ensure directories to export exist"
   ansible.builtin.file:
