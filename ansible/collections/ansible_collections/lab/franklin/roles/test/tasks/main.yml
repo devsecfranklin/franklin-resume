@@ -1,0 +1,10 @@
+---
+
+- name: 'test | install kdc_client.sh'
+  ansible.builtin.template:
+    src: krb_client.sh
+    dest: "/usr/local/bin/kdc_client.sh"
+    mode: "0755"
+    owner: root
+    group: root
+  tags: cluster

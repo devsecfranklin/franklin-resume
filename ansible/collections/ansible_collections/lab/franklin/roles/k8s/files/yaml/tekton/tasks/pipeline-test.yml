@@ -1,0 +1,76 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: test
+  namespace: tekton-pipelines
+spec:
+  resources:
+    inputs:
+      - name: source
+        type: git
+  results:
+    - name: my-test-task-docker
+      description: Inform pipeline of Docker test
+    - name: my-test-task-terraform
+      description: Inform pipeline of Python test
+    - name: my-test-task-python
+      description: Inform pipeline of Terraform test
+    - name: my-test-task-examples
+      description: Inform pipeline of examples test
+  steps:
+    - name: hygeine-checks
+      image: golang:1.17.3-alpine3.13
+      workingDir: /workspace/source
+      script: |
+        #!/usr/bin/env ash
+        apk add --no-cache tar git make curl
+        echo "url: $(resources.inputs.source.url)"
+        echo "revision: $(resources.inputs.source.revision)"
+
+        # Attempt to build/scan from Dockerfile
+        if [ -f "/workspace/source/Dockerfile" ]; then
+          echo "✅ Found top-level Dockerfile." | tee $(results.my-test-task-docker.path)
+        else
+          echo "❌ Missing top-level Dockerfile." | tee $(results.my-test-task-docker.path)
+        fi
+        if [ -f "/workspace/source/SECURITY.md" ]; then
+          echo "✅ Found SECURITY.md on this repo."
+        else
+          echo "❌ Missing SECURITY.md on this repo. Please fix it."
+        fi
+        if [ -d "/workspace/source/tests" ]; then
+          echo "✅ Found tests/ directory in this repo."
+        fi
+        if [ -d "/workspace/source/terraform" ]; then
+          echo "✅ Found Terraform directory." | tee $(results.my-test-task-terraform.path)
+          wget -q -O /workspace/source/terraform.zip "https://releases.hashicorp.com/terraform/0.14.11/terraform_0.14.11_linux_amd64.zip"
+          unzip /workspace/source/terraform.zip -d /bin
+          cd /workspace/source/terraform && terraform fmt -check
+          cd /workspace/source/terraform && terraform init
+          cd /workspace/source/terraform && terraform validate
+          #cd /workspace/source/terraform && terraform plan -out franklin.plan
+        else
+          echo "❌ No terraform/ folder found in this repo." | tee $(results.my-test-task-terraform.path)
+        fi
+        if [ -f "/workspace/source/tox.ini" ]; then
+          echo "✅ Found tox.ini. Smells like a Python project." | tee $(results.my-test-task-python.path)
+        else
+          echo "❌ No python found in src/ folder" | tee $(results.my-test-task-python.path)
+        fi
+        if [ -d "/workspace/source/examples" ]; then
+          echo "✅ Found examples/ directory. Hi Sarah!" | tee $(results.my-test-task-examples.path)
+          wget -q -O /workspace/source/terraform.zip "https://releases.hashicorp.com/terraform/0.14.11/terraform_0.14.11_linux_amd64.zip"
+          unzip /workspace/source/terraform.zip -d /bin
+          echo "hostname = \"34.136.90.64\"" > /workspace/source/examples/terraform.tfvars
+          echo "user = \"admin\"" >> /workspace/source/examples/terraform.tfvars
+          echo "password = \"psAuto2021##\"" >> /workspace/source/examples/terraform.tfvars
+          cd /workspace/source/examples && /bin/terraform fmt -check
+          cd /workspace/source/examples && terraform init
+          cd /workspace/source/examples && terraform destroy -force
+          cd /workspace/source/examples && terraform validate
+          cd /workspace/source/examples && terraform plan
+          cd /workspace/source/examples && terraform apply --auto-approve
+          #cd /workspace/source/examples && terraform destroy -force
+        else
+          echo "❌ No examples/ folder found in this repo." | tee $(results.my-test-task-examples.path)
+        fi

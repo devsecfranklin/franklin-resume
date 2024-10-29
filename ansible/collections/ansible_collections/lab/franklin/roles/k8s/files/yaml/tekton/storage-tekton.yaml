@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tekton-storage
+  namespace: tekton-pipelines
+type: kubernetes.io/opaque
+stringData:
+  gcs-config: |
+    {
+      "type": "service_account",
+      "project_id": "gproject",
+      "private_key_id": "some-key-id",
+      "private_key": "-----BEGIN PRIVATE KEY-----\nME[...]dF=\n-----END PRIVATE KEY-----\n",
+      "client_email": "tekton-storage@gproject.iam.gserviceaccount.com",
+      "client_id": "1234567890",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tekton-storage%40gproject.iam.gserviceaccount.com"
+    }
+---
+apiVersion: v1
+data:
+  size: 10Gi
+  storageClassName: standard
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: config-artifact-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tekton-ci-build
+  namespace: tekton-pipelines
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30Gi

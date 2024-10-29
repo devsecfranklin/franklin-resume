@@ -1,5 +1,5 @@
 ---
-- name: "Create /var/log/kerberos folder"
+- name: "kerberos_client | Create /var/log/kerberos folder"
   ansible.builtin.file:
     path: "/var/log/kerberos"
     owner: "root"

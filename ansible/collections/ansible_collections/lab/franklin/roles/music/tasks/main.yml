@@ -1,0 +1,7 @@
+---
+- name: "music | Create {{home_music_dir}}"
+  file:
+    path: "{{home_music_dir}}"
+    owner: "franklin"
+    state: link
+    src: "{{music_dir}}"
