@@ -81,7 +81,7 @@ Use the [Azure Public Cloud plugin compatibility matrix](https://docs.paloaltone
 ```sh
 show device-certificate status
 request license info # Check that the SaaS Security Inline license is present and Valid.
-show cloud-appid connection-to-cloud  
+show cloud-appid connection-to-cloud
 traceroute host kcs.ace.tpcloud.paloaltonetworks.com
 show netstat numeric-hosts yes numeric-ports yes | match 34.120.110.215
 show log system subtype equal app-cloud-engine direction equal backward

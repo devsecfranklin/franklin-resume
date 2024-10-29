@@ -1,1 +1,1 @@
-../../docs/python.md
+../documentation/files/python.md

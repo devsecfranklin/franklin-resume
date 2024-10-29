@@ -1,1 +1,0 @@
-../../../../../../../docs/markdown/cluster/cluster.md
