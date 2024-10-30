@@ -90,10 +90,10 @@ function install_debian() {
   for i in ${Packages[@]};
   do
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
-    echo Checking for ${i}: $PKG_OK
+    echo Checking for "${i}": "$PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
-      sudo apt-get --yes install ${i}
+      sudo apt-get --yes install "${i}"
     fi
   done
 }
@@ -101,27 +101,27 @@ function install_debian() {
 function install_ubuntu() {
   echo -e "${LGREEN}install Ubuntu specifics${NC}"
   declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" )
-  for i in ${Packages[@]};
+  for i in "${Packages[@]}";
   do
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
     echo Checking for ${i}: $PKG_OK
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
-      sudo apt-get --yes install ${i}
+      sudo apt-get --yes install "${i}"
     fi
   done
 }
 
 function krb5_conf() {
   echo -e "${LGREEN}install MIT Kerberos client packages${NC}"
-  declare -a Pakcages=(  "krb5-user" "libsasl2-modules-gssapi-mit" )
-  for i in ${Packages[@]};
+  declare -a Packages=( "krb5-user" "libsasl2-modules-gssapi-mit" )
+  for i in "${Packages[@]}";
   do
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
-    echo Checking for ${i}: $PKG_OK
+    echo Checking for "${i}": $PKG_OK
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
-      sudo apt-get --yes install ${i}
+      sudo apt-get --yes install "${i}"
     fi
   done
 
@@ -342,14 +342,16 @@ function raspi_serial() {
 function main() {
   detect_os
   krb5_conf
-  setup_ssh_key
-  # azure_setup
-  apt_update
+  setup_ldap
   setup_sudoers
   nfs_configuration
   # home dir stuff
   fix_home_dir
-  setup_ldap
+  setup_ssh_key
+  # azure_setup
+  apt_update
+
+
   install_hosts_file
 
   # configure_raspi
@@ -359,4 +361,4 @@ function main() {
 
 }
 
-main
+main "$@"

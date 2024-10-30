@@ -1,6 +1,6 @@
 # Kerberos
 
-files
+## files
 
 ```sh
 /etc/krb5.keytab
@@ -8,6 +8,8 @@ files
 /etc/krb5kdc/kdc.conf
 /var/lib/krb5kdc
 ```
+
+Check the files with the `krb_client.sh` script.
 
 ## Create a kadmind Keytab
 

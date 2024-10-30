@@ -33,6 +33,10 @@ function check_directory () {
   fi
 }
 
+function check_if_kdc() {
+  pass
+}
+
 function check_file () {
   if [ -f "${1}" ]; then
         echo -e "${LGREEN}File exists: ${1}${NC}"
@@ -42,7 +46,7 @@ function check_file () {
 }
 
 function check_service () {
-    if $(systemctl is-enabled ${1} &> /dev/null); then
+    if "$(systemctl is-enabled ${1} &> /dev/null)"; then
         echo -e "${LGREEN}Running: ${1}${NC}"
     else
         echo -e "${LRED}NOT Running: ${1}${NC}"
@@ -68,21 +72,22 @@ function create_kadmind_keytab() {
 
 function generate_host_keytabs() {
   declare -a  KT_HOSTS=( "edge-t" )
-  for i in ${KT_HOSTS[@]};
+  for i in "${KT_HOSTS[@]}";
   do
-    echo -e "${LGREEN}Generating host keytabd: ${KT_HOSTS}}${NC}"
+    echo -e "${LGREEN}Generating host keytabd: ${i}}${NC}"
     ktutil
-    add_entry -password -p host/${KT_HOSTS}.lab.bitsmasher.net -k 1 -e aes256-cts-hmac-sha1-96
-    add_entry -password -p host/${KT_HOSTS}.lab.bitsmasher.net -k 1 -e aes128-cts-hmac-sha1-96
-    add_entry -password -p ldap/${KT_HOSTS}.lab.bitsmasher.net -k 1 -e aes256-cts-hmac-sha1-96
-    add_entry -password -p ldap/${KT_HOSTS}.lab.bitsmasher.net -k 1 -e aes128-cts-hmac-sha1-96
-    wkt /tmp/${KT_HOSTS}.keytab
+    add_entry -password -p host/${i}}.lab.bitsmasher.net -k 1 -e aes256-cts-hmac-sha1-96
+    add_entry -password -p host/${i}.lab.bitsmasher.net -k 1 -e aes128-cts-hmac-sha1-96
+    add_entry -password -p ldap/${i}.lab.bitsmasher.net -k 1 -e aes256-cts-hmac-sha1-96
+    add_entry -password -p ldap/${i}.lab.bitsmasher.net -k 1 -e aes128-cts-hmac-sha1-96
+    wkt /tmp/${i}.keytab
     quit
   done
 }
 
 function main() {
     echo -e "\n${LCYAN}# --- kdc_check.sh --- ${YELLOW}DATE: ${MY_DATE} ${LCYAN}---------------\n${NC}"
+    check_if_kdc
     check_directory "/var/lib/krb5kdc"
     check_directory "/etc/krb5"
     check_directory "/etc/krb5kdc"
@@ -102,6 +107,7 @@ function main() {
     check_package "krb5-user"
     check_package "krb5-config"
     generate_host_keytabs
+    klist -ke /etc/krb5.keytab
     echo -e "\n${LCYAN}# -------------------- ${YELLOW}DATE: ${MY_DATE} ${LCYAN}---------------\n${NC}"
 }
 

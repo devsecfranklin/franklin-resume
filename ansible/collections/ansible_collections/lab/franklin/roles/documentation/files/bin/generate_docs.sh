@@ -129,7 +129,7 @@ function generate_customer_pdf() {
 }
 
 function check_installed() {
-  if ! command -v ${1} &>/dev/null; then
+  if ! command -v "${1}" &>/dev/null; then
     echo -e "${LRED}${1} could not be found${NC}"
     return 1
   else
