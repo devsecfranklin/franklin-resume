@@ -1,0 +1,2 @@
+dwave-ocean-sdk
+amazon-braket-ocean-plugin

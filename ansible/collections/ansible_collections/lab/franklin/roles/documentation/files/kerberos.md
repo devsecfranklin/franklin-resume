@@ -1,6 +1,6 @@
 # Kerberos
 
-## files
+## KDC Files
 
 ```sh
 /etc/krb5.keytab
@@ -11,7 +11,7 @@
 
 Check the files with the `krb_client.sh` script.
 
-## Create a kadmind Keytab
+## KDC - Create a kadmind Keytab
 
 * [Create a kadmind Keytab](https://web.mit.edu/kerberos/krb5-1.5/krb5-1.5.4/doc/krb5-install/Create-a-kadmind-Keytab-_0028optional_0029.html)
 
@@ -32,6 +32,11 @@ directory services and authentication mechanisms.
 for key in ~/.ssh/id_*; do ssh-keygen -l -f "${key}"; done | uniq
 ssh-keygen -t ed25519 -C "fdiaz@paloaltonetworks.com" -f ~/.ssh/id_ed25519_work -o -a 100
 ```
+
+### Ticket Forwarding
+
+* set `forwardable = True` in `/etc/krb5.conf`
+* set `GSSAPIDelegateCredentials=yes` and `GSSAPIAuthentication=yes` in `~/.ssh/config`
 
 ### Mac
 

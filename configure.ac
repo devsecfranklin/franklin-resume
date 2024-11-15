@@ -12,14 +12,17 @@ LT_INIT
 AC_CONFIG_COMMANDS([franklin-build],
  [echo "(⊃｡•́‿•̀｡)⊃━⭑･ﾟﾟ･*:༅｡.｡༅:*ﾟ:*:✼✿ Configuring for $mypkgname ☽༓･*˚⁺‧͙"],
  [mypkgname=$PACKAGE_NAME])
+
 AC_CONFIG_FILES([
- Makefile
- ansible/Makefile
- container/Makefile
- container/kerberos-containers/kdc-server/Makefile
- container/kerberos-containers/kdc-ssh-server/Makefile
- container/kerberos-containers/ssh-container/Makefile
- src/nodebot/Makefile
+	Makefile
+	ansible/Makefile
+	assembly/Makefile
+	assembly/src/Makefile
+	container/Makefile
+	container/kerberos-containers/kdc-server/Makefile
+	container/kerberos-containers/kdc-ssh-server/Makefile
+	container/kerberos-containers/ssh-container/Makefile
+	src/nodebot/Makefile
 ])
 
 dnl Checks for programs.
@@ -43,7 +46,19 @@ AC_CHECK_PROG( [HAS_ANSIBLE], [ansible], [found], [not-found])
 test -z "$HAS_ANSIBLE"     && AC_MSG_ERROR([Could not find ansible installed.])
 
 AC_CHECK_PROG( [HAS_GPG], [gpg], [found], [not-found])
+test -z "$HAS_GPG" && AC_MSG_ERROR([Could not find gpg installed.])
+
 AC_CHECK_PROG( [HAS_XMLLINT], [xmllint], [found], [not-found])
+test -z "$HAS_XMLLINT" && AC_MSG_ERROR([Could not find xmllint installed.])
+
+AC_CHECK_PROG(HAVE_AS, [as], [found], [not-found])
+test -z "$HAVE_AS"     && AC_MSG_ERROR([Could not find as. Please make sure you have it installed])
+
+AC_CHECK_PROG(HAVE_NASM, [nasm], [found], [not-found])
+test -z "$HAVE_NASM"     && AC_MSG_ERROR([Could not find nasm. Please make sure you have it installed])
+
+AC_CHECK_PROG(HAVE_YASM, [yasm], [found], [not-found])
+test -z "$HAVE_YASM"     && AC_MSG_ERROR([Could not find yasm. Please make sure you have it installed])
 
 AC_SUBST([GITVERSION])
 AC_SUBST([GITTAG])

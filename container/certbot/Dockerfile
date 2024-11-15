@@ -1,8 +1,6 @@
-# syntax=docker/dockerfile:1
-
 FROM python:3.13-slim-bullseye
 
-LABEL maintainer="DE:AD:10:C5 <franklin@dead10c5.org>"
+LABEL maintainer="franklin <devsecfranklin@duck.com>"
 LABEL org.opencontainers.image.source=https://github.com/devsecfranklin/lab-franklin
 LABEL org.opencontainers.image.description="Certbot Update container"
 LABEL org.opencontainers.image.licenses=MIT

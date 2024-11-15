@@ -7,8 +7,7 @@ resource "google_vpc_access_connector" "connector" {
   region         = var.region
   network        = "ps-devsecops-vpc"
   ip_cidr_range  = "10.9.0.0/28"
-  min_instances  = 2
-  max_instances  = 3
-  max_throughput = 300
+  //min_instances  = 2
+  //max_instances  = 3
+  //max_throughput = 300
 }
-

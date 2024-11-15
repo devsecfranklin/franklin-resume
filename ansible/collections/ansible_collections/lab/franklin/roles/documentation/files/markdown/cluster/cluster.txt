@@ -1,3 +1,6 @@
+
+https://clustershell.readthedocs.io/en/latest/config.html
+
 ### Checking status of the cluster:
 * clustat
 * clustat -m  -> Display status of and exit

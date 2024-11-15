@@ -6,7 +6,8 @@
 * Use Kerberos auth with my own user instead of "pi" user.
 
 ```bash
-ssh-agent bash && ssh-add ~/.ssh/id_ed25519
+eval ssh-agent bash
+ssh-add ~/.ssh/id_ed25519
 kinit -f franklin # generate a forwardable ticket
 make test
 . _test/bin/activate
@@ -151,7 +152,8 @@ ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspa
 ```sh
 ansible raspi_nodes -a 'apt update' -b -i ./hosts
 ansible raspi_nodes -a 'apt -y upgrade' -b -i ./hosts
-ansible-playbook playbook/playbook.yml -i ./hosts -b
+ansible nvidia_nodes -a 'apt update' -b -i /etc/ansible/hosts -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook ansible/collections/ansible_collections/lab/franklin/playbooks/playbook.yml -i ./hosts -b
 ```
 
 ## Managing Roles

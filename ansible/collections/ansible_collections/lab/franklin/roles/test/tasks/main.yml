@@ -1,10 +1,25 @@
 ---
+- name: "test | Create {{root_bin_dir}}}"
+  file:
+    path: "{{root_bin_dir}}}"
+    owner: "root"
+    state: link
+    src: "{{root_bin_dir}}}"
 
-- name: 'test | install kdc_client.sh'
+- name: 'test | install kdc_check.sh'
   ansible.builtin.template:
     src: krb_client.sh
-    dest: "/usr/local/bin/kdc_client.sh"
-    mode: "0755"
+    dest: "{{root_bin_dir}}}/kdc_check.sh"
+    mode: "0700"
+    owner: root
+    group: root
+  tags: cluster
+
+- name: 'test | install krb_client.sh'
+  ansible.builtin.template:
+    src: krb_client.sh
+    dest: "{{root_bin_dir}}}/krb_client.sh"
+    mode: "0700"
     owner: root
     group: root
   tags: cluster

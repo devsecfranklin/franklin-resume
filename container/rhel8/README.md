@@ -41,7 +41,6 @@ sudo sysctl -w net.ipv6.conf.all.forwarding=1 # Use when you have IPv6 network i
 export CR_PAT=$(pass show ghcr)
 echo $CR_PAT | docker login ghcr.io -u devsecfranklin --password-stdin
 docker compose build customer-build || docker build -t ghcr.io/devsecfranklin/customer-build .
-
 ```
 
 Without `docker-compose`
