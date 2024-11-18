@@ -8,6 +8,7 @@
 # v0.2 11/11/2022 Support differet Linux distros
 # v0.3 12/26/2022 Add SPARC support
 # v0.4 08/03/2024 Update the hosts file
+# v0.5 11/16/2024 Update the home directory fixer
 
 set -o nounset                              # Treat unset variables as an error
 
@@ -87,9 +88,9 @@ function detect_os() {
 function install_debian() {
   echo -e "${LGREEN}install Debian specifics${NC}"
   declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" )
-  for i in ${Packages[@]};
+  for i in "${Packages[@]}";
   do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' "${i}"|grep "install ok installed")
     echo Checking for "${i}": "$PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
@@ -104,7 +105,7 @@ function install_ubuntu() {
   for i in "${Packages[@]}";
   do
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
-    echo Checking for ${i}: $PKG_OK
+    echo "Checking for ${i}: $PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
       sudo apt-get --yes install "${i}"
@@ -118,7 +119,7 @@ function krb5_conf() {
   for i in "${Packages[@]}";
   do
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
-    echo Checking for "${i}": $PKG_OK
+    echo "Checking for ${i}: $PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
       sudo apt-get --yes install "${i}"
@@ -166,6 +167,7 @@ function setup_ssh_key() {
 
 cat <<EOF >> /root/.ssh/authorized_keys
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDU9GRwNI2y9NuElgDgLcfDuGstEZiHaMT/2Gs0prPUFN5egpqzJy1qrf7VLf7U4CyxU8QXnhPhzE9qLnDmqFMWpfyaw4F16YhDzxESZHZ6gqKcPhHRPTwVyIdF9nhH0bh9jZxdvUMuUO+G7T+kvKTcrLlmxnbE6dd/UOcZesuyjNeyPfPkYPXrx40LtXwEvk/EoaTQjjlBxOh2YWevHIVEeKgIXDd96UfrQT7ywPT9klBPEc7GxgDMNFKJ1bSWR51TOETRAfFmEnoc0pmULpvzQgj28ppxUZCEXBt8OImkRSG+rPypjIWIEIa54ap3kL9DeJbK6iC9DdXzmCp004EdZdpXqWzLkHOWL58En0c4puRVv+26DGgwwk8sTbyRIDBbkRNiR2HGpasK7SyMy7xdko8W2TScHnXYc/G9R9T4oEcnyN1rY65uNkfKg5QCC2NHDb+vShKHTQ6/wbvtC7sDt7RM6IYwfv46+Wo3D8uYNwow3Ny71EwtdxRkkn2tc5SAyYxBo7N0kFSPKrr15/fUY2TeYV/r/x9xa4cgg/VV8GOxwg/vQxyg9YZNpdiXSM9FCQMtv8wObci4tHpiySDYPo55Aga3EW6Jut856KP15EXPYWml/sHCbEvJUByk3CTt0wW2nxNSl9KUfcQrKGmW3YTW9LhoFDqY1WUHBjdHtQ== thedevilsvoice@protonmail.ch
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFN4w59V3YUwvONCPTClD2SnXhYhQsh/wO0Gr3tNta1w franklin@bitsmasher.net
 EOF
 
   if [ ! -d "/home/${MY_USER}/.ssh" ]; then mkdir /home/${MY_USER}/.ssh; fi
@@ -325,13 +327,16 @@ function configure_jetson() {
 }
 
 function fix_home_dir() {
-  if [ -d "/home/franklin" ];
-  then
-    mv /home/franklin /home/franklin.old
-  fi
-
   echo -e "${LGREEN}link home dir${NC}"
-  cd /home && ln -s /mnt/backup1/franklin /home
+  if [ ! -d "/home/franklin.old" ]; then mv /home/franklin /home/franklin.old; fi
+
+  if [ "${MY_OS}" == "obsd" ] && [ ! -L "/home/franklin" ]; then
+    ln -s /mnt/backup1/franklin-openbsd /home
+  elif [ "${MY_OS}" != "obsd" ] && [ ! -L "/home/franklin" ]; then
+    ln -s /mnt/backup1/franklin /home
+  else
+    echo -e "${LGREEN}The symlink already exists for /home/franklin${NC}"
+  fi
 }
 
 function raspi_serial() {

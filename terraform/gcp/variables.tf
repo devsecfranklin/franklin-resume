@@ -46,7 +46,7 @@ variable "access_list" {
     "34.206.152.182",   # AWS bh52pafwoew01p-mgmt1
     "35.222.82.220/32", # GCP lab-franklin-airlock1
     "44.216.25.244",    # AWS bh51pafwinb02p-mgmt1
-    "52.55.185.160",    # AWS bh52pafwoew02p-mgmt1)
+    "52.55.185.160",    # AWS bh52pafwoew02p-mgmt1
     "134.238.141.178",  # corp network
     "134.238.141.180",  # corp network
     "134.238.163.160",  # corp network

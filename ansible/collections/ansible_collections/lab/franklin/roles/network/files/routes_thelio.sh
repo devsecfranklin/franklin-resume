@@ -33,7 +33,7 @@ function wired() {
 
 function route_del(){
   # this will erase the wireless routes
-  route delete -net 10.10.8.0/21 gw 10.0.0.70
+  route delete -net 10.10.8.0/21 gw 10.0.0.70 dev enp9s0
   route delete  10.0.0.70
   route delete  10.0.0.1
 }

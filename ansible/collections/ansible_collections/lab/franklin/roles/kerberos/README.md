@@ -1,1 +1,1 @@
-../documentation/files/kerberos.md
+../documentation/files/markdown/kerberos.md

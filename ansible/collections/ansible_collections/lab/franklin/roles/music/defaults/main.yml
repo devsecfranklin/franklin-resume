@@ -1,2 +1,6 @@
 ---
-# defaults file for music
+# The state of the NTP service.
+mopidy_state: started
+
+# The state of the NTP service at boot.
+mopidy_enabled: true

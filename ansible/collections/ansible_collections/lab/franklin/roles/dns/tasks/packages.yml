@@ -1,6 +1,11 @@
 ---
-- name: Install DNS admin tools
-  apt:
-      package: ['bind9', 'bind9utils', 'dnsutils']
-      state: latest
-  tags: admin
+- name: 'Install DNS admin tools'
+  ansible.builtin.apt:
+    name:
+      - bind9
+      - bind9utils
+      - dnsutils
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - dns

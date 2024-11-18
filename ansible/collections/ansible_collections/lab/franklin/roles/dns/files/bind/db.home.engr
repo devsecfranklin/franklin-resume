@@ -1,0 +1,18 @@
+$TTL    10800
+@ IN SOA server1.lab.bitsmasher.net. root.lab.bitsmasher.net (
+        2024111601 ; serial
+        8H ; refresh
+        4H ; retry
+        4W ; expire
+        1D ; minimum
+        ) ;
+;Name Server Information
+@               IN NS server1.lab.bitsmasher.net.
+
+;IP address of Your Domain Name Server(DNS)
+server1       IN A 10.10.12.12
+
+;A Record for Host names
+xfinity         IN A 10.0.0.1
+dream-machine   IN A 10.0.0.70
+femputer        IN A 10.0.0.205

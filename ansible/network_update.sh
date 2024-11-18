@@ -26,7 +26,7 @@ NC='\033[0m' # No Color
 
 ETC_DIR="/etc/ansible"
 PLAYBOOK_DIR="collections/ansible_collections/lab/franklin/playbooks"
-WORKDIR="/home/franklin/workspace/LAB/lab-franklin/ansible"
+WORKDIR="${PWD}"
 
 function directories() {
   # ${ETC_DIR}/group_vars -> /home/franklin/workspace/LAB/lab-franklin/ansible/group_vars

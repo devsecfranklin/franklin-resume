@@ -1,7 +1,10 @@
 data "template_file" "linux-metadata" {
   template = <<EOF
-sudo apt-get update; 
-sudo apt-get install -y neofetch automake gawk git rsyslog nginx;
+sudo apt-get update;
+sudo apt-get install -y neofetch automake gawk git rsyslog nginx direnv pass;
+cd /tmp && wget https://go.dev/dl/go1.23.3.linux-amd64.tar.gz;
+if [ -d "/usr/local/go" ]; then sudo rm -rf /usr/local/go;fi && sudo tar -C /usr/local -xzf go1.23.3.linux-amd64.tar.gz;
+/usr/local/go/bin/go install github.com/aquasecurity/tfsec/cmd/tfsec@latest
 EOF
 }
 
@@ -73,4 +76,3 @@ resource "google_compute_instance" "gcp_timecube" {
   }
 }
 */
-

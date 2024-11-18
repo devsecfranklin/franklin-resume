@@ -1,5 +1,29 @@
 # Kerberos
 
+If you log in on a host that has a prperly installed `/etc/krb5.keytab` you will get a similar effect
+to requesting a new ticket, or typing `kinit -R` to refresh.
+
+* Find the correct hostname for each principal:
+
+```sh
+getent hosts $(hostname) | awk '{print $1; exit}' | xargs getent hosts | awk '{print $2}'
+```
+
+* Add the NFS principal for the hosts to the KDC:
+
+```sh
+kadmin -p  root/admin@LAB.BITSMASHER.NET
+addprinc -randkey nfs/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET
+ktadd nfs/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET host/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET ldap/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET
+klist -ke /etc/krb5.keytab
+```
+
+* OpenBSD
+
+```sh
+/usr/local/heimdal/bin/klist
+```
+
 ## KDC Files
 
 ```sh

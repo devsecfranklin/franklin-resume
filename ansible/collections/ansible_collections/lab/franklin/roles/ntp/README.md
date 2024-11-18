@@ -1,1 +1,1 @@
-../documentation/files/ntp.md
+../documentation/files/markdown/ntp.md

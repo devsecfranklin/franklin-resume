@@ -12,9 +12,9 @@ clean:
 	find . -name '__pycache__' | xargs rm -rf
 	for trash in AUTHORS ChangeLog _collect _build aclocal aclocal.m4 autom4te.cache config config.log _viz\
         	config.status configure configure~ libtool Makefile Makefile.in po\
-			docker/cloudbot/Makefile docker/cloudbot/Makefile.in\
-        	customer/Makefile customer/Makefile.in docker/rhel8/Makefile.in docker/rhel8/Makefile\
-			docker/Makefile docker/Makefile.in _test _security NEWS;do \
+			container/cloudbot/Makefile container/cloudbot/Makefile.in\
+        	customer/Makefile customer/Makefile.in container/rhel8/Makefile.in container/rhel8/Makefile\
+			container/Makefile container/Makefile.in _test _security NEWS;do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\

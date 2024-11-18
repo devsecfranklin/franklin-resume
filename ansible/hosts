@@ -3,9 +3,10 @@ bbb1.LAB.BITSMASHER.NET
 
 [debian]
 snowy.LAB.BITSMASHER.NET
-#lanparty ansible_host=10.10.12.7 ansible_user=root
 edge-t.LAB.BITSMASHER.NET
 netlab1.LAB.BITSMASHER.NET
+femputer.engr.bitsmasher.net
+#lanparty ansible_host=10.10.12.7 ansible_user=root
 
 [media]
 media01.LAB.BITSMASHER.NET

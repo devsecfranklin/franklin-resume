@@ -10,7 +10,6 @@
   # The following krb5.conf variables are only for MIT Kerberos.
   kdc_timesync = 1
   ccache_type = 4
-  forwardable = true
   proxiable = true
 
 [domain_realm]
