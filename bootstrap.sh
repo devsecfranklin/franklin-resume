@@ -42,7 +42,7 @@ NC='\033[0m' # No Color
 MY_OS="unknown"
 OS_RELEASE=""
 CONTAINER=false
-DOCUMENTATION=false
+#DOCUMENTATION=false
 
 # Check if we are inside a docker container
 function check_docker() {
@@ -124,26 +124,22 @@ function run_libtoolize() {
   lt_ver=$(libtoolize --version | awk '{print $NF; exit}')
   lt_maj=$(echo $lt_ver | sed 's;\..*;;g')
   lt_min=$(echo $lt_ver | sed -e 's;^[0-9]*\.;;g' -e 's;\..*$;;g')
-  lt_teeny=$(echo $lt_ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g')
+  #lt_teeny=$(echo $lt_ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g')
   echo "    $lt_ver"
 
   case $lt_maj in
   0)
-    echo "You must have libtool >= 1.4.0 but you seem to have $lt_ver"
+    echo "You must have libtool >= 1.4.0 but you seem to have ${lt_ver}"
     exit 1
     ;;
-
   1)
-    if test $lt_min -lt 4; then
-      echo "You must have libtool >= 1.4.0 but you seem to have $lt_ver"
+    if test "${lt_min}" -lt 4; then
+      echo "You must have libtool >= 1.4.0 but you seem to have ${lt_ver}"
       exit 1
     fi
     ;;
-
   2) ;;
-
-  \
-    *)
+  *)
     echo "You are running a newer libtool than gerbv has been tested with."
     echo "It will probably work, but this is a warning that it may not."
     ;;
@@ -390,8 +386,12 @@ function main() {
     install_debian
   fi
 
+  if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
+    rm config.status # if Makefile.in is missing, then erase stale config.status
+  fi
+
   if [ ! -f "./config.status" ]; then
-    echo "no config.status"
+    echo -e "${YELLOW}no config.status${NC}"
     # libtoolize
     if [ ! -d "aclocal" ]; then mkdir aclocal; fi
     #aclocal -I config

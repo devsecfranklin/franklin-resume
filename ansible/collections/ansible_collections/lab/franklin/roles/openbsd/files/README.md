@@ -12,7 +12,8 @@ Add my user to the staff group `usermod -G staff franklin`
 
 ```sh
 pkg_add heimdal heimdal-libs login_krb5
-fish_add_path -p /usr/local/heimdal/bin
+#fish_add_path -p /usr/local/heimdal/bin
+set -U fish_user_paths /usr/local/heimdal/bin $fish_user_paths
 cp krb5.conf /etc/heimdal
 doas route add -inet 10.10.8.0/21 10.0.0.70
 ```

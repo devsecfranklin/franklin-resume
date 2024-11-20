@@ -1,5 +1,7 @@
-CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
+CLOCAL_AMFLAGS = -I config/m4 -I aclocal
+
+#include target.mk
 
 check: DOCKER-exists
 PYTHON-exists: ; @which python > /dev/null
@@ -7,6 +9,9 @@ mytarget: check
 .PHONY: check PYTHON-exists
 
 clean:
+if HAS_DOCKER
+	docker system prune -f
+endif
 	rm -rf _build *.egg-info
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
@@ -20,9 +25,6 @@ clean:
 			rm -rf $$trash ;\
 		fi ; \
 	done
-if HAS_DOCKER
-	docker system prune -f
-endif
 
 python:
 	@$(PY39) -m venv _build
@@ -42,7 +44,8 @@ test:
 		_test/bin/python -m pip install -rtest/requirements-test.txt; \
 		./bootstrap.sh \
 	)
-	@echo "Found Python version $(PY39)"
+	@echo "$(info Found Python version $(PY39))"
+
 
 security:
 	@$(PY39) -m venv _security

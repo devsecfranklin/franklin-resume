@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env sh
+#
+# SPDX-FileCopyrightText: 2023 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # set the openBSD screensaver
 

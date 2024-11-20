@@ -12,6 +12,7 @@ __pycache__
 .tox/
 *.xml
 *.zip
+src/krb5_auth/gss-1.0.4.tar
 
 key
 cred.json
@@ -23,7 +24,6 @@ ansible/collections/ansible_collections/ansible
 ansible/collections/ansible_collections/community*
 ansible/collections/ansible_collections/containers*
 ansible/collections/ansible_collections/paloaltonetworks
-
 
 
 # This is a minimal list, OK to add things per repo

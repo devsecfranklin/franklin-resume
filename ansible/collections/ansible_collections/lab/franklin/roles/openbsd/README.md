@@ -9,6 +9,7 @@ usermod -G operator username
 usermod -G staff username
 usermod -G wheel username
 doas usermod -L staff franklin
+doas rdate time.google.com # sync the local clock to time server
 ```
 
 In `/etc/login.conf update the staff class as follows:

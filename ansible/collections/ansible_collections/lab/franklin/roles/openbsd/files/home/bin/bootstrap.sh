@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -163,7 +163,7 @@ function krb5_conf() {
   if [ ! -d "/etc/kerberos" ]; then doas mkdir /etc/kerberos; fi
   echo -e "${LGREEN}install Heimdal Kerberos client packages${NC}"
   declare -a Packages=(  "heimdal" "heimdal-libs" "login_krb5" )
-  for i in ${Packages[@]};
+  for i in "${Packages[@]}";
   do
     pkg_add ${i}
   done
@@ -211,7 +211,7 @@ EOF
 
 function add_pkgs() {
   declare -a Packages=(  "colorls" "polybar" "dia" "codeblocks" "git" "bash" "fish" "portslist" "openbsd-backgrounds" "qterminal" "neofetch" )
-  for i in ${Packages[@]};
+  for i in "${Packages[@]}";
   do
     pkg_add ${i}
   done

@@ -1,7 +1,9 @@
-Role Name
-=========
+SSH
+===
 
-A brief description of the role goes here.
+.. code-block:: sh
+
+   ssh -K -l franklin -o PubkeyAuthentication=no blowfish
 
 Requirements
 ------------

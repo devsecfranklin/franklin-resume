@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023-2024 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -8,7 +8,7 @@ ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
 
 10.0.0.1   xfinity.engr.bitsmasher.net xfinity
-10.0.0.44  thelio.engr.bitsmasher.net thelio
+10.0.0.67  thelio.engr.bitsmasher.net thelio
 10.0.0.70  dream-machine.engr.bitsmasher.net
 10.0.0.205 femputer.engr.bitsmasher.net femputer
 
@@ -29,7 +29,6 @@ ff02::2		ip6-allrouters
 10.10.12.13  server2.lab.bitsmasher.net server2
 10.10.12.14  storage1.lab.bitsmasher.net storage1
 10.10.12.15  blowfish.lab.bitsmasher.net blowfish
-#10.10.12.17  thelio.lab.bitsmasher.net thelio
 10.10.12.18  head1.lab.bitsmasher.net head1
 10.10.12.20  media01.lab.bitsmasher.net media1
 10.10.12.21  media02.lab.bitsmasher.net media2

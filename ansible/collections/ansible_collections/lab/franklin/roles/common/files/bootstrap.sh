@@ -9,8 +9,16 @@
 # v0.3 12/26/2022 Add SPARC support
 # v0.4 08/03/2024 Update the hosts file
 # v0.5 11/16/2024 Update the home directory fixer
+# v0.6 11/18/2024 Add required_files and OpenBSD support
 
-set -o nounset                              # Treat unset variables as an error
+#set -euo pipefail
+set -o errexit # abort on nonzero exitstatus
+set -o nounset # abort on unbound variable
+
+# The special shell variable IFS determines how Bash
+# recognizes word boundaries while splitting a sequence of character strings.
+#IFS=$'\n\t'
+
 
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31
@@ -29,11 +37,24 @@ CYAN='\033[0;36m'
 #YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-MY_OS="unknown"
-MACHINE="unknown"
+CONTAINER=false
+DOCUMENTATION=false
 KERNEL="unknown"
 KERNEL_VERSION="unknown"
+MACHINE="unknown"
 MY_USER="franklin"
+MY_OS="unknown"
+OS_RELEASE=""
+
+# Check if we are inside a docker container
+function check_docker() {
+  if [ -f /.dockerenv ]; then
+    echo -e "${CYAN}Containerized build environment...${NC}"
+    CONTAINER=true
+  else
+    echo -e "${CYAN}NOT a containerized build environment...${NC}"
+  fi
+}
 
 function detect_os() {
   MACHINE=$(uname -m)
@@ -59,24 +80,19 @@ function detect_os() {
     echo -e "${CYAN}Kernel Version: ${KERNEL_VERSION}${NC}"
   fi
 
-  if [ "$(uname)" == "Darwin" ]
-  then
+  if [ "$(uname)" == "Darwin" ]; then
     echo -e "${CYAN}Detected MacOS${NC}"
     MY_OS="mac"
-  elif [ -f "/etc/redhat-release" ]
-  then
+  elif [ -f "/etc/redhat-release" ]; then
     echo -e "${CYAN}Detected Red Hat/CentoOS/RHEL${NC}"
     MY_OS="rh"
-  elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]
-  then
+  elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
     echo -e "${CYAN}Detected Debian/Ubuntu/Mint${NC}"
     MY_OS="deb"
-  elif grep -q Microsoft /proc/version
-  then
+  elif grep -q Microsoft /proc/version; then
     echo -e "${CYAN}Detected Windows pretending to be Linux${NC}"
     MY_OS="win"
-  elif [ "$(uname -s)" == "OpenBSD" ]
-  then
+  elif [ "$(uname -s)" == "OpenBSD" ]; then
     echo -e "${CYAN}Detected OpenBSD${NC}"
     MY_OS="obsd"
   else
@@ -87,10 +103,9 @@ function detect_os() {
 
 function install_debian() {
   echo -e "${LGREEN}install Debian specifics${NC}"
-  declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" )
-  for i in "${Packages[@]}";
-  do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' "${i}"|grep "install ok installed")
+  declare -a Packages=("doxygen" "gawk" "doxygen-latex")
+  for i in "${Packages[@]}"; do
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' "${i}" | grep "install ok installed")
     echo Checking for "${i}": "$PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
@@ -101,10 +116,9 @@ function install_debian() {
 
 function install_ubuntu() {
   echo -e "${LGREEN}install Ubuntu specifics${NC}"
-  declare -a  Packages=( "doxygen" "gawk" "doxygen-latex" )
-  for i in "${Packages[@]}";
-  do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
+  declare -a Packages=("doxygen" "gawk" "doxygen-latex")
+  for i in "${Packages[@]}"; do
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i} | grep "install ok installed")
     echo "Checking for ${i}: $PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
@@ -115,10 +129,9 @@ function install_ubuntu() {
 
 function krb5_conf() {
   echo -e "${LGREEN}install MIT Kerberos client packages${NC}"
-  declare -a Packages=( "krb5-user" "libsasl2-modules-gssapi-mit" )
-  for i in "${Packages[@]}";
-  do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed")
+  declare -a Packages=("krb5-user" "libsasl2-modules-gssapi-mit")
+  for i in "${Packages[@]}"; do
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i} | grep "install ok installed")
     echo "Checking for ${i}: $PKG_OK"
     if [ "" = "$PKG_OK" ]; then
       echo "Installing ${i} since it is not found."
@@ -127,7 +140,7 @@ function krb5_conf() {
   done
 
   echo -e "${LGREEN}install /etc/krb5.conf${NC}"
-cat <<EOF >> /etc/krb5.conf
+  cat <<EOF >>/etc/krb5.conf
 # SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -165,7 +178,7 @@ function setup_ssh_key() {
   if [ ! -d "/root/.ssh" ]; then mkdir /root/.ssh; fi
   chmod 700 /root/.ssh
 
-cat <<EOF >> /root/.ssh/authorized_keys
+  cat <<EOF >>/root/.ssh/authorized_keys
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDU9GRwNI2y9NuElgDgLcfDuGstEZiHaMT/2Gs0prPUFN5egpqzJy1qrf7VLf7U4CyxU8QXnhPhzE9qLnDmqFMWpfyaw4F16YhDzxESZHZ6gqKcPhHRPTwVyIdF9nhH0bh9jZxdvUMuUO+G7T+kvKTcrLlmxnbE6dd/UOcZesuyjNeyPfPkYPXrx40LtXwEvk/EoaTQjjlBxOh2YWevHIVEeKgIXDd96UfrQT7ywPT9klBPEc7GxgDMNFKJ1bSWR51TOETRAfFmEnoc0pmULpvzQgj28ppxUZCEXBt8OImkRSG+rPypjIWIEIa54ap3kL9DeJbK6iC9DdXzmCp004EdZdpXqWzLkHOWL58En0c4puRVv+26DGgwwk8sTbyRIDBbkRNiR2HGpasK7SyMy7xdko8W2TScHnXYc/G9R9T4oEcnyN1rY65uNkfKg5QCC2NHDb+vShKHTQ6/wbvtC7sDt7RM6IYwfv46+Wo3D8uYNwow3Ny71EwtdxRkkn2tc5SAyYxBo7N0kFSPKrr15/fUY2TeYV/r/x9xa4cgg/VV8GOxwg/vQxyg9YZNpdiXSM9FCQMtv8wObci4tHpiySDYPo55Aga3EW6Jut856KP15EXPYWml/sHCbEvJUByk3CTt0wW2nxNSl9KUfcQrKGmW3YTW9LhoFDqY1WUHBjdHtQ== thedevilsvoice@protonmail.ch
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFN4w59V3YUwvONCPTClD2SnXhYhQsh/wO0Gr3tNta1w franklin@bitsmasher.net
 EOF
@@ -179,11 +192,11 @@ EOF
 function azure_setup() {
   # install azure cli
   curl -sL https://packages.microsoft.com/keys/microsoft.asc |
-  gpg --dearmor |
-  sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+    gpg --dearmor |
+    sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg >/dev/null
   AZ_REPO=$(lsb_release -cs)
   echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
-  sudo tee /etc/apt/sources.list.d/azure-cli.list
+    sudo tee /etc/apt/sources.list.d/azure-cli.list
   apt -y install azure-cli
 }
 
@@ -196,17 +209,17 @@ function apt_update() {
 }
 
 function setup_sudoers() {
-  grep -qxF 'franklin ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'franklin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+  grep -qxF 'franklin ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'franklin ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 }
 
 function nfs_configuration() {
   echo -e "${LGREEN}NFS Setup${NC}"
-  if [ ! -d  "/mnt/clusterfs" ]; then mkdir /mnt/clusterfs; fi
+  if [ ! -d "/mnt/clusterfs" ]; then mkdir /mnt/clusterfs; fi
   if [ ! -d "/mnt/backup1" ]; then mkdir /mnt/backup1; fi
   if [ ! -d "/mnt/storage1" ]; then mkdir /mnt/storage1; fi
-  grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0' >> /etc/fstab
-  grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >> /etc/fstab
-  grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' /etc/fstab || echo 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' >> /etc/fstab
+  grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0' >>/etc/fstab
+  grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >>/etc/fstab
+  grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' /etc/fstab || echo 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' >>/etc/fstab
   systemctl daemon-reload
   echo -e "${LGREEN}mount all NFS volumes${NC}"
   mount -a
@@ -216,7 +229,7 @@ function setup_ldap() {
   if [ ! -d "/etc/ldap" ]; then mkdir /etc/ldap; fi
   chmod 755 /etc/ldap
 
-cat <<EOF > /etc/ldap.conf
+  cat <<EOF >/etc/ldap.conf
 # SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -229,7 +242,7 @@ SASL_MECH GSSAPI
 SASL_REALM LAB.BITSMASHER.NET
 EOF
 
-cat <<EOF > /etc/pam_ldap.conf
+  cat <<EOF >/etc/pam_ldap.conf
 # SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -240,7 +253,7 @@ ldap_version 3
 pam_password md5
 EOF
 
-cat <<EOF > /etc/libnss-ldap.conf
+  cat <<EOF >/etc/libnss-ldap.conf
 # SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -250,7 +263,7 @@ uri ldap://10.10.13.1/
 ldap_version 3
 EOF
 
-cat <<EOF > /etc/nsswitch.conf
+  cat <<EOF >/etc/nsswitch.conf
 # SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -268,7 +281,7 @@ EOF
 
 function install_hosts_file() {
 
-  cat <<EOF > /etc/hosts
+  cat <<EOF >/etc/hosts
 # SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -279,6 +292,7 @@ ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
 
 10.0.0.1   xfinity.engr.bitsmasher.net xfinity
+10.0.0.67  thelio.engr.bitsmasher.net thelio
 10.0.0.70  dream-machine.engr.bitsmasher.net
 10.0.0.205 femputer.engr.bitsmasher.net femputer
 
@@ -341,28 +355,158 @@ function fix_home_dir() {
 
 function raspi_serial() {
   sudo systemctl enable getty@ttyAMA0.service
-  grep -qxF 'enable_uart=1' /boot/config.txt || echo 'enable_uart=1' >> /boot/config.txt
+  grep -qxF 'enable_uart=1' /boot/config.txt || echo 'enable_uart=1' >>/boot/config.txt
+}
+
+function open_bsd_nfs_configuration() {
+  echo -e "${LGREEN}NFS Setup${NC}"
+  if [ ! -d "/mnt/clusterfs" ]; then mkdir /mnt/clusterfs; fi
+  if [ ! -d "/mnt/backup1" ]; then mkdir /mnt/backup1; fi
+  if [ ! -d "/mnt/passport" ]; then mkdir /mnt/passport; fi
+  if [ ! -d "/mnt/storage1" ]; then mkdir /mnt/storage1; fi
+  # fstab
+  #storage1:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0
+  #storage1:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0
+  #storage1:/mnt/passport /mnt/passport nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0
+  #snowy:/mnt/storage1 /mnt/storage1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0
+
+  grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
+    echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
+  grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
+    echo 'storage1:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
+  grep -qxF 'storage1:/mnt/passport /mnt/passport nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
+    echo 'storage1:/mnt/passport /mnt/passport nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
+  grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
+    echo 'snowy:/mnt/storage1 /mnt/storage1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
+  echo -e "${LGREEN}mount all NFS volumes${NC}"
+  mount -a
+}
+
+function open_bsd_krb5_conf() {
+
+  if [ ! -d "/etc/kerberos" ]; then doas mkdir /etc/kerberos; fi
+  echo -e "${LGREEN}install Heimdal Kerberos client packages${NC}"
+  declare -a Packages=("heimdal" "heimdal-libs" "login_krb5")
+  for i in "${Packages[@]}"; do
+    doas pkg_add "${i}"
+  done
+
+  echo -e "${LGREEN}install /etc/heimdal/krb5.conf${NC}"
+  cat <<EOF >/etc/heimdal/krb5.conf
+[libdefaults]
+default_realm = LAB.BITSMASHER.NET
+dns_lookup_realm = true
+dns_lookup_kdc = true
+
+# The following krb5.conf variables are only for MIT Kerberos.
+kdc_timesync = 1
+ccache_type = 4
+forwardable = true
+proxiable = true
+
+[realms]
+LAB.BITSMASHER.NET = {
+        pkinit_anchors = FILE:/etc/krb5/cacert.pem
+        kdc = kdc1.lab.bitsmasher.net
+        admin_server = kdc1.lab.bitsmasher.net
+        default_domain = LAB.BITSMASHER.NET
+}
+
+[domain_realm]
+.bitsmasher.net = LAB.BITSMASHER.NET
+bitsmasher.net = LAB.BITSMASHER.NET
+lab.bitsmasher.net = LAB.BITSMASHER.NET
+.lab.bitsmasher.net = LAB.BITSMASHER.NET
+
+[kadmin]
+        # default salt string
+        default_keys = v5
+
+[logging]
+        # log to syslog(3)
+        kdc = SYSLOG:INFO:DAEMON
+        kpasswdd = SYSLOG:INFO:AUTH
+        default = SYSLOG:INFO:DAEMON
+
+EOF
+
+}
+
+function open_bsd_add_pkgs() {
+  declare -a Packages=("colorls" "polybar" "dia" "codeblocks" "git" "bash" "fish" "portslist" "openbsd-backgrounds" "qterminal" "neofetch")
+  for i in "${Packages[@]}"; do
+    pkg_add ${i}
+  done
+}
+
+function open_bsd_setup_ports() {
+  #Look for a file named ports.tar.gz on the mirrors.
+  cd /tmp && ftp https://cdn.openbsd.org/pub/OpenBSD/$(uname -r)/{ports.tar.gz,SHA256.sig}
+  signify -Cp /etc/signify/openbsd-$(uname -r | cut -c 1,3)-base.pub -x SHA256.sig ports.tar.gz
+  # You want to untar this file in the /usr directory, which will create /usr/ports and all the directories under it.
+  cd /usr && tar xzf /tmp/ports.tar.gz
+}
+
+function open_bsd_config_shell() {
+  doas usermod -G staff franklin # add my user to the staff group
+  echo "/usr/local/share/fish/man" >>/etc/man.conf
+  curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+  set -U fish_user_paths /usr/local/heimdal/bin $fish_user_paths
+}
+
+function open_bsd_setup_wifi() {
+  doas ifconfig  # lists all supported interfaces
+  doas fw_update # to install missing driver for your card
+  #dmesg | grep pci | grep <wifi card model> # report if not supported
+  doas ifconfig # again to check if your card listed
+  #doas ifconfig join <Wifi name> wpakey <password> # to join your wifi
+  # Run following 2 lines if you want to auto join your wifi:
+  #doas echo "join wifiname wpakey password" >> /etc/hostname.<wificardname>
+  #doas echo "dhcp" >> /etc/hostname.<wificardname>
+  doas sh /etc/netstart # to restart the network
+  ping openbsd.org      # to test your network
+}
+
+function open_bsd_initial_setup() {
+  # add my user to the staff group
+  usermod -G staff franklin
+  usermod -G wheel franklin
+  doas echo "permit persist :wheel" >>/etc/doas.conf
+
+  doas rcctl enable messagebus ## enable dbus
+  doas rcctl start messagebus  ## start dbus
+  doas rcctl enable apmd       ## enable power daemon
+  doas rcctl start apmd        ## start power daemon
 }
 
 function main() {
+  check_docker
   detect_os
-  krb5_conf
-  setup_ldap
-  setup_sudoers
-  nfs_configuration
-  # home dir stuff
-  fix_home_dir
+
+  if [[ "${MY_OS}" == "obsd" ]]; then
+    open_bsd_initial_setup
+    open_bsd_setup_wifi
+    syspatch
+    open_bsd_config_shell
+    open_bsd_setup_ports
+    open_bsd_nfs_configuration
+    open_bsd_add_pkgs
+    open_bsd_krb5_conf
+    open_bsd_config_shell
+    # netbeans https://netbeans.apache.org/download/nb14/nb14.html
+  else
+    krb5_conf
+    setup_ldap
+    setup_sudoers
+    nfs_configuration
+    fix_home_dir
+    apt_update
+    install_hosts_file
+    raspi_serial # configure_raspi
+  # configure_jetson
+  fi
   setup_ssh_key
   # azure_setup
-  apt_update
-
-
-  install_hosts_file
-
-  # configure_raspi
-  raspi_serial
-
-  # configure_jetson
 
 }
 
