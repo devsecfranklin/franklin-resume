@@ -4,8 +4,6 @@ AC_INIT(lab-franklin, 0.3, franklin@bitsmasher.net, https://github.com/devsecfra
 AC_CONFIG_MACRO_DIR(config/m4)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(foreign)
-AC_MSG_NOTICE([build directory: $ac_pwd])
-AC_SUBST(WORKDIR, $ac_pwd)
 
 LT_INIT
 
@@ -83,17 +81,25 @@ fi
 
 AM_CONDITIONAL(HAS_DOCKER, [test "docker" = "found"])
 
-# ****************** Multi target builds *************************
-dnl Note that if `host' and `target' are the same string, you can assume a native configuration. If they are different, you can assume a cross configuration.
-AC_CANONICAL_HOST # AC_CANONICAL_HOST is needed to access the 'host_os' variable
+dnl       ****************** Multi target builds *************************
+dnl Note that if `host' and `target' are the same string, you can assume
+dnl a native configuration. If they are different, you can assume a cross
+dnl configuration.
 
+AC_CANONICAL_HOST # AC_CANONICAL_HOST is needed to access the 'host_os' variable
 echo "Attempting to configure a build for host: $host"
 AC_SUBST(UNAME_P,$(uname -p))
 AC_SUBST(UNAME_S,$(uname -s))
 
+AC_SUBST(WORKDIR, $ac_pwd)
+AC_SUBST(BUILDDIR, $ac_pwd/_build/$host)
+AC_MSG_NOTICE([build directory: $ac_pwd/_build/$host])
+
 if test $UNAME_S = "Linux"
 then
-  echo "This is a LINUX host."
+  echo "This is a LINUX host: $host"
+  mkdir -p "$ac_pwd/_build/$host"
 fi
+
 
 AC_OUTPUT
