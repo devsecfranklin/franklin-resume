@@ -93,13 +93,20 @@ AC_SUBST(UNAME_S,$(uname -s))
 
 AC_SUBST(WORKDIR, $ac_pwd)
 AC_SUBST(BUILDDIR, $ac_pwd/_build/$host)
+AC_SUBST(MYSRCDIR, $ac_pwd/_build/$host/src)
+AC_SUBST(MYLIBDIR, $ac_pwd/_build/$host/lib)
 AC_MSG_NOTICE([build directory: $ac_pwd/_build/$host])
 
 if test $UNAME_S = "Linux"
 then
   echo "This is a LINUX host: $host"
   mkdir -p "$ac_pwd/_build/$host"
+  AC_SUBST(MYSRCDIR, $ac_pwd/_build/$host/src)
+
 fi
-
-
+if test $UNAME_S = "OpenBSD"
+then
+  echo "This is an OpenBSD host: $host"
+  mkdir -p "$ac_pwd/_build/$host"
+fi
 AC_OUTPUT

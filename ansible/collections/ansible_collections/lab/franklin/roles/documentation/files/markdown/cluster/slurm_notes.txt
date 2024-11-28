@@ -1,0 +1,13 @@
+Reconfigure all Slurm daemons on all nodes. This should be done after changing the Slurm configuration file.
+
+scontrol reconfig
+scontrol show nodes
+srun --mpi=list
+
+sinfo –s # summary of cluster resources (-s --summarize)
+sinfo -p <partition-name> -o %n,%C,%m,%z # compute info of nodes in a partition (-o --format)
+sinfo -p Gpu -o %n,%C,%m,%G # GPUs information in Gpu partition (-p --partition)
+sjstat –c # show computing resources per node
+scontrol show partition <partition-name> # partition information
+scontrol show node <node-name> # node information
+sacctmgr show qos format=name,maxwall,maxsubmit # show quality of services

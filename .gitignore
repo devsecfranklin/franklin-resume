@@ -90,6 +90,7 @@ config.sub
 config/
 configure
 configure~
+configure.lineno
 install-sh
 libtool
 ltmain.sh

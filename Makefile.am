@@ -12,19 +12,25 @@ clean:
 if HAS_DOCKER
 	docker system prune -f
 endif
-	rm -rf $(BUILDDIR) LDFLAGS
+	rm -rf *.egg-info
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
-	for trash in AUTHORS ChangeLog _collect _build aclocal aclocal.m4 autom4te.cache config config.log _viz\
-        	config.status configure configure~ libtool Makefile Makefile.in po\
-			container/cloudbot/Makefile container/cloudbot/Makefile.in\
-        	customer/Makefile customer/Makefile.in container/rhel8/Makefile.in container/rhel8/Makefile\
-			container/Makefile container/Makefile.in _test _security NEWS;do \
+	for trash in AUTHORS ChangeLog aclocal aclocal.m4 autom4te.cache config config.log \
+        	config.status configure configure~ libtool Makefile Makefile.in po \
+		ansible/Makefile ansible/Makefile.in \
+		assembly/Makefile assembly/Makefile.in assembly/src/Makefile assembly/src/Makefile.in \
+		container/cloudbot/Makefile container/cloudbot/Makefile.in \
+        	customer/Makefile customer/Makefile.in container/rhel8/Makefile.in container/rhel8/Makefile \
+		container/Makefile container/Makefile.in src/nodebot/Makefile src/nodebot/Makefile.in \
+		_test _security NEWS;do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\
 		fi ; \
 	done
+
+dist-clean: clean
+	rm -rf _build
 
 python:
 	@$(PY39) -m venv $(BUILDDIR)/build

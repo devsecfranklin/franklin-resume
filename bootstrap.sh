@@ -396,7 +396,11 @@ function main() {
     if [ ! -d "aclocal" ]; then mkdir aclocal; fi
     #aclocal -I config
     run_aclocal
-    autoreconf -i
+    if [ "${MY_OS}" == "openbsd" ]; then
+      AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 autoreconf -i || exit 1
+    else
+      autoreconf -i
+    fi
     #automake -a -c --add-missing
     run_automake
     ./configure
