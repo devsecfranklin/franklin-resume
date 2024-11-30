@@ -1,0 +1,8 @@
+dvc
+keras
+tensorflow
+seaborn
+sklearn
+scipy
+numpy
+vectormath

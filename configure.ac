@@ -5,6 +5,15 @@ AC_CONFIG_MACRO_DIR(config/m4)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(foreign)
 
+AC_ARG_ENABLE([debug],
+[  --enable-debug    Turn on debugging],
+[case "${enableval}" in
+  yes) debug=true ;;
+  no)  debug=false ;;
+  *) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
+esac],[debug=false])
+AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
+
 LT_INIT
 
 AC_CONFIG_COMMANDS([franklin-build],
@@ -20,6 +29,7 @@ AC_CONFIG_FILES([
 	container/kerberos-containers/kdc-server/Makefile
 	container/kerberos-containers/kdc-ssh-server/Makefile
 	container/kerberos-containers/ssh-container/Makefile
+  src/cluster_test/Makefile
 	src/nodebot/Makefile
 ])
 
@@ -68,6 +78,7 @@ AC_CHECK_PROG([HAS_GIT], [git], [found], [not-found])
 else
 HAS_GIT=no-repository
 fi
+
 if test $HAS_GIT = found
 then
     GITVERSION="git --git-dir \$(srcdir)/.git rev-parse --short HEAD"
@@ -104,9 +115,14 @@ then
   AC_SUBST(MYSRCDIR, $ac_pwd/_build/$host/src)
 
 fi
+
 if test $UNAME_S = "OpenBSD"
 then
   echo "This is an OpenBSD host: $host"
   mkdir -p "$ac_pwd/_build/$host"
 fi
+
+AC_SUBST([MY_SHELL],[$( echo $SHELL | cut -f1- -d"/" )])
+echo "Shell: $MY_SHELL"
+
 AC_OUTPUT

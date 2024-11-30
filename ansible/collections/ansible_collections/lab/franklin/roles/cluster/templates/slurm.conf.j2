@@ -24,10 +24,7 @@
 # configuration just change the values of SlurmctldHost, for the
 # control machine and PartitionName and NodeName for job execution
 #
-###############################################################################
-#
-#SlurmctldHost=workstation
-SlurmctldHost=head1(10.10.12.18)
+SlurmctldHost={{ansible_hostname}}({{ansible_eth0.ipv4.address}})
 #
 AuthType=auth/munge
 #CheckpointType=checkpoint/none
