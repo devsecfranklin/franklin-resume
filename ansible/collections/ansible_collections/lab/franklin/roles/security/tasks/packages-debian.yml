@@ -5,6 +5,9 @@
       "lynis",
       "pass",
       "tiger",
+      "gnupg2",
+      "wipe",
+      "keyringer"
     ]
     state: latest
   tags: admin

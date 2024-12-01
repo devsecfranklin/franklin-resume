@@ -1,6 +1,12 @@
 ---
 - name: 'Copy /etc/sysctl.d/90-kubelet.conf'
-  copy:
+  ansible.builtin.copy:
     src: 90-kubelet.conf
     dest: "/etc/sysctl.d/90-kubelet.conf"
     mode: 0644
+
+# - name: 'Copy config.keyringer'
+#   ansible.builtin.copy:
+#     src: config.keyringer
+#     dest: "/home/franklin/.keyringer/config"
+#     mode: 0600

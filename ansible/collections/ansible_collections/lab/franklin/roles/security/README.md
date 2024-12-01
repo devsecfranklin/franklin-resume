@@ -1,7 +1,23 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible role for gnupg related stuff.
+
+```sh
+gpg --list-secret-keys --keyid-format=long
+gpg --list-public-keys --keyid-format=long
+gpg --full-generate-key
+gpgconf --list-dirs # all the directories
+gpg --keyserver hkps://keys.openpgp.org:443 --send-key "3FDD B22B E65C FCC1 9BDF  37B2 7C02 032F 97E9 7720" # add key to keyserver
+```
+
+* keyringer
+
+*[https://github.com/quarkslab/keyringer](https://github.com/quarkslab/keyringer)
+
+```sh
+keyringer vault init /home/franklin/.password-store git@github.com:devsecfranklin/vault.git
+```
 
 Requirements
 ------------
@@ -20,12 +36,6 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
 
 License
 -------

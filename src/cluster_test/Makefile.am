@@ -9,18 +9,13 @@ endif
 CC=mpicc $(CFLAGS)
 CXX=mpic++ $(CXXFLAGS)
 
-EXECUTABLE = prime_check
-OBJECTS = prime_check.o
-
-all: $(EXECUTABLE)
+all:
 	$(CC) -o hello_mpi hello_mpi.c
+	$(CXX) -o prime_check prime_check.c
 if !DEBUG
-strip -d hello_mpi
-strip -d prime_check
+	strip -d hello_mpi
+	strip -d prime_check
 endif
-
-$(EXECUTABLE): $(OBJECTS)
-	$(CXX) -o $@ $^ -lfl
 
 clean :
 	@for trash in hello_mpi prime_check Makefile Makefile.in;do \

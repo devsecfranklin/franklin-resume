@@ -24,4 +24,5 @@ echo "Master node: $(hostname)"
 # OpenMPI will automatically discover resources from SLURM.
 
 #mpirun ${WORKDIR}/hello_mpi
-mpirun -n 2 ${WORKDIR}/prime_check
+#mpirun -n 2 ${WORKDIR}/prime_check
+srun -l ${WORKDIR}/prime_check
