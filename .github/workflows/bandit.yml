@@ -17,4 +17,4 @@ jobs:
       - name: Run Bandit
         uses: jpetrucciani/bandit-check@master
         with:
-          bandit_flags: '-c test/bandit.yaml -x .tox,ansible,docker,docs,github_actions,_build,terraform,_test,test,yaml -s B105'
+          bandit_flags: '-c security/bandit.yaml -x .tox,ansible,docker,docs,github_actions,_build,terraform,_test,test,yaml -s B105'

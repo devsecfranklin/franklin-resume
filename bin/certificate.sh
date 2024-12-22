@@ -4,28 +4,25 @@ EMAIL=""
 DOMAIN=""
 NAMESPACE=""
 
-for i in "$@"
-do
-case $i in
-    -e=*|--email=*)
+for i in "$@"; do
+  case $i in
+  -e=* | --email=*)
     EMAIL="${i#*=}"
     ;;
 
-    -d=*|--domain=*)
+  -d=* | --domain=*)
     DOMAIN="${i#*=}"
     ;;
 
-    -n=*|--namespace=*)
+  -n=* | --namespace=*)
     NAMESPACE="${i#*=}"
     ;;
 
-    *)
-    ;;
-esac
+  *) ;;
+  esac
 done
 
-
-cat << EOF | kubectl apply -f -
+cat <<EOF | kubectl apply -f -
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer

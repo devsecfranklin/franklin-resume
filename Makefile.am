@@ -47,16 +47,17 @@ test:
 	( \
 		source $(BUILDDIR)/test/bin/activate; \
 		$(BUILDDIR)/test/bin/python -m pip install --upgrade pip; \
-		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/requirements-test.txt; \
+		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/requirements.txt; \
 		$(WORKDIR)//bootstrap.sh \
 	)
 	@echo "$(info Found Python version $(PY39))"
 
+.PHONY: security
 security:
 	@$(PY39) -m venv $(BUILDDIR)/security
 	( \
 		source $(BUILDDIR)/security/bin/activate; \
 		$(BUILDDIR)/security/bin/python -m pip install --upgrade pip; \
-		$(BUILDDIR)/security/bin/python -m pip install -r$(WORKDIR)/test/requirements-security.txt; \
+		$(BUILDDIR)/security/bin/python -m pip install -r$(WORKDIR)/security/requirements.txt; \
 	)
 	@echo "Found Python version $(PY39)"

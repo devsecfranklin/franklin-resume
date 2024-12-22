@@ -9,6 +9,19 @@ testparm -v /etc/samba/smb.conf thelio 10.0.0.67
 testparm -v /etc/samba/smb.conf snowy 10.10.8.11
 ```
 
+Client
+
+```sh
+apt -y install smbclient cifs-utils
+testparm -v /etc/samba/smb.conf snowy 10.10.8.11
+```
+
+User Test, be sure to add user to the "sambashare" group
+
+```sh
+smbclient -L SNOWY
+```
+
 Requirements
 ------------
 
