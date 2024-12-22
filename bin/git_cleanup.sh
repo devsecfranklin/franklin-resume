@@ -84,8 +84,17 @@ function clean_repo {
   git gc --aggressive
 }
 
+function fix_permissions() {
+  if [ -d "/mnt/development/workspace" ]; then
+    sudo chgrp -R engr /mnt/development/workspace/lab-franklin/.git
+    sudo chmod -R g+rw /mnt/development/workspace/lab-franklin/.git/logs
+  fi
+}
+
 function main {
   check_if_root
+
+  fix_permissions
 
   is_in_local main result
   if [ "${result}" == "$true" ]; then echo -e "Branch main exists in local"; fi

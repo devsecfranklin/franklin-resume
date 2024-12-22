@@ -1,3 +1,4 @@
+/*
 data "google_container_engine_versions" "gke_version" {
   location = var.zone
 }
@@ -137,7 +138,6 @@ resource "google_container_cluster" "primary" {
   }
 }
 
-/*
 resource "google_container_node_pool" "cn-series" {
   name       = "security-nodes"
   project    = var.project_id
@@ -201,9 +201,7 @@ resource "google_container_node_pool" "cn-series" {
     auto_upgrade = true
   }
 }
-*/
 
-/*
 resource "google_container_node_pool" "development" {
   name       = "${var.name_prefix}-development"
   project    = var.project_id
@@ -268,7 +266,6 @@ resource "google_container_node_pool" "development" {
     auto_upgrade = true
   }
 }
-*/
 
 resource "google_container_node_pool" "primary" {
   //name       = "${var.cluster_name}-nodepool"
@@ -292,3 +289,4 @@ resource "google_container_node_pool" "primary" {
     ]
   }
 }
+*/

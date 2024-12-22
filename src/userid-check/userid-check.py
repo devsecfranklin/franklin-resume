@@ -1,33 +1,33 @@
-from getpass import getpass
-import sys
-import os
-import csv
-import logging
-from rich.console import Console
-from rich.table import Table
-from multiprocessing import Process
-from multiprocessing.dummy import Pool as ThreadPool
-from multiprocessing import cpu_count
-import xmltodict
-import requests
-import webbrowser
 import argparse
-import ipaddress
-from argparse import RawTextHelpFormatter
-from OpenSSL import SSL
-import socket
+import csv
 import datetime
-import time
-import matplotlib.pyplot as plt
 
 # from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 # from matplotlib.cbook import get_sample_data
 import io
-import PIL
-from PIL import Image
+import ipaddress
+import logging
+import os
+import socket
+import sys
+import time
+import webbrowser
+from argparse import RawTextHelpFormatter
+from getpass import getpass
+from multiprocessing import Process, cpu_count
+from multiprocessing.dummy import Pool as ThreadPool
+
+import matplotlib.pyplot as plt
 import networkx as nx
-from termcolor import colored
+import PIL
 import pyfiglet
+import requests
+import xmltodict
+from OpenSSL import SSL
+from PIL import Image
+from rich.console import Console
+from rich.table import Table
+from termcolor import colored
 
 from requests.packages import urllib3
 urllib3.disable_warnings()
