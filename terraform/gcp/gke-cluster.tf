@@ -48,8 +48,8 @@ resource "google_container_cluster" "primary" {
   private_cluster_config {
     enable_private_endpoint = false
     enable_private_nodes    = true // only use private nodes, no public IP on nodes
-    # This range must not overlap with any other ranges in use within 
-    # the cluster's network, and it must be a /28 subnet. 
+    # This range must not overlap with any other ranges in use within
+    # the cluster's network, and it must be a /28 subnet.
     master_ipv4_cidr_block = "10.254.0.16/28" // CIDR range for control plane since it is managed by google
   }
 
