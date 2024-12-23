@@ -99,7 +99,7 @@
         - "{{ airgap_dir }}/k3s-airgap-images-arm.tar"
       skip: true
 
-- name: Run K3s Install [server][Airgap]
+- name: "Run K3s Install [server][Airgap]"
   ansible.builtin.command:
     cmd: /usr/local/bin/k3s-install.sh
   environment:
@@ -107,7 +107,7 @@
     INSTALL_K3S_SKIP_DOWNLOAD: "true"
   changed_when: true
 
-- name: Run K3s Install [agent][Airgap]
+- name: "airgap | Run K3s Install [agent][Airgap]"
   ansible.builtin.command:
     cmd: /usr/local/bin/k3s-install.sh
   environment:

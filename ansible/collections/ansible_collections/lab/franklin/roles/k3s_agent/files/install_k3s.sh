@@ -22,7 +22,7 @@ systemctl disable nm-cloud-setup.service nm-cloud-setup.timer reboot
 #--bind-address 10.10.12.18 --disable-cloud-controller --disable local-storage
 
 # install sever
-hostname=`hostname`
+hostname=$(hostname)
 echo "Found hostname: ${hostname}"
 
 if [[ $hostname == "head1.lab.bitsmasher.net" ]]; then

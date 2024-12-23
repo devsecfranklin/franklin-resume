@@ -17,6 +17,10 @@ mpicc -showme
 
 ## OpenBSD
 
+```sh
+doas pkg_add openmpi
+```
+
 ## Nvidia Jetson
 
 * install jtop
@@ -41,3 +45,7 @@ cd /mnt/clusterfs/TOOLS/Python-3.9.0
 # need a newer version of make on nvidia (4.1)
 mpirun --hostfile /home/franklin/clusterfs/mpi-cluster/cluster -np 16 /mnt/clusterfs/TOOLS/make-4.3/make -j 16
 ```
+
+## QEMU Builds
+
+`https://azeria-labs.com/arm-on-x86-qemu-user/`
