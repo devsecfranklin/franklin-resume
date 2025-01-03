@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+auto enp2s0
+allow-hotplug enp2s0
+iface enp2s0 inet static
+  address 10.10.8.11
+  netmask 255.255.248.0
+  gateway 10.10.8.1
+  dns-domain lab.bitsmasher.net
+  dns-nameservers 10.10.13.1 10.10.12.12

@@ -1,4 +1,6 @@
 ---
+bin:dir: /usr/local/sbin
+log_dir: /mnt/storage1/logs
 lynis_dir: /usr/share/lynis
 sec_user: security
 sec_group: security

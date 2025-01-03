@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# add the route to the lab network on boot
+auto enp9s0
+allow-hotplug enp9s0
+iface enp9s0 inet static
+  address 10.0.0.67
+  gateway 10.0.0.70
+  dns-nameservers 10.10.13.1 10.10.12.12
+  dns-search bitsmasher.net
+  up ip route add 10.10.8.0/21 via 10.0.0.70 dev enp9s0
+
+# interfaces(5) file used by ifup(8) and ifdown(8)
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d

@@ -35,7 +35,7 @@ dist-clean: clean
 python:
 	@$(PY39) -m venv $(BUILDDIR)/build
 	( \
-		source $(BUILDDIR)build/bin/activate; \
+		source $(BUILDDIR)build/bin/$(ACTIVATE); \
 		$(BUILDDIR)/build/bin/python -m pip install --upgrade pip; \
 		$(BUILDDIR)/build/bin/python -m pip install -r $(WORKDIR)/src/cloudbot/requirements.txt; \
 		$(BUILDDIR)/build/bin/python -m pip install -r $(WORKDIR)/terraform/requirements.txt; \
@@ -45,10 +45,10 @@ python:
 test:
 	@$(PY39) -m venv $(BUILDDIR)/test
 	( \
-		source $(BUILDDIR)/test/bin/activate; \
+		source $(BUILDDIR)/test/bin/$(ACTIVATE); \
 		$(BUILDDIR)/test/bin/python -m pip install --upgrade pip; \
 		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/requirements.txt; \
-		$(WORKDIR)//bootstrap.sh \
+		$(WORKDIR)/bootstrap.sh \
 	)
 	@echo "$(info Found Python version $(PY39))"
 
@@ -56,7 +56,7 @@ test:
 security:
 	@$(PY39) -m venv $(BUILDDIR)/security
 	( \
-		source $(BUILDDIR)/security/bin/activate; \
+		source $(BUILDDIR)/security/bin/$(ACTIVATE); \
 		$(BUILDDIR)/security/bin/python -m pip install --upgrade pip; \
 		$(BUILDDIR)/security/bin/python -m pip install -r$(WORKDIR)/security/requirements.txt; \
 	)

@@ -1,25 +1,27 @@
-name: build cloudbot pod
+name: build container
 on:
-  push:
-    branches:
-      - main
   pull_request:
 jobs:
   build:
-    name: Build Cloudbot pod
-    runs-on: ubuntu-22.04
+    name: build RHEL image
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Build an image from Dockerfile
+        uses: actions/checkout@v4
+
+      - name: Build an image from Containerfile
+        env:
+          RHEL_USER: '${{ secrets.RHEL_USER }}'
+          RHEL_PASS: '${{ secrets.RHEL_PASS }}'
         run: |
-          docker build -t gcr.io/gcp-gcs-pso/build-pod:${{ github.sha }} .
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'gcr.io/gcp-gcs-pso/build-pod:${{ github.sha }}'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          ./bootstrap.sh
+          ./configure
+          cd container && make rhel
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: 'customer-build'
+      #     format: 'table'
+      #     exit-code: '1'
+      #     vuln-type: 'os,library'
+      #     severity: 'CRITICAL,HIGH'

@@ -1,5 +1,15 @@
 ---
-- name: "Copy bootstrap.sh"
+- name: "network | Copy thelio interface file"
+  ansible.builtin.copy:
+    src: thelio/interfaces.d/enp9s0
+    owner: "root"
+    dest: /etc/network/interfaces.d/enp9s0
+    mode: 0644
+  tags:
+    - thelio
+    - network
+
+- name: "network | Copy interfaces files"
   ansible.builtin.copy:
     src: thelio.service
     owner: "root"
@@ -7,18 +17,6 @@
     mode: 0644
   when:
     - "'thelio' in inventory_hostname"
-
-- name: "Make sure thelio service unit is running"
-  ansible.builtin.systemd_service:
-    state: started
-    name: thelio
-  when:
-    - "'thelio' in inventory_hostname"
-
-- name: "Enable service thelio and ensure it is not masked"
-  ansible.builtin.systemd_service:
-    name: thelio
-    enabled: true
-    masked: no
-  when:
-    - "'thelio' in inventory_hostname"
+  tags:
+    - thelio
+    - network

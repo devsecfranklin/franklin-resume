@@ -2,7 +2,7 @@
 
 FROM nginx:latest
 
-LABEL org.opencontainers.image.authors="Franklin <franklin@dead10c5.org>"
+LABEL org.opencontainers.image.authors="Franklin <franklin@bitsmasher.net>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/website-bitsmasher.net"
 LABEL org.opencontainers.image.description="bitsmasher.net website"
 LABEL org.opencontainers.image.licenses=MIT

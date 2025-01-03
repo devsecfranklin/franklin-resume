@@ -1,0 +1,14 @@
+---
+- name: "security | Create {{lynis_dir}}/plugins"
+  ansible.builtin.file:
+    path: "{{lynis_dir}}/plugins"
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
+    state: directory
+
+- name: "security | Create {{lynis_dir}}/reports"
+  ansible.builtin.file:
+    path: "{{lynis_dir}}/reports"
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
+    state: directory

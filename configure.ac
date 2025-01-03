@@ -122,7 +122,16 @@ then
   mkdir -p "$ac_pwd/_build/$host"
 fi
 
-AC_SUBST([MY_SHELL],[$( echo $SHELL | cut -f1- -d"/" )])
-echo "Shell: $MY_SHELL"
+dnl the script will prob always detect BASH if you run it from bootstrap.sh
+AC_SUBST([MYSHELL], $(echo $SHELL | rev | cut -f1 -d"/" | rev ) )
+CONFIG_SHELL=$SHELL
+if test "$MYSHELL" = "bash"; then
+  echo "Using BASH shell"
+  AC_SUBST([ACTIVATE], activate)
+elif test "$MYSHELL" = "bash"; then
+  # the script will prob always detect BASH if you run it from bootstrap.sh
+  echo "Using FISH shell"
+AC_SUBST([ACTIVATE], activate.fish)
+fi
 
 AC_OUTPUT

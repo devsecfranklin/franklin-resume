@@ -17,7 +17,7 @@
   when:
     grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
 
-- name: "Execute IPv6 related tasks on the Raspberry Pi"
-  ansible.builtin.include_tasks: ipv6-raspi.yml
-  when:
-    - raspberry_pi|default(false)
+#- name: "network | Execute IPv6 related tasks on the Raspberry Pi"
+#  ansible.builtin.include_tasks: ipv6-raspi.yml
+#  when:
+#    - raspberry_pi|default(false)
