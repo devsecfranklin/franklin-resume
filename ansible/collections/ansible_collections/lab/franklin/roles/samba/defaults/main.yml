@@ -1,11 +1,12 @@
-# roles/samba/defaults/main.yml
 ---
 
-samba_workgroup: 'WONDERLAND'
-samba_server_string: 'Fileserver %m'
+samba_workgroup: WONDERLAND
+samba_server_string: Fileserver %m
+#samba_interfaces: []
+samba_interfaces: 127.0.0.0/8 10.0.0.0/24 10.10.8.0/21
 samba_log_size: 5000
 samba_log_level: 0
-samba_interfaces: []
+
 samba_security: 'user'
 samba_passdb_backend: 'tdbsam'
 samba_map_to_guest: 'never'

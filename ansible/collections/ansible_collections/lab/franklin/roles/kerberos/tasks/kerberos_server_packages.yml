@@ -1,5 +1,5 @@
 ---
-- name: 'Install Kerberos Server Packages'
+- name: 'kerberos | Install Kerberos Server Packages'
   ansible.builtin.apt:
     name:
       - krb5-kdc
