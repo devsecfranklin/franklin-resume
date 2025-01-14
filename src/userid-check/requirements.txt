@@ -3,7 +3,7 @@ networkx==3.4.2
 Pillow==11.1.0
 setuptools==75.8.0
 pyfiglet==1.0.2
-pyOpenSSL==24.3.0
+pyOpenSSL==25.0.0
 Requests==2.32.3
 rich==13.9.4
 termcolor==2.5.0
