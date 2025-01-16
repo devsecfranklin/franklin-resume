@@ -1,0 +1,20 @@
+$TTL    10800
+@ IN SOA server1.core.bitsmasher.net. root.research.bitsmasher.net (
+        2024101801 ; serial
+        8H ; refresh
+        4H ; retry
+        4W ; expire
+        1D ; minimum
+        ) ;
+;Name Server Information
+@ IN NS server1.core.bitsmasher.net.
+
+;IP address of Your Domain Name Server(DNS)
+server1       IN A 10.10.0.12
+
+;A Record for Host names
+edge-t		IN A 10.10.24.30
+node900     IN A 10.10.24.90
+node901     IN A 10.10.24.91
+node902		IN A 10.10.24.92
+node903		IN A 10.10.24.93

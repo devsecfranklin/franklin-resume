@@ -39,3 +39,4 @@ ff02::2		ip6-allrouters
 10.10.12.254 odroid-c1.lab.bitsmasher.net odroid-c1 kdc1.lab.bitsmasher.net kdc1
 10.10.13.1   server3.lab.bitsmasher.net server3
 10.10.13.10  bbb1.lab.bitsmasher.net bbb1
+10.10.24.1   blowfish.research.bitsmasher.net

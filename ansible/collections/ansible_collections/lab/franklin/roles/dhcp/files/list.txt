@@ -20,3 +20,6 @@
 10.10.12.2 dc:a6:32:39:a2:b1 node2
 10.10.12.1 dc:a6:32:39:88:e9 node1
 10.10.12.0 dc:a6:32:39:a4:7c node0
+98:b7:85:21:ad:76 blowfish ix0 (10G sfp+)
+98:b7:85:21:ad:77 blowfish ix1 (10G sfp+)
+b8:ca:3a:7d:23:f2 blowfish em0 (1G RJ-45)
