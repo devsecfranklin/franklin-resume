@@ -24,21 +24,15 @@
   tags:
     - cluster
 
-- name: "munge | Create /run/munge directory"
+- name: "munge | Create munge directories"
   ansible.builtin.file:
-    path: "/run/munge"
     owner: "{{munge_user}}"
     group: "{{munge_group}}"
     mode: "0755"
     state: directory
-
-- name: "munge | Create /var/log/munge directory"
-  ansible.builtin.file:
-    path: "/var/log/munge"
-    owner: "{{munge_user}}"
-    group: "{{munge_group}}"
-    mode: "0755"
-    state: directory
+  loop:
+    - "/var/log/munge"
+    - "/run/munge"
 
 # daemon is same on head and nodes
 - name: "munge | Ensure munge is started"

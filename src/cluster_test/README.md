@@ -11,6 +11,7 @@ apt-get -y install openssh-server git htop python3-pip mpich mpi-default-dev lib
 
 ```sh
 cd src/cluster_test
+make all
 mpicc -dumpmachine
 mpicc -showme
 scontrol show node node[0-3] # show slurm on the nodes

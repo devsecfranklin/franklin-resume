@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -294,6 +294,7 @@ ff02::2		ip6-allrouters
 10.0.0.1   xfinity.engr.bitsmasher.net xfinity
 10.0.0.67  thelio.engr.bitsmasher.net thelio
 10.0.0.70  dream-machine.engr.bitsmasher.net
+10.0.0.189 grimoire.eng.bitsmasher.net grimoire
 10.0.0.205 femputer.engr.bitsmasher.net femputer
 
 10.10.8.1  dream-machine.lab.bitsmasher.net dream-machine
@@ -345,9 +346,9 @@ function fix_home_dir() {
   if [ ! -d "/home/franklin.old" ]; then mv /home/franklin /home/franklin.old; fi
 
   if [ "${MY_OS}" == "obsd" ] && [ ! -L "/home/franklin" ]; then
-    ln -s /mnt/backup1/franklin-openbsd /home
+    ln -s /mnt/storage1/home/franklin-openbsd /home
   elif [ "${MY_OS}" != "obsd" ] && [ ! -L "/home/franklin" ]; then
-    ln -s /mnt/backup1/franklin /home
+    ln -s /mnt/storage1/home/franklin /home
   else
     echo -e "${LGREEN}The symlink already exists for /home/franklin${NC}"
   fi

@@ -10,8 +10,8 @@ CC=mpicc $(CFLAGS)
 CXX=mpic++ $(CXXFLAGS)
 
 all:
-	$(CC) -o hello_mpi hello_mpi.c
-	$(CXX) -o prime_check prime_check.c
+	$(CC) -o hello_mpi src/hello_mpi.c
+	$(CXX) -o prime_check src/prime_check.c
 if !DEBUG
 	strip -d hello_mpi
 	strip -d prime_check

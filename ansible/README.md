@@ -150,8 +150,8 @@ ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspa
 ## Example Commands
 
 ```sh
-ansible raspi_nodes -a 'apt update' -b -i ./hosts
-ansible raspi_nodes -a 'apt -y upgrade' -b -i ./hosts
+ansible raspi_nodes -a 'apt update' -b -i /etc/ansible/hosts
+ansible raspi_nodes -a 'apt -y upgrade' -b -i /etc/ansible/hosts
 ansible nvidia_nodes -a 'apt update' -b -i /etc/ansible/hosts -e 'ansible_python_interpreter=/usr/bin/python3'
 ansible-playbook ansible/collections/ansible_collections/lab/franklin/playbooks/playbook.yml -i ./hosts -b
 ```
