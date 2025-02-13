@@ -1,0 +1,7 @@
+---
+home_dir: /usr/local/sbin
+log_dir: /mnt/storage1/logs/minecraft
+mc_user: minecraft
+mc_group: minecraft
+mc_uid: 420
+mc_gid: 420

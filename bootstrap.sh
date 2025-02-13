@@ -222,7 +222,7 @@ function install_macos() {
   brew update
 
   for i in "${Packages[@]}"; do
-    if brew list ${i} &>/dev/null; then
+    if brew list "${i}" &>/dev/null; then
       echo -e "${LGREEN}${i} is already installed${NC}"
       brew upgrade "${i}"
     else

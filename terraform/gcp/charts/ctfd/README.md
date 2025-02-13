@@ -62,7 +62,6 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeSelector`                              | Pod node selector                                       | {}                                                         |
 | `tolerations`                               | Pod tolerations                                         | []                                                         |
 | `affinity`                                  | Pod affinity                                            | {}                                                         |
-`metrics.enabled`                           | Start a side-car prometheus exporter                | `false`                                                           |
 | `metrics.image.registry`                    | Exporter image registry                             | `docker.io`                                                       |
 | `metrics.image.repository`                  | Exporter image name                                 | `bitnami/mysqld-exporter`                                         |
 | `metrics.image.tag`                         | Exporter image tag                                  | `{TAG_NAME}`                                                      |
@@ -82,7 +81,6 @@ The following table lists the configurable parameters of this chart and their de
 | `metrics.readinessProbe.timeoutSeconds`     | When the probe times out (metrics)                    | `1`                                                             |
 | `metrics.readinessProbe.successThreshold`   | Minimum consecutive successes for the probe (metrics) | `1`                                                             |
 | `metrics.readinessProbe.failureThreshold`   | Minimum consecutive failures for the probe (metrics)  | `3`                                                             |
-| `metrics.serviceMonitor.enabled`            | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)  | `false`       |
 | `metrics.serviceMonitor.namespace`          | Optional namespace which Prometheus is running in     | `nil`                                                           |
 | `metrics.serviceMonitor.interval`           | How frequently to scrape metrics (use by default, falling back to Prometheus' default)  | `nil`                         |
 | `metrics.serviceMonitor.selector`           | Default to kube-prometheus install (CoreOS recommended), but should be set according to Prometheus install   | `{ prometheus: kube-prometheus }` |

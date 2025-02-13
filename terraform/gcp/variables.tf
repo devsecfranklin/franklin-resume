@@ -36,30 +36,19 @@ variable "tags" {
 variable "access_list" {
   type = list(any)
   default = [
-    "3.233.53.199", # AWS bh51pafwinb01p-mgmt1
-    "8.44.144.96",  # viktor
     "10.0.0.0/8",
-    "24.8.186.84",      # Home network
-    "34.27.202.221",    # GCP fw 1
-    "34.134.31.136/32", # GCP panorama one
-    "34.136.90.64/32",  # GCP panorama two
-    "34.206.152.182",   # AWS bh52pafwoew01p-mgmt1
     "35.222.82.220/32", # GCP lab-franklin-airlock1
-    "44.216.25.244",    # AWS bh51pafwinb02p-mgmt1
-    "52.55.185.160",    # AWS bh52pafwoew02p-mgmt1
     "134.238.141.178",  # corp network
     "134.238.141.180",  # corp network
     "134.238.163.160",  # corp network
     "130.41.0.0/16",    # corp network
     "137.83.192.0/18",  # corp network
-    "174.16.149.41",    # viktor
     "192.168.0.0/24",   # old mgmt network
     "165.85.137.128",   # corp network
     "165.85.189.61",    # corp network
-    "138.145.192.35",
-    "35.192.145.138",
-    "99.140.240.200", # penny net
-    "137.83.249.243"  # corp network
+    "99.140.240.200",   # penny net
+    "137.83.249.243",   # corp network
+    "174.29.26.238"     # speer
   ]
 }
 

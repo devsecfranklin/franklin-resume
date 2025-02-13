@@ -82,8 +82,7 @@ set rulebase nat rules OUTBOUND-NAT tag OUTBOUND
 
 ## Cloud Identity Engine
 
-[How to troubleshoot gRPC connections failure between Firewall and ACE Application Cloud Engine/Content Cloud
-](https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA14u000000g1DOCAY)
+[How to troubleshoot gRPC connections failure between Firewall and Cloud Engine](https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA14u000000g1DOCAY)
 
 ```sh
 show device-certificate status

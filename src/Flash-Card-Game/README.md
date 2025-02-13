@@ -11,9 +11,6 @@
   <br/>
   <br/>
   <br/>
-<img width=400 src='./react-ui/assets/scrn1.png'>
-<br/>
-<img width=400 src='./react-ui/assets/scrn2.png'>
 </div>
 <br/>
 
@@ -22,7 +19,7 @@
 Our goal was to gamify the learning experience of using flashcards.
 
 We aim to do this by awarding users ⭐&nbsp; STARS for completed games with a satisfactory score
-(i.e. 9+/10 score), as well as awarding 💎&nbsp; GEMS for 2 day or more streaks.  
+(i.e. 9+/10 score), as well as awarding 💎&nbsp; GEMS for 2 day or more streaks.
 
 <br/>
 

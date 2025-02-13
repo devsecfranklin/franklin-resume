@@ -23,6 +23,7 @@
     comment: watching you so behave
     uid: "{{ sec_uid }}"
     group: "{{ sec_group }}"
+    gid: "{{sec_gid}}"
 
 - name: "security | setup lynis"
   ansible.builtin.include_tasks: lynis.yml
