@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 from mpi4py import MPI
 from math   import pi as PI
 from numpy  import array

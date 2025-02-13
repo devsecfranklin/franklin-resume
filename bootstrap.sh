@@ -249,6 +249,7 @@ function install_macos() {
   brew install kreuzwerker/taps/m1-terraform-provider-helper
   brew tap hashicorp/tap
   brew install hashicorp/tap/terraform
+  brew install yasm
   m1-terraform-provider-helper activate
   #m1-terraform-provider-helper install hashicorp/template -v v2.2.0 # DEPRECATED
   #terraform providers lock -platform=darwin_arm64
