@@ -455,7 +455,7 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 .#*
-*.bin
+#*.bin
 .cproject
 .metadata/
 .project
@@ -592,8 +592,6 @@ build/
 !default.mode2v3
 !default.perspectivev3
 
-
 ### Other
-*~
 node_modules
 template\ assembly

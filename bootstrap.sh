@@ -14,6 +14,7 @@
 # v0.6 07/13/2023 Add required_files and OpenBSD support
 # v0.7 04/22/2024 More OpenBSD support
 # v0.8 09/06/2024 Support GCP Linux
+# v0.9 02/18/2025 Updates for Mac
 
 #set -euo pipefail
 
@@ -216,10 +217,11 @@ function check_installed() {
 
 function install_macos() {
   #declare -a Packages=("ac")
-  declare -a Packages=("git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
+  declare -a Packages=("google-cloud-sdk" "git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
 
   echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
   brew update
+  #brew upgrade google-cloud-sdk # this is to avoid the error: ModuleNotFoundError: No module named 'imp'
 
   for i in "${Packages[@]}"; do
     if brew list "${i}" &>/dev/null; then

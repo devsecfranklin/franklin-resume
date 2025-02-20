@@ -1,14 +1,15 @@
 # Lab Backend
 
-- lab-franklin-windows
-- ps-devsecops-fw01
 - "10.252.0.0/25" mgmt
 - [Use IAP Desktop to access the VPC via Cloud NAT](https://github.com/GoogleCloudPlatform/iap-desktop)
 
 ## Jump Box
 
+You have to add your public IPv4 to the FW rule `franklin-lab-ingerss` manually in GCP or by
+adding it to the `variables.tf` list.
+
 ```sh
-gcloud compute ssh --zone=us-central1-a lab-franklin-airlock1
+gcloud compute ssh lab-franklin-airlock1 --project=gcp-gcs-pso --zone=us-central1-a
 gcloud compute ssh --zone=us-central1-a lab-franklin-timecube
 gcloud compute instances attach-disk lab-franklin-airlock1 --disk=lab-franklin-dev --device-name=lab-franklin-dev --zone=us-central1-a
 ls -l /dev/disk/by-id/google-*

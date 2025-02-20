@@ -48,6 +48,7 @@ variable "access_list" {
     "165.85.189.61",    # corp network
     "99.140.240.200",   # penny net
     "137.83.249.243",   # corp network
+    "202.181.131.131",  # corp
     "174.29.26.238"     # speer
   ]
 }
