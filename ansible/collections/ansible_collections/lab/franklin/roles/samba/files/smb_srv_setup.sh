@@ -1,3 +1,11 @@
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+#
+# {{ ansible_managed }}
+#
+
 apt-get install -y locales-all
 localectl set-locale LANG=en_US.utf8
 localectl status

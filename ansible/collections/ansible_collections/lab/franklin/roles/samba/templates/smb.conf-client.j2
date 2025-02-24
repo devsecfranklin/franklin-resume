@@ -2,6 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+#
+# {{ ansible_managed }}
+#
+
 [global]
 workgroup = {{samba_workgroup}}
 netbios name = {% if samba_netbios_name is defined %}{{ samba_netbios_name }}{% else %}{{ ansible_hostname }}{% endif %}

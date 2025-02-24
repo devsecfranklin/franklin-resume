@@ -6,6 +6,8 @@
       - krb5-admin-server
       - krb5-pkinit
       - krb5-kpropd
+      - krb5-config
+      - kstart
     force_apt_get: true
     update_cache: true
   tags:

@@ -1,3 +1,11 @@
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+#
+# {{ ansible_managed }}
+#
+
 check: ANSIBLE-exists
 
 setup:

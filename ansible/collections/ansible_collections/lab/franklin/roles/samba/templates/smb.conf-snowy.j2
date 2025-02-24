@@ -3,6 +3,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 #
+# {{ ansible_managed }}
+#
+
+#
 # This is the main Samba configuration file. You should read the
 # smb.conf(5) manual page in order to understand the options listed
 # here. Samba has a huge number of configurable options most of which
@@ -31,12 +35,12 @@ server string = %h server (Samba, Debian)
 # show the workgroup
 server min protocol = NT1
 
-lanman auth = yes
-ntlm auth = yes
-wins support = yes
-local master = yes
-preferred master = yes
-domain master = yes
+#lanman auth = yes
+#ntlm auth = yes
+#wins support = yes
+#local master = yes
+#preferred master = yes
+#domain master = yes
 
 #### Networking ####
 
@@ -182,11 +186,11 @@ read only = no
 
 # File creation mask is set to 0700 for security reasons. If you want to
 # create files with group=rw permissions, set next parameter to 0775.
-;   create mask = 0700
+create mask = 0755
 
 # Directory creation mask is set to 0700 for security reasons. If you want to
 # create dirs. with group=rw permissions, set next parameter to 0775.
-;   directory mask = 0700
+directory mask = 0755
 
 # By default, \\server\username shares can be connected to by anyone
 # with access to the samba server.

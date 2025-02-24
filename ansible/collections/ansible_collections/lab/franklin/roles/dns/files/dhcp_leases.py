@@ -1,8 +1,28 @@
-#!/usr/bin/python
-import datetime, bisect
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+#
+# {{ ansible_managed }}
+#
+
+import datetime
+import bisect
 
 
 def parse_timestamp(raw_str):
+    """_summary_
+
+    Args:
+        raw_str (_type_): _description_
+
+    Raises:
+        Exception: _description_
+        Exception: _description_
+
+    Returns:
+        _type_: _description_
+    """
     tokens = raw_str.split()
 
     if len(tokens) == 1:
@@ -20,6 +40,15 @@ def parse_timestamp(raw_str):
 
 
 def timestamp_is_ge(t1, t2):
+    """_summary_
+
+    Args:
+        t1 (_type_): _description_
+        t2 (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     if t1 == "never":
         return True
 
@@ -31,6 +60,15 @@ def timestamp_is_ge(t1, t2):
 
 
 def timestamp_is_lt(t1, t2):
+    """_summary_
+
+    Args:
+        t1 (_type_): _description_
+        t2 (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     if t1 == "never":
         return False
 
@@ -42,10 +80,31 @@ def timestamp_is_lt(t1, t2):
 
 
 def timestamp_is_between(t, tstart, tend):
+    """_summary_
+
+    Args:
+        t (_type_): _description_
+        tstart (_type_): _description_
+        tend (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     return timestamp_is_ge(t, tstart) and timestamp_is_lt(t, tend)
 
 
 def parse_hardware(raw_str):
+    """_summary_
+
+    Args:
+        raw_str (_type_): _description_
+
+    Raises:
+        Exception: _description_
+
+    Returns:
+        _type_: _description_
+    """
     tokens = raw_str.split()
 
     if len(tokens) == 2:
