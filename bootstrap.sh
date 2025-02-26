@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -15,6 +15,7 @@
 # v0.7 04/22/2024 More OpenBSD support
 # v0.8 09/06/2024 Support GCP Linux
 # v0.9 02/18/2025 Updates for Mac
+# v1.0 02/26/2025 Optimize ssome functions using Gemini 2.0 Flash
 
 #set -euo pipefail
 
@@ -206,12 +207,12 @@ function run_autoconf() {
 }
 
 function check_installed() {
-  if ! command -v ${1} &>/dev/null; then
-    echo -e "${LRED}${1} could not be found${NC}"
-    return 1
-  else
-    echo -e "${LPURP}Found command: ${1}${NC}"
+  if command -v "$1" &>/dev/null; then
+    printf "${LPURP}Found command: %s${NC}\n" "$1"
     return 0
+  else
+    printf "${LRED}%s could not be found${NC}\n" "$1"
+    return 1
   fi
 }
 
@@ -321,12 +322,9 @@ function debian() {
 
 function redhat() {
   if [ ! -f "./config.status" ]; then
-    # libtoolize
-    if [ ! -d "aclocal" ]; then mkdir aclocal; fi
-    #aclocal -I config
+    mkdir -p aclocal # Create aclocal if needed
     run_aclocal
     autoreconf -i
-    #automake -a -c --add-missing
     run_automake
     ./configure
   else
@@ -348,23 +346,19 @@ function install_redhat() {
 
 function required_files() {
   echo "Check for presence of required GNU autotools files"
-  declare -a required_files=("AUTHORS" "ChangeLog" "NEWS")
 
-  for xx in "${required_files[@]}"; do
-    #echo "check $xx"
-    if [ ! -f "${xx}" ]; then
-      echo -e "${LGREEN}Creating required file ${xx} since it is not found.${NC}"
-      #touch "${xx}"
-      ln -s README.md ${xx}
+  local required_files=("AUTHORS" "ChangeLog" "NEWS")
+
+  for file in "${required_files[@]}"; do
+    if [ ! -f "$file" ]; then
+      printf "${LGREEN}Creating required file %s since it is not found.${NC}\n" "$file"
+      ln -sf README.md "$file" # Use -sf to force and be silent
     else
-      echo -e "${LBLUE}Found required file ${xx}.${NC}"
+      printf "${LBLUE}Found required file %s.${NC}\n" "$file"
     fi
   done
 
-  if [ ! -d "config/m4" ]; then
-    echo "create congif/m4 dir"
-    mkdir -p config/m4
-  fi
+  mkdir -p config/m4 # Create config/m4 if needed
 }
 
 function main() {

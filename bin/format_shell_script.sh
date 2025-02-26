@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2024 Palo Alto Networks, Inc.  All rights reserved. <fdiaz@paloaltonetworks.com>
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: https://www.paloaltonetworks.com/legal/script-software-license-1-0.pdf
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# ChangeLog:
+#
 
 # v0.1 | 02/15/2024 | initial version | franklin
 # v0.2 | 10/05/2024 | check the scripts in test/ | franklin

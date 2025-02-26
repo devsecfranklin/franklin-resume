@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2023 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: © 2021-2025 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
+
+# ChangeLog:
+#
 
 # v0.1 06/11/2021 Original Version
 # v0.2 11/11/2022 Support differet Linux distros

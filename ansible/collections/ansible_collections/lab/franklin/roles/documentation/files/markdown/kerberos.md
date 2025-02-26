@@ -1,7 +1,38 @@
 # Kerberos
 
-If you log in on a host that has a prperly installed `/etc/krb5.keytab` you will get a similar effect
-to requesting a new ticket, or typing `kinit -R` to refresh.
+If you log in on a host that has a properly installed `/etc/krb5.keytab`
+you will get a similar effect to requesting a new ticket, or typing `kinit -R`
+to refresh.
+
+This is an example of how the keytab shoud look on an example machine:
+
+```sh
+root@thelio:~# klist -ke /etc/krb5.keytab 
+Keytab name: FILE:/etc/krb5.keytab
+KVNO Principal
+---- --------------------------------------------------------------------------
+   2 host/thelio.lab.bitsmasher.net@LAB.BITSMASHER.NET (aes256-cts-hmac-sha1-96) 
+   2 host/thelio.lab.bitsmasher.net@LAB.BITSMASHER.NET (aes128-cts-hmac-sha1-96) 
+   2 ldap/thelio.lab.bitsmasher.net@LAB.BITSMASHER.NET (aes256-cts-hmac-sha1-96) 
+   2 ldap/thelio.lab.bitsmasher.net@LAB.BITSMASHER.NET (aes128-cts-hmac-sha1-96) 
+   2 nfs/thelio.lab.bitsmasher.net@LAB.BITSMASHER.NET (aes256-cts-hmac-sha1-96) 
+   2 nfs/thelio.lab.bitsmasher.net@LAB.BITSMASHER.NET (aes128-cts-hmac-sha1-96)
+```
+
+## USER Principal
+
+* Add the user to the KDC:
+
+```sh
+kinit -f root/admin
+klist
+kadmin -p  root/admin@LAB.BITSMASHER.NET
+addprinc -randkey sly@LAB.BITSMASHER.NET
+cpw sly # Reset Passwd for a User
+klist -ke /etc/krb5.keytab
+```
+
+## HOST Principal
 
 * Find the correct hostname for each principal:
 
@@ -12,16 +43,18 @@ getent hosts $(hostname) | awk '{print $1; exit}' | xargs getent hosts | awk '{p
 * Add the NFS principal for the hosts to the KDC:
 
 ```sh
+kinit -f root/admin
+klist
 kadmin -p  root/admin@LAB.BITSMASHER.NET
 addprinc -randkey nfs/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET
 ktadd nfs/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET host/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET ldap/snowy.lab.bitsmasher.net@LAB.BITSMASHER.NET
-klist -ke /etc/krb5.keytab
 ```
 
-* OpenBSD
+* Validate
 
 ```sh
-/usr/local/heimdal/bin/klist
+klist -ke /etc/krb5.keytab # linnux
+/usr/local/heimdal/bin/klist #openbsd
 ```
 
 ## KDC Files
@@ -79,4 +112,14 @@ Once the SSH config file is updated, add the private-key to the SSH agent:
 
 ```sh
 ssh-add -K ~/.ssh/id_ed25519
+```
+
+### OpenBSD SSH setup
+
+TBD
+
+## User Setup
+
+```sh
+gpg --list-keys
 ```
