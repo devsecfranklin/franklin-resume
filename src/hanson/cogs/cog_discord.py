@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import logging
 import os
 import pathlib
@@ -23,7 +27,8 @@ class Disco(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        logger.info(f"{self.__class__.__name__} Cog has been loaded")
+        """Loading message"""
+        logger.info("Cog has been loaded: %s", self.__class__.__name__)
 
     def check_user(self, username):
         my_gh_username = "devsecfranklin"

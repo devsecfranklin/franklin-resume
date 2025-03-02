@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import datetime
 import logging
 import os
@@ -85,6 +89,7 @@ class Masto(commands.Cog):
         gv.edge_attr.update(len="2.0", color="blue")
         return gv
     """
+
     @commands.command(
         name="testtoot",
         brief="(mod) print a test status message",

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import json
 import logging
 import logging.config
@@ -59,7 +63,9 @@ class Utils:
         #    print(obj, "\n")
         # return r.text
 
-        with open(self.bot_data_folder + "/serverinfo.txt", "w") as f:
+        with open(
+            self.bot_data_folder + "/serverinfo.txt", "w", encoding="UTF=-8"
+        ) as f:
             f.write(r.text)
         f.close()
         msg = "Server info written to disk."
