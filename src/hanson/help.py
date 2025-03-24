@@ -1,7 +1,17 @@
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 # https://www.pythondiscord.com/pages/guides/python-guides/discordpy_help_command/
 
 
 class MyHelp(commands.HelpCommand):
+    """_summary_
+
+    Args:
+        commands (_type_): _description_
+    """
+
     async def send_bot_help(self, mapping):
         """
         This is triggered when !help is invoked.

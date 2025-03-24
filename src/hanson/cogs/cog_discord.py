@@ -5,11 +5,13 @@
 import logging
 import os
 import pathlib
-from pprint import pprint
+
+# from pprint import pprint
 
 import requests
 from discord.ext import commands
-from pygit2 import UserPass, clone_repository
+
+# from pygit2 import UserPass, clone_repository
 
 from . import Utils
 
@@ -28,11 +30,11 @@ class Disco(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         """Loading message"""
-        logger.info("Cog has been loaded: %s", self.__class__.__name__)
+        logger.info(f"Cog has been loaded: { self.__class__.__name__}")
 
     def check_user(self, username):
         my_gh_username = "devsecfranklin"
-        url = f"https://api.github.com/users/" + username
+        url = f"https://api.github.com/users/{username}"
 
         # create a re-usable session object with the user creds in-built
         gh_session = requests.Session()
@@ -50,6 +52,11 @@ class Disco(commands.Cog):
         help="(mod) Test network connectivity",
     )
     async def ping(self, ctx):
+        """_summary_
+
+        Args:
+            ctx (_type_): _description_
+        """
         if "moderator" or "Server Booster" in [
             i.name.lower() for i in ctx.author.roles
         ]:
@@ -59,6 +66,12 @@ class Disco(commands.Cog):
 
     @commands.command(name="check", brief="Check github user", help="Check github user")
     async def check(self, ctx, username):
+        """_summary_
+
+        Args:
+            ctx (_type_): _description_
+            username (_type_): _description_
+        """
         user_data = self.check_user(username)
         if user_data:
             logger.debug(
@@ -75,6 +88,12 @@ class Disco(commands.Cog):
         help="(Experimental) Clone a gitHub Repo",
     )
     async def clone(self, ctx, uri):
+        """_summary_
+
+        Args:
+            ctx (_type_): _description_
+            uri (_type_): _description_
+        """
         if "moderator" or "Server Booster" in [
             i.name.lower() for i in ctx.author.roles
         ]:
@@ -113,6 +132,11 @@ class Disco(commands.Cog):
         help="Bot info",
     )
     async def info(self, ctx):
+        """_summary_
+
+        Args:
+            ctx (_type_): _description_
+        """
         if "hacker fam" in [i.name.lower() for i in ctx.author.roles]:
             await ctx.send("My mastodon page: https://botsin.space/@hanson")
         else:
@@ -124,18 +148,17 @@ class Disco(commands.Cog):
         help="(mod) Server info",
     )
     async def serverinfo(self, ctx):
+        """_summary_
+
+        Args:
+            ctx (_type_): _description_
+        """
         if "hacker fam" in [i.name.lower() for i in ctx.author.roles]:
             srv_info = self.MyUtils.get_server_info()
             await ctx.send(srv_info)
         else:
             await ctx.send("You aint fam whats this we shit")
 
-
-"""
-__author__     = 'devsecfranklin'
-__version__    = '0.1'
-__email__      = 'devsecfranklin@duck.com'
-"""
 
 """from github import Github
 import pygit2

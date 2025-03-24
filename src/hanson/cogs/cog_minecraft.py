@@ -2,6 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+# ChangeLog:
+#
+# v0.1 02/25/2025 initial version
+
 import logging
 import os
 from mcstatus import JavaServer
@@ -11,14 +15,14 @@ from discord.ext import commands
 logger = logging.getLogger("hanson")
 
 
-class Music(commands.Cog):
+class Minecraft(commands.Cog):
     """Discord specific commands."""
 
     def __init__(self, bot):
         self.bot = bot
         self.guild_id = os.getenv("DISCORD_BOT_GUILD")
         self.bot_channel = os.getenv("DISCORD_BOT_CHANNEL")
-        self.token = os.getenv("DISCORD_BOT_TOKEN")
+        self.TOKEN = os.getenv("DISCORD_BOT_TOKEN")
         self.github_token = os.environ.get("GITHUB_TOKEN")
         self.server = JavaServer.lookup("127.0.0.1:25565")
 
@@ -43,15 +47,10 @@ class Music(commands.Cog):
         # plugins that hide this information or limit the number of players returned or even
         # alter this list to contain fake players for purposes of having a custom message here.
         """
-        if ("moderator" or "Server Booster") in [
-            i.name.lower() for i in ctx.author.roles
-        ]:
-            status = self.server.status()
-            print(
-                f"The server has {status.players.online} player(s) online and replied in {status.latency} ms"
-            )
-        else:
-            await ctx.send("Nice try, nerd. Do you even play Minecraft?")
+        status = self.server.status()
+        await ctx.send(
+            f"The server has {status.players.online} player(s) online and replied in {status.latency} ms"
+        )
 
     @commands.command(
         name="mcping",
@@ -67,9 +66,8 @@ class Music(commands.Cog):
         # 'ping' is supported by all Minecraft servers that are version 1.7 or higher.
         # It is included in a 'status' call, but is also exposed separate if you do not require the additional info.
         """
-
         latency = self.server.ping()
-        print(f"The server replied in {latency} ms")
+        await ctx.send(f"The server replied in {latency} ms")
 
     @commands.command(
         name="mcquery", brief="Get the MC server query", help="Get the MC server query"
@@ -83,8 +81,7 @@ class Music(commands.Cog):
         # 'query' has to be enabled in a server's server.properties file!
         # It may give more information than a ping, such as a full player list or mod information.
         """
-
         query = self.server.query()
-        print(
+        await ctx.send(
             f"The server has the following players online: {', '.join(query.players.names)}"
         )

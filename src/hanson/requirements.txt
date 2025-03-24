@@ -1,8 +1,10 @@
-wheel
-Mastodon.py
 discord
-PyGithub
-python-dotenv
+google-generativeai
+Mastodon.py
+mcstatus
 pygit2
+PyGithub
 #pygraphviz
+python-dotenv
 python_terraform
+wheel
