@@ -1,0 +1,334 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  twoside]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Enterprise Logging with Palo Alto Networks},
+  pdfauthor={Franklin Diaz fdiaz@paloaltonetworks.com},
+  pdflang={en},
+  pdfkeywords={logging, syslog, tls},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\else
+  \usepackage[shorthands=off,main=english]{babel}
+\fi
+
+\title{Enterprise Logging with Palo Alto Networks}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Customer Logging Configuration}
+\author{Franklin Diaz
+\href{mailto:fdiaz@paloaltonetworks.com}{\nolinkurl{fdiaz@paloaltonetworks.com}}}
+\date{March 24, 2025}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Instructions on configuration of TLS for an important account.
+\end{abstract}
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\begin{figure}
+\centering
+\includegraphics{../images/customer/diagram1-logging.png}
+\caption{an image showing the logging infra}
+\end{figure}
+
+\hypertarget{prerequisites}{%
+\subsection{Prerequisites}\label{prerequisites}}
+
+\begin{itemize}
+\tightlist
+\item
+  Make available the TCP ports as shown in the document
+  \href{https://docs.paloaltonetworks.com/strata-logging-service/administration/planning/ports-and-fqdns}{Strata
+  Logging Service}
+\item
+  Use the support portal to create a Device Certificate on all Panorama
+  and Firewall devices, and have Telemetry enabled.
+\end{itemize}
+
+\hypertarget{import-tls-certificates}{%
+\subsection{Import TLS Certificates}\label{import-tls-certificates}}
+
+The TLS certificates must be provided by the customer. Pleas take great
+care when handling sensitive files such as keys, pem files,
+certificates, etc. It is good practice to set ownership to
+owner/read-only at all times. For exmaple \texttt{chmod\ 400\ *.pem}.
+
+\begin{itemize}
+\tightlist
+\item
+  For each desired service,
+  \href{https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/certificate-management/obtain-certificates/import-a-certificate-and-private-key\#ide2b67a64-7100-4fa3-8304-48dbe64bcaa4}{generate
+  or import a certificate on the firewall}
+\item
+  You can also use OCSP like so:
+  \href{https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/certificate-management/obtain-certificates/obtain-a-certificate-from-an-external-ca}{Obtain
+  a Certificate from an External CA}
+\end{itemize}
+
+\hypertarget{configure-ssltls-service-profile}{%
+\subsection{Configure SSL/TLS Service
+Profile}\label{configure-ssltls-service-profile}}
+
+Making a service profile on the Panorama is the first step.
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/certificate-management/configure-an-ssltls-service-profile/configure-an-ssltls-service-profile-pan-os}{Configure
+  an SSL/TLS Service Profile (PAN-OS \& Panorama)}
+\item
+  Navigate to \texttt{Panorama} -\textgreater{}
+  \texttt{Certificate\ Management} -\textgreater{}
+  \texttt{SSL/TLS\ Service\ Profile}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    set min TLS version to 1.2, max to 1.3
+  \item
+    Reference the Certificate you imported/created for logging.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{configure-syslog-server-profile}{%
+\subsection{Configure Syslog Server
+Profile}\label{configure-syslog-server-profile}}
+
+This step is only needed for SYSLOG configuration. The details about
+each remote SYSLOG server are captured in these steps.
+
+\begin{itemize}
+\tightlist
+\item
+  Navigate to \texttt{Panorama} -\textgreater{}
+  \texttt{Server\ Profiles} -\textgreater{} \texttt{SYSLOG} and create
+  each logging profile as desired.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The TCP profile" for splunk testing is server 10.228.96.182,
+    transport TCP, port 8642, format IETF
+  \item
+    The TLS profile" for splunk testing is server 10.228.96.182,
+    transport TLS, port 8643. format IETF
+  \end{itemize}
+\item
+  We do not usually change any settings on the
+  \texttt{Custom\ Log\ Format} tab.
+\end{itemize}
+
+\hypertarget{configure-log-settings}{%
+\subsection{Configure Log Settings}\label{configure-log-settings}}
+
+\begin{itemize}
+\tightlist
+\item
+  Navigate to \texttt{Panorama} -\textgreater{} \texttt{Log\ Settings}
+  -\textgreater{} \texttt{System}
+\item
+  Add the new SYSLOG profiles here with the \texttt{All\ Logs} filter.
+\end{itemize}
+
+\hypertarget{qradar}{%
+\subsubsection{QRadar}\label{qradar}}
+
+The QRadar server is at \texttt{qrocvip-mah.xxx.com} with IP
+\texttt{153.2.226.136} on TCP port 514.
+
+\hypertarget{syslog-client-configuration}{%
+\subsubsection{Syslog Client
+Configuration}\label{syslog-client-configuration}}
+
+Syslog is configured in two places on the Panorama. Once in the Panorama
+tab for the Panorama itself, and again in the Device Templates for the
+Firewall devices.
+
+To configure firewall SYSLOG from the Panorama console:
+
+\begin{itemize}
+\tightlist
+\item
+  From the Global Template:
+  \texttt{device\ -\textgreater{}\ server\ profiles\ -\textgreater{}\ syslog}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This makes the firewalls aware of all the SYSLOG servers.
+  \end{itemize}
+\item
+  For SYSLOG coming from the Panorama(s) you should also check
+  \texttt{Panorama\ -\textgreater{}\ server\ profiles\ -\textgreater{}\ syslog}
+\item
+  NOTE: SYSLOG is system configuration logging, which is different from
+  the traffic log forwarding.
+\item
+  Make sure the IP address of the jump host or other test host is in the
+  permitted mgmt IP address list.
+\item
+  You could also try tcpdump from
+  \texttt{Panorama\ \textgreater{}\ Managed\ Devices\ \textgreater{}\ Troubleshooting}
+\end{itemize}
+
+Validate the basic connectivity between Panorama and SYSLOG server.
+These example commands are meant to be run from the CLI.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{debug}\NormalTok{ syslog{-}params show}
+\FunctionTok{ping}\NormalTok{ host }\OperatorTok{\textless{}}\NormalTok{IP address of syslog server}\OperatorTok{\textgreater{}}
+\ExtensionTok{traceroute}\NormalTok{ host }\OperatorTok{\textless{}}\NormalTok{IP address of syslog server}\OperatorTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Check the TCP connection between the firewall and the syslog server.
+\item
+  Replace TCP port if not using TCP/514, for exmaple 8642 or 8643.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{show}\NormalTok{ netstat numeric{-}hosts yes numeric{-}ports yes all yes }\KeywordTok{|} \ExtensionTok{match}\NormalTok{ 514}
+\ExtensionTok{show}\NormalTok{ netstat numeric{-}hosts yes numeric{-}ports yes all yes }\KeywordTok{|} \ExtensionTok{match}\NormalTok{ 8642}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  On Panorama Template, check permitted IP addresses
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{Device\ \textgreater{}\ Setup\ \textgreater{}\ Interfaces\ \textgreater{}\ Management\ \textgreater{}\ Permitted\ IP\ Addresses}
+  \item
+    The IP address for each SYSLOG collector should be listed in the
+    permitted list.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{cortex-data-lake}{%
+\subsubsection{Cortex Data Lake}\label{cortex-data-lake}}
+
+\begin{itemize}
+\tightlist
+\item
+  Capture and describe the settings for CDL here.
+\item
+  Note that CDL does not work without a valid device certificate on the
+  host.
+\end{itemize}
+
+\end{document}

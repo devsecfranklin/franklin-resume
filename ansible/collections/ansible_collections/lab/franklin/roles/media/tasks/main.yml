@@ -1,6 +1,6 @@
 ---
 - name: Install fbi
-  apt:
+  ansible.builtin.apt:
     name: fbi
     state: latest
 

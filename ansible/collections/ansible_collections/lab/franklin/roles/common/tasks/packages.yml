@@ -11,7 +11,6 @@
       - pass
       - python3-pip
       - tightvncserver
-
     state: latest
     autoclean: true
     autoremove: true

@@ -33,3 +33,31 @@ openssl req -in head2.lab.bitsmasher.net.csr -noout -subject
 openssl req  -noout -text -in /etc/ssl/server.csr
 openssl x509  -noout -text -in /etc/ssl/certs/server.crt
 ```
+
+## Setup Certificates
+
+```sh
+/usr/lib/ssl/misc/CA.pl -newca # use this file to set up CA
+/usr/lib/ssl/misc/CA.pl -signCA
+/usr/lib/ssl/misc/CA.pl -newreq # generate a CSR
+/usr/lib/ssl/misc/CA.pl -sign
+openssl rsa < newkey.pem > clearkey.pem # create an unencrypted version of the key file
+cp /etc/ssl/demoCA/cacert.pem /etc/ldap/bitsmasher.net.cert.pem # copy the CA cert
+cp /etc/ssl/clearkey.pem /etc/ldap/bitsmasher.net.key.pem # copy the CA key
+```
+
+## TLS Troubleshooting Client/Server Connections
+
+* Ensure both client and server support at least TLS 1.2 (and preferably TLS 1.3).
+  * Check your browser's or application's TLS settings to enable TLS 1.2 or higher.
+* The SSL/TLS certificate might be expired, revoked, untrusted, or have a name mismatch
+  * Verify the certificate's validity and ensure it's issued by a trusted Certificate Authority (CA).
+  * Check for any errors or warnings related to the certificate in your browser or application.
+  * If using a self-signed certificate, ensure it's properly configured and trusted by the client.
+* Ensure both client and server support a common set of cipher suites.
+  * Check the server's configuration to see which cipher suites are enabled.
+
+### Palo Alto Networks
+
+* [Configure an SSL/TLS Service Profile (PAN-OS & Panorama)](https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/certificate-management/configure-an-ssltls-service-profile/configure-an-ssltls-service-profile-pan-os)
+* [How to detect the SSL or TLS version being used](https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA14u0000008UgRCAU)

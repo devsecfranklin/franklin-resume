@@ -89,6 +89,7 @@ confdefs.h
 config.guess
 config.h
 config.h.in*
+config.log
 config.status
 config.sub
 config/
@@ -447,8 +448,6 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
-[Bb]in
-[Dd]ebug*/
 *.sbr
 obj/
 [Rr]elease*/

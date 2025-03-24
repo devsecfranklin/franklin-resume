@@ -1,6 +1,6 @@
 ---
 - name: "sssd | install sssd-krb5"
-  apt:
+  ansible.builtin.apt:
     name:
       - sssd-krb5
       - sssd-ldap
