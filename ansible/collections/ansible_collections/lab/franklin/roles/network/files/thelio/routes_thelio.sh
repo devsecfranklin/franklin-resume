@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023-2025 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
+
+# v0.2 3/24/2025 - update for new ISP
 
 set -o nounset                              # Treat unset variables as an error
 
@@ -24,7 +26,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 function wireless() {
-  route add -net 10.10.8.0/21 gw 10.0.0.70
+  route add -net 10.10.8.0/21 gw 192.168.0.17
 }
 
 function wired() {
@@ -33,9 +35,9 @@ function wired() {
 
 function route_del(){
   # this will erase the wireless routes
-  route delete -net 10.10.8.0/21 gw 10.0.0.70 dev enp9s0
-  route delete  10.0.0.70
-  route delete  10.0.0.1
+  route delete -net 10.10.8.0/21 gw 192.168.0.17 dev enp9s0
+  route delete  192.168.0.17
+  route delete  192.168.0.1
 }
 
 function main() {

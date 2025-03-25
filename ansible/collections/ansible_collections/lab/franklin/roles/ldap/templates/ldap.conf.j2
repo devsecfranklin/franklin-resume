@@ -1,14 +1,17 @@
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
 #
-# LDAP Defaults
-#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
+# v0.1 initial version
+
+# LDAP Defaults
 # See ldap.conf(5) for details
 # This file should be world readable but not world writable.
 
-BASE	dc=lab,dc=bitsmasher,dc=net
-#URI	ldap://ldap.bitsmasher.net ldap://ldap-master.bitsmasher.net:666
-#URI	ldap://10.10.12.254/
-URI	ldap://{{ ldap_uri }}
+BASE {{ ldap_base }}
+URI	 {{ ldap_uri }}
+
+#ldap_version 3
 
 #SIZELIMIT	12
 #TIMELIMIT	15

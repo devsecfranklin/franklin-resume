@@ -1,2 +1,4 @@
 ---
-ldap_uri: 10.10.13.1
+ldap_base: "dc=lab,dc=bitsmasher,dc=net"
+ldap_uri: ldap://10.10.13.1/
+my_crt: 
