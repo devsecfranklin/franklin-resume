@@ -1,16 +1,5 @@
 ---
-- name: "Install SSL packages"
-  apt:
-    package:
-      [
-        "python3-openssl",
-        "libssl-dev",
-        "openssl",
-      ]
-    state: latest
-  tags: TLS
-
-- name: "Install NTP packages"
+- name: "Install TLS packages"
   ansible.builtin.apt:
     name:
       - python3-openssl
@@ -26,7 +15,7 @@
   - ansible_facts['distribution'] == "Debian"
 
 - name: 'Install certificate'
-  ansible.builtin.include: ssl_client.yml
+  ansible.builtin.include_tasks: "ssl_client.yml"
 
 - name: "Copy in site CA cert"
   ansible.builtin.copy:
