@@ -144,7 +144,7 @@ function krb5_conf() {
 
   echo -e "${LGREEN}install /etc/krb5.conf${NC}"
   cat <<EOF >>/etc/krb5.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -213,6 +213,7 @@ function apt_update() {
 
 function setup_sudoers() {
   grep -qxF 'franklin ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'franklin ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
+  grep -qxF 'sly ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'sly ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 }
 
 function nfs_configuration() {
@@ -220,8 +221,8 @@ function nfs_configuration() {
   if [ ! -d "/mnt/clusterfs" ]; then mkdir /mnt/clusterfs; fi
   if [ ! -d "/mnt/backup1" ]; then mkdir /mnt/backup1; fi
   if [ ! -d "/mnt/storage1" ]; then mkdir /mnt/storage1; fi
-  grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0' >>/etc/fstab
-  grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >>/etc/fstab
+  # grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0' >>/etc/fstab
+  # grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >>/etc/fstab
   grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' /etc/fstab || echo 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' >>/etc/fstab
   systemctl daemon-reload
   echo -e "${LGREEN}mount all NFS volumes${NC}"
@@ -233,7 +234,7 @@ function setup_ldap() {
   chmod 755 /etc/ldap
 
   cat <<EOF >/etc/ldap.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -246,7 +247,7 @@ SASL_REALM LAB.BITSMASHER.NET
 EOF
 
   cat <<EOF >/etc/pam_ldap.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -257,7 +258,7 @@ pam_password md5
 EOF
 
   cat <<EOF >/etc/libnss-ldap.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -267,7 +268,7 @@ ldap_version 3
 EOF
 
   cat <<EOF >/etc/nsswitch.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -285,7 +286,7 @@ EOF
 function install_hosts_file() {
 
   cat <<EOF >/etc/hosts
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@dead10c5.org>
+# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -293,12 +294,6 @@ function install_hosts_file() {
 ::1		localhost ip6-localhost ip6-loopback
 ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
-
-10.0.0.1   xfinity.engr.bitsmasher.net xfinity
-10.0.0.67  thelio.engr.bitsmasher.net thelio
-10.0.0.70  dream-machine.engr.bitsmasher.net
-10.0.0.189 grimoire.eng.bitsmasher.net grimoire
-10.0.0.205 femputer.engr.bitsmasher.net femputer
 
 10.10.8.1  dream-machine.lab.bitsmasher.net dream-machine
 10.10.8.3 netlab1.lab.bitsmasher.net netlab1
@@ -323,6 +318,7 @@ ff02::2		ip6-allrouters
 10.10.12.254 odroid-c1.lab.bitsmasher.net odroid-c1 kdc1.lab.bitsmasher.net kdc1
 10.10.13.1 server3.lab.bitsmasher.net server3
 10.10.13.10 bbb1.lab.bitsmasher.net bbb1
+178.62.60.55 www.bitsmasher.net wonderland
 EOF
 
 }

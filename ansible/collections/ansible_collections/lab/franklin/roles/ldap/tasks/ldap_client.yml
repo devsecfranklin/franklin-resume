@@ -14,18 +14,18 @@
 
 - name: 'Copy /etc/nsswitch.conf'
   ansible.builtin.copy:
-    src: nsswitch.conf
+    src: etc/nsswitch.conf
     dest: /etc/nsswitch.conf
     mode: 0644
 
 - name: "Copy /etc/libnss-ldap.conf"
   ansible.builtin.copy:
-    src: libnss-ldap.conf
+    src: etc/libnss-ldap.conf
     dest: /etc/libnss-ldap.conf
     mode: 0644
 
 - name: "Copy /etc/pam_ldap.conf"
   ansible.builtin.copy:
-    src: pam_ldap.conf
+    src: etc/pam_ldap.conf
     dest: /etc/pam_ldap.conf
     mode: 0644

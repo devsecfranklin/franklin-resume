@@ -16,7 +16,7 @@
 
 - name: "Copy /etc/default/slapd"
   ansible.builtin.copy:
-    src: slapd
+    src: etc/default/slapd
     dest: /etc/default/slapd
     mode: 0644
 

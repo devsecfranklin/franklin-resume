@@ -1,0 +1,15 @@
+[submodule "src/bot-tang"]
+	path = src/bot-tang
+	url = https://github.com/devsecfranklin/bot-tang
+[submodule "src/bot-hanson"]
+	path = src/bot-hanson
+	url = https://github.com/devsecfranklin/bot-hanson
+[submodule "src/cloud-tools"]
+	path = src/cloud-tools
+	url = https://github.com/devsecfranklin/cloud-tools
+[submodule "templates/template-autotools"]
+	path = templates/template-autotools
+	url = https://github.com/devsecfranklin/template-autotools
+[submodule "templates/template-latex"]
+	path = templates/template-latex
+	url = https://github.com/devsecfranklin/template-latex

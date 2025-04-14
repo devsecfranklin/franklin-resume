@@ -4,7 +4,7 @@
 
 - name: "Install OpenLDAP"
   ansible.builtin.include_tasks: ldap_server.yml
-  when: "'server3' in ansible_hostname"
+  when: "'ldap' in ansible_hostname"
 
 - name: "Install OpenLDAP Client"
   ansible.builtin.include_tasks: ldap_client.yml
