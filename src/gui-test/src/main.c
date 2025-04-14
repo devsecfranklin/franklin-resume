@@ -1,6 +1,5 @@
 #include <gtk/gtk.h>
 
-/*
 static int counter = 0;
 
 void greet(GtkWidget* widget, gpointer data)
@@ -46,7 +45,7 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-*/
+/*
 
 static void activate (GtkApplication* app, gpointe user_data)
 {
@@ -70,3 +69,4 @@ int main (int argc, char **argv)
 
   return status;
 }
+*/
