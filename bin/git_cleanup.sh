@@ -94,6 +94,12 @@ function fix_permissions() {
   fi
 }
 
+function validate_remote(){
+  # git remote add origin git@github.com:devsecfranklin/bot-hanson.git
+  # git remote show  origin
+  pass
+}
+
 function main {
   check_if_root
 

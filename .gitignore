@@ -96,6 +96,9 @@ config/
 configure
 configure~
 configure.lineno
+conftest.c
+conftest
+conftest.err
 install-sh
 libtool
 ltmain.sh
