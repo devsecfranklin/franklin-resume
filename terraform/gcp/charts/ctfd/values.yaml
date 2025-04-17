@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: ctfd/ctfd
-  tag: "3.7.6"
+  tag: "3.7.7"
   pullPolicy: IfNotPresent
 
 env:
