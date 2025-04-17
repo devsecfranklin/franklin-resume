@@ -1,1 +1,4 @@
-py-image-dedup
+#numpy
+#py-image-dedup # https://github.com/markusressel/py-image-dedup
+# a diffrent method follows
+imagededup # https://github.com/idealo/imagededup

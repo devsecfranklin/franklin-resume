@@ -28,7 +28,7 @@ terraform show -json franklin.plan > tfplan.json
 doctl account get
 doctl auth init
 export DO_TOKEN=$(pass DO_TOKEN) || export DO_TOKEN=(pass DO_TOKEN)
-doctl compute domain records list bitsmasher.net
+doctl compute domain records list bitsmasher.net 
 terraform import -var "do_token=${DO_TOKEN}" digitalocean_domain.default bitsmasher.net
 terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.www bitsmasher.net,131134899
 terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt1 bitsmasher.net,33037444
@@ -39,4 +39,11 @@ terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt3 bitsmasher
 terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns1 bitsmasher.net,33037438
 terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns2 bitsmasher.net,33037439
 terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns3 bitsmasher.net,33037441
+```
+
+## metrics agent
+
+```sh
+curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
+ps aux | grep do-agent # verify it is running
 ```

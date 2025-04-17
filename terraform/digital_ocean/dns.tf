@@ -1,4 +1,7 @@
-# Create a new domain
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 resource "digitalocean_domain" "default" {
   name       = "bitsmasher.net"
   ip_address = "178.62.60.55"
@@ -16,6 +19,22 @@ resource "digitalocean_record" "www6" {
   type   = "AAAA"
   name   = "www6"
   value  = "2a03:b0c0:1:d0::30b:7001"
+}
+
+resource "digitalocean_record" "games" {
+  domain = digitalocean_domain.default.name
+  type   = "A"
+  name   = "games"
+  value  = "137.184.177.152"
+  ttl    = 1800
+}
+
+resource "digitalocean_record" "games6" {
+  domain = digitalocean_domain.default.name
+  type   = "AAAA"
+  name   = "games6"
+  value  = "2604:a880:4:1d0::8b30:a000"
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "txt1" {
@@ -52,6 +71,7 @@ resource "digitalocean_record" "ns1" {
   type   = "NS"
   name   = "@"
   value  = "ns1.digitalocean.com."
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "ns2" {
@@ -59,6 +79,7 @@ resource "digitalocean_record" "ns2" {
   type   = "NS"
   name   = "@"
   value  = "ns2.digitalocean.com."
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "ns3" {
@@ -66,17 +87,12 @@ resource "digitalocean_record" "ns3" {
   type   = "NS"
   name   = "@"
   value  = "ns3.digitalocean.com."
-}
-
-resource "digitalocean_record" "gopher" {
-  domain = digitalocean_domain.default.name
-  type   = "CNAME"
-  name   = "gopher"
-  value  = "www.bitsmasher.net."
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "dkim1" {
   domain = digitalocean_domain.default.name
+  ttl    = 1800
   type   = "CNAME"
   name   = "protonmail._domainkey"
   value  = "protonmail.domainkey.d7wob6rd7ydwemp7nuog2slag3bngwjhtb2ne5re6r4af7h7i56pq.domains.proton.ch."
@@ -87,6 +103,7 @@ resource "digitalocean_record" "dkim2" {
   type   = "CNAME"
   name   = "protonmail2._domainkey"
   value  = "protonmail2.domainkey.d7wob6rd7ydwemp7nuog2slag3bngwjhtb2ne5re6r4af7h7i56pq.domains.proton.ch."
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "dkim3" {
@@ -94,6 +111,7 @@ resource "digitalocean_record" "dkim3" {
   type   = "CNAME"
   name   = "protonmail3._domainkey"
   value  = "protonmail3.domainkey.d7wob6rd7ydwemp7nuog2slag3bngwjhtb2ne5re6r4af7h7i56pq.domains.proton.ch."
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "txt4" {
@@ -101,5 +119,6 @@ resource "digitalocean_record" "txt4" {
   type   = "TXT"
   name   = "@"
   value  = "google-site-verification=Y2VHPkWr404k4tGcBbXiFCDX8929NzpummmfTm1xpd4"
+  ttl    = 1800
 }
 

@@ -13,3 +13,15 @@
 [submodule "templates/template-latex"]
 	path = templates/template-latex
 	url = https://github.com/devsecfranklin/template-latex
+[submodule "src/bot-newb-actual"]
+	path = src/bot-newb-actual
+	url = https://github.com/devsecfranklin/bot-newb-actual
+[submodule "src/franklin-resume"]
+	path = src/franklin-resume
+	url = https://github.com/devsecfranklin/franklin-resume
+[submodule "src/math"]
+	path = src/math
+	url = https://github.com/devsecfranklin/math
+[submodule "src/random"]
+	path = src/random
+	url = https://github.com/devsecfranklin/random
