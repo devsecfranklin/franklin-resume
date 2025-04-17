@@ -14,6 +14,12 @@ resource "google_storage_bucket" "gke_terraform_state" {
   name     = "lab-franklin"
   location = var.region
 
+  /* This only deletes objects when the bucket is destroyed,
+     not when setting this parameter to true. Once this parameter
+     is set to true, there must be a successful terraform apply
+     run before a destroy is required to update this value in the
+     resource state. Without a successful terraform apply after
+     this parameter is set, this flag will have no effect. */
   force_destroy               = true
   uniform_bucket_level_access = true
 }
@@ -34,11 +40,15 @@ resource "google_compute_subnetwork" "mgmt-subnet" {
   region        = var.region
   network       = google_compute_network.mgmt-vpc.id
 
+  stack_type       = "IPV4_IPV6"
+  ipv6_access_type = "INTERNAL"
+
   log_config {
     aggregation_interval = "INTERVAL_10_MIN"
     flow_sampling        = 0.5
     metadata             = "INCLUDE_ALL_METADATA"
   }
+
   lifecycle {
     prevent_destroy = true
   }
@@ -46,6 +56,7 @@ resource "google_compute_subnetwork" "mgmt-subnet" {
 
 // ****************************************** OpenShift
 // have to move this to a region that allows larger machines
+/*
 resource "google_compute_subnetwork" "aus_network_subnet" {
   name                     = "${var.name}-aus-mgmt-subnet"
   project                  = var.project_id
@@ -57,12 +68,10 @@ resource "google_compute_subnetwork" "aus_network_subnet" {
     prevent_destroy = true
   }
 }
+*/
 
-// ****************************************** GKE
-
-// GCP Airlock
-
-// Create a "dual stack" subnet
+// GCP Airlock - Create a "dual stack" subnet
+/*
 resource "google_compute_subnetwork" "subnetwork-ipv6" {
   name          = "ipv6-test-subnetwork"
 
@@ -79,3 +88,4 @@ resource "google_compute_network" "custom-test" {
   name                    = "ipv6-test-network"
   auto_create_subnetworks = false
 }
+*/

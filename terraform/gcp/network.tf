@@ -9,7 +9,7 @@ internet. Public NAT does not rely on proxy VMs. Instead, a Public NAT gateway a
 a set of external IP addresses and source ports to each VM that uses the gateway to
 create outbound connections to the internet.
 
-*/
+
 
 ## Create Nat Gateway
 module "cloud_router" {
@@ -25,6 +25,8 @@ module "cloud_router" {
     source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   }]
 }
+
+*/
 
 resource "google_compute_subnetwork" "gke-subnet" {
   name                     = "${var.name_prefix}-gke-subnet"

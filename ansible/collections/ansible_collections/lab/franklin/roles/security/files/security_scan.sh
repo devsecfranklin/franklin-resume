@@ -5,10 +5,16 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 HOSTNAME=$(hostnamectl hostname)
-LOGDIR="/mnt/storage1/logs"/${HOSTNAME}
+LOGDIR="/mnt/storage1/logs/${HOSTNAME}"
 MYDATE=$(date +%Y%m%d)
 
-if [ ! -d "${LOGDIR}" ]; then echo "Creating ${LOGDIR}" && mkdir "${LOGDIR}"; fi
+if test -d "/mnt/storage1" && not test "${LOGDIR}" ; then
+  echo "In local lab. Creating ${LOGDIR}"
+  mkdir "${LOGDIR}"
+else
+  echo "Not in local lab. Creating ${LOGDIR}"
+  LOGDIR="/var/log/lynis"
+fi
 
 command -v /usr/sbin/lynis >/dev/null 2>&1 || \
   { echo >&2 "lynis not found. Installing"; apt install -y lynis; }

@@ -1,10 +1,7 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
+/*
+provider "aws" {
+  source  = "hashicorp/aws"
+  version = "~> 5.0"
 }
 
 provider "azurerm" {
@@ -12,7 +9,7 @@ provider "azurerm" {
   skip_provider_registration = "true"
   subscription_id            = var.subscription
 }
-
+*/
 
 provider "google" {
   project = var.project_id

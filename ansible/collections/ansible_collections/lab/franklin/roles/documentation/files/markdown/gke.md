@@ -4,9 +4,13 @@
 
 ```sh
 gcloud components install gke-gcloud-auth-plugin || sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+sudo apt install -y kubectl
+gcloud components update # use this, or the following giant blob
+sudo apt-get update && sudo apt-get --only-upgrade install google-cloud-cli-app-engine-go google-cloud-cli-pubsub-emulator google-cloud-cli-datastore-emulator google-cloud-cli google-cloud-cli-managed-flink-client google-cloud-cli-app-engine-java google-cloud-cli-cloud-run-proxy google-cloud-cli-minikube google-cloud-cli-cbt google-cloud-cli-terraform-tools kubectl google-cloud-cli-app-engine-python-extras google-cloud-cli-log-streaming google-cloud-cli-firestore-emulator google-cloud-cli-kpt google-cloud-cli-anthos-auth google-cloud-cli-package-go-module google-cloud-cli-nomos google-cloud-cli-spanner-migration-tool google-cloud-cli-local-extract google-cloud-cli-app-engine-python google-cloud-cli-istioctl google-cloud-cli-app-engine-grpc google-cloud-cli-config-connector google-cloud-cli-cloud-build-local google-cloud-cli-kubectl-oidc google-cloud-cli-docker-credential-gcr google-cloud-cli-enterprise-certificate-proxy google-cloud-cli-gke-gcloud-auth-plugin google-cloud-cli-spanner-emulator google-cloud-cli-skaffold google-cloud-cli-bigtable-emulator google-cloud-cli-anthoscli
 gke-gcloud-auth-plugin --version
-gcloud components update
+gcloud auth list
 gcloud auth activate-service-account --key-file={$GOOGLE_APPLICATION_CREDENTIALS}
+gcloud container clusters create --binauthz-evaluation-mode=PROJECT_SINGLETON_POLICY_ENFORCE --zone us-central1-a evening_tide
 ```
 
 ## Label Nodes

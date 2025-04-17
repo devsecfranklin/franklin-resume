@@ -15,6 +15,7 @@ data "google_compute_subnetwork" "mgmt-subnetwork" {
   region = var.region
 }
 
+/*
 data "google_compute_subnetwork" "aus-mgmt-subnetwork" {
   name   = "${var.name_prefix}-aus-mgmt-subnet"
   region = var.openshift-region
@@ -44,3 +45,4 @@ resource "google_compute_network" "vpc" {
     prevent_destroy = true
   }
 }
+*/
