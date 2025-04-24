@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 # ChangeLog:
 #
@@ -361,6 +361,12 @@ function required_files() {
   mkdir -p config/m4 # Create config/m4 if needed
 }
 
+function install_openbsd() {
+  doas pkg_add colorls
+  LINE="alias ls=\"colorls -G\""
+  grep -qF -- "$LINE" "$HOME/.bashrc" || echo "$LINE" >>  "$HOME/.bashrc"
+}
+
 function main() {
   check_docker
   detect_os
@@ -381,6 +387,10 @@ function main() {
 
   if [ "${MY_OS}" == "deb" ]; then
     install_debian
+  fi
+
+  if [ "${MY_OS}" == "openbsd" ]; then
+    install_openbsd
   fi
 
   if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then

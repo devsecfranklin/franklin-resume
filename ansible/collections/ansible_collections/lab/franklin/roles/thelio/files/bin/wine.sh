@@ -8,10 +8,11 @@
 # run winecfg and set emulate virtual desktop
 
 # Sound
-winetricks sound=disabled   # shut off sound
-Revert it back using " winetricks sound=pulse " or "winetricks settings list"
+# winetricks sound=disabled   # shut off sound
+# Revert it back using " winetricks sound=pulse " or "winetricks settings list"
 
-
+sudo apt-get --reinstall install ttf-mscorefonts-installer # this is interactive
+# install fonts into .wine/drive_c/windows/Fonts
 winetricks dlls # install first one
+winetricks corefonts vcrun6 
 
-# start a new game, shut off sound and graphics in the Game menu
