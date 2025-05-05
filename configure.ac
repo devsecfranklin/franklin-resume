@@ -21,16 +21,17 @@ AC_CONFIG_COMMANDS([franklin-build],
  [mypkgname=$PACKAGE_NAME])
 
 AC_CONFIG_FILES([
-	Makefile
-	ansible/Makefile
-	assembly/Makefile
-	assembly/src/Makefile
-	container/Makefile
-	container/kerberos-containers/kdc-server/Makefile
-	container/kerberos-containers/kdc-ssh-server/Makefile
-	container/kerberos-containers/ssh-container/Makefile
+  Makefile
+  ansible/Makefile
+  assembly/Makefile
+  assembly/src/Makefile
+  container/Makefile
+  container/kerberos-containers/kdc-server/Makefile
+  container/kerberos-containers/kdc-ssh-server/Makefile
+  container/kerberos-containers/ssh-container/Makefile
   src/cluster_test/Makefile
-	src/nodebot/Makefile
+  src/gui-test/Makefile
+  src/nodebot/Makefile
 ])
 
 dnl Checks for programs.
@@ -133,5 +134,37 @@ elif test "$MYSHELL" = "bash"; then
   echo "Using FISH shell"
 AC_SUBST([ACTIVATE], activate.fish)
 fi
+
+# Determine a C compiler to use. If CC is not already set in the environment,
+# check for gcc and cc, then for other C compilers. Set output variable CC to the name of the compiler found. 
+AC_PROG_CC([gcc cl cc])
+dnl Check for toolchain and install components
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_RANLIB
+
+dnl Check that our compiler can do const and inline
+AC_C_CONST
+AC_C_INLINE
+
+dnl Check for standard headers:
+AC_HEADER_STDC
+AC_HEADER_DIRENT
+AC_CHECK_HEADERS([stdlib.h stdio.h libintl.h locale.h arpa/inet.h netdb.h strings.h sys/socket.h unistd.h])
+AC_CONFIG_HEADERS([config.h])
+AC_CHECK_HEADER_STDBOOL # Checks for typedefs, structures, and compiler characteristics.
+
+
+dnl Check for libraries:
+# AC_CHECK_LIB(ssl, SSL_free)
+AC_CHECK_FUNCS([setlocale strtol socket]) # Checks for library functions.
+
+
+#AC_ARG_WITH([gtk], AS_HELP_STRING([--with-gtk], [Build with the GTK+ interface]))
+#if test "x$with_gtk" = "xyes"; then
+#   PKG_CHECK_MODULES([GTK], [gtk+-2.0])
+#fi
+
+PKG_CHECK_MODULES([GLIB], [glib-2.0])
 
 AC_OUTPUT

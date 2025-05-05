@@ -12,4 +12,6 @@ if [ "$files" != "" ]; then
     clang-format -i $files
     git add $files
 fi
+clang-tidy --config-file=.clang-tidy --use-color src/*.c
+clang-tidy --config-file=.clang-tidy --use-color include/*.h
 ```

@@ -49,7 +49,6 @@ function check_installed() {
   fi
 }
 
-
 function main() {
   check_docker
   # Container package installs will fail unless you do an initial update, the upgrade is optional
@@ -77,10 +76,9 @@ function main() {
   # because Google Cloud's software-defined networking reserves a virtual gateway IP address
   # for primary IP ranges in a VPC network's subnets.
   ICMP_ENABLED=$(cat /proc/sys/net/ipv4/icmp_echo_ignore_all) # It should output 0 which means ping is enabled, i.e. IPv4 ICMP echo request is not ignored.
-  if [ ${ICMP_ENABLED} == "0" ]; then echo -e "${LBLUE}ICMP is enabled${NC}"; fi
+  if [ "${ICMP_ENABLED}" == "0" ]; then echo -e "${LBLUE}ICMP is enabled${NC}"; fi
   # sudo sysctl -w net.ipv4.icmp_echo_ignore_all=0 # fix ICMP
   # cat /etc/sysctl.conf # net.ipv4.icmp_echo_ignore_all=0 line should exist
-
 
   # find route command
   # get the routes

@@ -1,7 +1,41 @@
-#include <gtk/gtk.h>
+// #include <gtk/gtk.h>
+#include "net_tools.c"
+#include "/home/franklin/workspace/lab-franklin/src/gui-test/include/lab_common.h"
 
-static int counter = 0;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#if defined(__linux__)
+#include <netdb.h>
+#include <netinet/in.h> 
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+
+#elif defined(_WIN32)
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#endif
+
+
+
+int ping_host(char ip_address[100]);
+
+int main() {
+  char ip_address[100] = "8.8.8.8";
+  status = ping_host(ip_address);
+  printf("STATUS: %d\n", status);
+  status2 = hostname_and_ip();
+  return status;
+}
+
+
+
+
+/*
 void greet(GtkWidget *widget, gpointer data) {
   // printf equivalent in GTK+
   g_print("Welcome to GTK\n");
@@ -11,7 +45,6 @@ void greet(GtkWidget *widget, gpointer data) {
 void destroy(GtkWidget *widget, gpointer data) { gtk_main_quit(); }
 
 int main(int argc, char *argv[]) {
-
   GtkWidget *window;
   GtkWidget *button;
   gtk_init(&argc, &argv);
@@ -19,10 +52,8 @@ int main(int argc, char *argv[]) {
   window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
   g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL);
-  /* Let's set the border width of the window to 20.
-   * You may play with the value and see the
-   * difference. */
-  gtk_container_set_border_width(GTK_CONTAINER(window), 20);
+  gtk_container_set_border_width(GTK_CONTAINER(window), 20); // last num is
+border width
 
   button = gtk_button_new_with_label("Click Me!");
 
@@ -36,9 +67,8 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-/*
 
-static void activate (GtkApplication* app, gpointe user_data)
+static void activate (GtkApplication* app, gpointer user_data)
 {
   GtkWidget *window;
 

@@ -22,6 +22,7 @@ endif
 		container/cloudbot/Makefile container/cloudbot/Makefile.in \
         	customer/Makefile customer/Makefile.in container/rhel8/Makefile.in container/rhel8/Makefile \
 		container/Makefile container/Makefile.in src/nodebot/Makefile src/nodebot/Makefile.in \
+		src/gui-test/Makefile.in src/gui-test/Makefile \
 		_test _security NEWS;do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\

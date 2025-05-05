@@ -16,6 +16,4 @@ duplicates = phasher.find_duplicates(encoding_map=encodings)
 # plot duplicates obtained for a given file using the duplicates dictionary
 
 
-plot_duplicates(
-    image_dir="/home/franklin/Pictures", duplicate_map=duplicates, filename="me/389.jpg"
-)
+plot_duplicates(image_dir=IMAGE_DIR, duplicate_map=duplicates, filename="/me/389.jpg")

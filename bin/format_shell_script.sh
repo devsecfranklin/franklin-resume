@@ -45,7 +45,7 @@ for filename in "bin"/*.sh; do
 done
 
 # check the test dir
-for filename in "bin"/*.sh; do
+for filename in "test"/*.sh; do
   echo "Checking file: ${filename}"
   ${MY_SHFMT} -i 2 -l -w "${filename}"
 done

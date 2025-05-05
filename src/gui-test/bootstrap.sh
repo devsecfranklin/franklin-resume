@@ -132,24 +132,154 @@ function format_shell() {
 
 }
 
+function run_autopoint() {
+  echo "Checking autopoint version..."
+  ver=$(autopoint --version | awk '{print $NF; exit}')
+  ap_maj=$(echo $ver | sed 's;\..*;;g')
+  ap_min=$(echo $ver | sed -e 's;^[0-9]*\.;;g' -e 's;\..*$;;g')
+  ap_teeny=$(echo $ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g')
+  echo "    $ver"
+
+  case $ap_maj in
+  0)
+    if test $ap_min -lt 14; then
+      echo "You must have gettext >= 0.14.0 but you seem to have $ver"
+      exit 1
+    fi
+    ;;
+  esac
+  echo "Running autopoint..."
+  autopoint --force || exit 1
+}
+
+function run_libtoolize() {
+  echo "Checking libtoolize version..."
+  libtoolize --version 2>&1 >/dev/null
+  rc=$?
+  if test $rc -ne 0; then
+    echo "Could not determine the version of libtool on your machine"
+    echo "libtool --version produced:"
+    libtool --version
+    exit 1
+  fi
+  lt_ver=$(libtoolize --version | awk '{print $NF; exit}')
+  lt_maj=$(echo $lt_ver | sed 's;\..*;;g')
+  lt_min=$(echo $lt_ver | sed -e 's;^[0-9]*\.;;g' -e 's;\..*$;;g')
+  #lt_teeny=$(echo $lt_ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g')
+  echo "    $lt_ver"
+
+  case $lt_maj in
+  0)
+    echo "You must have libtool >= 1.4.0 but you seem to have ${lt_ver}"
+    exit 1
+    ;;
+  1)
+    if test "${lt_min}" -lt 4; then
+      echo "You must have libtool >= 1.4.0 but you seem to have ${lt_ver}"
+      exit 1
+    fi
+    ;;
+  2) ;;
+  *)
+    echo "You are running a newer libtool than gerbv has been tested with."
+    echo "It will probably work, but this is a warning that it may not."
+    ;;
+  esac
+  echo "Running libtoolize..."
+  libtoolize --force --copy --automake || exit 1
+}
+
+function run_aclocal() {
+  if [ "${MY_OS}" != "openbsd" ]; then
+    echo -e "${LBLUE}Checking aclocal version...${NC}"
+    acl_ver=$(aclocal --version | awk '{print $NF; exit}')
+    echo "    $acl_ver"
+
+    echo -e "${CYAN}Running aclocal...${NC}"
+    #aclocal -I m4 $ACLOCAL_FLAGS || exit 1
+    aclocal -Iaclocal/latex-m4 || exit 1
+  else
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 aclocal || exit 1
+  fi
+  echo -e "${CYAN}.. done with aclocal.${NC}"
+}
+
+function run_autoheader() {
+  echo "Checking autoheader version..."
+  ah_ver=$(autoheader --version | awk '{print $NF; exit}')
+  echo "    $ah_ver"
+
+  echo "Running autoheader..."
+  autoheader || exit 1
+  echo "... done with autoheader."
+}
+
+function run_automake() {
+  if [ "${MY_OS}" != "openbsd" ]; then
+    echo "Checking automake version..."
+    am_ver=$(automake --version | awk '{print $NF; exit}')
+    echo "    $am_ver"
+
+    echo "Running automake..."
+    automake -a -c --add-missing || exit 1
+    #automake --force --copy --add-missing || exit 1
+  else
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 automake -a -c --add-missing || exit 1
+  fi
+  echo "... done with automake."
+}
+
+function run_autoconf() {
+  if [ "${MY_OS}" != "openbsd" ]; then
+    echo -e "${LGREEN}Checking autoconf version...${NC}"
+    ac_ver=$(autoconf --version | awk '{print $NF; exit}')
+    echo -e "${LGREEN}Autoconf version: $ac_ver${NC}"
+    echo "Running autoconf..."
+    autoreconf -i || exit 1
+  else
+    # this is for OpenBSD systems
+    ac_ver="2.71"
+    echo "Running autoconf..."
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 autoreconf -i || exit 1
+  fi
+  echo "... done with autoconf."
+}
+
 function main() {
 
-    apt install -y clang-format clang-tidy build-essential gdb
+    sudo apt install -y clang-format clang-tidy build-essential gdb
     clang-format -i src/main.c
     clang-format --style Google --dump-config >.clang-format
     clang-tidy --dump-config >.clang-tidy
-
-    sudo apt-get install libgtk2.0-dev
-    FLAGS=$(pkg-config --cflags --libs gtk+-2.0)
-    gcc src/main.c -o gui-test ${FLAGS}
 
     # build folder
     if [ ! -d "${WORKDIR}/build/logs" ]; then mkdir -p "${WORKDIR}build/logs"; fi
 
     # create configure.scan
-    autoscan && mv configure.scan configure.ac
+    # autoscan && mv configure.scan configure.ac
     if [ -f "autoscan.log" ]; then mv autoscan.log "${WORKDIR}build/logs"; fi
 
+  if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
+    rm config.status # if Makefile.in is missing, then erase stale config.status
+  fi
+
+  if [ ! -f "./config.status" ]; then
+    echo -e "${YELLOW}no config.status${NC}"
+    # libtoolize
+    if [ ! -d "aclocal" ]; then mkdir aclocal; fi
+    #aclocal -I config
+    run_aclocal
+    if [ "${MY_OS}" == "openbsd" ]; then
+      AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 autoreconf -i || exit 1
+    else
+      autoreconf -i
+    fi
+    #automake -a -c --add-missing
+    run_automake
+    ./configure
+  else
+    ./config.status
+  fi
 }
 
 main "$@"

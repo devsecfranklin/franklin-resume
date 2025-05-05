@@ -1,14 +1,24 @@
 {
+  "env": {
+    "myIncludePath": [
+      "${workspaceFolder}/src/gui-test/src",
+      "${workspaceFolder}/src/gui-test/include"
+    ],
+    "myDefines": [
+      "DEBUG",
+      "MY_FEATURE=1"
+    ]
+  },
   "configurations": [
     {
       "name": "linux-gcc-x64",
       "includePath": [
-        "${workspaceRoot}"
+        "${workspaceFolder}/**"
       ],
       "compilerPath": "/usr/bin/gcc",
       "cStandard": "${default}",
       "cppStandard": "${default}",
-      "intelliSenseMode": "clang-x64",
+      "intelliSenseMode": "linux-gcc-x64",
       "compilerArgs": [
         ""
       ]

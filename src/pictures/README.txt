@@ -2,7 +2,8 @@
 
 ## install magededup
 
-```shgit clone https://github.com/idealo/imagededup.git
+```sh
+git clone https://github.com/idealo/imagededup.git
 cd imagededup
 pip install "cython>=0.29"
 python setup.py install

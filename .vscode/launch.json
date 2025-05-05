@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/mnt/storage1/workspace/LAB/lab-franklin/test/src",
-      "program": "/mnt/storage1/workspace/LAB/lab-franklin/test/src/build/Debug/outDebug",
+      "cwd": "/home/franklin/workspace/lab-franklin/src/gui-test/src",
+      "program": "/home/franklin/workspace/lab-franklin/src/gui-test/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

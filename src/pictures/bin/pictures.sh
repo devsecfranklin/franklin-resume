@@ -96,6 +96,11 @@ function find_media() {
   echo -e "${YELLOW}Found ${TOTAL_VIDS} videos${NC}"
 }
 
+function sort_media() {
+  # check the pics dir for videos
+  pass
+}
+
 function find_duplicates() {
   file=$(mktemp /tmp/duplicates.XXXXX) || {
     echo "Error creating tmp file"
@@ -112,6 +117,11 @@ function find_duplicates() {
 
 function fix_permissions() {
   # change file permissions to 644
+  pass
+}
+
+function create_folders() {
+  # make sure we have folders for the pictures to be stored in
   pass
 }
 
