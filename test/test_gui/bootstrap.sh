@@ -96,39 +96,39 @@ function detect_os() {
 }
 
 function format_shell() {
-    # To install shfmt
-    # curl -sS https://webi.sh/shfmt | sh
+  # To install shfmt
+  # curl -sS https://webi.sh/shfmt | sh
 
-    if ! command -v shfmt &>/dev/null; then
-        echo "shfmt not found... installing!"
-        curl -sS https://webi.sh/shfmt | sh
-    fi
+  if ! command -v shfmt &>/dev/null; then
+    echo "shfmt not found... installing!"
+    curl -sS https://webi.sh/shfmt | sh
+  fi
 
-    if [ ! -d "docs" ] && [ ! -d "bin" ]; then
-        echo "Run script from top level of repo"
-        exit 1
-    fi
+  if [ ! -d "docs" ] && [ ! -d "bin" ]; then
+    echo "Run script from top level of repo"
+    exit 1
+  fi
 
-    if ! command -v shfmt &>/dev/null; then
-        echo "shfmt not found... installing!"
-        curl -sS https://webi.sh/shfmt | sh
-        MY_SHFMT="${HOME}/.local/bin/shfmt"
-    else
-        MY_SHFMT=$(which shfmt)
-    fi
+  if ! command -v shfmt &>/dev/null; then
+    echo "shfmt not found... installing!"
+    curl -sS https://webi.sh/shfmt | sh
+    MY_SHFMT="${HOME}/.local/bin/shfmt"
+  else
+    MY_SHFMT=$(which shfmt)
+  fi
 
-    echo "Checking file: ${WORKDIR}/bootstrap.sh"
-    ${MY_SHFMT} -i 2 -l -w "${WORKDIR}/bootstrap.sh"
+  echo "Checking file: ${WORKDIR}/bootstrap.sh"
+  ${MY_SHFMT} -i 2 -l -w "${WORKDIR}/bootstrap.sh"
 
-    for filename in "bin"/*.sh; do
-        echo "Checking file: ${WORKDIR}/${filename}"
-        ${MY_SHFMT} -i 2 -l -w "${WORKDIR}/${filename}"
-    done
+  for filename in "bin"/*.sh; do
+    echo "Checking file: ${WORKDIR}/${filename}"
+    ${MY_SHFMT} -i 2 -l -w "${WORKDIR}/${filename}"
+  done
 
-    for filename in "${WORKDIR}/bin"/*.sh; do
-        echo "Checking file: ${WORKDIR}/${filename}"
-        ${MY_SHFMT} -i 2 -l -w "${WORKDIR}/${filename}"
-    done
+  for filename in "${WORKDIR}/bin"/*.sh; do
+    echo "Checking file: ${WORKDIR}/${filename}"
+    ${MY_SHFMT} -i 2 -l -w "${WORKDIR}/${filename}"
+  done
 
 }
 
@@ -247,17 +247,17 @@ function run_autoconf() {
 
 function main() {
 
-    sudo apt install -y clang-format clang-tidy build-essential gdb
-    clang-format -i src/main.c
-    clang-format --style Google --dump-config >.clang-format
-    clang-tidy --dump-config >.clang-tidy
+  sudo apt install -y clang-format clang-tidy build-essential gdb
+  clang-format -i src/main.c
+  clang-format --style Google --dump-config >.clang-format
+  clang-tidy --dump-config >.clang-tidy
 
-    # build folder
-    if [ ! -d "${WORKDIR}/build/logs" ]; then mkdir -p "${WORKDIR}build/logs"; fi
+  # build folder
+  if [ ! -d "${WORKDIR}/build/logs" ]; then mkdir -p "${WORKDIR}build/logs"; fi
 
-    # create configure.scan
-    # autoscan && mv configure.scan configure.ac
-    if [ -f "autoscan.log" ]; then mv autoscan.log "${WORKDIR}build/logs"; fi
+  # create configure.scan
+  # autoscan && mv configure.scan configure.ac
+  if [ -f "autoscan.log" ]; then mv autoscan.log "${WORKDIR}build/logs"; fi
 
   if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
     rm config.status # if Makefile.in is missing, then erase stale config.status

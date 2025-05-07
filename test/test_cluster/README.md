@@ -17,6 +17,11 @@ mpicc -showme
 scontrol show node node[0-3] # show slurm on the nodes
 ```
 
+## clush
+
+* Edit `/etc/clustershell/groups.d/local.cfg` as needed.
+* Test like so: `clush -d -v -g compute date`
+
 ## OpenBSD
 
 ```sh

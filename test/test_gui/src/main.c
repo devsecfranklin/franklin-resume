@@ -1,18 +1,19 @@
 // #include <gtk/gtk.h>
-#include "net_tools.c"
-#include "/home/franklin/workspace/lab-franklin/src/gui-test/include/lab_common.h"
-
+#include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "/home/franklin/workspace/lab-franklin/src/gui-test/include/lab_common.h"
+#include "net_tools.c"
+
 #if defined(__linux__)
+#include <arpa/inet.h>
 #include <netdb.h>
-#include <netinet/in.h> 
+#include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <arpa/inet.h>
 #include <unistd.h>
 
 #elif defined(_WIN32)
@@ -20,20 +21,21 @@
 #include <ws2tcpip.h>
 #endif
 
-
-
 int ping_host(char ip_address[100]);
 
-int main() {
+int main(int argc, char** argv) {
+  int node;
+  MPI_Init(&argc, &argv);
+  MPI_Comm_rank(MPI_COMM_WORLD, &node);
+  printf("Hello World from Node %d!\n", node);
+  MPI_Finalize();
+
   char ip_address[100] = "8.8.8.8";
   status = ping_host(ip_address);
   printf("STATUS: %d\n", status);
   status2 = hostname_and_ip();
   return status;
 }
-
-
-
 
 /*
 void greet(GtkWidget *widget, gpointer data) {

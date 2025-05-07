@@ -45,3 +45,11 @@
       - pssh
     state: present
   become: true
+
+- name: "cluster | install clush local.cfg"
+  ansible.builtin.copy:
+    src: "clush.local.cfg"
+    dest: /etc/clustershell/groups.d/local.cfg
+    owner: root
+    group: root
+    mode: "0644"

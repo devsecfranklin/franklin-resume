@@ -15,8 +15,8 @@ __pycache__
 src/krb5_auth/gss-1.0.4.tar
 
 # temp binaries
-src/cluster_test/prime_check
-src/cluster_test/hello_mpi
+**/prime_check
+**/hello_mpi
 
 key
 cred.json

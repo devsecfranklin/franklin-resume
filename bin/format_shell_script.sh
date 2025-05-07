@@ -13,8 +13,8 @@
 # To install shfmt
 # curl -sS https://webi.sh/shfmt | sh
 
-set -euo pipefail
-IFS=$'\n\t'
+#set -euo pipefail
+#IFS=$'\n\t'
 
 if ! command -v shfmt &>/dev/null; then
   echo "shfmt not found... installing!"
@@ -33,6 +33,10 @@ if ! command -v shfmt &>/dev/null; then
 else
   MY_SHFMT=$(which shfmt)
 fi
+
+# returns nothing on success
+${MY_SHFMT} -i 2 -l -w test/test_cluster/bootstrap.sh
+${MY_SHFMT} -i 2 -l -w test/test_gui/bootstrap.sh
 
 # check bootstrap.sh
 echo "Checking file: bootstrap.sh"

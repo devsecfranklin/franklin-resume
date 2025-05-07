@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: MIT
+
 CFLAGS=-I../include -g3 -DNDEBUG
 CXXFLAGS=-I../include -g3 -DNDEBUG
 
@@ -10,15 +14,15 @@ CC=mpicc $(CFLAGS)
 CXX=mpic++ $(CXXFLAGS)
 
 all:
-	$(CC) -o hello_mpi src/hello_mpi.c
-	$(CXX) -o prime_check src/prime_check.c
+	$(CC) -o bin/hello_mpi src/hello_mpi.c
+	$(CXX) -o bin/prime_check src/prime_check.c
 if !DEBUG
-	strip -d hello_mpi
-	strip -d prime_check
+	strip -d bin/hello_mpi
+	strip -d bin/prime_check
 endif
 
 clean :
-	@for trash in hello_mpi prime_check Makefile Makefile.in;do \
+	@for trash in bin/hello_mpi bin/prime_check Makefile Makefile.in;do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
 			rm -rf $$trash ;\

@@ -8,7 +8,7 @@
         "openmpi-common",
         "libopenmpi3",
         "libopenmpi-dev",
-        "mpi-default-dev",
+        "mpi-default-dev"
       ]
     state: latest
   tags: cluster
