@@ -23,17 +23,19 @@ IFS=$'\n\t'
 #Cyan         0;36     Light Cyan    1;36
 #Light Gray   0;37     White         1;37
 
-RED='\033[0;31m'
+#RED='\033[0;31m'
 LRED='\033[1;31m'
 LGREEN='\033[1;32m'
-LBLUE='\033[1;34m'
+#LBLUE='\033[1;34m'
 CYAN='\033[0;36m'
 LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-BUILD_DIR="/mnt/storage1/workspace/build"
+BUILD_DIR="/home/franklin/workspace/build"
 GPG_DIR="${BUILD_DIR}/gnupg"
+OPEN_MPI_VER="openmpi-5.0.5"
+ompi_package="https://download.open-mpi.org/release/open-mpi/v5.0/${OPEN_MPI_VER}.tar.bz2"
 
 declare GNU_PACKAGES=(
   "https://ftp.gnu.org/gnu/m4/m4-latest.tar.xz"
@@ -53,18 +55,31 @@ declare -a KEYSERVERS=(
   "hkp://pgp.mit.edu:80"
 )
 
-declare -a list=(
-  'm4-1.4.19'
-  'autoconf-2.72'
-  'automake-1.17'
-  'libtool-2.5.4'
+declare list=(
+  'm4-latest|m4-1.4.19'
+  'autoconf-latest|autoconf-2.72'
+  'automake-1.17|automake-1.17'
+  'libtool-2.5.4|libtool-2.5.4'
 )
 
-pushd "${BUILD_DIR}" || exit 1
+# change to working dir 
+pushd "${BUILD_DIR}" 2>&1 || exit 1
+
+function check_host() {
+  MY_ARCH=$(getconf LONG_BIT)
+  # arch
+  # dpkg --print-architecture
+  #MY_ARCH=$(dpkg-architecture | grep DEB_BUILD_ARCH_BITS= | cut -f2 -d=)
+  if [ "${MY_ARCH}" == "32" ]; then
+    echo -e "${LRED}This is a 32 bit system. Unable to build.${NC}"
+    echo -e "${YELLOW}$(dpkg-architecture)${NC}"
+    exit 1
+  fi
+}
 
 function install_packages() {
-  echo -e "${CYAN}Installing packages${NC}"
-  sudo apt-get install -y debian-keyring debian-archive-keyring 
+  echo -e "${CYAN}Installing packages to ${BUILD_DIR}${NC}"
+  sudo apt-get install -y debian-keyring debian-archive-keyring gfortran libudev-dev libpciaccess-dev valgrind
   sudo apt-key update # Warning: 'apt-key update' is deprecated and should not be used anymore!
   sudo apt-get update && sudo apt install -y figlet lolcat cowsay fortune
 
@@ -114,7 +129,8 @@ function update_keys() {
 
   for server in "${KEYSERVERS[@]}"; do
     # check if MY_KEY already exists locally
-    LOCAL_KEY="$(gpg --homedir ${BUILD_DIR}/gnupg --export-options export-minimal --armor --export ${MY_KEY} 2>&1)"
+    #LOCAL_KEY=$(gpg --homedir ${BUILD_DIR}/gnupg --export-options export-minimal --armor --export ${MY_KEY} 2>&1)
+    LOCAL_KEY="$(gpg --homedir ${BUILD_DIR}/gnupg --export-options export-minimal --armor --export "${MY_KEY}" 2>&1)"
     if [ -n "${LOCAL_KEY}" ]; then
       echo -e "${CYAN}Local copy of key not found, getting${NC}"
       gpg --homedir "${BUILD_DIR}/gnupg" --keyserver "${server}" --recv-keys "${MY_KEY}"
@@ -161,7 +177,6 @@ function build_gnu_tools() {
     echo "preparing ${packagename}" | figlet | lolcat
     packagenametar=$(echo "${package}" | rev | cut -f1 -d"/" | cut -f2- -d'.' | rev)
 
-
     if [ ! -f "${BUILD_DIR}/${packagenamefull}" ]; then
       echo -e "${CYAN}Downloading ${packagename} to ${BUILD_DIR}${NC}"
       wget -O "${BUILD_DIR}/${packagenamefull}" "${packageurl}"
@@ -172,30 +187,42 @@ function build_gnu_tools() {
 
     update_keys "${BUILD_DIR}/${packagenamefull}.sig" "${BUILD_DIR}/${packagenamefull}"
 
-    if [ ! -e "${BUILD_DIR}/${packagenamefull}" ]; then
+    if [ ! -e "${BUILD_DIR}/${packagenametar}" ]; then
       echo -e "${LPURP}Uncompress ${packagenamefull}${NC}"
       unxz "${BUILD_DIR}/${packagenamefull}"
-      echo -e "${LPURP}Untar ${packagenametar}... this may take some time.${NC}"
-      tar xf "${BUILD_DIR}/${packagenametar}"
     else
       echo -e "${LPURP}${packagenametar} already uncompressed${NC}"
     fi
+
+    if [ ! -f "${BUILD_DIR}/${packagenametar}" ]; then
+      echo "Untar ${packagenametar}" | figlet | lolcat
+      tar xf "${BUILD_DIR}/${packagenametar}" -C "${BUILD_DIR}"
+    else
+      echo -e "${LPURP}${packagenametar} already untarred${NC}"
+    fi
+
+    # You must build and install the GNU Autotools in the following order:
+    #
+    # m4
+    # Autoconf
+    # Automake
+    # Libtool
+    for element in "${list[@]}"; do
+      this_element=$(echo "${element}" | cut -f1 -d'|')
+      if [ "${packagename}" == "${this_element}" ]; then
+        goodname=$(echo "${element}" | cut -f2 -d'|')
+        echo "configure ${goodname}" | figlet | lolcat
+        "${BUILD_DIR}/${goodname}/configure" --prefix="${BUILD_DIR}" | tee "${BUILD_DIR}/${goodname}-config.log"
+        echo "build ${goodname}" | figlet | lolcat
+        cd "${BUILD_DIR}/${goodname}" && make all install | tee "${BUILD_DIR}/${goodname}-make.log"
+      fi
+    done
   done
 
-  # You must build and install the GNU Autotools in the following order:
-  #
-  # m4
-  # Autoconf
-  # Automake
-  # Libtool
-
-  for element in "${list[@]}"; do
-    echo "building ${element}" | figlet | lolcat
-    cd "${BUILD_DIR}/${element}" && ./configure --prefix="${BUILD_DIR}" && make all install && cd ..
-  done
 }
 
 function verify_gnu_tools() {
+  echo "verifiying GNU tools installation" | figlet | lolcat
   declare -a GNUTOOLS=(
     "m4"
     "autoconf"
@@ -204,50 +231,113 @@ function verify_gnu_tools() {
   )
 
   for package in "${GNUTOOLS[@]}"; do
-    echo -e "${LPURP}$(${package} --version | head -1)${NC}"
+    echo -e "${LGREEN}$(${package} --version | head -1)${NC}"
   done
 
 }
 
+function build_prrte() {
+  sudo apt install -y flex bison
+  git clone https://github.com/openpmix/prrte.git "${HOME}"/workspace/build
+  cd "${HOME}"/workspace/build/prrte && git submodule update --init --recursive
+  "${HOME}"/workspace/build/prrte/autogen.pl
+  cd "${HOME}"/workspace/build/prrte && ./configure
+}
+
+function build_hwloc() {
+  cd ${HOME}/workspace/build/ && ./configure --enable-doxygen --enable-netloc --prefix=/home/franklin/workspace/build
+}
+
 function build_openmpi() {
+  echo "Build Open MPI: ${OPEN_MPI_VER}" | figlet | lolcat
+
+  packagenamefull=$(echo "${ompi_package}" | rev | cut -f1 -d'/' | rev)
+  #echo "full package name: ${packagenamefull}"
+  packagename=$(echo "${ompi_package}" | rev | cut -f1 -d"/" | cut -f3- -d'.' | rev)
+  #echo "Building ${packagename}" | figlet | lolcat
+  packagenametar=$(echo "${ompi_package}" | rev | cut -f1 -d"/" | cut -f2- -d'.' | rev)
+
   # MD5: 0529027472015810e5f0d749136ca0a3
   # SHA1: edfb7c60aecdd3080dab70aba252ee20518252d1
   # SHA256: 119f2009936a403334d0df3c0d74d5595a32d99497f9b1d41e90019fee2fc2dd
-  wget -O "${BUILD_DIR}/openmpi-5.0.7.tar.bz2" \
-    https://download.open-mpi.org/release/open-mpi/v5.0/openmpi-5.0.7.tar.bz2
-  SHA256=$(sha256sum -b "${BUILD_DIR}/openmpi-5.0.7.tar.bz2")
-  echo -e "COmpare ${SHA256} with value: 119f2009936a403334d0df3c0d74d5595a32d99497f9b1d41e90019fee2fc2dd"
-  bunzip2 "${BUILD_DIR}/openmpi-5.0.7.tar.bz2"
-  cd "${BUILD_DIR}/openmpi-5.0.7" && ./configure --with-slurm --prefix="${BUILD_DIR}" 2>&1 | tee "${BUILD_DIR}/openmpi-config.log"
-  cd "${BUILD_DIR}/openmpi-5.0.7" && make -j4 all 2>&1 | tee "${BUILD_DIR}/openmpi-make.log"
-  cd "${BUILD_DIR}/openmpi-5.0.7" && make install 2>&1 | tee "${BUILD_DIR}/openmpi-install.log"
+  if [ ! -f "${BUILD_DIR}/${packagenamefull}" ]; then
+    echo -e "${CYAN}Download ${packagenamefull}${NC}"
+    wget -O "${BUILD_DIR}/${packagenamefull}"
+  else
+    echo -e "${LPURP}${packagename} is already downloaded${NC}"
+  fi
+
+  SHA256=$(sha256sum -b "${BUILD_DIR}/${OPEN_MPI_VER}.tar.bz2")
+  echo -e "${YELLOW}Compare ${SHA256} with value: 119f2009936a403334d0df3c0d74d5595a32d99497f9b1d41e90019fee2fc2dd${NC}\n"
+
+  if [ ! -f "${BUILD_DIR}/${OPEN_MPI_VER}.tar" ]; then
+    echo -e "${CYAN}Uncompress openmpi-5.0.7.tar.bz2${NC}"
+    bunzip2 "${BUILD_DIR}/${OPEN_MPI_VER}.tar.bz2"
+  else
+    echo -e "${LPURP}${packagenamefull} already uncompressed${NC}"
+  fi
+
+  if [ ! -d "${BUILD_DIR}/${packagename}" ]; then
+    echo -e "${CYAN}Untar ${packagenametar}... please be patient, it\'s a lot of code!${NC}"
+    tar xf "${BUILD_DIR}/${packagenametar}" -C "${BUILD_DIR}"
+  else
+    echo -e "${LPURP}${packagenamefull} already untarred${NC}"
+  fi
+
+  if [ -d "${BUILD_DIR}/${OPEN_MPI_VER}" ]; then
+    echo -e "${CYAN}Configure ${OPEN_MPI_VER}.tar.bz2${NC}"
+
+    # CFLAGS="-m64 -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=neon-fp-armv8" FCFLAGS="-m64"
+    # CFLAGS=-march=armv7-a CCASFLAGS=-march=armv7-a ../configure"
+    cd "${BUILD_DIR}/${OPEN_MPI_VER}" && \
+      CFLAGS="-O3 -DNDEBUG -finline -finline-functions" ./configure \
+      --prefix="${BUILD_DIR}" --exec-prefix="${BUILD_DIR}" --enable-mpi-java --enable-mpi-fortran --enable-memchecker --with-slurm \
+      --with-valgrind --with-gnu-ld --enable-ipv6 \
+      --with-hwloc="/home/franklin/workspace/build" 2>&1 | tee "${BUILD_DIR}/openmpi-config.log"
+    
+    echo -e "${CYAN}Make ${OPEN_MPI_VER}.tar.bz2${NC}"
+    cd "${BUILD_DIR}/${OPEN_MPI_VER}" && make -j4 all 2>&1 | tee "${BUILD_DIR}/openmpi-make.log"
+
+    echo -e "${CYAN}Install ${OPEN_MPI_VER}.tar.bz2${NC}"
+    cd "${BUILD_DIR}/${OPEN_MPI_VER}" && sudo make install 2>&1 | tee "${BUILD_DIR}/openmpi-install.log"
+
+    sudo ldconfig
+  else
+    echo -e "${CYAN}Cannot find ${BUILD_DIR}/${OPEN_MPI_VER}${NC}"
+  fi
 }
 
 function cleanup() {
   echo "cleanup" | figlet | lolcat
+
+  # delete the build directories
   for item in "${list[@]}"; do
     echo -e "${LPURP}Deleting ${item}${NC}"
     rm -rf "${BUILD_DIR:?}/${item}" # https://www.shellcheck.net/wiki/SC2115
   done
+
+  # delete the tar files
   for package in "${GNU_PACKAGES[@]}"; do
-    packagenametar=$(echo "${package}" | rev | cut -f1 -d"/" | cut -f2- -d'.' | rev)
+    packagenametar=$(echo "${package}" | rev | cut -f1 -d'/' | cut -f2- -d'.' | rev)
     echo -e "${LPURP}Deleting ${packagenametar}${NC}"
     rm "${BUILD_DIR:?}/${packagenametar}"
   done
 }
 
 function main() {
+  check_host
   case $HOSTNAME in
-  "head1")
+  head1)
     install_packages # Warning :: You will have problems if you do not use recent versions of the GNU Autotools
     gpg_setup
     build_gnu_tools
     verify_gnu_tools
-    cleanup
+    build_openmpi
+    #cleanup
     echo -e "${YELLOW}Now add ${BUILD_DIR}/bin to the start of your PATH var.${NC}"
     echo -e "${LGREEN}Setup complete!${NC}"
     ;;
-  *) echo -e "${LRED}Run this script on the cluster head node${NC}";;
+  *) echo -e "${LRED}Run this script on the cluster head node${NC}" ;;
   esac
 }
 

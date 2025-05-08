@@ -104,6 +104,12 @@ oc label secret/pipconf openshiftciapplication=<YOUR_APP_NAME> -n <YOUR_APP_NAME
 oc label secret/pipconf openshiftciapplication=<YOUR_APP_NAME> -n <YOUR_APP_NAME>-release-build
 ```
 
+## Clang Setup
+
+- install clang
+
 ## Cases
 
 1. test to fail if text file does not exist.
+2. Search file for unmatch quotes: `tr -cd "'\n" < run_me.sh | awk 'length%2==1 {print NR, $0}'`
+3. Run `shellcheck` and `bin/format_shell_script.sh` on shell scripts.

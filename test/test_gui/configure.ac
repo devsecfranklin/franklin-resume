@@ -28,4 +28,29 @@ AC_CHECK_HEADER_STDBOOL
 AC_CHECK_FUNCS([socket])
 
 AC_CONFIG_FILES([Makefile])
+
+echo "Attempting to configure a build for host: $host"
+AC_SUBST(UNAME_P,$(uname -p))
+AC_SUBST(UNAME_S,$(uname -s))
+
+AC_SUBST(WORKDIR, $ac_pwd)
+AC_SUBST(BUILDDIR, $ac_pwd/build/$host)
+AC_SUBST(MYSRCDIR, $ac_pwd/build/$host/src)
+AC_SUBST(MYLIBDIR, $ac_pwd/build/$host/lib)
+AC_MSG_NOTICE([build directory: $ac_pwd/build/$host])
+
+if test $UNAME_S = "Linux"
+then
+  echo "This is a LINUX host: $host"
+  mkdir -p "$ac_pwd/build/$host"
+dnl AC_SUBST(MYSRCDIR, $ac_pwd/build/$host/src)
+fi
+
+if test $UNAME_S = "OpenBSD"
+then
+  echo "This is an OpenBSD host: $host"
+  mkdir -p "$ac_pwd/build/$host"
+fi
+
+
 AC_OUTPUT

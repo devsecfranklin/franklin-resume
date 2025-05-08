@@ -4,6 +4,7 @@
 
 CFLAGS=-I../include -g3 -DNDEBUG
 CXXFLAGS=-I../include -g3 -DNDEBUG
+# FCFLAGS=-m64
 
 if DEBUG
 override CFLAGS=-DDEBUG -g -femit-struct-debug-baseonly -Wall -Werror -Wextra -03
