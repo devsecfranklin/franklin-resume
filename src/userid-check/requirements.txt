@@ -1,4 +1,4 @@
-matplotlib==3.10.1
+matplotlib==3.10.3
 networkx==3.4.2
 Pillow==11.2.1
 setuptools==80.3.1
