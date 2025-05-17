@@ -145,6 +145,7 @@ ansible-playbook -i firewalls playbook/firewalls.yml --ask-vault-pass -e 'ansibl
 ansible -i /etc/ansible/hosts -b --list-hosts nodes
 ansible nodes -m ping -b -i /etc/ansible/hosts
 ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspace/LAB/lab-home/ansible/hosts # check dists
+clush -d -v -g compute --progress date
 ```
 
 ## Example Commands
@@ -154,6 +155,7 @@ ansible raspi_nodes -a 'apt update' -b -i /etc/ansible/hosts
 ansible raspi_nodes -a 'apt -y upgrade' -b -i /etc/ansible/hosts
 ansible nvidia_nodes -a 'apt update' -b -i /etc/ansible/hosts -e 'ansible_python_interpreter=/usr/bin/python3'
 ansible-playbook ansible/collections/ansible_collections/lab/franklin/playbooks/playbook.yml -i ./hosts -b
+clush -v -g compute sudo apt update
 ```
 
 ## Managing Roles

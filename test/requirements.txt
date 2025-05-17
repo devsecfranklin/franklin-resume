@@ -12,3 +12,4 @@ pre-commit-update
 molecule
 molecule-plugins[podman]
 podman-compose
+yamllint ansible-lint
