@@ -17,6 +17,9 @@ ansible_become_method=doas
 head1.LAB.BITSMASHER.NET ansible_user=root
 node[0:3].LAB.BITSMASHER.NET ansible_user=root
 
+[raspi_nodes:vars]
+ansible_python_interpreter=/usr/bin/python3
+
 [samba]
 snowy.LAB.BITSMASHER.NET
 

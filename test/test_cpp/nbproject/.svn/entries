@@ -1,0 +1,88 @@
+8
+
+dir
+2
+file:///usr/local/SVN/cpp_test/nbproject
+file:///usr/local/SVN
+
+
+
+2008-07-27T19:08:41.164733Z
+2
+franklin
+has-props
+has-prop-mods
+svn:special svn:externals svn:needs-lock
+
+project.properties
+file
+
+
+
+
+2008-07-26T18:04:40.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2008-07-27T19:08:41.164733Z
+2
+franklin
+
+Makefile-Release.mk
+file
+
+
+
+
+2008-07-27T18:35:31.000000Z
+ce1728b116608a6b7b313d9d983bcd16
+2008-07-27T19:08:41.164733Z
+2
+franklin
+
+Makefile-impl.mk
+file
+
+
+
+
+2008-07-27T18:35:31.000000Z
+dbf9e23741f3f5242e34d77a6e6f5e02
+2008-07-27T19:08:41.164733Z
+2
+franklin
+
+project.xml
+file
+
+
+
+
+2008-07-27T18:35:31.000000Z
+94c943661a3399ddf1b2075ca3ef4c4d
+2008-07-27T19:08:41.164733Z
+2
+franklin
+
+Makefile-Debug.mk
+file
+
+
+
+
+2008-07-27T18:35:31.000000Z
+5c17d883de80faca2f9d8a9ea24e1744
+2008-07-27T19:08:41.164733Z
+2
+franklin
+
+configurations.xml
+file
+
+
+
+
+2008-07-27T18:35:30.000000Z
+7bca8118d5ef33eea10d6dea80f66c17
+2008-07-27T19:08:41.164733Z
+2
+franklin
+

@@ -1,0 +1,25 @@
+/* 
+ * File:   SunBox.h
+ * Author: franklin
+ *
+ * Created on July 27, 2008, 1:25 PM
+ */
+
+#ifndef _SUNBOX_H
+#define	_SUNBOX_H
+
+class SunBox : public Device {
+    
+public:
+    SunBox(); //parameterless default constructor
+    //constructor with parameters
+
+    ~SunBox();
+    
+private:
+    
+};
+
+
+#endif	/* _SUNBOX_H */
+

@@ -5,8 +5,8 @@
 - name: "nfs | Install raspi NFS Server"
   ansible.builtin.include_tasks: nfs_server.yml
   when:
-    - "'storage' in inventory_hostname"
-    - "'localhost' in inventory_hostname"
+    - "'snowy' in inventory_hostname"
+    - "'thelio' in inventory_hostname"
   tags:
     - nfs
     - storage
@@ -17,4 +17,6 @@
 
 - name: "nfs | Install NFS Client"
   ansible.builtin.include_tasks: nfs_client.yml
-  when: "'storage' not in inventory_hostname"
+  when:
+    - "'snowy' not in inventory_hostname"
+    - "'thelio' not in inventory_hostname"

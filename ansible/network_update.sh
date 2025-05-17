@@ -25,8 +25,8 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 ETC_DIR="/etc/ansible"
-PLAYBOOK_DIR="collections/ansible_collections/lab/franklin/playbooks"
 WORKDIR="${PWD}"
+PLAYBOOK_DIR="collections/ansible_collections/lab/franklin/playbooks"
 
 function directories() {
   # ${ETC_DIR}/group_vars -> /home/franklin/workspace/LAB/lab-franklin/ansible/group_vars
@@ -44,6 +44,7 @@ function main() {
 
   if [ ! -f "${ETC_DIR}/hosts" ]; then
     echo -e "${LRED}Copy the hosts file from ${RED}${WORKDIR}${LRED} to ${RED}${ETC_DIR}${NC}"
+    exit 1
   fi
 
   # copy ${WORKDIR}/ansible.cfg to /etc/ansible
@@ -63,7 +64,7 @@ function main() {
 
   # node0 node1 node2 node3
   echo -e "${CYAN}RUNNING RASPI CLUSTER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/raspi_nodes.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
+  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/cluster_raspi.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
 
   # node900 node901 node902 node903
   echo -e "${CYAN}RUNNING NVIDIA CLUSTER PLAYBOOK${ID}${NC}"
