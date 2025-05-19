@@ -21,6 +21,7 @@ src/krb5_auth/gss-1.0.4.tar
 key
 cred.json
 node_modules/
+ansible/tmp
 ansible/venv_molecule/
 ansible/roles/firewall/vars/firewall-secrets.yml
 ansible/roles/firewall/vars/panorama-secrets.yml
@@ -99,6 +100,7 @@ configure.lineno
 conftest.c
 conftest
 conftest.err
+conftest.cpp
 install-sh
 libtool
 ltmain.sh

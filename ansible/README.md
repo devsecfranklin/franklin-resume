@@ -131,6 +131,11 @@ ansible-galaxy collection init lab.franklin # create the new collection if neede
 ANSIBLE_HOME=${PWD} sudo ansible-galaxy collection init lab.franklin -vvv
 ```
 
+[WARNING]: The specified collections path '/mnt/storage1/workspace/lab-franklin/ansible/collections'
+appears to be part of the pip Ansible package. Managing these directly with ansible-galaxy could break
+the Ansible package. Install collections to a configured collections path, which will take precedence
+over collections found in the PYTHONPATH.
+
 ### Collection: Palo Alto Firewall
 
 [Examples](https://github.com/PaloAltoNetworks/ansible-pan/tree/master/examples)
@@ -156,6 +161,7 @@ ansible raspi_nodes -a 'apt -y upgrade' -b -i /etc/ansible/hosts
 ansible nvidia_nodes -a 'apt update' -b -i /etc/ansible/hosts -e 'ansible_python_interpreter=/usr/bin/python3'
 ansible-playbook ansible/collections/ansible_collections/lab/franklin/playbooks/playbook.yml -i ./hosts -b
 clush -v -g compute sudo apt update
+clush -g compute DEBIAN_FRONTEND="noninteractive" sudo apt -y upgrade
 ```
 
 ## Managing Roles

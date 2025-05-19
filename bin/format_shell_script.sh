@@ -21,8 +21,8 @@ if ! command -v shfmt &>/dev/null; then
   curl -sS https://webi.sh/shfmt | sh
 fi
 
-if [ ! -d "docs" ] && [ ! -d "bin" ]; then
-  echo "Run script from top level of repo"
+if [ ! -d "./.git" ]; then
+  echo -e "${RED}ERROR: ${YELLOW}Run script from top level of your Git repo${NC}"
   exit 1
 fi
 

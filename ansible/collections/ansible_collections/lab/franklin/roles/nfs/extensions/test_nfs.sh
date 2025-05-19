@@ -6,7 +6,7 @@
 
 # ChangeLog:
 #
-# v0.1 05/16/2025 Maintainer script
+# v0.1 05/16/2025 Initial Version
 
 RED='\033[0;31m'
 LRED='\033[1;31m'
@@ -17,18 +17,39 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-ansible-galaxy collection list
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-pip install "molecule[lint]"
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-molecule --version
-molecule dependency --scenario
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-molecule check
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-molecule list
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-molecule destroy
+# set up molecule
+# python3 -m pip install "molecule-plugins[podman]"
 
-molecule prepare
+# Collections
+ansible-galaxy collection install \
+  --collections-path /mnt/storage1/workspace/lab-franklin/ansible/collections \
+  containers.podman community.docker ansible.posix --force
+
+
+echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+echo -e "${LPURP}tell us about molecule\n"
+ansible-galaxy collection list
+
+echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+echo -e "${LPURP}tell us about molecule\n"
+molecule --version
+molecule dependency --scenario-name default
+
+echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+echo -e "${LPURP}molecule check\n"
+molecule check
+
+echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+echo -e "${LPURP}molecule list\n"
+molecule list
+
+echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+echo -e "${LPURP}preparing podman...\n"
+molecule --debug destroy --all --driver-name podman
+molecule prepare --driver-name podman
+
+echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+echo -e "${LPURP}molecule converge\n"
+molecule converge
+
+echo -e "${NC}"

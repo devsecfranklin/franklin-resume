@@ -18,6 +18,8 @@ driver:
       ansible_connection: podman
 provisioner:
   name: ansible
+  env:
+    HOMELAB_MOLECULE_TEST: true
 verifier:
   name: ansible
 lint: |
