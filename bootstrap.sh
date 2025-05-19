@@ -367,6 +367,11 @@ function install_openbsd() {
   grep -qF -- "$LINE" "$HOME/.bashrc" || echo "$LINE" >>"$HOME/.bashrc"
 }
 
+function cleanup() {
+  find . -type d -print0 | xargs -0 chmod 755
+  find . -type f -print0 | xargs -0 chmod 644 
+}
+
 function main() {
   check_docker
   detect_os
@@ -414,6 +419,8 @@ function main() {
   else
     ./config.status
   fi
+
+  # cleanup
 }
 
 main "$@"

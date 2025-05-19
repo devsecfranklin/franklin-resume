@@ -1,5 +1,5 @@
 ---
-- name: 'Install packages for NFS server'
+- name: "Install packages for NFS server"
   ansible.builtin.apt:
     pkg:
       - nfs-kernel-server
@@ -39,3 +39,5 @@
     name: nfs-kernel-server
     state: started
     enabled: true
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined

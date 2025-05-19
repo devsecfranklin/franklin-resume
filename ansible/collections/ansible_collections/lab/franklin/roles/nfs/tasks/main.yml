@@ -2,7 +2,7 @@
 # - fail: msg="The machine's domain must not be empty."
 #   when: ansible_domain | length == 0
 
-- name: "nfs | Install raspi NFS Server"
+- name: "nfs | Install NFS Server files"
   ansible.builtin.include_tasks: nfs_server.yml
   when:
     - "'snowy' in inventory_hostname"
@@ -14,9 +14,15 @@
 - name: "nfs | Install snowy NFS Server"
   ansible.builtin.include_tasks: nfs_server_snowy.yml
   when: "'snowy' in inventory_hostname"
+  tags:
+    - nfs
+    - storage
 
 - name: "nfs | Install NFS Client"
   ansible.builtin.include_tasks: nfs_client.yml
   when:
     - "'snowy' not in inventory_hostname"
     - "'thelio' not in inventory_hostname"
+  tags:
+    - nfs
+    - storage

@@ -18,7 +18,7 @@ data "terraform_remote_state" "vpc" {
     key    = "${var.vpc_state_key}"
   }
 }
-*/
+
 
 terraform {
   required_providers {
@@ -35,3 +35,4 @@ terraform {
     //dynamodb_table = "franklin-terraform-state-locking"
   }
 }
+*/

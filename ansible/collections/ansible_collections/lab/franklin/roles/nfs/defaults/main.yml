@@ -8,6 +8,10 @@ nfs_exports: [
 snowy_nfs_exports: [
     "/mnt/storage1 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
     "/mnt/storage1 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage2 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage2 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage3 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage3 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)",
     "/opt/software 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
     "/opt/software 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)"
 ]

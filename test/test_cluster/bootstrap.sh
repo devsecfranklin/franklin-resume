@@ -61,7 +61,7 @@ declare list=(
   'libtool-2.5.4|libtool-2.5.4'
 )
 
-# change to working dir 
+# change to working dir
 pushd "${PREFIX}" 2>&1 || exit 1
 
 function check_host() {
@@ -309,13 +309,13 @@ function build_openmpi() {
 
     # CFLAGS="-m64 -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=neon-fp-armv8" FCFLAGS="-m64"
     # CFLAGS=-march=armv7-a CCASFLAGS=-march=armv7-a ../configure"
-    cd "${PREFIX}/${OPEN_MPI_VER}" && \
+    cd "${PREFIX}/${OPEN_MPI_VER}" &&
       CFLAGS="-O3 -DNDEBUG -finline -finline-functions" ./configure \
-      --prefix="${PREFIX}" --exec-prefix="${PREFIX}" \
-      --enable-mpi-fortran --enable-memchecker --with-slurm \
-      --with-valgrind --with-gnu-ld --enable-ipv6 \
-      --with-hwloc="${PREFIX}" 2>&1 | tee "${PREFIX}/openmpi-config.log"
-    
+        --prefix="${PREFIX}" --exec-prefix="${PREFIX}" \
+        --enable-mpi-fortran --enable-memchecker --with-slurm \
+        --with-valgrind --with-gnu-ld --enable-ipv6 \
+        --with-hwloc="${PREFIX}" 2>&1 | tee "${PREFIX}/openmpi-config.log"
+
     echo -e "${CYAN}Make ${OPEN_MPI_VER}.tar.bz2${NC}"
     cd "${PREFIX}/${OPEN_MPI_VER}" && make -j4 all 2>&1 | tee "${PREFIX}/openmpi-make.log"
 

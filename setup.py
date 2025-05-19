@@ -9,8 +9,8 @@ setuptools.setup(
     version="0.8",
     description="Lab Stuff",
     author="Franklin D.",
-    author_email="franklin@dead10c5.org",
+    author_email="franklin@bitsmasher.net",
     url="https://github.com/devvsecfranklin/lab-franklin/",
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     extras_require={"test": ["pytest"]},
 )

@@ -221,6 +221,8 @@ function nfs_configuration() {
   if [ ! -d "/mnt/clusterfs" ]; then mkdir /mnt/clusterfs; fi
   if [ ! -d "/mnt/backup1" ]; then mkdir /mnt/backup1; fi
   if [ ! -d "/mnt/storage1" ]; then mkdir /mnt/storage1; fi
+ if [ ! -d "/mnt/storage2" ]; then mkdir /mnt/storage2; fi
+  if [ ! -d "/mnt/storage3" ]; then mkdir /mnt/storage3; fi
   # grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0' >>/etc/fstab
   # grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >>/etc/fstab
   grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' /etc/fstab || echo 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' >>/etc/fstab

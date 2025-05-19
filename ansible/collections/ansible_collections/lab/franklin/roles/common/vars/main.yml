@@ -3,4 +3,4 @@ bindir: /usr/local/sbin
 users:
   - username: franklin
   - username: thedevilsvoice
-  - username: mzbat
+  - username: sly

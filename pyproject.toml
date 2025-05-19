@@ -2,13 +2,26 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.version]
+path = "src/cloudbot/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src",
+]
+[tool.hatch.build.targets.wheel.force-include]
+"./src" = "src"
+
+[tool.hatch.build.targets.wheel]
+only-packages = false
+
 [project]
 dynamic = ["version"]
 name = "spam-eggs"
 readme = "README.md"
 requires-python = ">=3.8, <4"
 authors = [
-    { name = "franklin", email = "franklin@dead10c5.org" },
+    { name = "franklin", email = "franklin@bitsmasher.net" },
 ]
 
 [project.urls]
@@ -22,10 +35,11 @@ test = [
 dev = [
 ]
 
-[tool.hatch.version]
-path = "src/cloudbot/__init__.py"
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "src",
+# https://ansible.readthedocs.io/projects/pytest-ansible/getting_started/#help
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+filterwarnings = [
+    'ignore:AnsibleCollectionFinder has already been configured',
 ]
