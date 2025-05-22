@@ -178,22 +178,22 @@
     - HOMELAB_MOLECULE_TEST is not defined
     - "'snowy' not in inventory_hostname"
 
-- name: "nfs_client | Mount /mnt/storage2"
-  ansible.posix.mount:
-    src: "snowy:/mnt/storage2"
-    path: "/mnt/storage2"
-    fstype: nfs
-    state: mounted
-  when:
-    - HOMELAB_MOLECULE_TEST is not defined
-    - "'snowy' not in inventory_hostname"
+# - name: "nfs_client | Mount /mnt/storage2"
+#   ansible.posix.mount:
+#     src: "snowy:/mnt/storage2"
+#     path: "/mnt/storage2"
+#     fstype: nfs
+#     state: mounted
+#   when:
+#     - HOMELAB_MOLECULE_TEST is not defined
+#     - "'snowy' not in inventory_hostname"
 
-- name: "nfs_client | Mount /mnt/storage3"
-  ansible.posix.mount:
-    src: "snowy:/mnt/storage3"
-    path: "/mnt/storage3"
-    fstype: nfs
-    state: mounted
-  when:
-    - HOMELAB_MOLECULE_TEST is not defined
-    - "'snowy' not in inventory_hostname"
+# - name: "nfs_client | Mount /mnt/storage3"
+#   ansible.posix.mount:
+#     src: "snowy:/mnt/storage3"
+#     path: "/mnt/storage3"
+#     fstype: nfs
+#     state: mounted
+#   when:
+#     - HOMELAB_MOLECULE_TEST is not defined
+#     - "'snowy' not in inventory_hostname"

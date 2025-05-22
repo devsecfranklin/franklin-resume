@@ -1,0 +1,4 @@
+roles:
+    wheel: 'head[1-2]'                 # define groups @roles:adm and @adm
+    compute: 'node[0-3]'
+    research: 'node[900-903]'

@@ -2,7 +2,7 @@
 - name: "Install Debian packages"
   ansible.builtin.include_tasks: packages-debian.yml
   when:
-  - ansible_facts['distribution'] == "Debian"
+  - ansible_facts['distribution'] == "Debian" or ansible_facts['distribution'] == "Ubuntu"
 
 # - name: "Set timezone to {{ ntp_timezone }}"
 #   community.general.timezone:

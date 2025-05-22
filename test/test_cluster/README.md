@@ -22,6 +22,11 @@ scontrol show node node[0-3] # show slurm on the nodes
 * Edit `/etc/clustershell/groups.d/local.cfg` as needed.
 * Test like so: `clush -d -v -g compute date`
 
+```sh
+nodeset -LL
+clush -g compute sudo apt install -y mlocate
+```
+
 ## OpenBSD
 
 ```sh

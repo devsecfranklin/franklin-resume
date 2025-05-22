@@ -2,6 +2,8 @@
 - name: Restart exportfs
   command: exportfs -ra
   listen: "Restart exportfs"
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined
 
 - name: restart nfs-kernel-server
   ansible.builtin.service:
@@ -10,7 +12,11 @@
     enabled: yes
     daemon-reload: yes
   listen: "restart nfs-kernel-server"
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined
 
+# The rpcsec_gss protocol gives a means of using the gss-api generic security
+# api to provide security for protocols using rpc (in particular, nfs).
 - name: restart rpc-svcgssd
   ansible.builtin.service:
     name: rpc-svcgssd
@@ -18,3 +24,5 @@
     enabled: yes
     daemon-reload: yes
   listen: "restart rpc-svcgssd"
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined

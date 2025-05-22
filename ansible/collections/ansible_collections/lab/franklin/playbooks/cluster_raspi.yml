@@ -11,17 +11,6 @@
     ansible_python_interpreter: "/usr/bin/python3"
   roles:
     - common
-    - python
-    - ldap
-    - kerberos
-    - ssh
-    - security
-    - cluster
-    - ntp
-    - dns
-    - raspberrypi
     - nfs
-    - golang
-    - shell
   environment:
     DEBIAN_FRONTEND: noninteractive

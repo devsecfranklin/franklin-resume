@@ -17,8 +17,14 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# run like so
+# HOMELAB_MOLECULE_TEST=true ./test_nfs.sh
+
 # set up molecule
-python3 -m pip install "molecule-plugins[podman]"
+# python3 -m pip install "molecule-plugins[podman]"
+
+sudo mkdir /var/log/ansible
+sudo chmod 777 /var/log/ansible
 
 # Collections
 ansible-galaxy collection install \
@@ -32,24 +38,23 @@ ansible-galaxy collection list
 
 echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
 echo -e "${LPURP}tell us about molecule\n"
-molecule --version
-molecule dependency --scenario-name default
+HOMELAB_MOLECULE_TEST=true molecule --version
+HOMELAB_MOLECULE_TEST=true molecule dependency --scenario-name nfs-client 
 
 echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
 echo -e "${LPURP}molecule check\n"
-molecule check
+HOMELAB_MOLECULE_TEST=true molecule check --scenario-name nfs-client  
 
 echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
 echo -e "${LPURP}molecule list\n"
-molecule list
+HOMELAB_MOLECULE_TEST=true molecule list --scenario-name nfs-client 
 
 echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
 echo -e "${LPURP}preparing podman...\n"
-molecule --debug destroy --all --driver-name podman
-molecule prepare --driver-name podman
+HOMELAB_MOLECULE_TEST=true molecule --debug destroy --all --driver-name podman --scenario-name nfs-client 
+HOMELAB_MOLECULE_TEST=true molecule create --driver-name podman --scenario-name nfs-client 
 
 echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
 echo -e "${LPURP}molecule converge\n"
-molecule converge
-
+HOMELAB_MOLECULE_TEST=true molecule converge --scenario-name nfs-client 
 echo -e "${NC}"

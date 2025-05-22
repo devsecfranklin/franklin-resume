@@ -19,6 +19,11 @@ gpg --keyserver hkps://keys.openpgp.org:443 --send-key "3FDD B22B E65C FCC1 9BDF
 keyringer vault init /home/franklin/.password-store git@github.com:devsecfranklin/vault.git
 ```
 
+```sh
+bash gpg||gpg2 --import franklin.gpg # import
+bash gpg||gpg2 --list-public-keys # verify import
+```
+
 Requirements
 ------------
 

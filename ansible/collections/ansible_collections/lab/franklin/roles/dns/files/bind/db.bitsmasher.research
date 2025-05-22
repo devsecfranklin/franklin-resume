@@ -1,6 +1,6 @@
 $TTL    10800
-@ IN SOA server1.core.bitsmasher.net. root.research.bitsmasher.net (
-        2024101801 ; serial
+@ IN SOA server1.core.bitsmasher.net. root.bitsmasher.net (
+        202505191415 ; serial
         8H ; refresh
         4H ; retry
         4W ; expire

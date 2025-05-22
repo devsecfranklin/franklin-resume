@@ -1,18 +1,19 @@
 $TTL    10800
-@ IN SOA server1.core.bitsmasher.net. root.lab.bitsmasher.net (
-        2024101801 ; serial
+@ IN SOA server1.lab.bitsmasher.net. root.bitsmasher.net (
+        202505191415  ; serial
         8H ; refresh
         4H ; retry
         4W ; expire
         1D ; minimum
         ) ;
 ;Name Server Information
-@ IN NS server1.core.bitsmasher.net.
+@ IN NS server1.lab.bitsmasher.net.
 
 ;IP address of Your Domain Name Server(DNS)
-server1       IN A 10.10.0.12
+server1       IN A 10.10.12.12
 
 ;A Record for Host names
+dream-machine   IN A 10.10.8.1
 netlab1		IN A 10.10.8.3
 snowy           IN A 10.10.8.11
 node0           IN A 10.10.12.0
@@ -26,11 +27,12 @@ grimoire        IN A 10.10.12.8
 ;labbench        IN A 10.10.12.11
 storage1        IN A 10.10.12.14
 blowfish	IN A 10.10.12.15
-;thelio          IN A 10.10.12.17
+thelio          IN A 10.10.12.17
 head1		IN A 10.10.12.18
+head2		IN A 10.10.12.19
 ;media01         IN A 10.10.12.20
-;media02		IN A 10.10.12.21
-
+;media02	IN A 10.10.12.21
+ldap            IN A 10.10.13.1
 bbb1		IN A 10.10.13.10
 pa220           IN A 10.10.15.253
 labgate         IN A 10.10.15.254
@@ -38,8 +40,7 @@ labgate         IN A 10.10.15.254
 ;CNAME Record
 gateway          IN CNAME dream-machine.lab.bitsmasher.net.
 ns1              IN CNAME server1.lab.bitsmasher.net.
-ns2              IN CNAME server3.lab.bitsmasher.net.
-ldap1            IN CNAME server3.lab.bitsmasher.net.
+ns2              IN CNAME ldap.lab.bitsmasher.net.
 kdc1             IN CNAME odroid-c1.lab.bitsmasher.net.
 kerberos1        IN CNAME server2.lab.bitsmasher.net.
 
