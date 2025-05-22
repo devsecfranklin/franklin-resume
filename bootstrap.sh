@@ -263,7 +263,7 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=("ansible" "libglib2.0-dev" "libonig-dev" "tox" "sshpass" "libxml2-utils" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  declare -a Packages=( "podman" "ansible" "libglib2.0-dev" "libonig-dev" "tox" "sshpass" "libxml2-utils" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -287,7 +287,7 @@ function install_debian() {
     dircolors -p >~/.dircolors
     echo -e "${LBLUE}Updating the dircolors configuration.${NC}"
   fi
-
+  sudo apt autoremove -y
 }
 
 function install_az_cli() {
@@ -345,7 +345,7 @@ function install_redhat() {
 }
 
 function required_files() {
-  echo "Check for presence of required GNU autotools files"
+  -e "${LCYAN}Check for presence of required GNU autotools file${NC}"
 
   local required_files=("AUTHORS" "ChangeLog" "NEWS")
 
@@ -362,21 +362,51 @@ function required_files() {
 }
 
 function install_openbsd() {
+  echo -e "${LPURP}OpenBSD Installation${NC}"
   doas pkg_add colorls
   LINE="alias ls=\"colorls -G\""
   grep -qF -- "$LINE" "$HOME/.bashrc" || echo "$LINE" >>"$HOME/.bashrc"
 }
 
+function configure_ansible() {
+  if [ -d "var/log/ansible" ]; then
+    echo -e "${LPURP}Found /var/log/ansible.${NC}"
+  else
+    echo -e "${LPURP}Attempting to create /var/log/ansible...${NC}"
+    sudo mkdir /var/log/ansible
+    sudo chown nobody:engr /var/log/ansible
+    sudo chmod 770 /var/log/ansible
+    
+    if [ $? -ne 0 ]; then
+      echo -e "${LRED}mkdir command failed.${NC}"
+    fi
+  fi
+}
+
 function cleanup() {
+  echo -e "${LPURP}Cleanup!${NC}"
   find . -type d -print0 | xargs -0 chmod 755
   find . -type f -print0 | xargs -0 chmod 644 
 }
 
 function main() {
+  if [ ! -d "var/log/ansible" ]; then
+    echo -e "${LPURP}Attempting to create /var/log/ansible...${NC}"
+    sudo mkdir /var/log/ansible
+    if [ $? -ne 0 ]; then
+      echo -e "${LRED}mkdir command failed.${NC}"
+    else
+      echo -e "${LPURP}Success creating /var/log/ansible.${NC}"
+    fi
+  else
+    echo -e "${LPURP}Exists: /var/log/ansible.${NC}"
+  fi
+
   check_docker
   detect_os
   # check_installed doxygen
   required_files
+  configure_ansible
 
   if [ ! -d "aclocal" ]; then mkdir aclocal; fi
   if [ ! -d "config/m4" ]; then mkdir -p config/m4; fi

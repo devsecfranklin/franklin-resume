@@ -1,9 +1,16 @@
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2022-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 [debian]
+games.bitsmasher.net
+# gaming-pc.LAB.BITSMASHER.NET
 snowy.LAB.BITSMASHER.NET
+thelio.LAB.BITSMASHER.NET
+www.bitsmasher.net
+
+[nvidia_nodes]
+node[900:903].LAB.BITSMASHER.NET ansible_user=root
 
 [openbsd]
 blowfish.LAB.BITSMASHER.NET
@@ -15,16 +22,14 @@ ansible_become_method=doas
 
 [raspi_nodes]
 head1.LAB.BITSMASHER.NET ansible_user=root
+head2.LAB.BITSMASHER.NET ansible_user=root
 node[0:3].LAB.BITSMASHER.NET ansible_user=root
+ldap.LAB.BITSMASHER.NET ansible_user=root
+time.LAB.BITSMASHER.NET ansible_user=root
+storage1.LAB.BITSMASHER.NET ansible_user=root
 
 [raspi_nodes:vars]
 ansible_python_interpreter=/usr/bin/python3
-
-[samba]
-snowy.LAB.BITSMASHER.NET
-
-[storage]
-storage1.LAB.BITSMASHER.NET
 
 [ubuntu]
 odroid-c1.LAB.BITSMASHER.NET ansible_user=root

@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 # ChangeLog:
 #
@@ -15,8 +15,8 @@
 # v0.6 11/18/2024 Add required_files and OpenBSD support
 
 #set -euo pipefail
-set -o errexit # abort on nonzero exitstatus
-set -o nounset # abort on unbound variable
+#set -o errexit # abort on nonzero exitstatus
+#set -o nounset # abort on unbound variable
 
 # The special shell variable IFS determines how Bash
 # recognizes word boundaries while splitting a sequence of character strings.
@@ -144,9 +144,9 @@ function krb5_conf() {
 
   echo -e "${LGREEN}install /etc/krb5.conf${NC}"
   cat <<EOF >>/etc/krb5.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 [libdefaults]
 default_realm = LAB.BITSMASHER.NET
@@ -208,12 +208,12 @@ function apt_update() {
   apt update
   apt -y full-upgrade
   echo -e "${LGREEN}install tools${NC}"
-  apt -y install krb5-user nfs-common apt-utils
+  apt -y install krb5-user nfs-common apt-utils dnsutils
 }
 
 function setup_sudoers() {
   grep -qxF 'franklin ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'franklin ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
-  grep -qxF 'sly ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'sly ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
+  # grep -qxF 'sly ALL=(ALL) NOPASSWD:ALL' /etc/sudoers || echo 'sly ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 }
 
 function nfs_configuration() {
@@ -221,10 +221,10 @@ function nfs_configuration() {
   if [ ! -d "/mnt/clusterfs" ]; then mkdir /mnt/clusterfs; fi
   if [ ! -d "/mnt/backup1" ]; then mkdir /mnt/backup1; fi
   if [ ! -d "/mnt/storage1" ]; then mkdir /mnt/storage1; fi
- if [ ! -d "/mnt/storage2" ]; then mkdir /mnt/storage2; fi
-  if [ ! -d "/mnt/storage3" ]; then mkdir /mnt/storage3; fi
-  # grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0' >>/etc/fstab
-  # grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >>/etc/fstab
+  # if [ ! -d "/mnt/storage2" ]; then mkdir /mnt/storage2; fi
+  # if [ ! -d "/mnt/storage3" ]; then mkdir /mnt/storage3; fi
+  grep -qxF 'thelio:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' /etc/fstab || echo 'thelio:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0' >>/etc/fstab
+  grep -qxF 'thelio:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' /etc/fstab || echo 'thelio:/mnt/backup1 /mnt/backup1 nfs defaults 0 0' >>/etc/fstab
   grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' /etc/fstab || echo 'snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0' >>/etc/fstab
   systemctl daemon-reload
   echo -e "${LGREEN}mount all NFS volumes${NC}"
@@ -236,9 +236,9 @@ function setup_ldap() {
   chmod 755 /etc/ldap
 
   cat <<EOF >/etc/ldap.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 BASE    dc=lab,dc=bitsmasher,dc=net
 URI     ldap://10.10.13.1/
@@ -249,9 +249,9 @@ SASL_REALM LAB.BITSMASHER.NET
 EOF
 
   cat <<EOF >/etc/pam_ldap.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 base dc=lab,dc=bitsmasher,dc=net
 uri ldap://10.10.13.1/
@@ -260,9 +260,9 @@ pam_password md5
 EOF
 
   cat <<EOF >/etc/libnss-ldap.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 base dc=lab,dc=bitsmasher,dc=net
 uri ldap://10.10.13.1/
@@ -270,9 +270,9 @@ ldap_version 3
 EOF
 
   cat <<EOF >/etc/nsswitch.conf
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 passwd:         compat systemd ldap
 group:          compat systemd ldap
@@ -288,9 +288,9 @@ EOF
 function install_hosts_file() {
 
   cat <<EOF >/etc/hosts
-# SPDX-FileCopyrightText: 2023 DE:AD:10:C5 <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 127.0.0.1	localhost
 ::1		localhost ip6-localhost ip6-loopback
@@ -298,29 +298,38 @@ ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
 
 10.10.8.1  dream-machine.lab.bitsmasher.net dream-machine
-10.10.8.3 netlab1.lab.bitsmasher.net netlab1
-10.10.8.4 netlab2.lab.bitsmasher.net netlab2
+10.10.8.3  netlab1.lab.bitsmasher.net netlab1
+10.10.8.4  netlab2.lab.bitsmasher.net netlab2
 10.10.8.11 snowy.lab.bitsmasher.net snowy
+10.10.8.12 pa220.lab.bitsmasher.net pa220
 10.10.12.0 node0.lab.bitsmasher.net node0
 10.10.12.1 node1.lab.bitsmasher.net node1
-10.10.12.2 node2.lab.bitsmasher.net node2
-10.10.12.3 node3.lab.bitsmasher.net node3
-10.10.12.4 edge-t.lab.bitsmasher.net edge-t
-10.10.12.12 server1.lab.bitsmasher.net server1
-10.10.12.13 server2.lab.bitsmasher.net server2
-10.10.12.14 storage1.lab.bitsmasher.net storage1
-10.10.12.15 blowfish.lab.bitsmasher.net blowfish
-10.10.12.18 head1.lab.bitsmasher.net head1
-10.10.12.20 media01.lab.bitsmasher.net media1
-10.10.12.21 media02.lab.bitsmasher.net media2
-10.10.12.90 node900.lab.bitsmasher.net node900
-10.10.12.91 node901.lab.bitsmasher.net node901
-10.10.12.92 node902.lab.bitsmasher.net node902
-10.10.12.93 node903.lab.bitsmasher.net node903
+10.10.12.2   node2.lab.bitsmasher.net node2
+10.10.12.3   node3.lab.bitsmasher.net node3
+10.10.12.4   node4.lab.bitsmasher.net node4
+10.10.12.5   node5.lab.bitsmasher.net node5
+10.10.12.6   node6.lab.bitsmasher.net node6
+10.10.12.30  edge-t.lab.bitsmasher.net edge-t
+10.10.12.12  ns1.lab.bitsmasher.net server1
+10.10.12.13  time.lab.bitsmasher.net server2
+10.10.12.14  storage1.lab.bitsmasher.net storage1
+10.10.12.15  blowfish.lab.bitsmasher.net blowfish
+10.10.12.17  thelio.lab.bitsmasher.net thelio
+10.10.12.18  head1.lab.bitsmasher.net head1
+10.10.12.20  media01.lab.bitsmasher.net media1
+10.10.12.21  media02.lab.bitsmasher.net media2
+10.10.12.90  node900.lab.bitsmasher.net node900
+10.10.12.91  node901.lab.bitsmasher.net node901
+10.10.12.92  node902.lab.bitsmasher.net node902
+10.10.12.93  node903.lab.bitsmasher.net node903
 10.10.12.254 odroid-c1.lab.bitsmasher.net odroid-c1 kdc1.lab.bitsmasher.net kdc1
-10.10.13.1 server3.lab.bitsmasher.net server3
-10.10.13.10 bbb1.lab.bitsmasher.net bbb1
+10.10.13.1   ldap.lab.bitsmasher.net server3
+10.10.13.10  bbb1.lab.bitsmasher.net bbb1
+
+137.184.177.152 games.bitsmasher.net games
 178.62.60.55 www.bitsmasher.net wonderland
+192.168.0.1   century-link.dmz.bitsmasher.net century-link
+192.169.0.16  dream-machine.dmz.bitsmasher.net
 EOF
 
 }
@@ -372,12 +381,10 @@ function open_bsd_nfs_configuration() {
   #storage1:/mnt/passport /mnt/passport nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0
   #snowy:/mnt/storage1 /mnt/storage1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0
 
-  grep -qxF 'storage1:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
-    echo 'storage1:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
-  grep -qxF 'storage1:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
-    echo 'storage1:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
-  grep -qxF 'storage1:/mnt/passport /mnt/passport nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
-    echo 'storage1:/mnt/passport /mnt/passport nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
+  grep -qxF 'thelio:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
+    echo 'thelio:/mnt/clusterfs /mnt/clusterfs nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
+  grep -qxF 'thelio:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
+    echo 'thelio:/mnt/backup1 /mnt/backup1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
   grep -qxF 'snowy:/mnt/storage1 /mnt/storage1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' /etc/fstab ||
     echo 'snowy:/mnt/storage1 /mnt/storage1 nfs -3,-T,rw,nodev,nosuid,soft,intr 0 0' >>/etc/fstab
   echo -e "${LGREEN}mount all NFS volumes${NC}"

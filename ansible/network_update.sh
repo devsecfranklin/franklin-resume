@@ -28,27 +28,17 @@ ETC_DIR="/etc/ansible"
 WORKDIR="${PWD}"
 PLAYBOOK_DIR="collections/ansible_collections/lab/franklin/playbooks"
 
-function directories() {
-  # ${ETC_DIR}/group_vars -> /home/franklin/workspace/LAB/lab-franklin/ansible/group_vars
-  # /etc/ansible/roles -> /home/franklin/workspace/LAB/lab-franklin/ansible/roles
-  # /etc/ansible/hosts -> /home/franklin/workspace/LAB/lab-franklin/ansible/hosts
-  pass
+# Check if we are inside a docker container
+function check_docker() {
+  if [ -f /.dockerenv ]; then
+    echo -e "${CYAN}Containerized build environment...${NC}" | tee -a "${RAW_OUTPUT}"
+    CONTAINER=true
+  else
+    echo -e "${CYAN}NOT a containerized build environment...${NC}" | tee -a "${RAW_OUTPUT}"
+  fi
 }
 
-function main() {
-  echo -e "${LRED} _     _ _                           _                          _   "
-  echo -e "| |__ (_) |_ ___ _ __ ___   __ _ ___| |__   ___ _ __ _ __   ___| |_ "
-  echo -e "| '_ \| | __/ __| '_ \` _ \ / _\` / __| '_ \ / _ \ '__| '_ \ / _ \ __|"
-  echo -e "| |_) | | |_\__ \ | | | | | (_| \__ \ | | |  __/ | _| | | |  __/ |_ "
-  echo -e "|_.__/|_|\__|___/_| |_| |_|\__,_|___/_| |_|\___|_|(_)_| |_|\___|\__|${NC}\n"
-
-  if [ ! -f "${ETC_DIR}/hosts" ]; then
-    echo -e "${LRED}Copy the hosts file from ${RED}${WORKDIR}${LRED} to ${RED}${ETC_DIR}${NC}"
-    exit 1
-  fi
-
-  # copy ${WORKDIR}/ansible.cfg to /etc/ansible
-
+function all_playbooks() {
   # Debian: snowy
   # Do this one first since it is our file server
   echo -e "${CYAN}RUNNING DEBIAN PLAYBOOK${ID}${NC}"
@@ -77,6 +67,24 @@ function main() {
   # odroid-c1
   echo -e "${CYAN}RUNNING UBUNTU PLAYBOOK${ID}${NC}"
   ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/ubuntu.yml" -i "${ETC_DIR}/hosts" -b
+}
+
+function main() {
+  
+  [[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
+  [[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
+
+  echo -e "${LRED}$(figlet -d /usr/share/figlet -f smmono9 "Welcome to")${NC}\n"
+  echo -e "${LRED}$(figlet -d /usr/share/figlet -f smmono9 bitsmasher.net)${NC}\n"
+
+  # if [ ! -f "${ETC_DIR}/hosts" ]; then
+  #   echo -e "${LRED}Copy the hosts file from ${RED}${WORKDIR}${LRED} to ${RED}${ETC_DIR}${NC}"
+  #   exit 1
+  # fi
+
+  # copy ${WORKDIR}/ansible.cfg to /etc/ansible
+  
+  #all_playbooks
 }
 
 main "$@"

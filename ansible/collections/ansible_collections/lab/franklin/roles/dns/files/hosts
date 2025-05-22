@@ -1,6 +1,6 @@
-# SPDX-FileCopyrightText: 2023-2024 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 127.0.0.1	localhost
 ::1		localhost ip6-localhost ip6-loopback
@@ -20,10 +20,11 @@ ff02::2		ip6-allrouters
 10.10.12.5   node5.lab.bitsmasher.net node5
 10.10.12.6   node6.lab.bitsmasher.net node6
 10.10.12.30  edge-t.lab.bitsmasher.net edge-t
-10.10.12.12  server1.lab.bitsmasher.net server1
-10.10.12.13  server2.lab.bitsmasher.net server2
+10.10.12.12  ns1.lab.bitsmasher.net server1
+10.10.12.13  time.lab.bitsmasher.net server2
 10.10.12.14  storage1.lab.bitsmasher.net storage1
 10.10.12.15  blowfish.lab.bitsmasher.net blowfish
+10.10.12.17  thelio.lab.bitsmasher.net thelio
 10.10.12.18  head1.lab.bitsmasher.net head1
 10.10.12.20  media01.lab.bitsmasher.net media1
 10.10.12.21  media02.lab.bitsmasher.net media2
@@ -32,12 +33,10 @@ ff02::2		ip6-allrouters
 10.10.12.92  node902.lab.bitsmasher.net node902
 10.10.12.93  node903.lab.bitsmasher.net node903
 10.10.12.254 odroid-c1.lab.bitsmasher.net odroid-c1 kdc1.lab.bitsmasher.net kdc1
-10.10.13.1   server3.lab.bitsmasher.net server3
+10.10.13.1   ldap.lab.bitsmasher.net server3
 10.10.13.10  bbb1.lab.bitsmasher.net bbb1
 
-# 10.10.24.1   blowfish.research.bitsmasher.net
-
+137.184.177.152 games.bitsmasher.net games
+178.62.60.55 www.bitsmasher.net wonderland
 192.168.0.1   century-link.dmz.bitsmasher.net century-link
 192.169.0.16  dream-machine.dmz.bitsmasher.net
-192.168.0.33  thelio.dmz.bitsmasher.net thelio
-#10.0.0.205 femputer.engr.bitsmasher.net femputer

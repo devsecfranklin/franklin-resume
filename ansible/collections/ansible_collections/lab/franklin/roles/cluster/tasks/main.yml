@@ -41,7 +41,6 @@
   ansible.builtin.apt:
     pkg:
       - clustershell
-      - munge
       - pssh
     state: present
   become: true
@@ -50,6 +49,38 @@
   ansible.builtin.copy:
     src: "clush.local.cfg"
     dest: /etc/clustershell/groups.d/local.cfg
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush cluster.yaml"
+  ansible.builtin.copy:
+    src: "clush.cluster.yaml"
+    dest: /etc/clustershell/groups.d/cluster.yaml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush groups.conf"
+  ansible.builtin.copy:
+    src: "clush.local.cfg"
+    dest: /etc/clustershell/groups.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush.conf"
+  ansible.builtin.copy:
+    src: "clush.conf"
+    dest: /etc/clustershell/clush.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush slurm.conf"
+  ansible.builtin.copy:
+    src: "clush.slurm.conf"
+    dest: /etc/clustershell/groups.conf.d/slurm.conf
     owner: root
     group: root
     mode: "0644"

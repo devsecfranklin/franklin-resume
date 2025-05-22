@@ -162,6 +162,7 @@ ansible nvidia_nodes -a 'apt update' -b -i /etc/ansible/hosts -e 'ansible_python
 ansible-playbook ansible/collections/ansible_collections/lab/franklin/playbooks/playbook.yml -i ./hosts -b
 clush -v -g compute sudo apt update
 clush -g compute DEBIAN_FRONTEND="noninteractive" sudo apt -y upgrade
+clush -g compute df -Th | sort
 ```
 
 ## Managing Roles

@@ -2,6 +2,14 @@
 #- fail: msg="The machine's domain must not be empty."
 #  when: ansible_domain | length == 0
 
+- name: create ansible logging directory
+  ansible.builtin.file:
+    path: /var/log/ansible
+    state: directory
+    owner: nobody
+    group: nobody
+    mode: 0755
+
 - name: check if we are installing
   stat: path=/etc/rsyslog.d/bitsmasher.conf
   register: myconf
