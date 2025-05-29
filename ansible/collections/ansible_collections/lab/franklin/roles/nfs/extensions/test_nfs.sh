@@ -20,41 +20,88 @@ NC='\033[0m' # No Color
 # run like so
 # HOMELAB_MOLECULE_TEST=true ./test_nfs.sh
 
-# set up molecule
-# python3 -m pip install "molecule-plugins[podman]"
+ROLE_NAME="nfs"
 
-sudo mkdir /var/log/ansible
-sudo chmod 777 /var/log/ansible
+function setup_ansible_logging() {
+  if [[ -d "var/log/ansible" ]]; then
+    echo -e "${LPURP}Found /var/log/ansible.${NC}"
+  else
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}Attempting to create /var/log/ansible..."
+    sudo mkdir -p /var/log/ansible
+    if [ $? -ne 0 ]; then
+      echo -e "${LRED}mkdir command failed.${NC}"
+    else
+      sudo chown nobody:engr /var/log/ansible
+      sudo chmod 770 /var/log/ansible
+      echo -e "${LGREEN}Created directory /var/log/ansible${NC}"
+    fi
+  fi
+  # set up molecule
+  # python3 -m pip install "molecule-plugins[podman]" podman-compose
+  podman --version
+  podman-compose --version
+}
 
-# Collections
-ansible-galaxy collection install \
-  --collections-path /mnt/storage1/workspace/lab-franklin/ansible/collections \
-  containers.podman community.docker ansible.posix --force
+function prepare_env() {
+  # Collections
+  ansible-galaxy collection install \
+    --collections-path /mnt/storage1/workspace/lab-franklin/ansible/collections \
+    containers.podman \
+    community.docker \
+    ansible.posix \
+    --force
 
+  echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+  echo -e "${LPURP}tell us about molecule\n"
+  ansible-galaxy collection list
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-echo -e "${LPURP}tell us about molecule\n"
-ansible-galaxy collection list
+  FOLDERS=$(cd "${ANSIBLE_ROLES_PATH}/${ROLE_NAME}/extensions/molecule" &&
+    find -maxdepth 1 -type d | cut -f2 -d/)
+  SCENARIO_NAMES="${FOLDERS[*]/'.'/}"
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-echo -e "${LPURP}tell us about molecule\n"
-HOMELAB_MOLECULE_TEST=true molecule --version
-HOMELAB_MOLECULE_TEST=true molecule dependency --scenario-name nfs-client 
+  for SCENARIO_NAME in ${SCENARIO_NAMES}; do
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}tell us about molecule\n"
+    HOMELAB_MOLECULE_TEST=true molecule --version
+    HOMELAB_MOLECULE_TEST=true molecule dependency --scenario-name "${SCENARIO_NAME}"
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}molecule list --scenario-name ${SCENARIO_NAME}\n{NC}"
+    HOMELAB_MOLECULE_TEST=true molecule list --scenario-name "${SCENARIO_NAME}"
+  done
+}
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-echo -e "${LPURP}molecule check\n"
-HOMELAB_MOLECULE_TEST=true molecule check --scenario-name nfs-client  
+function molecule_check() {
+  for SCENARIO_NAME in ${SCENARIO_NAMES}; do
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}molecule check\n"
+    HOMELAB_MOLECULE_TEST=true molecule check --scenario-name "${SCENARIO_NAME}"
+  done
+}
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-echo -e "${LPURP}molecule list\n"
-HOMELAB_MOLECULE_TEST=true molecule list --scenario-name nfs-client 
+function run_tests() {
+  for SCENARIO_NAME in ${SCENARIO_NAMES}; do
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}\nExexcute scenario: ${SCENARIO_NAME}\n${NC}"
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-echo -e "${LPURP}preparing podman...\n"
-HOMELAB_MOLECULE_TEST=true molecule --debug destroy --all --driver-name podman --scenario-name nfs-client 
-HOMELAB_MOLECULE_TEST=true molecule create --driver-name podman --scenario-name nfs-client 
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}Configuring via podman...\n"
+    # HOMELAB_MOLECULE_TEST=true molecule --debug destroy --all --driver-name podman --scenario-name nfs-client
+    HOMELAB_MOLECULE_TEST=true molecule destroy --all --driver-name podman --scenario-name "${SCENARIO_NAME}"
+    HOMELAB_MOLECULE_TEST=true molecule prepare --driver-name podman --scenario-name "${SCENARIO_NAME}"
 
-echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-echo -e "${LPURP}molecule converge\n"
-HOMELAB_MOLECULE_TEST=true molecule converge --scenario-name nfs-client 
-echo -e "${NC}"
+    echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
+    echo -e "${LPURP}molecule converge\n"
+    HOMELAB_MOLECULE_TEST=true molecule converge --scenario-name "${SCENARIO_NAME}" 
+    echo -e "${NC}"
+  done
+}
+
+function main() {
+
+  setup_ansible_logging
+  prepare_env
+  molecule_check
+}
+
+main "$@"

@@ -2,7 +2,7 @@
 
 FROM python:3.13-slim-bullseye
 
-LABEL maintainer="DE:AD:10:C5 <thedevilsvoice@dead10c5.org>"
+LABEL maintainer="franklin <franklin@bitsmasher.net>"
 LABEL org.opencontainers.image.source=https://github.com/devsecfranklin/lab-franklin
 LABEL org.opencontainers.image.description="Social networking"
 LABEL org.opencontainers.image.licenses=MIT
