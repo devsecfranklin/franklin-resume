@@ -1,0 +1,6 @@
+---
+- name: "Prepare Collection"
+  hosts: "localhost"
+  tasks:
+    - name: "Run ansible-galaxy"
+      ansible.builtin.command: "ansible-galaxy install --force -r collections.yml"

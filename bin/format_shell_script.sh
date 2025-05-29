@@ -35,7 +35,7 @@ else
 fi
 
 # returns nothing on success
-${MY_SHFMT} -i 2 -l -w test/test_cluster/bootstrap.sh
+${MY_SHFMT} test/test_cluster/bootstrap.sh
 ${MY_SHFMT} -i 2 -l -w test/test_gui/bootstrap.sh
 
 # check bootstrap.sh

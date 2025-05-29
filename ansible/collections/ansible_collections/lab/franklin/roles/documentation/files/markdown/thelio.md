@@ -3,6 +3,8 @@ Role Name
 
 A brief description of the role goes here.
 
+* [Wacom tablet support](https://github.com/linuxwacom/input-wacom/wiki/Device-IDs)
+
 Requirements
 ------------
 

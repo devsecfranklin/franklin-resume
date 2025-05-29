@@ -10,12 +10,13 @@
 # v0.2 09/24/2022 Update this script
 # v0.3 10/19/2022 Add tool functions
 # v0.4 11/10/2022 Add automake check
-# v0.5 11/16/2022 Handle Docker container builds
+# v0.5 11/16/2022 Handle container builds
 # v0.6 07/13/2023 Add required_files and OpenBSD support
 # v0.7 04/22/2024 More OpenBSD support
 # v0.8 09/06/2024 Support GCP Linux
 # v0.9 02/18/2025 Updates for Mac
-# v1.0 02/26/2025 Optimize ssome functions using Gemini 2.0 Flash
+# v1.0 02/26/2025 Optimize some functions using Gemini 2.0 Flash
+# v1.1 05/29/2025 Update the OS Detection function, add HW Detection function
 
 #set -euo pipefail
 
@@ -41,56 +42,132 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-MY_OS="unknown"
-OS_RELEASE=""
+# --- Some config Variables ----------------------------------------
 CONTAINER=false
 #DOCUMENTATION=false
+KERNEL=$(uname -r)       # the kernel version
+MACHINE_TYPE=$(uname -m) # the machine type
+MY_DATE=$(date '+%Y-%m-%d-%H')
+MY_OS=$(uname | tr '[:upper:]' '[:lower:]') # usually "linux"
+MY_UNAME=$(uname)
+OS_RELEASE="$(cat /etc/os-release | grep "^ID=" | cut -d"=" -f2)"
+PRIV_CMD="sudo"
+RAW_OUTPUT="/tmp/bootstrap_lab_${MY_DATE}.log"
 
-# Check if we are inside a docker container
-function check_docker() {
+# Check if we are inside a container
+function check_container() {
+  echo -e "\n${LPURP}# --- Check Container Status ------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   if [ -f /.dockerenv ]; then
-    echo -e "${CYAN}Containerized build environment...${NC}"
+    echo -e "${YELLOW}Containerized build environment...${NC}"
     CONTAINER=true
   else
-    echo -e "${CYAN}NOT a containerized build environment...${NC}"
+    echo -e "${LBLUE}NOT a containerized build environment...${NC}"
+  fi
+}
+
+function check_python_version() {
+  if command -v python &>/dev/null; then
+    PYTHON_VERSION=$(python -c 'import sys; print(sys.version_info.major)')
+    if [[ "$PYTHON_VERSION" -eq 3 ]]; then
+      echo "The 'python' command points to Python 3."
+      # Use 'python'
+      PYTHON_CMD="python"
+    elif [[ "$PYTHON_VERSION" -eq 2 ]]; then
+      echo "The 'python' command points to Python 2."
+      # Decide what to do: try python3, or exit
+      if command -v python3 &>/dev/null; then
+        echo "Using 'python3' instead."
+        PYTHON_CMD="python3"
+      else
+        echo "Error: Python 3 not found. Exiting."
+        exit 1
+      fi
+    else
+      echo "The 'python' command points to an unknown Python version ($PYTHON_VERSION)."
+      # Decide what to do
+      if command -v python3 &>/dev/null; then
+        echo "Attempting to use 'python3' instead."
+        PYTHON_CMD="python3"
+      else
+        echo "Error: Python 3 not found. Exiting."
+        exit 1
+      fi
+    fi
+  elif command -v python3 &>/dev/null; then
+    echo "'python' command not found, using 'python3'."
+    PYTHON_CMD="python3"
+  else
+    echo "Error: Neither 'python' nor 'python3' found. Please install Python 3. Exiting."
+    exit 1
+  fi
+
+  echo "Using Python command: $PYTHON_CMD"
+}
+function detect_hardware() {
+  # FIXME: need to detect ubuntu running on nvidia
+  echo -e "\n${LPURP}# --- Hardware Detection ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+
+  echo -e "${LBLUE}Machine type: ${MACHINE_TYPE}${NC}"
+  echo -e "${LBLUE}Kernel: ${MACHINE_TYPE}${NC}"
+
+  # ---------- # RASPBERRY PI #----------#
+  # python -c "import platform; print ('raspberrypi') in platform.uname()"
+  # check /proc/cpuinfo for "Model"
+  IS_RASPI="$(grep Model /proc/cpuinfo | cut -f2 -d':')"
+  if [ -n "${IS_RASPI}" ]; then
+    echo -e "${YELLOW}Found Raspberry Pi: ${IS_RASPI}${NC}"
+    # cat /proc/device-tree/model
   fi
 }
 
 function detect_os() {
-  # check for the /etc/os-release file
-  if [ -f "/etc/os-release" ]; then
-    OS_RELEASE=$(cat /etc/os-release | grep "^ID=" | cut -d"=" -f2)
+  # FIXME: need to detect ubuntu running on nvidia
+  echo -e "\n${LPURP}# --- Operating System Detection --------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+
+  # first know the OS
+  if [ -n "${MY_OS}" ]; then
+    echo -e "${LBLUE}Operating System based on uname: ${MY_OS}${NC}"
   fi
 
-  if [ -n "${OS_RELEASE}" ]; then
-    echo -e "${CYAN}Found /etc/os-release file: ${OS_RELEASE}${NC}"
-  fi
+  case $MY_OS in
 
-  # Check uname (Linux, OpenBSD, Darwin)
-  MY_UNAME=$(uname)
-  if [ -n "${OS_RELEASE}" ]; then
-    echo -e "${CYAN}Found uname: ${MY_UNAME}${NC}"
-  fi
+  linux)
+    # if linux, check the distro. check for the /etc/os-release file
+    if [ -n "${OS_RELEASE}" ]; then
+      echo -e "${LBLUE}Found /etc/os-release file: ${OS_RELEASE}${NC}"
+      if [ "${OS_RELEASE}" == "debian" ]; then install_debian; fi
+    fi
 
-  if [ "${MY_UNAME}" == "OpenBSD" ]; then
-    echo -e "${CYAN}Detected OpenBSD${NC}"
-    MY_OS="openbsd"
-  elif [ "${MY_UNAME}" == "Darwin" ]; then
-    echo -e "${CYAN}Detected MacOS${NC}"
-    MY_OS="mac"
-  elif [ -f "/etc/redhat-release" ]; then
-    echo -e "${CYAN}Detected Red Hat/CentoOS/RHEL${NC}"
-    MY_OS="rh"
-  elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
-    echo -e "${CYAN}Detected Debian/Ubuntu/Mint${NC}"
-    MY_OS="deb"
-  elif grep -q Microsoft /proc/version; then
-    echo -e "${CYAN}Detected Windows pretending to be Linux${NC}"
-    MY_OS="win"
-  else
-    echo -e "${YELLOW}Unrecongnized architecture.${NC}"
+    #if [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
+    #  echo -e "${CYAN}Detected Debian/Ubuntu/Mint${NC}"
+    #fi
+
+    if [ -f "/etc/redhat-release" ]; then
+      echo -e "${CYAN}Detected Red Hat/CentOS/RHEL${NC}\n"
+      MY_OS="rh"
+      install_redhat
+    fi
+
+    if grep -q Microsoft /proc/version; then
+      echo -e "${CYAN}Detected Windows pretending to be Linux${NC}\n"
+      MY_OS="win"
+    fi
+    ;;
+  openbsd)
+    echo -e "${LBLUE}Detected OpenBSD${NC}\n"
+    PRIV_CMD="doas" # there is no sudo
+    install_openbsd
+    ;;
+  darwin)
+    echo -e "${CYAN}Detected MacOS${NC}\n"
+    check_installed brew
+    install_macos
+    ;;
+  *)
+    echo -e "${YELLOW}Unrecongnized architecture. Time to panic!${NC}\n"
     exit 1
-  fi
+    ;;
+  esac
 }
 
 function run_autopoint() {
@@ -114,7 +191,8 @@ function run_autopoint() {
 }
 
 function run_libtoolize() {
-  echo "Checking libtoolize version..."
+  echo -e "\n${LPURP}# --- Run libtoolize --------------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+  echo -e "Checking libtoolize version...\n"
   libtoolize --version 2>&1 >/dev/null
   rc=$?
   if test $rc -ne 0; then
@@ -151,6 +229,7 @@ function run_libtoolize() {
 }
 
 function run_aclocal() {
+  echo -e "\n${LPURP}# --- Running aclocal -------------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   if [ "${MY_OS}" != "openbsd" ]; then
     echo -e "${LBLUE}Checking aclocal version...${NC}"
     acl_ver=$(aclocal --version | awk '{print $NF; exit}')
@@ -166,6 +245,7 @@ function run_aclocal() {
 }
 
 function run_autoheader() {
+  echo -e "\n${LPURP}# --- Running autoheader ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   echo "Checking autoheader version..."
   ah_ver=$(autoheader --version | awk '{print $NF; exit}')
   echo "    $ah_ver"
@@ -176,6 +256,7 @@ function run_autoheader() {
 }
 
 function run_automake() {
+  echo -e "\n${LPURP}# --- Running automake ------------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   if [ "${MY_OS}" != "openbsd" ]; then
     echo "Checking automake version..."
     am_ver=$(automake --version | awk '{print $NF; exit}')
@@ -191,6 +272,7 @@ function run_automake() {
 }
 
 function run_autoconf() {
+  echo -e "\n${LPURP}# --- Running autoconf ------------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   if [ "${MY_OS}" != "openbsd" ]; then
     echo -e "${LGREEN}Checking autoconf version...${NC}"
     ac_ver=$(autoconf --version | awk '{print $NF; exit}')
@@ -217,6 +299,7 @@ function check_installed() {
 }
 
 function install_macos() {
+  echo -e "\n${LPURP}# --- Installing for MacOS --------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   #declare -a Packages=("ac")
   declare -a Packages=("google-cloud-sdk" "git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
 
@@ -263,7 +346,13 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=( "podman" "ansible" "libglib2.0-dev" "libonig-dev" "tox" "sshpass" "libxml2-utils" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "doxygen" "latexmk" "gawk" "doxygen-latex" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  apt install netselect netselect-apt -y
+  # netselect-apt testing
+  # netselect-apt stable
+  # netselect-apt unstable # for debian x64
+  # sudo netselect-apt bookworm # for raspi
+
+  pkgs=(podman ansible libglib2.0-dev libonig-dev tox sshpass libxml2-utils shellcheck screen make gcc git automake libtool doxygen latexmk gawk doxygen-latex nodejs npm apt-transport-https ca-certificates curl gnupg lsb-release direnv clustershell)
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -271,14 +360,16 @@ function install_debian() {
     apt-get update && apt-get upgrade -y
   fi
 
-  for i in "${Packages[@]}"; do
+  for i in "${pkgs[@]}"; do
     if [ $(dpkg-query -W -f='${Status}' ${i} 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
       # If we are in a container there is no sudo in Debian
       if [ "${CONTAINER}" = true ]; then
         apt-get --yes install "${i}"
+        apt-get autoremove -y
       else
         sudo apt-get install "${i}" -y
+        sudo apt-get autoremove -y
       fi
     fi
   done
@@ -287,7 +378,6 @@ function install_debian() {
     dircolors -p >~/.dircolors
     echo -e "${LBLUE}Updating the dircolors configuration.${NC}"
   fi
-  sudo apt autoremove -y
 }
 
 function install_az_cli() {
@@ -345,8 +435,7 @@ function install_redhat() {
 }
 
 function required_files() {
-  -e "${LCYAN}Check for presence of required GNU autotools file${NC}"
-
+  echo -e "\n${LPURP}# --- Check GNU Autotools files ----------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   local required_files=("AUTHORS" "ChangeLog" "NEWS")
 
   for file in "${required_files[@]}"; do
@@ -362,76 +451,67 @@ function required_files() {
 }
 
 function install_openbsd() {
-  echo -e "${LPURP}OpenBSD Installation${NC}"
+  echo -e "${LPURP}# --- OpenBSD Installation ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   doas pkg_add colorls
   LINE="alias ls=\"colorls -G\""
   grep -qF -- "$LINE" "$HOME/.bashrc" || echo "$LINE" >>"$HOME/.bashrc"
 }
 
 function configure_ansible() {
-  if [ -d "var/log/ansible" ]; then
+  echo -e "\n${LPURP}# --- Configuring Ansible ---------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+  if [ -d "/var/log/ansible" ]; then
     echo -e "${LPURP}Found /var/log/ansible.${NC}"
   else
     echo -e "${LPURP}Attempting to create /var/log/ansible...${NC}"
-    sudo mkdir /var/log/ansible
-    sudo chown nobody:engr /var/log/ansible
-    sudo chmod 770 /var/log/ansible
-    
-    if [ $? -ne 0 ]; then
-      echo -e "${LRED}mkdir command failed.${NC}"
+    $PRIV_CMD mkdir /var/log/ansible
+    $PRIV_CMD chown nobody:engr /var/log/ansible
+    $PRIV_CMD chmod 770 /var/log/ansible
+    if ! $?; then
+      echo -e "${LGREEN}The /var/log/ansible directory already exists.${NC}\n"
+    fi
+  fi
+}
+
+function raspberry_pi() {
+  echo -e "\n${LPURP}# --- Raspberry Pi Setup ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+  # check if it is a raspberry pi, because we'll need a special ruby first
+  if [ -x "$(command -v python)" ]; then
+    R_PI=$(python -c "import platform; print 'raspberrypi' in platform.uname()")
+
+    if [ "$R_PI" = "True" ]; then
+      # put your raspberry py code here, in my case I upgrade the ruby version:
+      # run ruby upgrade script. source: https://gist.github.com/blacktm/8302741
+      yes | bash <(curl -s https://gist.githubusercontent.com/blacktm/8302741/raw/install_ruby_rpi.sh)
     fi
   fi
 }
 
 function cleanup() {
+  echo -e "\n${LPURP}# --- Cleanup ---------------------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   echo -e "${LPURP}Cleanup!${NC}"
   find . -type d -print0 | xargs -0 chmod 755
-  find . -type f -print0 | xargs -0 chmod 644 
+  find . -type f -print0 | xargs -0 chmod 644
 }
 
+# --- The main() function ----------------------------------------
 function main() {
-  if [ ! -d "var/log/ansible" ]; then
-    echo -e "${LPURP}Attempting to create /var/log/ansible...${NC}"
-    sudo mkdir /var/log/ansible
-    if [ $? -ne 0 ]; then
-      echo -e "${LRED}mkdir command failed.${NC}"
-    else
-      echo -e "${LPURP}Success creating /var/log/ansible.${NC}"
-    fi
-  else
-    echo -e "${LPURP}Exists: /var/log/ansible.${NC}"
-  fi
-
-  check_docker
-  detect_os
-  # check_installed doxygen
-  required_files
-  configure_ansible
+  check_container
+  check_python_version
 
   if [ ! -d "aclocal" ]; then mkdir aclocal; fi
   if [ ! -d "config/m4" ]; then mkdir -p config/m4; fi
-
-  if [ "${MY_OS}" == "mac" ]; then
-    check_installed brew
-    install_macos
-  fi
-
-  if [ "${MY_OS}" == "rh" ]; then
-    install_redhat
-  fi
-
-  if [ "${MY_OS}" == "deb" ]; then
-    install_debian
-  fi
-
-  if [ "${MY_OS}" == "openbsd" ]; then
-    install_openbsd
-  fi
 
   if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
     rm config.status # if Makefile.in is missing, then erase stale config.status
   fi
 
+  detect_os
+  detect_hardware
+  # check_installed doxygen
+  required_files
+  configure_ansible
+
+  echo -e "\n${LPURP}# --- Configure the build ---------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   if [ ! -f "./config.status" ]; then
     echo -e "${YELLOW}no config.status${NC}"
     # libtoolize
