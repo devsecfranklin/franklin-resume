@@ -1,3 +1,4 @@
+/* stop the auto updates until we need OCI again
 terraform {
   required_version = ">=0.13, <2.0"
   required_providers {
@@ -7,6 +8,7 @@ terraform {
     }
   }
 }
+*/
 
 /*
 provider "oci" {
