@@ -99,11 +99,12 @@ configure
 configure~
 configure.lineno
 conftest.c
+conftest.cpp
+conftest.err
 conftest.mk
 conftest
-conftest.err
-conftest.cpp
 conftest.o
+conftest.one
 install-sh
 libtool
 ltmain.sh

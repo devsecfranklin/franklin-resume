@@ -1,12 +1,3 @@
 ---
 - name: "Ansible Playbook for servers"
-  import_playbook: raspi_servers.yml
-
-- name: Include the storage play
-  import_playbook: storage.yml
-
-- name: "Include the Raspberry Pi cluster play"
-  import_playbook: raspi_cluster.yml
-
-- name: Include the media play
-  import_playbook: media.yml
+  import_playbook: cluster_raspi.yml

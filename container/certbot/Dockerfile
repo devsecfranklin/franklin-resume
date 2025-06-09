@@ -1,13 +1,6 @@
 FROM python:3.13-slim-bullseye
 
-LABEL maintainer="franklin <devsecfranklin@duck.com>"
-LABEL org.opencontainers.image.source=https://github.com/devsecfranklin/lab-franklin
-LABEL org.opencontainers.image.description="Certbot Update container"
-LABEL org.opencontainers.image.licenses=MIT
-
-WORKDIR /app
-
-ENV DEBIAN_FRONTEND noninteractive
+x
 ENV PYTHONUNBUFFERED 1
 
 ARG PASS

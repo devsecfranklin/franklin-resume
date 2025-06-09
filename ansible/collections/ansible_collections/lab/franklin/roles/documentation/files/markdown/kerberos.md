@@ -4,7 +4,7 @@ If you log in on a host that has a properly installed `/etc/krb5.keytab`
 you will get a similar effect to requesting a new ticket, or typing `kinit -R`
 to refresh.
 
-This is an example of how the keytab shoud look on an example machine:
+This is an example of how the keytab should look on an example machine:
 
 ```sh
 root@thelio:~# klist -ke /etc/krb5.keytab 

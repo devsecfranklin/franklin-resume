@@ -2,3 +2,5 @@
 ntp_service: systemd-timesyncd # this is for Debian, diff on other OS
 ntp_configuration_file: ntp.conf
 ntp_timezone: "America/Denver"
+ntp_user: ntpsec
+ntp_group: ntpsec
