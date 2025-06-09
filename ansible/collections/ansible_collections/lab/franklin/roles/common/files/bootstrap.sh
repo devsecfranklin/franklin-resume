@@ -22,7 +22,6 @@
 # recognizes word boundaries while splitting a sequence of character strings.
 #IFS=$'\n\t'
 
-
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31
 #Green        0;32     Light Green   1;32
@@ -106,7 +105,7 @@ function detect_os() {
 
 function install_debian() {
   echo -e "${LGREEN}install Debian specifics${NC}"
-  declare -a Packages=("doxygen" "gawk" "doxygen-latex")
+  declare -a Packages=("doxygen" "gawk" "doxygen-latex" "direnv" "screen" "neofetch" "mlocate")
   for i in "${Packages[@]}"; do
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' "${i}" | grep "install ok installed")
     echo Checking for "${i}": "$PKG_OK"
@@ -297,25 +296,23 @@ function install_hosts_file() {
 ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
 
-10.10.8.1  dream-machine.lab.bitsmasher.net dream-machine
-10.10.8.3  netlab1.lab.bitsmasher.net netlab1
-10.10.8.4  netlab2.lab.bitsmasher.net netlab2
-10.10.8.11 snowy.lab.bitsmasher.net snowy
-10.10.8.12 pa220.lab.bitsmasher.net pa220
-10.10.12.0 node0.lab.bitsmasher.net node0
-10.10.12.1 node1.lab.bitsmasher.net node1
+10.10.8.1    dream-machine.lab.bitsmasher.net dream-machine
+10.10.8.3    netlab1.lab.bitsmasher.net netlab1
+10.10.8.4    netlab2.lab.bitsmasher.net netlab2
+10.10.8.11   snowy.lab.bitsmasher.net snowy
+10.10.8.12   pa220.lab.bitsmasher.net pa220
+10.10.12.0   node0.lab.bitsmasher.net node0
+10.10.12.1   node1.lab.bitsmasher.net node1
 10.10.12.2   node2.lab.bitsmasher.net node2
 10.10.12.3   node3.lab.bitsmasher.net node3
 10.10.12.4   node4.lab.bitsmasher.net node4
-10.10.12.5   node5.lab.bitsmasher.net node5
-10.10.12.6   node6.lab.bitsmasher.net node6
 10.10.12.30  edge-t.lab.bitsmasher.net edge-t
 10.10.12.12  ns1.lab.bitsmasher.net server1
 10.10.12.13  time.lab.bitsmasher.net server2
-10.10.12.14  storage1.lab.bitsmasher.net storage1
+10.10.12.14  node5.lab.bitsmasher.net node5
 10.10.12.15  blowfish.lab.bitsmasher.net blowfish
 10.10.12.17  thelio.lab.bitsmasher.net thelio
-10.10.12.18  head1.lab.bitsmasher.net head1
+10.10.12.18  node6.lab.bitsmasher.net node6
 10.10.12.20  media01.lab.bitsmasher.net media1
 10.10.12.21  media02.lab.bitsmasher.net media2
 10.10.12.90  node900.lab.bitsmasher.net node900

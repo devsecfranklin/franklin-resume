@@ -70,12 +70,12 @@ function all_playbooks() {
 }
 
 function main() {
-  
+
   [[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
   [[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
 
-  echo -e "${LRED}$(figlet -d /usr/share/figlet -f smmono9 "Welcome to")${NC}\n"
-  echo -e "${LRED}$(figlet -d /usr/share/figlet -f smmono9 bitsmasher.net)${NC}\n"
+  echo -e "${LRED}$(figlet -d /usr/share/figlet -f block "Welcome to")${NC}\n"
+  echo -e "${LRED}$(figlet -d /usr/share/figlet -f block bitsmasher.net)${NC}\n"
 
   # if [ ! -f "${ETC_DIR}/hosts" ]; then
   #   echo -e "${LRED}Copy the hosts file from ${RED}${WORKDIR}${LRED} to ${RED}${ETC_DIR}${NC}"
@@ -83,8 +83,11 @@ function main() {
   # fi
 
   # copy ${WORKDIR}/ansible.cfg to /etc/ansible
-  
-  #all_playbooks
+
+  # all_playbooks
+
+  echo -e "${CYAN}RUNNING MAIN PLAYBOOK${NC}"
+  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/cluster_raspi.yml" -i ./hosts -b
 }
 
 main "$@"

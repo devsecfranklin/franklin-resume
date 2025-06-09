@@ -362,6 +362,7 @@ function install_debian() {
   if [ "${CONTAINER}" = true ]; then
     echo -e "${LBLUE}Upgrading container packages${NC}"
     sudo apt-get update && apt-get upgrade -y
+    sudo apt-get autoremove -y
   fi
 
   for i in "${pkgs[@]}"; do
@@ -450,8 +451,6 @@ function required_files() {
       printf "${LBLUE}Found required file %s.${NC}\n" "$file"
     fi
   done
-
-  mkdir -p config/m4 # Create config/m4 if needed
 }
 
 function install_openbsd() {
@@ -499,8 +498,15 @@ function main() {
   check_container
   check_python_version
 
-  if [ ! -d "aclocal" ]; then mkdir aclocal; fi
-  if [ ! -d "config/m4" ]; then mkdir -p config/m4; fi
+  if [ ! -d "aclocal" ]; then
+    echo "create aclocal dir"
+    mkdir -p aclocal
+  fi
+
+  if [ ! -d "config/m4" ]; then
+    echo "create congif/m4 dir"
+    mkdir -p config/m4
+  fi
 
   if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
     rm config.status # if Makefile.in is missing, then erase stale config.status

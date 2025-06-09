@@ -1,0 +1,222 @@
+export K3S_KUBECONFIG_MODE="644"
+export INSTALL_K3S_EXEC=" --no-deploy servicelb --no-deploy traefik"
+curl -sfL https://get.k3s.io | sh -
+# Deploy K3s and Rancher on Raspberry Pi 4 cluster
+Today I tried to setup a small Kubernetes cluster on top of 3 Raspberry Pi 4 (4GB Memory).
+Here is the steps to install the cluster.
+
+![IMG_3817](https://user-images.githubusercontent.com/944672/81684895-acc6d980-9457-11ea-9973-099d5d08f38c.jpeg)
+
+## Preparation
+
+I have 3 Raspberry Pi 4 stacked with PoE headers and connected to a PoE switch at home. The are connected to Internet through a home router. All Pis are equipped with a 64GB Samsung SDXC card flushed with Ubuntu 20.04 image.
+
+### Router configuration
+
+I used a Mikrotik RB4011 as the home router with direct Internet access. The LAN CIDR is configured to 192.168.11.0/24. In order to expose the services on Kubernetes cluster to the Internet, i have to add 2 dst-nat rule with script. The IP "192.168.11.50" will be configured to Loadbalancer IP. Make sure it is not occupied by any of existing client.
+
+```console
+/ip firewall nat
+add action=masquerade chain=srcnat comment="LAN to Server" dst-address=<LAN_CIDR> src-address=<LAN_CIDR>
+add action=dst-nat chain=dstnat comment="WAN to https Server" dst-address-list=WAN-IP dst-port=443 protocol=tcp to-addresses=<LB_ADDR>
+add action=dst-nat chain=dstnat comment="WAN to http Server" dst-address-list=WAN-IP dst-port=80 protocol=tcp to-addresses=<LB_ADDR>
+/ip firewall address-list
+add address=<WEBSITE_FQDN> list=WAN-IP
+
+# Example:
+# /ip firewall nat
+# add action=masquerade chain=srcnat comment="LAN to Server" dst-address=10.0.0.0/25 src-address=10.0.0.0/25
+# add action=masquerade chain=srcnat out-interface="PPPoE client" src-address=10.0.0.0/25
+# add action=dst-nat chain=dstnat comment="WAN to https Server" dst-address-list=WAN-IP dst-port=443 protocol=tcp to-addresses=10.0.0.50
+# add action=dst-nat chain=dstnat comment="WAN to http Server" dst-address-list=WAN-IP dst-port=80 protocol=tcp to-addresses=10.0.0.50
+
+# /ip firewall address-list
+# add address=server.example.com list=WAN-IP
+```
+
+
+## Deploy K3s
+
+Basically I followed [Install and configure a Kubernetes cluster](https://kauri.io/38-install-and-configure-a-kubernetes-cluster-with/418b3bc1e0544fbc955a4bbba6fff8a9/a) to deploy the cluster.
+
+- On 1st Pi (Control node), run following commands:
+
+```bash
+export K3S_KUBECONFIG_MODE="644"
+export INSTALL_K3S_EXEC=" --no-deploy servicelb --no-deploy traefik"
+curl -sfL https://get.k3s.io | sh -
+
+# Get token of the k3s svc
+sudo cat /var/lib/rancher/k3s/server/node-token
+```
+
+- On 2nd and 3rd Pi (Worker node), run following command
+
+```bash
+export K3S_URL="https://piattop.zhenfang.home:6443"
+export K3S_KUBECONFIG_MODE="644"
+export K3S_TOKEN="<TOKEN>"
+curl -sfL https://get.k3s.io | sh -
+```
+
+## Deploy loadbalancer and ingress controller
+
+Here we deploy the loadbalancer and ingress controller onto the cluster.
+
+- Use Helm(v3) to install Loadbalancer
+
+```bash
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
+helm repo update
+helm install metallb stable/metallb --namespace kube-system \
+  --set configInline.address-pools[0].name=default \
+  --set configInline.address-pools[0].protocol=layer2 \
+  --set configInline.address-pools[0].addresses[0]=192.168.11.50-192.168.11.60
+```
+
+- Use Helm(v3) to install ingress controller
+
+```bash
+kubectl create namespace ingress-controller
+helm install nginx-ingress stable/nginx-ingress \
+  --namespace ingress-controller \
+  --set controller.image.repository=quay.io/kubernetes-ingress-controller/nginx-ingress-controller-arm64 \
+  --set controller.image.tag=0.25.1 \
+  --set controller.image.runAsUser=33 \
+  --set defaultBackend.enabled=false
+```
+
+### Install Cert-manager
+
+Cert manager will help you to grant TLS keys from Letsencrypt. I created a separate namespace to install it. I refer to Rancher's [cert-manager install doc](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/#5-install-cert-manager)
+
+```bash
+# Install the CustomResourceDefinition resources separately
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml
+
+# **Important:**
+# If you are running Kubernetes v1.15 or below, you
+# will need to add the `--validate=false` flag to your
+# kubectl apply command, or else you will receive a
+# validation error relating to the
+# x-kubernetes-preserve-unknown-fields field in
+# cert-manager’s CustomResourceDefinition resources.
+# This is a benign error and occurs due to the way kubectl
+# performs resource validation.
+
+# Create the namespace for cert-manager
+kubectl create namespace cert-manager
+
+# Add the Jetstack Helm repository
+helm repo add jetstack https://charts.jetstack.io
+
+# Update your local Helm chart repository cache
+helm repo update
+
+# Install the cert-manager Helm chart
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v0.12.0
+```
+
+### Install Rancher
+
+In order to manage the cluster properly. I installed Rancher 2 onto the cluster. The reference doc is [Install Rancher on Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/)
+
+```bash
+kubectl create namespace cattle-system
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=<HOST_NAME> \
+  --set ingress.tls.source=letsEncrypt \
+  --set letsEncrypt.email=<EMAIL_ADDR>
+```
+
+N.B. There is some "race-condition" during rancher deployment. The certificate granting might ends up failure or pending. Here you need to do following checks:
+
+- Is the dst-nat and masqurading properly set on home router
+- Is the certificate created successfully.
+
+```bash
+kubectl -n cattle-system get certificate
+kubectl -n cattle-system get issuer
+kubectl -n cattle-system get certificaterequest
+kubectl -n cattle-system describe certificaterequest rancher
+```
+
+- If the certificaterequest got stuck. Try to delete the ingress and re-create it.
+
+```bash
+helm -n cattle-system get values rancher > rancher-values.yaml
+kubectl -n cattle-system delete ingress rancher
+helm -n cattle-system upgrade -i rancher \
+  rancher-latest/rancher -f rancher-values.yaml
+```
+
+After Rancher is installed, we could check if Rancher is accessible from WAN and LAN.
+
+![rancher-login](https://user-images.githubusercontent.com/944672/81685208-2f4f9900-9458-11ea-8e03-6aab82e399b9.png)
+
+The cluster is shown in below pic.
+
+![K3s Local Cluster](https://user-images.githubusercontent.com/944672/82371075-e0869e00-9a19-11ea-8ecd-0c8516faaa56.png)
+
+### Prepare cluster-issuer for further deployment
+
+In order to make use of cert-managet to other services, create cluster-issuer.
+
+```bash
+cat <<EOF | kubectl apply -f -
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: <EMAIL>
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: <EMAIL>
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+EOF
+```
+
+### NFS provisioner
+
+I have an Synology diskstation home with NFS server enabled. In order to get pvc support on K3s cluster, i use following command to deploy the NFS client provisioner.
+
+```bash
+helm -n nfs-provisioner install diskstation \
+  stable/nfs-client-provisioner \
+  --set nfs.server=<DISKSTATION_IP> \
+  --set nfs.path=<NFS_MOUNTING_PATH> \
+  --set image.repository=kopkop/nfs-client-provisioner-arm64
+```
+
+N.B. Remember to install **NFS client** on every worker node first if it is not pre-installed.
+
+```bash
+sudo apt update && sudo apt -y install nfs-common
+```

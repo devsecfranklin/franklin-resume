@@ -17,15 +17,13 @@ ff02::2		ip6-allrouters
 10.10.12.2   node2.lab.bitsmasher.net node2
 10.10.12.3   node3.lab.bitsmasher.net node3
 10.10.12.4   node4.lab.bitsmasher.net node4
-10.10.12.5   node5.lab.bitsmasher.net node5
-10.10.12.6   node6.lab.bitsmasher.net node6
 10.10.12.30  edge-t.lab.bitsmasher.net edge-t
 10.10.12.12  ns1.lab.bitsmasher.net server1
 10.10.12.13  time.lab.bitsmasher.net server2
-10.10.12.14  storage1.lab.bitsmasher.net storage1
+10.10.12.14  node5.lab.bitsmasher.net node5
 10.10.12.15  blowfish.lab.bitsmasher.net blowfish
 10.10.12.17  thelio.lab.bitsmasher.net thelio
-10.10.12.18  head1.lab.bitsmasher.net head1
+10.10.12.18  node6.lab.bitsmasher.net node6
 10.10.12.19  head2.lab.bitsmasher.net head2
 10.10.12.20  media01.lab.bitsmasher.net media1
 10.10.12.21  media02.lab.bitsmasher.net media2

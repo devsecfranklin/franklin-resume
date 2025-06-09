@@ -11,6 +11,7 @@
     name:
       - tzdata
       - systemd-timesyncd
+      - ntp
     force_apt_get: true
     update_cache: true
   tags:
@@ -18,3 +19,6 @@
     - timezone
   when:
   - ansible_facts['distribution'] == "Debian"
+
+# gpsd packages 
+# apt install gpsd gpsd-clients libgps-dev libgps

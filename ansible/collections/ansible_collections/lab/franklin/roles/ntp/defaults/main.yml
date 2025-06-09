@@ -17,9 +17,9 @@ ntp_pool:
   - name: "3.pool.ntp.org iburst"
 
 # A list of NTP servers and their options.
-# ntp_server:
-#   - name: ntp.example.com
-#     options:
-#       - iburst
+ntp_server:
+  - name: time.lab.bitsmasher.net
+    options:
+      - iburst
 
 ntp_timezone: "America/Denver"

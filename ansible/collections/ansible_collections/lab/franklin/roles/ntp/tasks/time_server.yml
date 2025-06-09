@@ -1,0 +1,12 @@
+- name: "Install NTP packages"
+  ansible.builtin.apt:
+    name:
+      - gpsd
+      - gpsd-clients
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - ntp
+    - timezone
+  when:
+  - ansible_facts['distribution'] == "Debian"

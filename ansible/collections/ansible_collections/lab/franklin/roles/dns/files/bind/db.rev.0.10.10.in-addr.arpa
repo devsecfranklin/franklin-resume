@@ -1,6 +1,6 @@
 $TTL 1D
 @ IN SOA server1.lab.bitsmasher.net hostmaster.lab.bitsmasher.net. (
-        202505191415 ; serial
+        202506031415 ; serial
         8H ; refresh
         4H ; retry
         4W ; expire
@@ -20,21 +20,17 @@ lab.bitsmasher.net. IN NS ns1.lab.bitsmasher.net.
 1.12            IN PTR node1.lab.bitsmasher.net.
 2.12            IN PTR node2.lab.bitsmasher.net.
 3.12            IN PTR node3.lab.bitsmasher.net.
-4.12            IN PTR node4.lab.bitsmasher.net.
+4.12            IN PTR edge-t.lab.bitsmasher.net.
 5.12            IN PTR node5.lab.bitsmasher.net.
-6.12            IN PTR node6.lab.bitsmasher.net.
 7.12            IN PTR lanparty.lab.bitsmasher.net.
 8.12            IN PTR grimoire.lab.bitsmasher.net.
 11.12           IN PTR labbench.lab.bitsmasher.net.
 12.12           IN PTR ns1.lab.bitsmasher.net.
 13.12           IN PTR time.lab.bitsmasher.net.
-14.12           IN PTR storage1.lab.bitsmasher.net.
+14.12           IN PTR node5.lab.bitsmasher.net.
 15.12		IN PTR blowfish.lab.bitsmasher.net.
 17.12           IN PTR thelio.lab.bitsmasher.net.
-18.12		IN PTR head1.lab.bitsmasher.net.
-20.12           IN PTR media01.lab.bitsmasher.net.
-21.12           IN PTR media02.lab.bitsmasher.net.
-30.12		IN PTR edge-t.lab.bitsmasher.net.
+18.12		IN PTR node6.lab.bitsmasher.net.
 90.12		IN PTR node900.lab.bitsmasher.net.
 91.12		IN PTR node901.lab.bitsmasher.net.
 92.12		IN PTR node902.lab.bitsmasher.net.
