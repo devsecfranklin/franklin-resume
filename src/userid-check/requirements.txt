@@ -1,8 +1,8 @@
 matplotlib==3.10.3
-networkx==3.4.2
+networkx==3.5
 Pillow==11.2.1
 setuptools==80.9.0
-pyfiglet==1.0.2
+pyfiglet==1.0.3
 pyOpenSSL==25.1.0
 Requests==2.32.3
 rich==14.0.0

@@ -66,43 +66,46 @@ function check_container() {
 }
 
 function check_python_version() {
+  echo -e "\n${LPURP}# --- Check Python Version -------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   if command -v python &>/dev/null; then
     PYTHON_VERSION=$(python -c 'import sys; print(sys.version_info.major)')
     if [[ "$PYTHON_VERSION" -eq 3 ]]; then
-      echo "The 'python' command points to Python 3."
+      echo -e "${LBLUE}The 'python' command points to Python 3.${NC}"
       # Use 'python'
       PYTHON_CMD="python"
     elif [[ "$PYTHON_VERSION" -eq 2 ]]; then
-      echo "The 'python' command points to Python 2."
+      echo -e "${LBLUE}The 'python' command points to Python 2.${NC}"
+
       # Decide what to do: try python3, or exit
       if command -v python3 &>/dev/null; then
-        echo "Using 'python3' instead."
+        echo -e "Using 'python3' instead."
         PYTHON_CMD="python3"
       else
-        echo "Error: Python 3 not found. Exiting."
+        echo -e "${LRED}Error: Python 3 not found. Exiting.${NC}"
         exit 1
       fi
     else
-      echo "The 'python' command points to an unknown Python version ($PYTHON_VERSION)."
+      echo -e "${LRED}The 'python' command points to an unknown Python version ($PYTHON_VERSION).${NC}"
       # Decide what to do
       if command -v python3 &>/dev/null; then
-        echo "Attempting to use 'python3' instead."
+        echo "Attempting to use 'python3' instead.${NC}"
         PYTHON_CMD="python3"
       else
-        echo "Error: Python 3 not found. Exiting."
+        echo -e "${LRED}Error: Python 3 not found. Exiting.${NC}"
         exit 1
       fi
     fi
   elif command -v python3 &>/dev/null; then
-    echo "'python' command not found, using 'python3'."
+    echo "'python' command not found, using 'python3'.${NC}"
     PYTHON_CMD="python3"
   else
-    echo "Error: Neither 'python' nor 'python3' found. Please install Python 3. Exiting."
+    echo -e "${LRED}Error: Neither 'python' nor 'python3' found. Please install Python 3. Exiting.${NC}"
     exit 1
   fi
 
-  echo "Using Python command: $PYTHON_CMD"
+  echo -e "${LBLUE}Using Python command: ${PYTHON_CMD}${NC}"
 }
+
 function detect_hardware() {
   # FIXME: need to detect ubuntu running on nvidia
   echo -e "\n${LPURP}# --- Hardware Detection ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
@@ -111,11 +114,12 @@ function detect_hardware() {
   echo -e "${LBLUE}Kernel: ${MACHINE_TYPE}${NC}"
 
   # ---------- # RASPBERRY PI #----------#
-  # python -c "import platform; print ('raspberrypi') in platform.uname()"
+  # $PYTHON_CMD -c "import platform; print ('raspberrypi') in platform.uname()"
   # check /proc/cpuinfo for "Model"
   IS_RASPI="$(grep Model /proc/cpuinfo | cut -f2 -d':')"
   if [ -n "${IS_RASPI}" ]; then
     echo -e "${YELLOW}Found Raspberry Pi: ${IS_RASPI}${NC}"
+    install_raspberry_pi
     # cat /proc/device-tree/model
   fi
 }
@@ -290,10 +294,10 @@ function run_autoconf() {
 
 function check_installed() {
   if command -v "$1" &>/dev/null; then
-    printf "${LPURP}Found command: %s${NC}\n" "$1"
+    printf "${LBLUE}Found command: %s${NC}\n" "$1"
     return 0
   else
-    printf "${LRED}%s could not be found${NC}\n" "$1"
+    printf "${LRED}%s could was not found${NC}\n" "$1"
     return 1
   fi
 }
@@ -346,18 +350,18 @@ function install_macos() {
 }
 
 function install_debian() {
-  apt install netselect netselect-apt -y
+
+  sudo apt-get install netselect netselect-apt -y
   # netselect-apt testing
   # netselect-apt stable
   # netselect-apt unstable # for debian x64
-  # sudo netselect-apt bookworm # for raspi
 
   pkgs=(podman ansible libglib2.0-dev libonig-dev tox sshpass libxml2-utils shellcheck screen make gcc git automake libtool doxygen latexmk gawk doxygen-latex nodejs npm apt-transport-https ca-certificates curl gnupg lsb-release direnv clustershell)
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
     echo -e "${LBLUE}Upgrading container packages${NC}"
-    apt-get update && apt-get upgrade -y
+    sudo apt-get update && apt-get upgrade -y
   fi
 
   for i in "${pkgs[@]}"; do
@@ -365,11 +369,11 @@ function install_debian() {
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
       # If we are in a container there is no sudo in Debian
       if [ "${CONTAINER}" = true ]; then
-        apt-get --yes install "${i}"
-        apt-get autoremove -y
+        $PRIV_CMD apt-get --yes install "${i}"
+        $PRIV_CMD apt-get autoremove -y
       else
-        sudo apt-get install "${i}" -y
-        sudo apt-get autoremove -y
+        $PRIV_CMD apt-get install "${i}" -y
+        $PRIV_CMD apt-get autoremove -y
       fi
     fi
   done
@@ -472,17 +476,14 @@ function configure_ansible() {
   fi
 }
 
-function raspberry_pi() {
+function install_raspberry_pi() {
+  R_PI=$($PYTHON_CMD -c "import platform; print('raspberrypi') in platform.uname()")
   echo -e "\n${LPURP}# --- Raspberry Pi Setup ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
-  # check if it is a raspberry pi, because we'll need a special ruby first
-  if [ -x "$(command -v python)" ]; then
-    R_PI=$(python -c "import platform; print 'raspberrypi' in platform.uname()")
 
-    if [ "$R_PI" = "True" ]; then
-      # put your raspberry py code here, in my case I upgrade the ruby version:
-      # run ruby upgrade script. source: https://gist.github.com/blacktm/8302741
-      yes | bash <(curl -s https://gist.githubusercontent.com/blacktm/8302741/raw/install_ruby_rpi.sh)
-    fi
+  if [ "$R_PI" = "raspberrypi" ]; then
+    echo -e "${LBLUE}Running netselect.${NC}"
+    sudo netselect-apt bookworm # for raspi
+    # yes | bash <(curl -s https://gist.githubusercontent.com/blacktm/8302741/raw/install_ruby_rpi.sh)
   fi
 }
 
