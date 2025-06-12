@@ -1,0 +1,28 @@
+---
+- name: "Converge:: test nfs_server_snowy from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
+
+  pre_tasks:
+  - name: update apt cache
+    apt:
+      update_cache: yes
+    when: ansible_os_family == 'Debian'
+    changed_when: no
+
+  - name: create test users
+    become: yes
+    user:
+      name: '{{ item }}'
+      home: '/home/{{ item }}'
+      createhome: yes
+    with_items:
+      - franklin
+      - sly
+
+  tasks:
+    - name: "Testing nfs_server_snowy"
+      ansible.builtin.include_role:
+        name: lab.franklin.nfs
+        tasks_from: nfs_server_snowy.yml

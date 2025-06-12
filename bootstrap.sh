@@ -33,7 +33,7 @@
 #Cyan         0;36     Light Cyan    1;36
 #Light Gray   0;37     White         1;37
 
-RED='\033[0;31m'
+#RED='\033[0;31m'
 LRED='\033[1;31m'
 LGREEN='\033[1;32m'
 LBLUE='\033[1;34m'
@@ -44,6 +44,7 @@ NC='\033[0m' # No Color
 
 # --- Some config Variables ----------------------------------------
 CONTAINER=false
+DEB_PKG=(ansible figlet libglib2.0-dev libonig-dev tox sshpass libxml2-utils shellcheck screen make gcc git automake sqlite3 libsqlite3-dev podman libtool doxygen latexmk gawk doxygen-latex nodejs npm apt-transport-https ca-certificates curl gnupg lsb-release direnv clustershell)
 #DOCUMENTATION=false
 KERNEL=$(uname -r)       # the kernel version
 MACHINE_TYPE=$(uname -m) # the machine type
@@ -350,14 +351,6 @@ function install_macos() {
 }
 
 function install_debian() {
-
-  sudo apt-get install netselect netselect-apt -y
-  # netselect-apt testing
-  # netselect-apt stable
-  # netselect-apt unstable # for debian x64
-
-  pkgs=(podman ansible libglib2.0-dev libonig-dev tox sshpass libxml2-utils shellcheck screen make gcc git automake libtool doxygen latexmk gawk doxygen-latex nodejs npm apt-transport-https ca-certificates curl gnupg lsb-release direnv clustershell)
-
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
     echo -e "${LBLUE}Upgrading container packages${NC}"
@@ -365,7 +358,7 @@ function install_debian() {
     sudo apt-get autoremove -y
   fi
 
-  for i in "${pkgs[@]}"; do
+  for i in "${DEB_PKG[@]}"; do
     if [ $(dpkg-query -W -f='${Status}' ${i} 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
       # If we are in a container there is no sudo in Debian
@@ -478,12 +471,17 @@ function configure_ansible() {
 function install_raspberry_pi() {
   R_PI=$($PYTHON_CMD -c "import platform; print('raspberrypi') in platform.uname()")
   echo -e "\n${LPURP}# --- Raspberry Pi Setup ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+  # sudo apt-get install netselect netselect-apt -y
+  # netselect-apt testing
+  # netselect-apt stable
+  # netselect-apt unstable # for debian x64
 
-  if [ "$R_PI" = "raspberrypi" ]; then
-    echo -e "${LBLUE}Running netselect.${NC}"
-    sudo netselect-apt bookworm # for raspi
-    # yes | bash <(curl -s https://gist.githubusercontent.com/blacktm/8302741/raw/install_ruby_rpi.sh)
-  fi
+  # if [ "$R_PI" = "raspberrypi" ]; then
+  #   echo -e "${LBLUE}Running netselect.${NC}"
+  #   sudo netselect-apt bookworm # for raspi
+  #   # yes | bash <(curl -s https://gist.githubusercontent.com/blacktm/8302741/raw/install_ruby_rpi.sh)
+  # fi
+
 }
 
 function cleanup() {

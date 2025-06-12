@@ -1,0 +1,20 @@
+{
+    "CN": "bitsmasher.net Intermediate 1",
+    "key": {
+        "algo": "ecdsa",
+        "size": 384
+    },
+    "CA": {
+        "expiry": "43800h",
+        "pathlen": 1
+    },
+    "names": [
+        {
+            "C": "US",
+            "L": "Colordao",
+            "ST": "Denver",
+            "O": "research",
+            "OU": "lab"
+        }
+    ]
+}

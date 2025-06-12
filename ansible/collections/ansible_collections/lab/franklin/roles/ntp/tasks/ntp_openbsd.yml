@@ -1,0 +1,10 @@
+---
+# run this to be sure ntp is running at the end of setup ntpctl -sa
+
+- name: "ntp | Configure /etc/{{ntp_obsd_configuration_file }}"
+  ansible.builtin.template:
+    src: "{{ntp_obsd_configuration_file }}"
+    dest: /etc/{{ ntp_obsd_configuration_file }}
+    mode: 0644
+  tags:
+    - ntp

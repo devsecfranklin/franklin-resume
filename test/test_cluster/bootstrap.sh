@@ -245,27 +245,56 @@ function build_flex() {
 
 function build_munge() {
   #https://github.com/dun/munge/releases/download/munge-0.5.16/munge-0.5.16.tar.xz
-  cd "${PREFIX}/munge-0.5.16" && ./bootstrap && ./configure --prefix="${PREFIX}" && make && make install
+  pushd "${PREFIX}/munge-0.5.16" || exit 1
+  ./bootstrap
+  ./configure --prefix="${PREFIX}"
+  make
+  make install
+  popd || exit 1
 }
 
 function build_slurm() {
-  cd "${PREFIX}/slurm-21.08.6" && ./bootstrap && ./configure --prefix="${PREFIX}" && make && make install
-}
-
-function build_pmix() {
-  if [ ! -d "${PREFIX}/openpmix" ]; then git clone https://github.com/openpmix/openpmix.git "${PREFIX}/openpmix"; fi
-  cd "${PREFIX}/openpmix" && ./configure --prefix="${PREFIX}" --with-munge="${PREFIX}" && make && make install
-}
-
-function build_prrte() {
-  if [ ! -d "${PREFIX}/prrte" ]; then git clone https://github.com/openpmix/prrte.git "${PREFIX}/prrte"; fi
-  cd "${PREFIX}"/prrte && git submodule update --init --recursive && "${PREFIX}"/prrte/autogen.pl
-  cd "${PREFIX}"/prrte && ./configure && make && make install
+  pushd "${PREFIX}/slurm-21.08.6" || exit 1
+  ./bootstrap
+  ./configure --prefix="${PREFIX}"
+  make
+  make install
+  popd || exit 1
 }
 
 function build_hwloc() {
-  cd ${PREFIX}/hwloc-2.12.0 && ./configure --enable-doxygen \
-    --prefix="${PREFIX}" && make && make install
+  pushd ${PREFIX}/hwloc-2.12.0 || exit 1
+  ./configure --enable-doxygen --prefix="${PREFIX}"
+  make
+  make install
+  popd || exit 1
+}
+
+function build_pmix() {
+  # depends on: hwloc
+  if [ ! -d "${PREFIX}/openpmix" ]; then
+    git clone https://github.com/openpmix/openpmix.git "${PREFIX}/openpmix"
+  fi
+
+  pushd "${PREFIX}/openpmix" || exit 1
+  ./configure --prefix="${PREFIX}" --with-munge="${PREFIX}"
+  make
+  make install
+  popd || exit 1
+}
+
+function build_prrte() {
+  if [ ! -d "${PREFIX}/prrte" ]; then
+    git clone https://github.com/openpmix/prrte.git "${PREFIX}/prrte"
+  fi
+
+  pushd "${PREFIX}/prrte" || exit 1
+  git submodule update --init --recursive
+  ./autogen.pl
+  ./configure --with-slurm --with-hwloc=/mnt/clusterfs/build --with-pmix-libdir=/mnt/clusterfs/build/lib --prefix="${PREFIX}"
+  make
+  make install
+  popd || exit 1
 }
 
 function build_openmpi() {
@@ -360,11 +389,11 @@ function main() {
   head2*)
     install_packages # Warning :: You will have problems if you do not use recent versions of the GNU Autotools
     gpg_setup
-    #build_gnu_tools
-    #build_flex
-    #build_munge
+    build_gnu_tools
+    build_flex
+    build_munge
+    build_hwloc
     build_pmix
-    #build_hwloc
     build_prrte
     verify_gnu_tools
     build_openmpi
