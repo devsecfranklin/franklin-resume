@@ -32,7 +32,14 @@ int main(int argc, char** argv) {
 
   char ip_address[100] = "8.8.8.8";
   status = ping_host(ip_address);
-  printf("STATUS: %d\n", status);
+  if status == 0 {
+    printf("PING STATUS: success\n");
+  }
+  else
+  {
+    printf("PING STATUS: failure\n");
+  }
+   
   status2 = hostname_and_ip();
   return status;
 }

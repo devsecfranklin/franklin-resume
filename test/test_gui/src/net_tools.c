@@ -10,6 +10,7 @@ int ping_host(char ip_address[100]) {
 
     if(fork() == 0) //child
     {
+        printf("ping a ling: %s\n", ip_address);
         dup2(pipe_arr[1], STDOUT_FILENO);
         execl("/sbin/ping", "ping", "-c 1", ip_address, (char*)NULL);
         // if execl returns nothing, success. -1 indicates failure
@@ -19,7 +20,7 @@ int ping_host(char ip_address[100]) {
     {
         wait(NULL);
         read(pipe_arr[0], buf, BUFLEN);
-        printf("SOMETHING: %s\n", buf);
+        //printf("SOMETHING: %s\n", buf);
 
     }
 
