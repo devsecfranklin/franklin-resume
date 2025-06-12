@@ -11,7 +11,8 @@
       'kstart'
       ]
     state: latest
-  tags: admin
+  tags:
+    - krb5
+    - debian
   when:
     - ansible_facts['distribution'] == "Debian"
-    #- ansible_distribution == 'Ubuntu'

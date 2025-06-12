@@ -15,9 +15,18 @@
   ansible.builtin.set_fact:
     raspberry_pi: true
   when:
-    grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
+    - grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
 
-#- name: "network | Execute IPv6 related tasks on the Raspberry Pi"
-#  ansible.builtin.include_tasks: ipv6-raspi.yml
-#  when:
-#    - raspberry_pi|default(false)
+- name: Enable IPv4 forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: true
+  when:
+    - raspberry_pi|default(false)
+
+- name: "network | Execute IPv6 related tasks on the Raspberry Pi"
+  ansible.builtin.include_tasks: ipv6-raspi.yml
+  when:
+    - raspberry_pi|default(false)

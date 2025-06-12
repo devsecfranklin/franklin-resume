@@ -9,8 +9,6 @@
     "bbenoist.Nix",
     "timonwong.shellcheck",
     "markis.code-coverage",
-    "sonarsource.sonarlint-vscode",
-    "streetsidesoftware.code-spell-checker",
     "hediet.vscode-drawio"
   ]
 }

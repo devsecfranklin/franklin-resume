@@ -1,0 +1,16 @@
+# /etc/systemd/system/ollama.service
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=$PATH"
+Environment="OLLAMA_DEBUG=1"
+
+[Install]
+WantedBy=multi-user.target

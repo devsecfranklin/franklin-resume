@@ -164,7 +164,6 @@ AC_CHECK_FUNCS([setlocale strtol socket]) # Checks for library functions.
 #if test "x$with_gtk" = "xyes"; then
 #   PKG_CHECK_MODULES([GTK], [gtk+-2.0])
 #fi
-
-PKG_CHECK_MODULES([GLIB], [glib-2.0])
+# PKG_CHECK_MODULES([GLIB], [glib-2.0])
 
 AC_OUTPUT

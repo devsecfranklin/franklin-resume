@@ -1,30 +1,30 @@
 ---
-- name: "Install TLS packages"
+- name: "TLS | Install packages"
   ansible.builtin.apt:
     name:
       - python3-openssl
       - libssl-dev
       - openssl
+      - certbot
     force_apt_get: true
     update_cache: true
   tags:
     - TLS
-    - LDAP
-    - KRB5
-  when:
-  - ansible_facts['distribution'] == "Debian"
 
-- name: 'Install certificate'
-  ansible.builtin.include_tasks: "ssl_client.yml"
+- name: 'TLS | Run Lets Encrypt'
+  ansible.builtin.include_tasks: "lets_encrypt.yml"
 
-- name: "Copy in site CA cert"
-  ansible.builtin.copy:
-    src: ca.crt
-    dest: "{{ cert }}"
-    mode: 0444
+# - name: 'Install certificate'
+#   ansible.builtin.include_tasks: "ssl_client.yml"
 
-- name: 'Copy cacert.pem in /etc/krb5'
-  ansible.builtin.copy:
-    src: ca.crt
-    dest: /etc/krb5/cacert.pem
-    mode: 0644
+# - name: "Copy in site CA cert"
+#   ansible.builtin.copy:
+#     src: ca.crt
+#     dest: "{{ cert }}"
+#     mode: 0444
+
+# - name: 'Copy cacert.pem in /etc/krb5'
+#   ansible.builtin.copy:
+#     src: ca.crt
+#     dest: /etc/krb5/cacert.pem
+#     mode: 0644

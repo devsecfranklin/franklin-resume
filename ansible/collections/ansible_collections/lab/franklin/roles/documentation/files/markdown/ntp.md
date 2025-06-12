@@ -37,3 +37,19 @@ molecule lint
 molecule converge
 molecule test --scenario-name default # the create, converge and destroy steps will be run one after another.
 ```
+
+## OpenBSD
+
+* Configure it with `/etc/ntpd.conf`
+* there is a `.j2` template config file for this
+
+```sh
+$ ntpctl -sa # check the time on openbsd
+
+1/1 peers valid, constraint offset 0s, clock synced, stratum 2
+
+peer
+   wt tl st  next  poll          offset       delay      jitter
+10.10.12.13 time.lab.bitsmasher.net
+ *  1 10  1    7s   30s         4.084ms     0.514ms     0.064ms\
+ ```

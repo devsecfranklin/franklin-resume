@@ -1,16 +1,12 @@
-# SPDX-FileCopyrightText: ©2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: © 2025 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: MIT
 
 [debian]
-games.bitsmasher.net
-# gaming-pc.LAB.BITSMASHER.NET
-snowy.LAB.BITSMASHER.NET
-thelio.LAB.BITSMASHER.NET
-www.bitsmasher.net
+snowy.LAB.BITSMASHER.NET ansible_user=franklin
 
 [nvidia_nodes]
-node[900:903].LAB.BITSMASHER.NET ansible_user=root
+node[900:903].LAB.BITSMASHER.NET ansible_user=franklin
 
 [openbsd]
 blowfish.LAB.BITSMASHER.NET
@@ -20,19 +16,22 @@ ansible_python_interpreter=/usr/local/bin/python3
 ansible_connection=paramiko
 ansible_become_method=doas
 
+[popos]
+thelio.LAB.BITSMASHER.NET ansible_user=franklin
+
 [raspi_nodes]
-#head2.LAB.BITSMASHER.NET ansible_user=root
-node[0:3].LAB.BITSMASHER.NET ansible_user=root
-node5.LAB.BITSMASHER.NET ansible_user=root
-node6.LAB.BITSMASHER.NET ansible_user=root
+head2.LAB.BITSMASHER.NET ansible_user=franklin
+node[0:3].LAB.BITSMASHER.NET ansible_user=franklin
+node5.LAB.BITSMASHER.NET ansible_user=franklin
+node6.LAB.BITSMASHER.NET ansible_user=franklin
 
 [raspi_nodes:vars]
 ansible_python_interpreter=/usr/bin/python3
 
 [raspi_servers]
-ldap.LAB.BITSMASHER.NET ansible_user=root
-time.LAB.BITSMASHER.NET ansible_user=root
-storage1.LAB.BITSMASHER.NET ansible_user=root
+ldap.LAB.BITSMASHER.NET ansible_user=franklin
+time.LAB.BITSMASHER.NET ansible_user=franklin
+storage1.LAB.BITSMASHER.NET ansible_user=franklin
 
 [ubuntu]
-odroid-c1.LAB.BITSMASHER.NET ansible_user=root
+odroid-c1.LAB.BITSMASHER.NET ansible_user=franklin

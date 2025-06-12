@@ -2,7 +2,7 @@
 - name: "kerberos | Install Kerberos server packages"
   ansible.builtin.include_tasks: kerberos_server_packages.yml
   when:
-    - "'server2' in ansible_hostname"
+    - "'server1' in ansible_hostname"
     - "'odroid-c1' in ansible_hostname"
 
 - name: "kerberos | Install kerberos server setup"
@@ -11,8 +11,13 @@
     - "'server2' in ansible_hostname"
     - "'odroid-c1' in ansible_hostname"
 
-- name: "kerberos | Install Kerberos client packages"
+- name: "kerberos | Install Kerberos client packages on Debian"
   ansible.builtin.include_tasks: kerberos_client_packages.yml
+  tags:
+    - krb5
+    - debian
+  when:
+    - ansible_facts['distribution'] == "Debian"
 
 - name: "kerberos | Init Kerberos client"
   ansible.builtin.include_tasks: configure.yml

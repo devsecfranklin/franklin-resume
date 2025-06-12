@@ -1,0 +1,20 @@
+{
+  "CN": "bitsmasher.net CA",
+  "key": {
+    "algo": "ecdsa",
+    "size": 512
+  },
+  "CA": {
+    "expiry": "87660h",
+    "pathlen": 2
+  },
+  "names": [
+    {
+      "C": "US",
+      "L": "Colordao",
+      "ST": "Denver",
+      "O": "research",
+      "OU": "lab"
+    }
+  ]
+}
