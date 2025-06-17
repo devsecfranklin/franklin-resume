@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.12-bullseye
+FROM python:3.13-bullseye
 
 LABEL org.opencontainers.image.authors="Franklin <franklin@dead10c5.org>"
 LABEL org.opencontainers.image.source="https://github.com/devsecfranklin/franklin-resume"
