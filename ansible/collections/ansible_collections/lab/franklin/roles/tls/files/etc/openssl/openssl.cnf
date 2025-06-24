@@ -4,9 +4,6 @@
 
 # OpenSSL example configuration file.
 # See doc/man5/config.pod for more info
-#
-# This is mostly being used for generation of certificate requests,
-# but may be used for auto loading of providers
 
 # Note that you can include other files from the main configuration
 # file using the .include directive.
@@ -83,7 +80,7 @@ default_ca      = CA_default            # The default ca section
 ####################################################################
 [ CA_default ]
 
-dir             = /etc/ssl/bitsmasher.net-CA            # Where everything is kept
+dir             = /mnt/clusterfs/openssl/ca-bitsmasher.net           # Where everything is kept
 certs           = $dir/certs            # Where the issued certs are kept
 crl_dir         = $dir/crl              # Where the issued crl are kept
 database        = $dir/index.txt        # database index file.
@@ -91,12 +88,12 @@ database        = $dir/index.txt        # database index file.
                                         # several certs with same subject.
 new_certs_dir   = $dir/newcerts         # default place for new certs.
 
-certificate     = $dir/cacert.pem       # The CA certificate
+certificate     = $dir/certs/root-ca.crt       # The CA certificate
 serial          = $dir/serial           # The current serial number
 crlnumber       = $dir/crlnumber        # the current crl number
                                         # must be commented out to leave a V1 CRL
 crl             = $dir/crl.pem          # The current CRL
-private_key     = $dir/private/cakey.pem# The private key
+private_key     = $dir/private/root-ca.key # The private key
 
 x509_extensions = usr_cert              # The extensions to add to the cert
 
@@ -165,7 +162,14 @@ x509_extensions = v3_ca # The extensions to add to the self signed cert
 # WARNING: ancient versions of Netscape crash on BMPStrings or UTF8Strings.
 string_mask = utf8only
 
-# req_extensions = v3_req # The extensions to add to a certificate request
+req_extensions = v3_req # The extensions to add to a certificate request
+
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = head2
+DNS.2 = head2.lab.bitsmasher.net
+IP.1 = 10.10.12.19
 
 [ req_distinguished_name ]
 countryName                     = Country Name (2 letter code)
@@ -177,22 +181,25 @@ stateOrProvinceName             = State or Province Name (full name)
 stateOrProvinceName_default     = Colorado
 
 localityName                    = Locality Name (eg, city)
+localityName_default = Denver
 
 0.organizationName              = Organization Name (eg, company)
-0.organizationName_default      = bitsmasher.net
+0.organizationName_default      = ca-bitsmasher.net
 
 # we can do this but it is not needed normally :-)
 #1.organizationName             = Second Organization Name (eg, company)
 #1.organizationName_default     = World Wide Web Pty Ltd
 
 organizationalUnitName          = Organizational Unit Name (eg, section)
-#organizationalUnitName_default =
+organizationalUnitName_default = research
 
 commonName                      = Common Name (e.g. server FQDN or YOUR name)
 commonName_max                  = 64
+commonName_default = head2.lab.bitsmasher.net
 
 emailAddress                    = Email Address
 emailAddress_max                = 64
+emailAddress_default = franklin@bitsmasher.net
 
 # SET-ex3                       = SET extension number 3
 
@@ -210,7 +217,7 @@ unstructuredName                = An optional company name
 # This goes against PKIX guidelines but some CAs do it and some software
 # requires this to avoid interpreting an end user certificate as a CA.
 
-basicConstraints=CA:FALSE
+#basicConstraints=CA:FALSE
 
 # This is typical in keyUsage for a client certificate.
 # keyUsage = nonRepudiation, digitalSignature, keyEncipherment
@@ -221,13 +228,12 @@ authorityKeyIdentifier=keyid,issuer
 
 # This stuff is for subjectAltName and issuerAltname.
 # Import the email address.
-# subjectAltName=email:copy
-# An alternative to produce certificates that aren't
-# deprecated according to PKIX.
+subjectAltName=email:copy
+# An alternative to produce certificates that aren't deprecated according to PKIX.
 # subjectAltName=email:move
 
 # Copy subject details
-# issuerAltName=issuer:copy
+issuerAltName=issuer:copy
 
 # This is required for TSA certificates.
 # extendedKeyUsage = critical,timeStamping
@@ -236,21 +242,13 @@ authorityKeyIdentifier=keyid,issuer
 
 # Extensions to add to a certificate request
 
-basicConstraints = CA:FALSE
+#basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 
 [ v3_ca ]
 
-
-# Extensions for a typical CA
-
-
-# PKIX recommendation.
-
 subjectKeyIdentifier=hash
-
 authorityKeyIdentifier=keyid:always,issuer
-
 basicConstraints = critical,CA:true
 
 # Key usage: this is typical for a CA certificate. However since it will
@@ -259,9 +257,9 @@ basicConstraints = critical,CA:true
 # keyUsage = cRLSign, keyCertSign
 
 # Include email address in subject alt name: another PKIX recommendation
-# subjectAltName=email:copy
+#subjectAltName=email:copy
 # Copy issuer details
-# issuerAltName=issuer:copy
+issuerAltName=issuer:copy
 
 # DER hex encoding of an extension: beware experts only!
 # obj=DER:02:03
@@ -283,7 +281,7 @@ authorityKeyIdentifier=keyid:always
 # This goes against PKIX guidelines but some CAs do it and some software
 # requires this to avoid interpreting an end user certificate as a CA.
 
-basicConstraints=CA:FALSE
+#basicConstraints=CA:FALSE
 
 # This is typical in keyUsage for a client certificate.
 # keyUsage = nonRepudiation, digitalSignature, keyEncipherment
@@ -294,13 +292,13 @@ authorityKeyIdentifier=keyid,issuer
 
 # This stuff is for subjectAltName and issuerAltname.
 # Import the email address.
-# subjectAltName=email:copy
+subjectAltName=email:copy
 # An alternative to produce certificates that aren't
 # deprecated according to PKIX.
-# subjectAltName=email:move
+subjectAltName=email:move
 
 # Copy subject details
-# issuerAltName=issuer:copy
+issuerAltName=issuer:copy
 
 # This really needs to be in place for it to be a proxy certificate.
 proxyCertInfo=critical,language:id-ppl-anyLanguage,pathlen:3,policy:foo

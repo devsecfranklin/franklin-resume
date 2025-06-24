@@ -25,10 +25,11 @@ resource "digitalocean_record" "games" {
   domain = digitalocean_domain.default.name
   type   = "A"
   name   = "games"
-  value  = "137.184.177.152"
+  value  = "143.244.182.73"
   ttl    = 1800
 }
 
+/*
 resource "digitalocean_record" "games6" {
   domain = digitalocean_domain.default.name
   type   = "AAAA"
@@ -36,12 +37,15 @@ resource "digitalocean_record" "games6" {
   value  = "2604:a880:4:1d0::8b30:a000"
   ttl    = 1800
 }
+*/
+
 
 resource "digitalocean_record" "txt1" {
   domain = digitalocean_domain.default.name
   type   = "TXT"
   name   = "@"
   value  = "protonmail-verification=61f4835bee8424d6668cf2384ff3da85ba5731a4"
+  ttl    = 1800
 }
 
 resource "digitalocean_record" "txt2" {
