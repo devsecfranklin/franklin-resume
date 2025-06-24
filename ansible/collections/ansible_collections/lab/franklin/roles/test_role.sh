@@ -86,8 +86,8 @@ function prepare_env() {
 function molecule_check() {
   for SCENARIO_NAME in ${SCENARIO_NAMES}; do
     echo -e "${LCYAN}\n# ---------------------- molecule check -------------------------\n${NC}"
-    HOMELAB_MOLECULE_TEST=true molecule prepare --scenario-name "${SCENARIO_NAME}"
-    # HOMELAB_MOLECULE_TEST=true molecule check --scenario-name "${SCENARIO_NAME}"
+    # HOMELAB_MOLECULE_TEST=true molecule prepare --scenario-name "${SCENARIO_NAME}"
+    HOMELAB_MOLECULE_TEST=true molecule check --scenario-name "${SCENARIO_NAME}"
   done
 }
 

@@ -29,20 +29,22 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 HOSTS=(head2 node0 node1 node2 node3 node5 node6 time)
-WORKDIR="/etc/openssl/cfssl"
+WORKDIR="/etc/openssl"
+CERT_DIR="${WORKDIR}/certs"
+JSON_DIR="${WORKDIR}/json"
 
 function create_intermediate() {
-  cd "$WORKDIR/cfssl/intermediate1"
-  cfssl genkey -initca "${WORKDIR}/cfssl/intermediate1/config.json" | cfssljson -bare intermediate1
+  cd "$CERT_DIR/intermediate1"
+  cfssl genkey -initca "${CERT_DIR}/intermediate1/config.json" | cfssljson -bare intermediate1
   # sign intermediate cert
-  cfssl sign -ca ../ca.pem -ca-key ../ca-key.pem -profile intermediate --config ../profiles.json intermediate1.csr | cfssljson -bare intermediate1
-  openssl x509 -in "${WORKDIR}/cfssl/intermediate1/intermediate1.pem" -noout -text # inspect new cert
+  cfssl sign -ca ${WORKDIR}/ca.pem -ca-key ../ca-key.pem -profile intermediate --config ${JSON_DIR}/profiles.json "${CERT_DIR}/intermediate/intermediate1.csr" | cfssljson -bare intermediate1
+  openssl x509 -in "${CERT_DIR}/intermediate1/intermediate1.pem" -noout -text # inspect new cert
 }
 
 function main() {
   echo "Workdir: $WORKDIR"
   echo "Copying latest files out of ansible"
-  cd /etc && (yes | cp -r /mnt/storage1/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/roles/tls/files/etc/openssl .)
+  #cd /etc && (yes | cp -r /mnt/storage1/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/roles/tls/files/etc/openssl .)
   cd $WORKDIR
 
   for i in "${HOSTS[@]}"; do
@@ -51,7 +53,7 @@ function main() {
     if [ ! -d "./${i}" ]; then mkdir -p "${WORKDIR}/${i}"; else echo -e "${LGREEN}folder exists: ${i}${NC}"; fi
     echo -e "\n${LPURP}# --- generate ${i}/${i}-csr.json ${i} -------------------------------------------\n"
 
-    cat >"${WORKDIR}/${i}/${i}-csr.json" <<EOF
+  cat >"${WORKDIR}/${i}/${i}-csr.json" <<EOF
   {
       "CN": "${i}",
       "hosts": [
@@ -70,7 +72,7 @@ function main() {
           }
       ]
   }
-  EOF
+EOF
 
     if [ -f "${WORKDIR}/${i}/${i}-csr.json" ]; then echo -e "${LGREEN}Success creating ${WORKDIR}/${i}/${i}-csr.json${NC}"; else echo -e "${LRED}FAILED to create ${WORKDIR}/${i}/${i}-csr.json${NC}" && exit 1; fi
 
