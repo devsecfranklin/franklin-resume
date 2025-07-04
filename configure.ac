@@ -1,6 +1,6 @@
 dnl Process this file with autoconf
-AC_PREREQ([2.69])
-AC_INIT(lab-franklin, 0.2, franklin@bitsmasher.net, https://github.com/devsecfranklin/lab-franklin)
+AC_PREREQ([2.71])
+AC_INIT([lab-franklin],[0.2],[franklin@bitsmasher.net],[https://github.com/devsecfranklin/lab-franklin])
 AC_CONFIG_MACRO_DIR(config/m4)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(foreign)
@@ -148,7 +148,15 @@ AC_C_CONST
 AC_C_INLINE
 
 dnl Check for standard headers:
-AC_HEADER_STDC
+m4_warn([obsolete],
+[The preprocessor macro `STDC_HEADERS' is obsolete.
+  Except in unusual embedded environments, you can safely include all
+  ISO C90 headers unconditionally.])dnl
+# Autoupdate added the next two lines to ensure that your configure
+# script's behavior did not change.  They are probably safe to remove.
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS([stdlib.h stdio.h libintl.h locale.h arpa/inet.h netdb.h strings.h sys/socket.h unistd.h])
 AC_CONFIG_HEADERS([config.h])

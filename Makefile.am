@@ -53,7 +53,7 @@ test:
 	( \
 		source $(BUILDDIR)/test/bin/$(ACTIVATE); \
 		$(BUILDDIR)/test/bin/python -m pip install --upgrade pip; \
-		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/requirements.txt; \
+		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/python/requirements.txt; \
 		$(WORKDIR)/bootstrap.sh \
 	)
 	@echo "$(info Found Python version $(PY39))"

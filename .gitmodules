@@ -25,9 +25,6 @@
 [submodule "src/fizz-buzz"]
 	path = src/fizz-buzz
 	url = https://github.com/devsecfranklin/fizz-buzz
-[submodule "src/website"]
-	path = src/website
-	url = https://github.com/devsecfranklin/website
 [submodule "src/minecraft.bitsmasher.net"]
 	path = src/minecraft.bitsmasher.net
 	url = https://github.com/devsecfranklin/minecraft.bitsmasher.net

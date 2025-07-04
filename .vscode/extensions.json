@@ -2,13 +2,6 @@
   // See http://go.microsoft.com/fwlink/?LinkId=827846
   // for the documentation about the extensions.json format
   "recommendations": [
-    "ms-kubernetes-tools.vscode-kubernetes-tools",
-    "esbenp.prettier-vscode",
-    "redhat.vscode-tekton-pipelines",
-    "golang.go",
-    "bbenoist.Nix",
-    "timonwong.shellcheck",
-    "markis.code-coverage",
-    "hediet.vscode-drawio"
+    "golang.go"
   ]
 }
