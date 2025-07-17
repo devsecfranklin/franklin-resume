@@ -6,10 +6,10 @@
     ansible_python_interpreter: "/usr/bin/python3"
   roles:
     - nfs
-    - common
+    #- common
     - dns
-    - ldap
-    - kerberos
-    - ssh
+    #- ldap
+    #- kerberos
+    #- ssh
   environment:
     DEBIAN_FRONTEND: noninteractive

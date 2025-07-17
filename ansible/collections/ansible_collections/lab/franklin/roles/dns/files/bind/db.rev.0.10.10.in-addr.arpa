@@ -1,6 +1,6 @@
 $TTL 1D
 @ IN SOA server1.lab.bitsmasher.net hostmaster.lab.bitsmasher.net. (
-        202506031415 ; serial
+        202507161228 ; serial
         8H ; refresh
         4H ; retry
         4W ; expire
@@ -38,5 +38,6 @@ lab.bitsmasher.net. IN NS ns1.lab.bitsmasher.net.
 254.12		IN PTR odroid-c1.lab.bitsmasher.net.
 1.13            IN PTR ldap.lab.bitsmasher.net.
 10.13		IN PTR bbb1.lab.bitsmasher.net.
+1.15            IN PTR femputer.lab.bitsmasher.net.
 253.15          IN PTR pa220.lab.bitsmasher.net.
 254.15          IN PTR labgate.lab.bitsmasher.net.

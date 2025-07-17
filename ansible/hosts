@@ -9,7 +9,7 @@ snowy.LAB.BITSMASHER.NET ansible_user=franklin
 node[900:903].LAB.BITSMASHER.NET ansible_user=franklin
 
 [openbsd]
-blowfish.LAB.BITSMASHER.NET
+blowfish.LAB.BITSMASHER.NET ansible_user=franklin
 
 [openbsd:vars]
 ansible_python_interpreter=/usr/local/bin/python3
