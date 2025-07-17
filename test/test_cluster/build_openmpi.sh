@@ -32,7 +32,7 @@ LPURP='\033[1;35m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-PREFIX="/mnt/storage1/workspace/build"
+PREFIX="/mnt/clusterfs2/scratch"
 GPG_DIR="${PREFIX}/gnupg"
 OPEN_MPI_VER="openmpi-5.0.5"
 ompi_package="https://download.open-mpi.org/release/open-mpi/v5.0/${OPEN_MPI_VER}.tar.bz2"
@@ -80,7 +80,7 @@ function install_packages() {
   echo -e "${CYAN}Installing packages to ${PREFIX}${NC}"
   sudo apt-get install -y debian-keyring debian-archive-keyring \
     gfortran libudev-dev libpciaccess-dev valgrind autopoint \
-    texinfo help2man bison libxml2-dev
+    texinfo help2man bison libxml2-dev doxygen valgrind
   sudo apt-key update # Warning: 'apt-key update' is deprecated and should not be used anymore!
   sudo apt-get update && sudo apt install -y figlet lolcat cowsay fortune
 
@@ -264,7 +264,7 @@ function build_slurm() {
 
 function build_hwloc() {
   pushd ${PREFIX}/hwloc-2.12.0 || exit 1
-  ./configure --enable-doxygen --prefix="${PREFIX}"
+  ./configure --with-x --prefix="${PREFIX}"
   make
   make install
   popd || exit 1
@@ -291,7 +291,7 @@ function build_prrte() {
   pushd "${PREFIX}/prrte" || exit 1
   git submodule update --init --recursive
   ./autogen.pl
-  ./configure --with-slurm --with-hwloc=/mnt/clusterfs/build --with-pmix-libdir=/mnt/clusterfs/build/lib --prefix="${PREFIX}"
+  ./configure --with-slurm --with-hwloc="${PREFIX}" --with-pmix-libdir="${PREFIX}/lib" --prefix="${PREFIX}"
   make
   make install
   popd || exit 1
@@ -390,13 +390,13 @@ function main() {
     install_packages # Warning :: You will have problems if you do not use recent versions of the GNU Autotools
     gpg_setup
     build_gnu_tools
-    build_flex
-    build_munge
-    build_hwloc
-    build_pmix
-    build_prrte
-    verify_gnu_tools
-    build_openmpi
+    #build_flex
+    #build_munge
+    #build_hwloc
+    #build_pmix
+    #build_prrte
+    #verify_gnu_tools
+    #build_openmpi
     #cleanup
     echo -e "${YELLOW}Now add ${PREFIX}/bin to the start of your PATH var.${NC}"
     echo -e "${LGREEN}Setup complete!${NC}"

@@ -7,7 +7,7 @@ platforms:
   - name: molecule-ubuntu
     image: ubuntu:20.04
     groups:
-      - nfs_clients
+      - cluster
 driver:
   name: podman
   options:

@@ -1,5 +1,11 @@
 # pictures
 
+`/mnt/clusterfs2/pictures_sorted`
+
+```sh
+sudo apt-get install -y jp2a
+```
+
 ## install magededup
 
 ```sh

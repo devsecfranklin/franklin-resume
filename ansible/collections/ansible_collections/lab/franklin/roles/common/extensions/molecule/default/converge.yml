@@ -1,8 +1,10 @@
 ---
-- name: Converge
-  hosts: all
-  gather_facts: false
+- name: "Converge:: test nfs_client from lab.franklin Collection"
+  hosts: localhost
+  become: true
+  gather_facts: true
   tasks:
-    - name: Replace this task with one that validates your content
-      ansible.builtin.debug:
-        msg: "This is the effective test"
+    - name: "Testing common"
+      ansible.builtin.include_role:
+        name: lab.franklin.common
+        tasks_from: main.yml

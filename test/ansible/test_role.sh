@@ -112,7 +112,7 @@ function run_tests() {
 function main() {
   check_installed podman-compose
   setup_ansible_logging
-  pushd "${ANSIBLE_ROLES_PATH}/${ROLE_NAME}/extensions" || exit 1
+  pushd "${ROLE_NAME}/extensions" || exit 1
   prepare_env
   molecule destroy
   molecule_check

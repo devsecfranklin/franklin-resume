@@ -8,7 +8,8 @@
 
 check: ANSIBLE-exists
 
-setup:
+all:
+	if [ ! -d "/etc/ansible" ]; then sudo mkdir /etc/ansible; fi
 	sudo cp ansible.cfg hosts /etc/ansible
 	sudo ln -s $PWD/roles /etc/ansible/roles
 	sudo ln -s $PWD/group_vars /etc/ansible/group_vars
