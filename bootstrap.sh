@@ -372,7 +372,7 @@ function install_debian() {
     fi
   done
 
-  if check_installed dircolors && [ ! -f "${HOME}/.dircolors" ]; then
+  if ! check_installed dircolors && [ ! -d "${HOME}/.dircolors" ]; then
     dircolors -p >~/.dircolors
     echo -e "${LBLUE}Updating the dircolors configuration.${NC}"
   fi
