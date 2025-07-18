@@ -24,17 +24,15 @@ CYAN='\033[0;36m'
 # YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-ETC_DIR="/etc/ansible"
-WORKDIR="${PWD}"
-PLAYBOOK_DIR="collections/ansible_collections/lab/franklin/playbooks"
+ETC_DIR="${ANSIBLE_HOME}"
 
 # Check if we are inside a docker container
 function check_docker() {
   if [ -f /.dockerenv ]; then
-    echo -e "${CYAN}Containerized build environment...${NC}" | tee -a "${RAW_OUTPUT}"
+    echo -e "${CYAN}Containerized build environment...${NC}"
     CONTAINER=true
   else
-    echo -e "${CYAN}NOT a containerized build environment...${NC}" | tee -a "${RAW_OUTPUT}"
+    echo -e "${CYAN}NOT a containerized build environment...${NC}"
   fi
 }
 
@@ -42,31 +40,31 @@ function all_playbooks() {
   # Debian: snowy
   # Do this one first since it is our file server
   echo -e "${CYAN}RUNNING DEBIAN PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/debian.yml" -i "${ETC_DIR}/hosts" -b
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/debian.yml" -i "${ETC_DIR}/hosts" -b
 
   # storage1
   echo -e "${CYAN}RUNNING STORAGE PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/storage.yml" -i "${ETC_DIR}/hosts" -b
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/storage.yml" -i "${ETC_DIR}/hosts" -b
 
   # server1 server2 server3
   echo -e "${CYAN}RUNNING SERVER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/servers.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/servers.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
 
   # node0 node1 node2 node3
   echo -e "${CYAN}RUNNING RASPI CLUSTER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/cluster_raspi.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/raspi_nodes.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
 
   # node900 node901 node902 node903
   echo -e "${CYAN}RUNNING NVIDIA CLUSTER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/nvidia_nodes.yml" -i "${ETC_DIR}/hosts" -b
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/nvidia_nodes.yml" -i "${ETC_DIR}/hosts" -b
 
   # openbsd
-  echo -e "${CYAN}RUNNING OPENBSD PLAYBOOK${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/openbsd.yml" -i "${ETC_DIR}/hosts" -b
+  #echo -e "${CYAN}RUNNING OPENBSD PLAYBOOK${NC}"
+  #ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/openbsd.yml" -i "${ETC_DIR}/hosts" -b
 
   # odroid-c1
   echo -e "${CYAN}RUNNING UBUNTU PLAYBOOK${ID}${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/ubuntu.yml" -i "${ETC_DIR}/hosts" -b
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/ubuntu.yml" -i "${ETC_DIR}/hosts" -b
 }
 
 function main() {
@@ -82,12 +80,9 @@ function main() {
   #   exit 1
   # fi
 
-  # copy ${WORKDIR}/ansible.cfg to /etc/ansible
-
-  # all_playbooks
-
+  #all_playbooks
   echo -e "${CYAN}RUNNING MAIN PLAYBOOK${NC}"
-  ansible-playbook "${WORKDIR}/${PLAYBOOK_DIR}/cluster_raspi.yml" -i ./hosts -b
+  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/playbook.yml" -i ./hosts -b
 }
 
 main "$@"

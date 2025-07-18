@@ -1,0 +1,6 @@
+collections:
+  - containers.podman
+  - lab.franklin
+  - paloaltonetworks.panos
+  - community.general
+  - ansible.posix

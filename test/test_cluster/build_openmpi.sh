@@ -386,7 +386,7 @@ function cleanup() {
 function main() {
   check_host
   case $HOSTNAME in
-  head2*)
+  *)
     install_packages # Warning :: You will have problems if you do not use recent versions of the GNU Autotools
     gpg_setup
     build_gnu_tools
@@ -401,7 +401,7 @@ function main() {
     echo -e "${YELLOW}Now add ${PREFIX}/bin to the start of your PATH var.${NC}"
     echo -e "${LGREEN}Setup complete!${NC}"
     ;;
-  *) echo -e "${LRED}Run this script on the cluster head node${NC}" ;;
+  host*) echo -e "${LRED}Run this script on the cluster head node${NC}" ;;
   esac
 }
 

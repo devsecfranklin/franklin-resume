@@ -1,61 +1,25 @@
-# don't drop connection if network is down temporarily (eg, suspend)
-TCPKeepAlive no
-# but do send ssh keepalives every minute to keep firewalls happy
-ServerAliveInterval 60
-ServerAliveCountMax 10
-# keep connections open for 4 hours, even after logging out
-ControlPersist 4h
-ControlMaster auto
-ControlPath ~/.ssh/sockets/socket-%r@%h:%p
-# allow host key verification via SSHFP records
-VerifyHostKeyDNS yes
-# cwm's ssh menu does not work with host hashing enabled
-HashKnownHosts no
-# automatically add ssh keys to running ssh agent
-AddKeysToAgent yes
-
-#Host github.com
-#  ServerAliveInterval 86400
-#  ServerAliveCountMax 4
+# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: MIT
 
 Host *.lab.bitsmasher.net
-  GSSAPIAuthentication yes
-  GSSAPIDelegateCredentials yes
-  CanonicalizeHostname yes
-  CanonicalDomains lab.bitsmasher.net
-  CanonicalizeMaxDots 3
-  CanonicalizeFallbackLocal yes
+   User franklin
+   GSSAPIAuthentication yes
+   GSSAPIDelegateCredentials yes
+   PreferredAuthentications gssapi-keyex,gssapi-with-mic,publickey
+   CanonicalizeHostname yes
+   CanonicalDomains lab.bitsmasher.net
+   CanonicalizeMaxDots 3
+   CanonicalizeFallbackLocal yes
+   ServerAliveInterval 8860
+   ForwardX11 yes                # Enable X11 forwarding for these hosts
+   ForwardX11Trusted yes         # (Optional) Use trusted X11 forwarding
+   XAuthLocation /usr/bin/xauth # Uncomment and set if xauth is not in default path
 
-Host 5.101.103.232
-   AddressFamily inet
-   Port 22
-   User tankspi
-   IdentityFile ~/.ssh/id_rsa
-   IdentitiesOnly yes
-   PreferredAuthentications publickey
-   ForwardAgent yes
-Host cloud-pirouter
-   AddressFamily inet6
-   Port 22
-   User tankspi
-   IdentityFile ~/.ssh/id_rsa
-   IdentitiesOnly yes
-   PreferredAuthentications publickey
-   HostName 2a03:b0c0:0:1010::24:4001
-Host pi
-   HostName pi.ladosanostra.com
-   Port 22
-   User frankthetank
-Host amsterdam1
-   Port 22
-   IdentityFile ~/.ssh/id_rsa
-Host pi-hole
-   HostName 192.168.1.253
-   Port 22
-   IdentityFile ~/.ssh/id_rsa
-   User pi
-Host media01.local.bitmsmasher.net
-   HostName media01
-   Port 22
-   IdentityFile ~/.ssh/id_rsa
-   User pi
+Host *
+  IdentityAgent ~/.1password/agent.sock
+
+Host github.com
+  ServerAliveInterval 86400
+  ServerAliveCountMax 4
+  IdentityFile ~/.ssh/id_ed25519

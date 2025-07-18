@@ -23,7 +23,7 @@
   ansible.builtin.file:
     path: "{{ item.strip().split()[0] }}"
     state: directory
-  with_items: "{{ snowy_nfs_exports }}"
+  with_items: "{{ nfs_exports_snowy }}"
 
 - name: Copy exportfs file.
   template:
