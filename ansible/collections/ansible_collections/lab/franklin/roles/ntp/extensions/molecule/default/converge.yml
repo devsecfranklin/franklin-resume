@@ -1,10 +1,10 @@
 ---
-- name: "Include NTP role from lab.franklin collection"
+- name: "Converge:: test nfs_client from lab.franklin Collection"
   hosts: localhost
   become: true
-  gather_facts: false
+  gather_facts: true
   tasks:
-    - name: Testing role
+    - name: "Testing nfs_client"
       ansible.builtin.include_role:
-        name: lab.franklin.ntp
-        tasks_from: main.yml
+        name: lab.franklin.nfs
+        tasks_from: nfs_client.yml

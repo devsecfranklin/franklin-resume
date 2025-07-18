@@ -37,6 +37,7 @@ fi
 # returns nothing on success
 ${MY_SHFMT} test/test_cluster/bootstrap.sh
 ${MY_SHFMT} -i 2 -l -w test/test_gui/bootstrap.sh
+${MY_SHFMT} -i 2 -l -w test/test_ansible/*.sh
 
 # check bootstrap.sh
 echo "Checking file: bootstrap.sh"
@@ -50,6 +51,11 @@ done
 
 # check the test dir
 for filename in "test"/*.sh; do
+  echo "Checking file: ${filename}"
+  ${MY_SHFMT} -i 2 -l -w "${filename}"
+done
+
+for filename in "ansible"/*.sh; do
   echo "Checking file: ${filename}"
   ${MY_SHFMT} -i 2 -l -w "${filename}"
 done

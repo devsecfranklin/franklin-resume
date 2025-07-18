@@ -30,7 +30,6 @@ AC_CONFIG_FILES([
   container/kerberos-containers/kdc-server/Makefile
   container/kerberos-containers/kdc-ssh-server/Makefile
   container/kerberos-containers/ssh-container/Makefile
-  src/nodebot/Makefile
   test/test_cluster/Makefile
   test/test_gui/Makefile
 ])
@@ -159,7 +158,7 @@ m4_warn([obsolete],
   ISO C90 headers unconditionally.])dnl
 # Autoupdate added the next two lines to ensure that your configure
 # script's behavior did not change.  They are probably safe to remove.
-AC_CHECK_INCLUDES_DEFAULT
+AC_CHECK_INCLUDES_DEFAULT dnl  check for the presence of a default set of standard C header files. These headers are commonly assumed to exist on most modern systems, but Autoconf includes this check for maximum portability
 AC_PROG_EGREP
 
 AC_HEADER_DIRENT
