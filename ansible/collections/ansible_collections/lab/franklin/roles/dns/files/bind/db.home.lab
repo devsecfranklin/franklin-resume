@@ -1,6 +1,6 @@
 $TTL    10800
 @ IN SOA ns1.lab.bitsmasher.net. root.bitsmasher.net (
-        2025052101 ; serial
+        202507161228 ; serial
         8H ; refresh
         4H ; retry
         4W ; expire
@@ -41,8 +41,9 @@ node901         IN A 10.10.12.91
 node902		IN A 10.10.12.92
 node903		IN A 10.10.12.93
 odroid-c1       IN A 10.10.12.254
-ldap            IN A 10.10.13.1  ; server3 is renamed to ldap 
+ldap            IN A 10.10.13.1  ; server3 is renamed to ldap
 bbb1		IN A 10.10.13.10
+femputer        IN A 10.10.15.1; slyborg laptop
 pa220           IN A 10.10.15.253
 labgate         IN A 10.10.15.254
 

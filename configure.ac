@@ -1,9 +1,10 @@
 dnl Process this file with autoconf
-AC_PREREQ([2.71])
-AC_INIT([lab-franklin],[0.2],[franklin@bitsmasher.net],[https://github.com/devsecfranklin/lab-franklin])
-AC_CONFIG_MACRO_DIR(config/m4)
-AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(foreign)
+AC_PREREQ([2.69])
+AC_INIT([lab-franklin], [0.2], [franklin@bitsmasher.net], [https://github.com/devsecfranklin/lab-franklin])
+AC_CONFIG_MACRO_DIR([config/m4])
+AC_CONFIG_AUX_DIR([config])
+AM_INIT_AUTOMAKE
+LT_INIT # Initialize Libtool for shared library support
 
 AC_ARG_ENABLE([debug],
 [  --enable-debug    Turn on debugging],
@@ -48,6 +49,10 @@ test -z "$HAVE_NODE"     && AC_MSG_ERROR([Could not find node.js. Please make su
 AC_CHECK_PROG( [HAS_CURL], [curl], [found], [not-found])
 test -z "$HAS_CURL"     && AC_MSG_ERROR([Could not find curl. Please make sure you have it installed.])
 
+dnl Check for mandatory programs with more robust error messages.
+dnl AC_CHECK_PROG([HAVE_XMLLINT], [xmllint], [xmllint])
+dnl AS_IF([test -z "$HAVE_NODE"], [AC_MSG_ERROR([node.js not found. Please install node.js to proceed.])])
+
 AC_CHECK_PROG( [HAS_PODMAN], [podman], [found], [not-found])
 test -z "$HAS_PODMAN"     && AC_MSG_ERROR([Could not find podman installed. This is OK for testing.])
 
@@ -57,17 +62,17 @@ test -z "$HAS_ANSIBLE"     && AC_MSG_ERROR([Could not find ansible installed.])
 AC_CHECK_PROG( [HAS_GPG], [gpg], [found], [not-found])
 test -z "$HAS_GPG" && AC_MSG_ERROR([Could not find gpg installed.])
 
-AC_CHECK_PROG( [HAS_XMLLINT], [xmllint], [found], [not-found])
-test -z "$HAS_XMLLINT" && AC_MSG_ERROR([Could not find xmllint installed.])
+dnl AC_CHECK_PROG([HAS_XMLLINT], [xmllint], [xmllint])
+dnl AS_IF([test -z "$HAS_XMLLINT"], [AC_MSG_ERROR([xmllint not found. Please install libxml2-utils or equivalent.])])
 
-AC_CHECK_PROG(HAVE_AS, [as], [found], [not-found])
-test -z "$HAVE_AS"     && AC_MSG_ERROR([Could not find as. Please make sure you have it installed])
+dnl AC_CHECK_PROG([HAVE_AS], [as], [as])
+dnl AS_IF([test -z "$HAVE_AS"], [AC_MSG_ERROR([Assembler 'as' not found. Please ensure your build essential tools are installed.])])
 
-AC_CHECK_PROG(HAVE_NASM, [nasm], [found], [not-found])
-test -z "$HAVE_NASM"     && AC_MSG_ERROR([Could not find nasm. Please make sure you have it installed])
+dnl AC_CHECK_PROG([HAVE_NASM], [nasm], [nasm])
+dnl AS_IF([test -z "$HAVE_NASM"], [AC_MSG_ERROR([NASM assembler not found. Please install nasm.])])
 
-AC_CHECK_PROG(HAVE_YASM, [yasm], [found], [not-found])
-test -z "$HAVE_YASM"     && AC_MSG_ERROR([Could not find yasm. Please make sure you have it installed])
+dnl AC_CHECK_PROG([HAVE_YASM], [yasm], [yasm])
+dnl AS_IF([test -z "$HAVE_YASM"], [AC_MSG_ERROR([YASM assembler not found. Please install yasm.])])
 
 AC_SUBST([GITVERSION])
 AC_SUBST([GITTAG])
