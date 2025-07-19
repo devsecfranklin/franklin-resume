@@ -28,11 +28,12 @@ ansible/venv_molecule/
 ansible/roles/firewall/vars/firewall-secrets.yml
 ansible/roles/firewall/vars/panorama-secrets.yml
 ansible/collections/ansible_collections/ansible
+ansible/collections/ansible_collections/ansible.posix-2.1.0.info/
 ansible/collections/ansible_collections/community*
 ansible/collections/ansible_collections/containers*
 ansible/collections/ansible_collections/paloaltonetworks
 ansible/collections/ansible_collections/lab/franklin/tests/output
-
+lab-franklin-*.tar.gz
 # This is a minimal list, OK to add things per repo
 # mac specific
 .DS_Store

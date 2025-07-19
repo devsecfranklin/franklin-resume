@@ -1,8 +1,32 @@
 ---
-driver:
-  name: default
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
 platforms:
-  - name: instance
-    # you might want to add your own variables here based on what provisioning
-    # you are doing like:
-    # image: quay.io/centos/centos:stream8
+  - name: molecule-ubuntu
+    image: ubuntu:20.04
+    groups:
+      - nfs_clients
+driver:
+  name: podman
+  options:
+    managed: false
+    login_cmd_template: "podman exec -ti {instance} bash"
+    ansible_connection_options:
+      ansible_connection: podman
+provisioner:
+  name: ansible
+  log: true
+  env:
+    HOMELAB_MOLECULE_TEST: true
+verifier:
+  name: ansible
+lint: |
+  set -e
+  echo "Run yamllint"
+  yamllint .
+  echo "Run ansible-lint"
+  ansible-lint
+  echo "Run flake8"
+  flake8

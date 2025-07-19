@@ -18,6 +18,13 @@
     - nfs
     - storage
 
+- name: "nfs | Install thelio NFS Server"
+  ansible.builtin.include_tasks: nfs_server_thelio.yml
+  when: "'thelio' in inventory_hostname"
+  tags:
+    - nfs
+    - storage
+
 - name: "nfs | Install NFS Client"
   ansible.builtin.include_tasks: nfs_client.yml
   when:

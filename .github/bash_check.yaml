@@ -1,4 +1,4 @@
-name: Script Validation
+name: GNU autotools
 on:
   pull_request:
   push:
@@ -6,34 +6,20 @@ on:
       - main
 jobs:
   linux:
-    name: LINUX shell script testing
-    env:
-      PASS: ${{ secrets.PASS }}
-      PAN_IP: '34.134.31.136'
+    name: GNU Autotools testing
     runs-on: ubuntu-latest
-
     steps:
-
+      - uses: actions/checkout@v4
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: libxml2-utils pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+          packages: make automake autoconf
           version: 1.0
 
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
-        with:
-          PASS: ${{env.PASS }}
-          PAN_IP: ${{env.PAN_IP }}
-
-      - name: Setup dev env
-        run:  |
-          ${GITHUB_WORKSPACE}/bootstrap.sh
-          make test
-
-      - name: Test stage_release.sh
-        run:  ${GITHUB_WORKSPACE}/bin/stage_release.sh -h
-
-      - name: Test generate_docs.sh
-        run:   ${GITHUB_WORKSPACE}/bin/generate_docs.sh
-
-      # - name: Test daily.sh
-      #   run: ${GITHUB_WORKSPACE}/bin/daily.sh
+      - name: bootstrap
+        run: ${GITHUB_WORKSPACE}/bootstrap.sh
+      - name: make test
+        run: make test
+      - name: make test
+        run: make security
+      - name: make test
+        run: make python
