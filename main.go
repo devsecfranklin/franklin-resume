@@ -8,10 +8,17 @@ package main
 
 import (
 	"fmt"
-
 	"html/template"
 	"log"
 	"net/http"
+
+	"internal/logging"
+)
+
+type (
+	Page struct { // Page data structure for a generic page
+			Title string
+	}
 )
 
 var (
@@ -37,7 +44,23 @@ func main() {
 	}
 }
 
-func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
+func handler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving index page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{"www.bitsmasher.net"}
+
+	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
+	if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
+	}
+}
+
+func bioHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving index page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")

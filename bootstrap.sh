@@ -17,6 +17,7 @@
 # v0.9 02/18/2025 Updates for Mac
 # v1.0 02/26/2025 Optimize some functions using Gemini 2.0 Flash
 # v1.1 05/29/2025 Update the OS Detection function, add HW Detection function
+# v1.2 07/28/2025 Remove GNU autotools and add Golang
 
 #set -euo pipefail
 
@@ -44,78 +45,38 @@ NC='\033[0m' # No Color
 
 # --- Some config Variables ----------------------------------------
 CONTAINER=false
-DEB_PKG=(direnv git podman-toolbox)
-MAC_PKG=(git)
+DEB_PKG=(direnv git podman-toolbox nginx certbot)
+GO_VERSION="$(go version | awk '{print $3}')"
 MY_OS="unknown"
 OS_RELEASE="unknown"
 RHEL_PKG=(git)
 
-function check_container() { # Check if we are inside a container
-  if [ -f /.dockerenv ]; then
-    echo -e "${CYAN}Containerized build environment...${NC}"
-    CONTAINER=true
-  else
-    echo -e "${CYAN}NOT a containerized build environment...${NC}"
-  fi
+function log_header() {
+  printf "\n${LPURP}# --- %s ${NC}\n" "$1"
+}
+function log_info() { printf "${LBLUE}==>${NC} \e[1m%s\e[0m\n" "$1"; } # Using printf for Bold
+function log_warn() { printf >&2 "${YELLOW}WARN:${NC} %s\n" "$1"; }
+function log_success() { printf "${LGREEN}==>${NC} \e[1m%s\e[0m\n" "$1"; } # Using printf for Bold
+function log_error() {
+  printf "${LRED}ERROR: %s${NC}\n" "$1" >&2
+  exit 1
 }
 
-function detect_os() {
-  if [ -f "/etc/os-release" ]; then  # check for the /etc/os-release file
-    OS_RELEASE=$(grep "^ID=" /etc/os-release | cut -d"=" -f2)
-    echo -e "${CYAN}Found /etc/os-release file: ${OS_RELEASE}${NC}"
+function check_container() {
+  log_header "Check Container Status"
+  if [ -f /.dockerenv ]; then
+    log_info "Containerized build environment..."
+    CONTAINER=true
   else
-    echo -e "${YELLOW}NO /etc/os-release file found.${NC}"
-  fi
-
-  MY_UNAME=$(uname) # Check uname (Linux, OpenBSD, Darwin)
-  if [ -n "${OS_RELEASE}" ]; then
-    echo -e "${CYAN}Found uname: ${MY_UNAME}${NC}"
-  fi
-
-  if [ "${MY_UNAME}" == "OpenBSD" ]
-  then
-    echo -e "${CYAN}Detected OpenBSD${NC}"
-    MY_OS="openbsd"
-  elif [ "${MY_UNAME}" == "Darwin" ]
-  then
-    echo -e "${CYAN}Detected MacOS${NC}"
-    MY_OS="mac"
-  elif [ -f "/etc/redhat-release" ]
-  then
-    echo -e "${CYAN}Detected Red Hat/CentoOS/RHEL${NC}"
-    MY_OS="rh"
-  elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]
-  then
-    echo -e "${CYAN}Detected Debian/Ubuntu/Mint${NC}"
-    MY_OS="deb"
-  elif grep -q Microsoft /proc/version
-  then
-    echo -e "${CYAN}Detected Windows pretending to be Linux${NC}"
-    MY_OS="win"
-  else
-    echo -e "${YELLOW}Unrecongnized architecture.${NC}"
-    exit 1
+    log_info "NOT a containerized build environment..."
   fi
 }
 
 function check_installed() {
-  if ! command -v ${1} &> /dev/null
-  then
+  if ! command -v ${1} &>/dev/null; then
     echo "${1} could not be found"
     exit
   fi
-}
-
-function install_macos() {
-  echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
-  
-  brew cleanup
-  brew upgrade
-
-  for i in ${MAC_PKG[@]};
-  do
-    brew install "${i}"
-  done
 }
 
 function install_debian() {
@@ -124,9 +85,8 @@ function install_debian() {
     apt-get update && apt-get upgrade -y
   fi
 
-  for i in ${DEB_PKG[@]};
-  do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed") &> /dev/null
+  for i in ${DEB_PKG[@]}; do
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i} | grep "install ok installed") &>/dev/null
     # echo -e "${LBLUE}Checking for ${i}: ${PKG_OK}${NC}"
     if [ "" = "${PKG_OK}" ]; then
       echo -e "${LBLUE}Installing ${i} since it is not found.${NC}"
@@ -141,38 +101,48 @@ function install_debian() {
   done
 }
 
-function install_redhat() {
-  echo -e "${CYAN}RedHat 8 setup${NC}"
-  dnf upgrade -y
-  yum -y --disableplugin=subscription-manager update
-  dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+function setup_golang() {
+  #wget https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
+  #rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz
 
-  for i in ${RHEL_PKG[@]};
-  do
-    dnf install -y ${i} --skip-broken
-  done
+  echo "Go version: ${GO_VERSION}"
+
+  if [ ! -f "go.mod" ]; then
+    log_info "Initializing go module"
+    go mod init github.com/devsecfranklin/website
+  fi
+
+  log_info "Tidying up Go modules"
+  go mod tidy
+
+  log_info "Installing Go tools"
+  go install github.com/mattn/go-sqlite3
+  go install github.com/kisielk/errcheck@latest
+  go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  # test/test.sh  <-- What is this for? Is this a comment or needed?
+
+  # Consolidate errcheck installation. No need to do it multiple times.
+  if ! command -v errcheck &>/dev/null; then
+    go install github.com/kisielk/errcheck@latest
+  fi
+  # Correct the path for golangci-lint check
+  if ! command -v golangci-lint &>/dev/null; then
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  fi
+
+  # go get is deprecated, consider `go mod tidy` or `go install` where applicable
+  #  These lines might cause issues since `internal` is usually not publicly available.
+  #  If they are in the same module, just running `go mod tidy` should be sufficient.
+  # go get internal/database  #  Consider if this is really needed, and how it's used.
+  # go get internal/auth      #  Same here
+  # go get internal/cookies   #  Same here
 }
 
 function main() {
   check_container
-  detect_os
+  install_debian
+  setup_golang
 
-  case "${MY_OS}" in
-  "mac")
-    check_installed brew
-    install_macos
-  ;;
-  "rh")
-    install_redhat
-  ;;
-
-  "deb")
-    install_debian
-  ;;
-  *)
-    echo "what are you doing, Dave?"
-  ;;
-  esac
 }
 
 main "$@"
