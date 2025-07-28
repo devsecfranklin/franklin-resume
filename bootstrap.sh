@@ -142,7 +142,8 @@ function main() {
   check_container
   install_debian
   setup_golang
-
+  go get codeberg.org/go-pdf/fpdf
+  go get -u -v codeberg.org/go-pdf/fpdf/...
 }
 
 main "$@"
