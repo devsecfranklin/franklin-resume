@@ -1,4 +1,4 @@
-FROM yobasystems/alpine:3.22.0-aarch64
+FROM yobasystems/alpine:3.22.1-aarch64
 
 
 ARG BUILD_DATE
