@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2023-2025 franklin <smoooth.y62wj@passmail.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 # ChangeLog:
 #
@@ -18,8 +18,7 @@ function check_installed() {
 }
 
 function install_packages {
-  # sudo apt get install neopfetch moonmoji npm direnv automake
-  pass
+  sudo apt get install neofetch moonmoji npm direnv automake
 }
 
 function main() {

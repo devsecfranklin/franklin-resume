@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2023-2025 franklin <smoooth.y62wj@passmail.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 # ChangeLog:
 #
@@ -124,4 +124,4 @@ function main {
   echo -e "${NC}"
 }
 
-main
+main "$@"

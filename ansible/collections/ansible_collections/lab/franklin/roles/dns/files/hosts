@@ -11,12 +11,12 @@ ff02::2		ip6-allrouters
 10.10.8.3    netlab1.lab.bitsmasher.net netlab1
 10.10.8.4    netlab2.lab.bitsmasher.net netlab2
 10.10.8.11   snowy.lab.bitsmasher.net snowy
-10.10.8.12   pa220.lab.bitsmasher.net pa220
 10.10.12.0   node0.lab.bitsmasher.net node0
 10.10.12.1   node1.lab.bitsmasher.net node1
 10.10.12.2   node2.lab.bitsmasher.net node2
 10.10.12.3   node3.lab.bitsmasher.net node3
 10.10.12.4   edge-t.lab.bitsmasher.net edge-t
+10.10.12.11  labbench.lab.bitsmasher.net labbench
 10.10.12.12  ns1.lab.bitsmasher.net server1 ns1
 10.10.12.13  time.lab.bitsmasher.net time server2
 10.10.12.14  node5.lab.bitsmasher.net node5
@@ -31,8 +31,10 @@ ff02::2		ip6-allrouters
 10.10.12.254 odroid-c1.lab.bitsmasher.net odroid-c1 kdc1.lab.bitsmasher.net kdc1
 10.10.13.1   ldap.lab.bitsmasher.net server3 ldap
 10.10.13.10  bbb1.lab.bitsmasher.net bbb1
+10.10.15.1     femputer.lab.bitsmasher.net femputer
+10.10.15.253   pa220.lab.bitsmasher.net pa220
 
-137.184.177.152 games.bitsmasher.net games
-178.62.60.55    www.bitsmasher.net wonderland
+143.244.182.73  games.bitsmasher.net games
+178.62.60.55    www.bitsmasher.net www wonderland
 192.168.0.1     century-link.dmz.bitsmasher.net century-link
 192.169.0.16    dream-machine.dmz.bitsmasher.net

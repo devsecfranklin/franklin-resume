@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: ©2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2023-2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
+
 
 #RED='\033[0;31m'
 LRED='\033[1;31m'

@@ -15,6 +15,7 @@ lab.bitsmasher.net. IN NS ns1.lab.bitsmasher.net.
 ;PTR Record IP address to HostName
 1.8             IN PTR dream-machine.lab.bitsmasher.net.
 3.8		IN PTR netlab1.lab.bitsmasher.net.
+4.8		IN PTR netlab2.lab.bitsmasher.net.
 11.8            IN PTR snowy.lab.bitsmasher.net.
 0.12            IN PTR node0.lab.bitsmasher.net.
 1.12            IN PTR node1.lab.bitsmasher.net.

@@ -1,0 +1,4 @@
+deb https://esm.ubuntu.com/infra/ubuntu jammy-infra-security main # X-Repolib-Name: ubuntu-esm-infra # X-Repolib-ID: ubuntu-esm-infra
+# deb-src https://esm.ubuntu.com/infra/ubuntu jammy-infra-security main # X-Repolib-Name: ubuntu-esm-infra # X-Repolib-ID: ubuntu-esm-infra
+deb https://esm.ubuntu.com/infra/ubuntu jammy-infra-updates main # X-Repolib-Name: ubuntu-esm-infra-jammy-infra-updates # X-Repolib-ID: ubuntu-esm-infra-jammy-infra-updates
+# deb-src https://esm.ubuntu.com/infra/ubuntu jammy-infra-updates main # X-Repolib-Name: ubuntu-esm-infra-ubuntu-esm-infra-jammy-infra-updates # X-Repolib-ID: ubuntu-esm-infra-ubuntu-esm-infra-jammy-infra-updates

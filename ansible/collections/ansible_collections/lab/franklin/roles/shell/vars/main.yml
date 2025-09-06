@@ -1,5 +1,5 @@
 ---
-software_dir: /opt/software
+software_dir: /home/franklin/
 
 engr_user: operator
 engr_group: engr
