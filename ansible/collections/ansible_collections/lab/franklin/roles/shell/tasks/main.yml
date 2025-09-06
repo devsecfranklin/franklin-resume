@@ -9,7 +9,7 @@
 
 - name: "Copy update_motd.sh script"
   copy:
-    src: "scripts/git_cleanup.sh"
+    src: "{{ software_dir }}/git_cleanup.sh"
     dest: "{{ software_dir }}/bin/git_cleanup.sh"
     owner: "franklin"
     mode: 0755

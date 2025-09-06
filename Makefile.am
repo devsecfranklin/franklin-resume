@@ -37,7 +37,7 @@ endif
 dist-clean: clean
 	rm -rf _build
 
-python:
+dev:
 	@$(PY39) -m venv $(BUILDDIR)/build
 	( \
 		source $(BUILDDIR)/build/bin/$(ACTIVATE); \

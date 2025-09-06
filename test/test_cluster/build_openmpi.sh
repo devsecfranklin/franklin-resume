@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: ©2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2023-2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
+
 
 # ChangeLog:
 #
@@ -336,14 +337,14 @@ function build_openmpi() {
   if [ -d "${PREFIX}/${OPEN_MPI_VER}" ]; then
     echo -e "${CYAN}Configure ${OPEN_MPI_VER}.tar.bz2${NC}"
 
-  # Configure command line: '--build=aarch64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man'
-  # '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules'
-  # '--libdir=${prefix}/lib/aarch64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking'
-  # '--disable-silent-rules' '--disable-wrapper-runpath' '--with-package-string=Debian OpenMPI' '--with-verbs' '--with-libfabric'
-  # '--with-ucx' '--with-pmix=/usr/lib/aarch64-linux-gnu/pmix2' '--with-jdk-dir=/usr/lib/jvm/default-java' '--enable-mpi-java'
-  # '--enable-opal-btl-usnic-unit-tests' '--with-libevent=external' '--with-hwloc=external' '--disable-silent-rules' '--enable-mpi-cxx'
-  # '--enable-ipv6' '--with-devel-headers' '--with-slurm' '--with-sge' '--without-tm' '--sysconfdir=/etc/openmpi'
-  # '--libdir=${prefix}/lib/aarch64-linux-gnu/openmpi/lib' '--includedir=${prefix}/lib/aarch64-linux-gnu/openmpi/include'
+    # Configure command line: '--build=aarch64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man'
+    # '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules'
+    # '--libdir=${prefix}/lib/aarch64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking'
+    # '--disable-silent-rules' '--disable-wrapper-runpath' '--with-package-string=Debian OpenMPI' '--with-verbs' '--with-libfabric'
+    # '--with-ucx' '--with-pmix=/usr/lib/aarch64-linux-gnu/pmix2' '--with-jdk-dir=/usr/lib/jvm/default-java' '--enable-mpi-java'
+    # '--enable-opal-btl-usnic-unit-tests' '--with-libevent=external' '--with-hwloc=external' '--disable-silent-rules' '--enable-mpi-cxx'
+    # '--enable-ipv6' '--with-devel-headers' '--with-slurm' '--with-sge' '--without-tm' '--sysconfdir=/etc/openmpi'
+    # '--libdir=${prefix}/lib/aarch64-linux-gnu/openmpi/lib' '--includedir=${prefix}/lib/aarch64-linux-gnu/openmpi/include'
 
     # CFLAGS="-m64 -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=neon-fp-armv8" FCFLAGS="-m64"
     # CFLAGS=-march=armv7-a CCASFLAGS=-march=armv7-a ../configure"

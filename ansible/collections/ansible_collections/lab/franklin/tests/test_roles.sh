@@ -86,7 +86,7 @@ function prepare_env() {
   verify_test_files
 
   for SCENARIO_NAME in ${SCENARIO_NAMES}; do
-  cd "${MOLECULE_EXEC_DIR}" && HOMELAB_MOLECULE_TEST=true molecule reset --scenario-name "${SCENARIO_NAME}" && (cd - || log_error "unable to cd")
+    cd "${MOLECULE_EXEC_DIR}" && HOMELAB_MOLECULE_TEST=true molecule reset --scenario-name "${SCENARIO_NAME}" && (cd - || log_error "unable to cd")
     log_info "check scenario: ${SCENARIO_NAME}"
     log_info "molecule list --scenario-name ${SCENARIO_NAME}"
     cd "${MOLECULE_EXEC_DIR}" && HOMELAB_MOLECULE_TEST=true molecule list --scenario-name "${SCENARIO_NAME}" && (cd - || log_error "unable to cd")
@@ -158,7 +158,7 @@ function main() {
   echo -e "${LRED}$(figlet -d /usr/share/figlet -f mono9 "Welcome to")${NC}\n"
   echo -e "${LRED}$(figlet -d /usr/share/figlet -f mono9 bitsmasher.net)${NC}\n"
   echo -e "${LCYAN}\n# -----------------------------------------------\n${NC}"
-  
+
   prepare_env # set up the roles
 
   for SCENARIO_NAME in "${SCENARIO_NAMES[@]}"; do

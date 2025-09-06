@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2023-2025 franklin <smoooth.y62wj@passmail.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
+
 
 # ChangeLog:
 #
@@ -35,7 +36,8 @@ else
 fi
 
 # returns nothing on success
-${MY_SHFMT} test/test_cluster/bootstrap.sh
+${MY_SHFMT} -i 2 -l -w test/test_cluster/*.sh
+${MY_SHFMT} -i 2 -l -w test/test_cluster/bin/*.sh
 ${MY_SHFMT} -i 2 -l -w test/test_gui/bootstrap.sh
 ${MY_SHFMT} -i 2 -l -w test/test_ansible/*.sh
 
