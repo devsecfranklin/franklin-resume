@@ -11,15 +11,7 @@ clean:
 	docker system prune -f
 
 push: .check-env-vars
-	docker push ghcr.io/devsecfranklin/customer:latest
 	docker push gcr.io/gcp-gcs-pso/mmmbot:latest
 
 bot-run:
 	docker run -it gcr.io/gcp-gcs-pso/mmmbot:latest bash
-customer-run:
-	docker run -it customer-build bash
-
-rhel:
-	docker compose build customer-build
-    @echo "Tagging image:  $(shell docker images -q | head -1)"
-    docker tag $(shell docker images -q | head -1) ghcr.io/devsecfranklin/customer:latest

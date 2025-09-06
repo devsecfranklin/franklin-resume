@@ -306,7 +306,7 @@ function check_installed() {
 function install_macos() {
   echo -e "\n${LPURP}# --- Installing for MacOS --------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   #declare -a Packages=("ac")
-  declare -a Packages=("google-cloud-sdk" "git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
+  declare -a Packages=("docker" "docker-compose" "google-cloud-sdk" "git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
 
   echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
   brew update
