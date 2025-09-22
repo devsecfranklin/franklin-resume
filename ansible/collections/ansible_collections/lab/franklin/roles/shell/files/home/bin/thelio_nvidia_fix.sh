@@ -10,11 +10,11 @@
 apt purge ~nnvidia
 
 # make sure we are getting the most recent release
-apt update -m
+apt update -m  
 
 # make sure apt and dpkg were not interrupted
-dpkg --configure -a
-apt install -f
+dpkg --configure -a  
+apt install -f  
 
 # remove supporting libraries as well
 apt autoremove --purge
@@ -25,3 +25,4 @@ apt install system76-driver-nvidia
 # reboot the system to start using the new driver
 # reboot
 echo "YOU SHOULD REBOOT NOW"
+

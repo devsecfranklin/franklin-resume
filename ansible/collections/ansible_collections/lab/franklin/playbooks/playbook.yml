@@ -1,9 +1,10 @@
 ---
 - name: 'Ansible Playbook: lab.bitsmasher.net'
-  hosts: nvidia_nodes
-  become: yes
+  hosts: debian, openbsd, nvidia_nodes, raspi_nodes, raspi_servers, popos
+  become: true
   vars:
     ansible_python_interpreter: "/usr/bin/python3"
   roles:
+    - common
     - ntp
 

@@ -4,7 +4,7 @@
 - name: "ntp | Configure /etc/{{ntp_obsd_configuration_file }}"
   ansible.builtin.template:
     src: "{{ntp_obsd_configuration_file }}"
-    dest: /etc/{{ ntp_obsd_configuration_file }}
+    dest: /etc/ntpd.conf
     mode: 0644
   tags:
     - ntp

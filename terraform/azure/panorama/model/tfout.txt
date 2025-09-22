@@ -1,6 +1,0 @@
-[31m[31m╷[0m[0m
-[31m│[0m [0m[1m[31mError: [0m[0m[1mError loading state: Error retrieving keys for Storage Account "franklinxyz321": storage.AccountsClient#ListKeys: Failure responding to request: StatusCode=404 -- Original Error: autorest/azure: Service returned an error. Status=404 Code="ResourceGroupNotFound" Message="Resource group 'ps-automation-dev' could not be found."[0m
-[31m│[0m [0m
-[31m│[0m [0m[0m
-[31m╵[0m[0m
-[0m[0m

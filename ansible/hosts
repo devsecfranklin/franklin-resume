@@ -9,18 +9,19 @@ snowy.LAB.BITSMASHER.NET ansible_user=franklin
 node[900:903].LAB.BITSMASHER.NET ansible_user=franklin
 
 [openbsd]
-blowfish.LAB.BITSMASHER.NET ansible_user=franklin
+blowfish.LAB.BITSMASHER.NET 
 
 [openbsd:vars]
 ansible_python_interpreter=/usr/local/bin/python3
-ansible_connection=paramiko
+# ansible_connection=paramiko
 ansible_become_method=doas
+# ansible_user=franklin
 
 [popos]
 thelio.LAB.BITSMASHER.NET ansible_user=franklin
 
 [raspi_nodes]
-head2.LAB.BITSMASHER.NET ansible_user=franklin
+# head2.LAB.BITSMASHER.NET ansible_user=franklin
 node[0:3].LAB.BITSMASHER.NET ansible_user=franklin
 node5.LAB.BITSMASHER.NET ansible_user=franklin
 node6.LAB.BITSMASHER.NET ansible_user=franklin

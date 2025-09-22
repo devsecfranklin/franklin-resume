@@ -20,7 +20,7 @@ endif
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
 	for trash in AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log \
-        	config.status configure configure~ libtool Makefile Makefile.in po \
+        	config.status configure configure~ config.h.in~ libtool Makefile Makefile.in po \
 		ansible/Makefile ansible/Makefile.in \
 		assembly/Makefile assembly/Makefile.in assembly/src/Makefile assembly/src/Makefile.in \
 		container/cloudbot/Makefile container/cloudbot/Makefile.in \

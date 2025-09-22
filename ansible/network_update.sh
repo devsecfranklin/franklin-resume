@@ -7,82 +7,61 @@
 # v0.1 02/25/2022 Maintainer script
 # v0.2 04/22/2024 Add OpenBSD support
 
-#Black        0;30     Dark Gray     1;30
-#Red          0;31     Light Red     1;31
-#Green        0;32     Light Green   1;32
-#Brown/Orange 0;33     Yellow        1;33
-#Blue         0;34     Light Blue    1;34
-#Purple       0;35     Light Purple  1;35
-#Cyan         0;36     Light Cyan    1;36
-#Light Gray   0;37     White         1;37
+#set -euo pipefail # Exit on error, exit on unset variables, fail if any command in a pipe fails.
+#IFS=$'\n\t'        # Preserve newlines and tabs in word splitting.
 
-RED='\033[0;31m'
+# --- Terminal Colors ---
 LRED='\033[1;31m'
-# LGREEN='\033[1;32m'
+LGREEN='\033[1;32m'
+LBLUE='\033[1;34m'
 CYAN='\033[0;36m'
-# LPURP='\033[1;35m'
-# YELLOW='\033[1;33m'
+LPURP='\033[1;35m'
 NC='\033[0m' # No Color
+
+# --- Helper Functions for Logging ---
+log_header() {
+	printf "\n${LPURP}# --- %s ${NC}\n" "$1"
+}
+
+log_info() { printf "${LBLUE}==>${NC} \e[1m%s\e[0m\n" "$1"; } # Using printf for Bold
+log_warn() { printf >&2 "${YELLOW}WARN:${NC} %s\n" "$1"; }
+log_success() { printf "${LGREEN}==>${NC} \e[1m%s\e[0m\n" "$1"; } # Using printf for Bold
+
+log_error() {
+	printf "${LRED}ERROR: %s${NC}\n" "$1" >&2
+	exit 1
+}
 
 ETC_DIR="${ANSIBLE_HOME}"
 
 # Check if we are inside a docker container
 function check_docker() {
-  if [ -f /.dockerenv ]; then
-    echo -e "${CYAN}Containerized build environment...${NC}"
-    CONTAINER=true
-  else
-    echo -e "${CYAN}NOT a containerized build environment...${NC}"
-  fi
+	if [ -f "/.dockerenv" ]; then
+		log_warn "Containerized build environment..."
+		CONTAINER=true
+	else
+		log_info "NOT a containerized build environment"
+	fi
 }
 
-function all_playbooks() {
-  # Debian: snowy
-  # Do this one first since it is our file server
-  echo -e "${CYAN}RUNNING DEBIAN PLAYBOOK${ID}${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/debian.yml" -i "${ETC_DIR}/hosts" -b
-
-  # storage1
-  echo -e "${CYAN}RUNNING STORAGE PLAYBOOK${ID}${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/storage.yml" -i "${ETC_DIR}/hosts" -b
-
-  # server1 server2 server3
-  echo -e "${CYAN}RUNNING SERVER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/servers.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
-
-  # node0 node1 node2 node3
-  echo -e "${CYAN}RUNNING RASPI CLUSTER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/raspi_nodes.yml" -i "${ETC_DIR}/hosts" -b -e 'ansible_python_interpreter=/usr/bin/python3'
-
-  # node900 node901 node902 node903
-  echo -e "${CYAN}RUNNING NVIDIA CLUSTER PLAYBOOK${ID}${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/nvidia_nodes.yml" -i "${ETC_DIR}/hosts" -b
-
-  # openbsd
-  #echo -e "${CYAN}RUNNING OPENBSD PLAYBOOK${NC}"
-  #ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/openbsd.yml" -i "${ETC_DIR}/hosts" -b
-
-  # odroid-c1
-  echo -e "${CYAN}RUNNING UBUNTU PLAYBOOK${ID}${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/ubuntu.yml" -i "${ETC_DIR}/hosts" -b
+function openbsd() {
+  log_header "setup OpenBSD"
+	ansible -m raw -a "pkg install -y python" -b ./hosts blowfish
 }
 
 function main() {
 
-  [[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
-  [[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
+	[[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
+	[[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
 
-  echo -e "${LRED}$(figlet -d /usr/share/figlet -f block "Welcome to")${NC}\n"
-  echo -e "${LRED}$(figlet -d /usr/share/figlet -f block bitsmasher.net)${NC}\n"
+	#echo -e "${LRED}$(figlet -d /usr/share/figlet -f block "Welcome to")${NC}\n"
+	#echo -e "${LRED}$(figlet -d /usr/share/figlet -f block bitsmasher.net)${NC}\n"
 
-  # if [ ! -f "${ETC_DIR}/hosts" ]; then
-  #   echo -e "${LRED}Copy the hosts file from ${RED}${WORKDIR}${LRED} to ${RED}${ETC_DIR}${NC}"
-  #   exit 1
-  # fi
+  ansible raspi_nodes -a 'apt update' -b -i "${ANSIBLE_HOME}/hosts"
 
-  #all_playbooks
-  echo -e "${CYAN}RUNNING MAIN PLAYBOOK${NC}"
-  ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/playbook.yml" -i ./hosts -b
+	log_header "RUNNING MAIN PLAYBOOK"
+	ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/playbook.yml" -i ./hosts -b
+
 }
 
 main "$@"

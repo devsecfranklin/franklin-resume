@@ -29,7 +29,7 @@ pip3 install ansible-dev-tools
 Molecule does not include ansible-lint (nor does the lint extra), but is easily installed separately:
 
 ```sh
-python3 -m pip install molecule ansible-lint
+python3 -m pip install --break-system-packages molecule ansible-lint
 #python3 -m pip install -U git+https://github.com/ansible-community/molecule
 ```
 
@@ -39,7 +39,7 @@ would like to use podman as the molecule driver, the installation command would 
 this:
 
 ```sh
-python3 -m pip install "molecule-plugins[podman]"
+python3 -m pip install --break-system-packages "molecule-plugins[podman]"
 ```
 
 If you upgrade molecule from previous versions, make sure to remove previously installed

@@ -1,0 +1,34 @@
+run:
+  timeout: 5m
+linters:
+  enable:
+    - asasalint
+    - bidichk
+    - bodyclose
+    - containedctx
+    - gocheckcompilerdirectives
+    - gofmt
+    - gofumpt
+    - gosimple
+    - govet
+    - ineffassign
+    - makezero
+    - misspell
+    - nilerr
+    - nolintlint
+    - nosprintfhostport
+    - staticcheck
+    - unconvert
+    - wastedassign
+    - whitespace
+  disable:
+    - usestdlibvars
+    - errcheck
+severity:
+  default: error
+  rules:
+    - linters:
+        - gofmt
+        - goimports
+        - intrange
+      severity: info

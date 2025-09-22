@@ -11,20 +11,11 @@
 # v0.1 02/25/2022 Maintainer script
 # v0.2 06/25/2025 Used goog ai studio to make improvements
 
-# --- Script Configuration ---
-# Exit immediately if a command exits with a non-zero status.
-set -e
-# Treat unset variables as an error.
-set -u
-# The return value of a pipeline is the status of the last command to exit
-# with a non-zero status, or zero if no command failed.
-set -o pipefail
-
 # --- Wine and Game Configuration ---
 # Use a dedicated WINEPREFIX for the game to avoid conflicts with other apps.
 # This can be overridden by setting the WINEPREFIX environment variable before running the script.
 # Example: WINEPREFIX=/path/to/my/prefix ./run_civ2.sh run
-WINEPREFIX="${WINEPREFIX:-$HOME/.wine_civ2}"
+WINEPREFIX="${WINEPREFIX:-$HOME/.wine}"
 
 # Civilization II is a 32-bit application.
 #readonly WINEARCH="win32"

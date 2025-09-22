@@ -5,7 +5,7 @@
 # MANAGED BY ANSIBLE
 
 # Addresses to listen on (ntpd does not listen by default)
-listen on 127.0.0.1
+listen on 10.10.8.11
 
 ## To browse Public NTP servers
 ## http://support.ntp.org/bin/view/Servers/WebHome#Finding_A_Time_Server
@@ -15,6 +15,9 @@ server {{ntp_server}}
 ## public 
 #servers time-a.timefreq.bldrdoc.gov
 
-#constraint from "9.9.9.9"              # quad9 v4 without DNS
-# constraint from "2620:fe::fe"          # quad9 v6 without DNS
+constraint from "1.1.1.1"
 constraints from "www.google.com"      # intentionally not 8.8.8.8
+#constraint from "9.9.9.9"              # quad9 v4 without DNS
+
+# IPv6
+# constraint from "2620:fe::fe"          # quad9 v6 without DNS

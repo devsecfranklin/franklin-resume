@@ -28,8 +28,9 @@
 - name: 'Remove extra junk packages'
   ansible.builtin.apt:
     purge: true
-    package: [
-      'libreoffice-l10n*']
+    package: 
+      - 'libreoffice-l10n*'
+      - tripwire
     state: absent
   tags: admin
 
