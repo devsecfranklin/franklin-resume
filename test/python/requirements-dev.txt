@@ -1,2 +1,8 @@
-tox
--e .[dev]
+# tox -e .[dev]
+flake8
+pytest
+#coverage==6.1.2
+isort
+black
+yamllint
+ansible-lint

@@ -1,10 +1,14 @@
 ---
 - name: 'Ansible Playbook: lab.bitsmasher.net'
-  hosts: debian, openbsd, nvidia_nodes, raspi_nodes, raspi_servers, popos
+  hosts: raspi_servers nvidia_nodes raspi_nodes 
   become: true
   vars:
     ansible_python_interpreter: "/usr/bin/python3"
   roles:
-    - common
+    - dns
+    - dhcp
+    - nfs
     - ntp
-
+    - ldap
+    - kerberos
+    - security

@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 #RED='\033[0;31m'
 LRED='\033[1;31m'
 LGREEN='\033[1;32m'
@@ -37,21 +36,25 @@ function verify_collections() {
   for COLLECTION in "${MY_COLLECTIONS[@]}"; do
     log_info "verify collection: ${COLLECTION}"
     if ! ansible-galaxy collection verify "${COLLECTION}"; then
-      ansible-galaxy collection install --collections-path "${ANSIBLE_COLLECTIONS_PATH}" --force
+      log_warn "installing ${COLLECTION}"
+      ansible-galaxy collection install --collections-path "${ANSIBLE_COLLECTIONS_PATH}" --force "${COLLECTION}"
     fi
   done
 }
 
 function build_collection() {
-  log_header "rebuild lab.franklin collection package"
-  pushd "${COLLECTION_DIR}" || exit 1
-  if [ -f "${COLLECTION_DIR}/galaxy.yml" ]; then
+  MY_COLELCTION="lab.franklin"
+  log_header "Verify ${MY_COLLECTION} collection package"
 
+  pushd "${COLLECTION_DIR}" || log_error "Directory not found ${COLLECTION_DIR}"
+  if [ ! -f "${COLLECTION_DIR}/galaxy.yml" ]; then
+    log_info "building collection: ${MY_COLLECTION}"
     ansible-galaxy collection build # generates MANIFEST.json and FILES.json
   else
-    log_error "Unable to find file: ${COLLECTION_DIR}/galaxy.yml"
+    log_success "Found file: ${COLLECTION_DIR}/galaxy.yml"
   fi
 }
+
 function main() {
   verify_collections
   build_collection

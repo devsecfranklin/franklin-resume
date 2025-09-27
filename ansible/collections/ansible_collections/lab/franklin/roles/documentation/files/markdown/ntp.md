@@ -8,7 +8,7 @@
 * Set the time zone: `sudo timedatectl set-timezone America/Denver`
 
 ```sh
-sudo apt install ntp gpsd gpsd-clients
+sudo apt install ntp gpsd gpsd-clients # gpsd-clients has `xgps` used for testing
 chmod a+rw /dev/ttyUSB0
 sudo systemctl enable gpsd # enabled gpsd on boot
 cgps -s # test gpsd

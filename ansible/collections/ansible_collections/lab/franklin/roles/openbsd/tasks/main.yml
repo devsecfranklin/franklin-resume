@@ -8,7 +8,7 @@
   ansible.builtin.include_tasks: files.yml
   when: ansible_distribution == 'OpenBSD'
 
-- name: "update loate database"
+- name: "update locate database"
   ansible.builtin.command: locate.updatedb
   args:
     chdir: /usr/libexec

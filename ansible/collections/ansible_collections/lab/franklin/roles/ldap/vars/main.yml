@@ -2,3 +2,7 @@
 ldap_base: "dc=lab,dc=bitsmasher,dc=net"
 ldap_uri: ldap://10.10.13.1/
 my_crt: 
+
+ansible_email: ©2023-2025 franklin <smoooth.y62wj@passmail.net>
+ansible_license: MIT
+ansible_managed: MANAGED BY ANSIBLE

@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 # ChangeLog:
 #
 # v0.1

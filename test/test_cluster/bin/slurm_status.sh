@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 # systemctl is-enabled munge
 # systemctl is-enabled slurmd
 # systemctl status slurmctld # on the head node only

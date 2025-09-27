@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
 
@@ -54,6 +54,7 @@ test:
 		source $(BUILDDIR)/test/bin/$(ACTIVATE); \
 		$(BUILDDIR)/test/bin/python -m pip install --upgrade pip; \
 		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/python/requirements.txt; \
+		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/python/requirements-dev.txt; \
 		$(WORKDIR)/bootstrap.sh \
 	)
 	@echo "$(info Found Python version $(PY39))"

@@ -7,3 +7,7 @@ golang_env:
   GOROOT: "{{ golang_install_dir }}/go"
   PATH: "{{ golang_install_dir }}/go/bin:{{ ansible_env.PATH }}"
 golang_cache_dir: /tmp/cacheansible
+
+ansible_email: ©2023-2025 franklin <smoooth.y62wj@passmail.net>
+ansible_license: MIT
+ansible_managed: MANAGED BY ANSIBLE

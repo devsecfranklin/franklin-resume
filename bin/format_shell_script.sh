@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 # ChangeLog:
 #
 
@@ -36,6 +35,7 @@ else
 fi
 
 # returns nothing on success
+${MY_SHFMT} -i 2 -l -w test/test_ansible/*.sh
 ${MY_SHFMT} -i 2 -l -w test/test_cluster/*.sh
 ${MY_SHFMT} -i 2 -l -w test/test_cluster/bin/*.sh
 ${MY_SHFMT} -i 2 -l -w test/test_gui/bootstrap.sh

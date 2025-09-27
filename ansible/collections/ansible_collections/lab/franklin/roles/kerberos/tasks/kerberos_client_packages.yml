@@ -8,7 +8,8 @@
       'libpam-krb5',
       'libpam-ccreds',
       'nss-updatedb',
-      'kstart'
+      'kstart',
+      'ksshaskpass'
       ]
     state: latest
   tags:

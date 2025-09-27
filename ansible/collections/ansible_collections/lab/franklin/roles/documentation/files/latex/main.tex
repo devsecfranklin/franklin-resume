@@ -24,14 +24,30 @@
 
 \mainmatter
 
-\section {Introduction}
+\chapter{Introduction}
 
-\include{sec00/ch01}
+\include{ch00/sec01} % history
+\include{ch00/sec02} % code storage
 
-\section{infrastructure}
+\chapter{infrastructure}
 
-\include{sec01/ch01}
-\include{sec01/ch02}
+\include{ch01/sec01} % network time
+\include{ch01/sec02} % DNS
+\include{ch01/sec03} % ansible
+
+\chapter{Storage}
+
+This is one of the most important elements of the network. These servers must be up before the other since there are several
+important NFS mounts.
+
+\include{ch02/sec01} % nfs mounts
+\include{ch02/sec02}
+
+\chapter{Development Environment}
+
+\include{ch03/sec01} % direnv 
+\include{ch03/sec02} % clustershell
+
 
 \backmatter
 % bibliography, glossary and index would go here.

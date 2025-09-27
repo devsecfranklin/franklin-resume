@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 set -euxo pipefail
 
 # Make a directory for the output files

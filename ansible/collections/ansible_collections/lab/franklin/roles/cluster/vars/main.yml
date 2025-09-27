@@ -1,4 +1,8 @@
 ---
+ansible_email: ©2023-2025 franklin <smoooth.y62wj@passmail.net>
+ansible_license: MIT
+ansible_managed: MANAGED BY ANSIBLE
+
 software_dir: /mnt/storage1/workspace/build
 
 auks_build_dir: "{{ software_dir }}/auks"

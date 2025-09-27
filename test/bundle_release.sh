@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 # the `-r` flag does subdirs
 # zip -r scripts.zip <directory name>
 

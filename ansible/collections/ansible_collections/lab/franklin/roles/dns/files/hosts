@@ -1,6 +1,10 @@
-# SPDX-FileCopyrightText: ©2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: MIT
+#
+# MANAGED BY ANSIBLE
+#
+# filename: /etc/hosts
 
 127.0.0.1	localhost
 ::1		localhost ip6-localhost ip6-loopback
@@ -17,7 +21,7 @@ ff02::2		ip6-allrouters
 10.10.12.3   node3.lab.bitsmasher.net node3
 10.10.12.4   edge-t.lab.bitsmasher.net edge-t
 10.10.12.11  labbench.lab.bitsmasher.net labbench
-10.10.12.12  ns1.lab.bitsmasher.net server1 ns1
+10.10.12.12  ns1.lab.bitsmasher.net ns1 server1
 10.10.12.13  time.lab.bitsmasher.net time server2
 10.10.12.14  node5.lab.bitsmasher.net node5
 10.10.12.15  blowfish.lab.bitsmasher.net blowfish

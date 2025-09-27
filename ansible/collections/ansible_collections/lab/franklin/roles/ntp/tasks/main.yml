@@ -18,11 +18,11 @@
   tags:
     - ntp
 
-- name: "ntp | Install OpenBSD"
-  ansible.builtin.include_tasks: ntp_openbsd.yml
-  when:
-    - ansible_distribution == 'OpenBSD'
-  tags:
-    - ntp
-
-
+# - name: "ntp | Install OpenBSD"
+#   ansible.builtin.include_tasks: ntp_openbsd.yml
+#   when:
+#     - ansible_distribution == 'OpenBSD'
+#         - "'time' not in inventory_hostname"
+#   tags:
+#     - ntp
+#     - openbsd

@@ -148,6 +148,7 @@ ansible-playbook -i firewalls playbook/firewalls.yml --ask-vault-pass -e 'ansibl
 
 ```sh
 ansible -i /etc/ansible/hosts -b --list-hosts nodes
+ansible -m setup blowfish.lab.bitsmasher.net -i ./hosts # validate a single host
 ansible nodes -m ping -b -i /etc/ansible/hosts
 ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspace/LAB/lab-home/ansible/hosts # check dists
 clush -d -v -g compute --progress date
