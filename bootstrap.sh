@@ -97,7 +97,7 @@ function check_python_version() {
       fi
     fi
   elif command -v python3 &>/dev/null; then
-    echo "'python' command not found, using 'python3'.${NC}"
+    echo "${LGREEN}Using python3 as your python version.${NC}"
     PYTHON_CMD="python3"
   else
     echo -e "${LRED}Error: Neither 'python' nor 'python3' found. Please install Python 3. Exiting.${NC}"
@@ -138,9 +138,11 @@ function detect_os() {
 
   linux)
     # if linux, check the distro. check for the /etc/os-release file
-    if [ -n "${OS_RELEASE}" ]; then
-      echo -e "${LBLUE}Found /etc/os-release file: ${OS_RELEASE}${NC}"
+    if [ -f "/etc/os-release" ]; then
+      echo -e "${LGREEN}Found /etc/os-release file. The Release is: ${OS_RELEASE}${NC}"
       if [ "${OS_RELEASE}" == "debian" ]; then install_debian; fi
+    else
+      echo -e "${LYELLOW}Not found: /etc/os-release${NC}"
     fi
 
     #if [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
@@ -166,6 +168,14 @@ function detect_os() {
   darwin)
     echo -e "${CYAN}Detected MacOS${NC}\n"
     check_installed brew
+    # Get the directory path
+    BIN_PATH=$(dirname $(which aclocal))
+
+    # Create a link for aclocal
+    sudo ln -s $BIN_PATH/aclocal $BIN_PATH/aclocal-1.17
+
+    # Create a link for automake
+    sudo ln -s $BIN_PATH/automake $BIN_PATH/automake-1.17
     install_macos
     ;;
   *)
@@ -306,7 +316,7 @@ function check_installed() {
 function install_macos() {
   echo -e "\n${LPURP}# --- Installing for MacOS --------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   #declare -a Packages=("ac")
-  declare -a Packages=("docker" "docker-compose" "google-cloud-sdk" "git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
+  declare -a Packages=("pyenv" "docker" "docker-compose" "google-cloud-sdk" "git" "bash" "make" "automake" "gsed" "gawk" "direnv" "terraform" "libtool" "jq" "google-cloud-sdk" "coreutils")
 
   echo -e "${CYAN}Updating brew for MacOS (this may take a while...)${NC}"
   brew update
@@ -375,6 +385,14 @@ function install_debian() {
   if ! check_installed dircolors && [ ! -d "${HOME}/.dircolors" ]; then
     dircolors -p >~/.dircolors
     echo -e "${LBLUE}Updating the dircolors configuration.${NC}"
+  fi
+
+  if ! check_installed terraform; then
+    sudo apt-get update && sudo apt-get install -y curl gnupg software-properties-common
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    sudo apt-get update
+    sudo apt-get install terraform
   fi
 }
 

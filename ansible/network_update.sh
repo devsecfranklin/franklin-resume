@@ -37,6 +37,21 @@ log_error() {
 CONTAINER=false
 ETC_DIR="${ANSIBLE_HOME}"
 
+<<<<<<< HEAD
+# Check if we are inside a docker container
+function check_docker() {
+  if [ -f "/.dockerenv" ]; then
+    log_warn "Containerized build environment..."
+    CONTAINER=true
+  else
+    log_info "NOT a containerized build environment"
+  fi
+}
+
+function openbsd() {
+  log_header "setup OpenBSD"
+  ansible -m raw -a "pkg install -y python" -b ./hosts blowfish
+=======
 # Check if we are inside a container
 function check_container() {
   log_header "Check Container Status ------------------------------------------" && echo -e "\n"
@@ -56,6 +71,7 @@ function check_installed() {
     log_warn "${1} was not found" && echo -e "\n"
     return 1
   fi
+>>>>>>> origin/main
 }
 
 function configure_head_node() {
@@ -63,6 +79,13 @@ function configure_head_node() {
   # python3 -m pip install ansible-dev-tools --break-system-packages
 }
 
+<<<<<<< HEAD
+  [[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
+  [[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
+
+  #echo -e "${LRED}$(figlet -d /usr/share/figlet -f block "Welcome to")${NC}\n"
+  #echo -e "${LRED}$(figlet -d /usr/share/figlet -f block bitsmasher.net)${NC}\n"
+=======
 # this function needs to attempt an apt-get update && upgrade
 # it also needs to account for failures in apt-get
 function apt-get-target() {

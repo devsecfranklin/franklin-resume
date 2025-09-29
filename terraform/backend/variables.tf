@@ -48,5 +48,3 @@ variable "openshift-region" {
   type        = string
   default     = "australia-southeast2"
 }
-
-// *********************** AWS *********************************

@@ -40,8 +40,9 @@ resource "google_compute_subnetwork" "mgmt-subnet" {
   region        = var.region
   network       = google_compute_network.mgmt-vpc.id
 
-  stack_type       = "IPV4_IPV6"
-  ipv6_access_type = "INTERNAL"
+  #stack_type       =  "IPV4_IPV6"
+  stack_type = "IPV4_ONLY"
+  # ipv6_access_type = "INTERNAL"
 
   log_config {
     aggregation_interval = "INTERVAL_10_MIN"
@@ -53,39 +54,3 @@ resource "google_compute_subnetwork" "mgmt-subnet" {
     prevent_destroy = true
   }
 }
-
-// ****************************************** OpenShift
-// have to move this to a region that allows larger machines
-/*
-resource "google_compute_subnetwork" "aus_network_subnet" {
-  name                     = "${var.name}-aus-mgmt-subnet"
-  project                  = var.project_id
-  region                   = var.openshift-region
-  network                  = google_compute_network.mgmt-vpc.id
-  ip_cidr_range            = "10.252.128.0/25"
-  private_ip_google_access = true
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-*/
-
-// GCP Airlock - Create a "dual stack" subnet
-/*
-resource "google_compute_subnetwork" "subnetwork-ipv6" {
-  name          = "ipv6-test-subnetwork"
-
-  ip_cidr_range = "10.0.0.0/22"
-  region        = "us-west2"
-
-  stack_type       = "IPV4_IPV6"
-  ipv6_access_type = "EXTERNAL"
-
-  network       = google_compute_network.custom-test.id
-}
-
-resource "google_compute_network" "custom-test" {
-  name                    = "ipv6-test-network"
-  auto_create_subnetworks = false
-}
-*/

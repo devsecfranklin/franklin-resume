@@ -38,7 +38,7 @@ dist-clean: clean
 	rm -rf _build
 
 dev:
-	@$(PY39) -m venv $(BUILDDIR)/build
+	/Users/fdiaz/.pyenv/versions/3.11.13/bin/python3 -m venv $(BUILDDIR)/build
 	( \
 		source $(BUILDDIR)/build/bin/$(ACTIVATE); \
 		$(BUILDDIR)/build/bin/python -m pip install --upgrade pip; \

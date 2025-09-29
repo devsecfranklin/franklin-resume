@@ -1,9 +1,3 @@
-variable "name" {
-  description = "Name to add to our resources"
-  type        = string
-  default     = "franklin-lab"
-}
-
 variable "name_prefix" {
   type    = string
   default = "lab-franklin"

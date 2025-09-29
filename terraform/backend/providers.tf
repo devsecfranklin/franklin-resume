@@ -1,16 +1,3 @@
-/*
-provider "aws" {
-  source  = "hashicorp/aws"
-  version = "~> 5.0"
-}
-
-provider "azurerm" {
-  features {}
-  skip_provider_registration = "true"
-  subscription_id            = var.subscription
-}
-*/
-
 provider "google" {
   project = var.project_id
   region  = var.region

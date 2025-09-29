@@ -9,8 +9,17 @@ internet. Public NAT does not rely on proxy VMs. Instead, a Public NAT gateway a
 a set of external IP addresses and source ports to each VM that uses the gateway to
 create outbound connections to the internet.
 
+  While using a secondary IP range is recommended in order to to separate
+  cluster master and pod IPs, when using a network in the same project as
+  your GKE cluster you can specify a blank range name to draw alias IPs
+  from your subnetwork's primary IP range. If using a shared VPC network
+  (a network from another GCP project) using an explicit secondary range is
+  required.
 
 
+*/
+
+/*
 ## Create Nat Gateway
 module "cloud_router" {
   source  = "terraform-google-modules/cloud-router/google"
@@ -25,9 +34,9 @@ module "cloud_router" {
     source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   }]
 }
-
 */
 
+/*
 resource "google_compute_subnetwork" "gke-subnet" {
   name                     = "${var.name_prefix}-gke-subnet"
   project                  = var.project_id
@@ -36,15 +45,7 @@ resource "google_compute_subnetwork" "gke-subnet" {
   ip_cidr_range            = "10.249.0.0/25"
   private_ip_google_access = true
 
-  /* A named secondary range is mandatory for a private cluster
-
-  While using a secondary IP range is recommended in order to to separate
-  cluster master and pod IPs, when using a network in the same project as
-  your GKE cluster you can specify a blank range name to draw alias IPs
-  from your subnetwork's primary IP range. If using a shared VPC network
-  (a network from another GCP project) using an explicit secondary range is
-  required.
-
+  // A named secondary range is mandatory for a private cluster
   secondary_ip_range = [
   {
     ip_cidr_range = "10.12.0.0/16"
@@ -55,10 +56,8 @@ resource "google_compute_subnetwork" "gke-subnet" {
     range_name    = "gke-lab-franklin-gke-services-f23f12d3"
   },
   ]
-    */
 }
 
-/*
 module "nginx" {
   source              = "./modules/nginx"
   nginx_chart_version = "4.0.18"
