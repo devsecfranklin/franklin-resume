@@ -51,8 +51,7 @@ function check_docker() {
 function openbsd() {
   log_header "setup OpenBSD"
   ansible -m raw -a "pkg install -y python" -b ./hosts blowfish
-=======
-# Check if we are inside a container
+
 function check_container() {
   log_header "Check Container Status ------------------------------------------" && echo -e "\n"
   if [ -f /.dockerenv ]; then
@@ -71,22 +70,8 @@ function check_installed() {
     log_warn "${1} was not found" && echo -e "\n"
     return 1
   fi
->>>>>>> origin/main
 }
 
-function configure_head_node() {
-  log_header "\nConfigure Head Node: head2" && echo -e "\n"
-  # python3 -m pip install ansible-dev-tools --break-system-packages
-}
-
-<<<<<<< HEAD
-  [[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
-  [[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
-
-  #echo -e "${LRED}$(figlet -d /usr/share/figlet -f block "Welcome to")${NC}\n"
-  #echo -e "${LRED}$(figlet -d /usr/share/figlet -f block bitsmasher.net)${NC}\n"
-=======
-# this function needs to attempt an apt-get update && upgrade
 # it also needs to account for failures in apt-get
 function apt-get-target() {
 
@@ -133,7 +118,6 @@ function main() {
 
   log_header "RUNNING MAIN PLAYBOOK  ------------------------------------------"
   ansible-playbook "${ANSIBLE_PLAYBOOK_DIR}/playbook.yml" -i ./hosts -b
-
 }
 
 main "$@"
