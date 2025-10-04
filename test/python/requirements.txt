@@ -1,9 +1,0 @@
-#grpcio
-#mdformat
-#pre-commit
-#pdoc3
-#pre-commit-update
-ansible-dev-tools
-molecule-plugins[podman]
-podman-compose
-#pipx

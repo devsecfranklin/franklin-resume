@@ -55,6 +55,8 @@ test:
 		$(BUILDDIR)/test/bin/python -m pip install --upgrade pip; \
 		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/python/requirements.txt; \
 		$(BUILDDIR)/test/bin/python -m pip install -r$(WORKDIR)/test/python/requirements-dev.txt; \
+		python3 -m pip install molecule[lint]; \
+		python3 -m pip install "molecule-plugins[podman]"; \
 		$(WORKDIR)/bootstrap.sh \
 	)
 	@echo "$(info Found Python version $(PY39))"

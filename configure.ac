@@ -42,8 +42,8 @@ PY39="python$PYTHON_VERSION" # define the python interpreter
 dnl LDFLAGS="$LDFLAGS -l$PY39"
 AC_SUBST(PY39, python$PYTHON_VERSION)
 
-AC_CHECK_PROG(HAVE_NODE, [node], [found], [not-found])
-test -z "$HAVE_NODE"     && AC_MSG_ERROR([Could not find node.js. Please make sure you have it installed])
+dnl AC_CHECK_PROG(HAVE_NODE, [node], [node])
+dnl AS_IF([test -z "$HAVE_NODE"], [AC_MSG_ERROR([node.js not found. Please install node.js to proceed.])])
 
 AC_CHECK_PROG( [HAS_CURL], [curl], [found], [not-found])
 test -z "$HAS_CURL"     && AC_MSG_ERROR([Could not find curl. Please make sure you have it installed.])
@@ -64,7 +64,7 @@ test -z "$HAS_GPG" && AC_MSG_ERROR([Could not find gpg installed.])
 dnl AC_CHECK_PROG([HAS_XMLLINT], [xmllint], [xmllint])
 dnl AS_IF([test -z "$HAS_XMLLINT"], [AC_MSG_ERROR([xmllint not found. Please install libxml2-utils or equivalent.])])
 
-dnl AC_CHECK_PROG([HAVE_AS], [as], [as])
+dnl dnl AC_CHECK_PROG([HAVE_AS], [as], [as])
 dnl AS_IF([test -z "$HAVE_AS"], [AC_MSG_ERROR([Assembler 'as' not found. Please ensure your build essential tools are installed.])])
 
 dnl AC_CHECK_PROG([HAVE_NASM], [nasm], [nasm])
@@ -103,7 +103,8 @@ dnl a native configuration. If they are different, you can assume a cross
 dnl configuration.
 
 AC_CANONICAL_HOST # AC_CANONICAL_HOST is needed to access the 'host_os' variable
-echo "Attempting to configure a build for host: $host"
+echo "Attempting to configure a build for host: $host_os"
+
 AC_SUBST(UNAME_P,$(uname -p))
 AC_SUBST(UNAME_S,$(uname -s))
 
@@ -133,10 +134,9 @@ CONFIG_SHELL=$SHELL
 if test "$MYSHELL" = "bash"; then
   echo "Using BASH shell"
   AC_SUBST([ACTIVATE], activate)
-elif test "$MYSHELL" = "bash"; then
-  # the script will prob always detect BASH if you run it from bootstrap.sh
+elif test "$MYSHELL" = "fish"; then
   echo "Using FISH shell"
-AC_SUBST([ACTIVATE], activate.fish)
+  AC_SUBST([ACTIVATE], activate.fish)
 fi
 
 # Determine a C compiler to use. If CC is not already set in the environment,
