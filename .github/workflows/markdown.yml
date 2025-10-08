@@ -12,4 +12,3 @@ jobs:
       with:
         files: .
         config_file: ".github/.markdownlint.json"
-

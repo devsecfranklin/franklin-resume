@@ -98,3 +98,4 @@ alias cat="/opt/local/bin/lolcat"
 #if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="/usr/local/sbin:$PATH"
 export GPG_TTY=$(tty)
+export LC_ALL=en_US.UTF-8

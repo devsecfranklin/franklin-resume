@@ -61,16 +61,16 @@ test -z "$HAS_ANSIBLE"     && AC_MSG_ERROR([Could not find ansible installed.])
 AC_CHECK_PROG( [HAS_GPG], [gpg], [found], [not-found])
 test -z "$HAS_GPG" && AC_MSG_ERROR([Could not find gpg installed.])
 
-dnl AC_CHECK_PROG([HAS_XMLLINT], [xmllint], [xmllint])
+AC_CHECK_PROG([HAS_XMLLINT], [xmllint], [xmllint])
 dnl AS_IF([test -z "$HAS_XMLLINT"], [AC_MSG_ERROR([xmllint not found. Please install libxml2-utils or equivalent.])])
 
-dnl dnl AC_CHECK_PROG([HAVE_AS], [as], [as])
+dnl AC_CHECK_PROG([HAVE_AS], [as], [as])
 dnl AS_IF([test -z "$HAVE_AS"], [AC_MSG_ERROR([Assembler 'as' not found. Please ensure your build essential tools are installed.])])
 
-dnl AC_CHECK_PROG([HAVE_NASM], [nasm], [nasm])
+AC_CHECK_PROG([HAVE_NASM], [nasm], [nasm])
 dnl AS_IF([test -z "$HAVE_NASM"], [AC_MSG_ERROR([NASM assembler not found. Please install nasm.])])
 
-dnl AC_CHECK_PROG([HAVE_YASM], [yasm], [yasm])
+AC_CHECK_PROG([HAVE_YASM], [yasm], [yasm])
 dnl AS_IF([test -z "$HAVE_YASM"], [AC_MSG_ERROR([YASM assembler not found. Please install yasm.])])
 
 AC_SUBST([GITVERSION])
