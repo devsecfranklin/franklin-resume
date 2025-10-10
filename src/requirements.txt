@@ -1,4 +1,4 @@
-tomli==2.2.1
+tomli==2.3.0
 gunicorn==23.0.0
 tox==4.30.3
 Flask==3.1.2
