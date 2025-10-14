@@ -433,7 +433,7 @@ Thumbs.db
 *~
 *#
 *.orig
-*.rej
+*.rejbuild/
 .gdb_history
 
 #*#

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
 
@@ -97,6 +97,8 @@ check_installed() {
 main() {
   check_container
   setup_golang
+
+  mkdir /etc/apt/backup
 }
 
 main "$@"
