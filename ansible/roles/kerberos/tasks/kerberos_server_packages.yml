@@ -1,0 +1,16 @@
+---
+- name: 'kerberos | Install Kerberos Server Packages'
+  ansible.builtin.apt:
+    name:
+      - krb5-kdc
+      - krb5-admin-server
+      - krb5-pkinit
+      - krb5-kpropd
+      - krb5-config
+      - kstart
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - krb5
+  when:
+  - ansible_facts['distribution'] == "Debian"

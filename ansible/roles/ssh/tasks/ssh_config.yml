@@ -1,0 +1,18 @@
+---
+- name: "kerberize ssh client, authenticate"
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/ssh_config
+    line: "GSSAPIAuthentication yes"
+    insertafter: "#   GSSAPIAuthentication no"
+
+- name: "kerberize ssh client, keyex"
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/ssh_config
+    line: "GSSAPIKeyExchange yes"
+    insertafter: "#   GSSAPIKeyExchange no"
+
+- name: "kerberize ssh client, delegate credentials"
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/ssh_config
+    line: "GSSAPITrustDNS yes"
+    insertafter: "#   GSSAPITrustDNS no"

@@ -1,2 +1,0 @@
-boto3
-amazon-braket-sdk

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tekton-lb
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
+  labels:
+    app: my-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: el-github-pr
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP

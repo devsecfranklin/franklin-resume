@@ -1,0 +1,28 @@
+---
+# - fail: msg="The machine's domain must not be empty."
+#   when: ansible_domain | length == 0
+
+- name: "ntp | Install NTP server"
+  ansible.builtin.include_tasks: ntp_server.yml
+  when:
+    - ansible_facts['distribution'] == "Debian"
+    - "'time' in inventory_hostname"
+  tags:
+    - ntp
+
+- name: "ntp | Install Debian"
+  ansible.builtin.include_tasks: ntp_debian.yml
+  when:
+    - ansible_facts['distribution'] == "Debian" or ansible_facts['distribution'] == "Ubuntu"
+    - "'time' not in inventory_hostname"
+  tags:
+    - ntp
+
+# - name: "ntp | Install OpenBSD"
+#   ansible.builtin.include_tasks: ntp_openbsd.yml
+#   when:
+#     - ansible_distribution == 'OpenBSD'
+#         - "'time' not in inventory_hostname"
+#   tags:
+#     - ntp
+#     - openbsd

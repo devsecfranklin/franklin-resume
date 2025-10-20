@@ -1,0 +1,17 @@
+! $OpenBSD: dot.Xdefaults,v 1.3 2014/07/10 10:22:59 jasper Exp $
+XTerm*loginShell:true
+XTerm*faceName:  Iosevka NF:style=Regular:size=12
+XTerm*faceSize1: 8
+XTerm*faceSize2: 10
+XTerm*faceSize3: 14
+XTerm*faceSize4: 16
+XTerm*faceSize5: 20
+XTerm*faceSize6: 24
+*.background:    #2E3440
+*.foreground:    #FFFFFF
+*.color2:        #50FA7B
+*.color10:       #50FA7B
+
+# doas pkg_add nnn
+# echo NNN_COLORS='2222' >> ~/.kshrc
+# echo NNN_FCOLORS='0f0f020f0f0f0f0f0f0f0f0f' >> ~/.kshrc

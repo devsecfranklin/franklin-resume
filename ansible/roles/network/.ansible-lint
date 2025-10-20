@@ -1,0 +1,6 @@
+# .config/ansible-lint.yml
+warn_list:  # or 'skip_list' to silence them completely
+  - deprecated-module  # Deprecated module.
+  - experimental  # all rules tagged as experimental
+skip_list:
+  - '403'

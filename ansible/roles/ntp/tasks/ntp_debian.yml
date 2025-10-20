@@ -1,0 +1,50 @@
+---
+- name: "Install NTP packages"
+  ansible.builtin.apt:
+    name:
+      - tzdata
+      - systemd-timesyncd
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - ntp
+    - timezone
+  when:
+  - ansible_facts['distribution'] == "Debian"
+
+- name: "ntp | Configure {{ ntp_configuration_file }}"
+  ansible.builtin.template:
+    src: ntp.conf.j2
+    dest: "{{ ntp_configuration_file }}"
+    mode: 0644
+  notify:
+    - Restart timesyncd
+  when: 
+    - HOMELAB_MOLECULE_TEST is not defined
+    - ansible_facts['distribution'] == "Debian" or ansible_facts['distribution'] == "Ubuntu"
+
+- name: "ntp | Create {{ntp_logging_dir}} directory"
+  ansible.builtin.file:
+    path: "{{ntp_logging_dir}}"
+    owner: "{{ntp_user}}"
+    group: "{{ntp_group}}"
+    state: directory
+    mode: 0755
+
+- name: "ntp | Create {{ntp_logging_stats}} directory"
+  ansible.builtin.file:
+    path: "{{ntp_logging_stats}}"
+    owner: "{{ntp_user}}"
+    group: "{{ntp_group}}"
+    state: directory
+    mode: 0755
+
+- name: "Manage {{ ntp_service }}"
+  ansible.builtin.service:
+    name: "{{ ntp_service }}"
+    state: "{{ ntp_state }}"
+    enabled: "{{ ntp_enabled }}"
+
+# - name: "Set timezone to {{ ntp_timezone }}"
+#   community.general.timezone:
+#     name: "{{ ntp_timezone }}"

@@ -1,0 +1,53 @@
+---
+- name: "install munge via apt-get"
+  ansible.builtin.apt:
+    name:
+      - munge
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - cluster
+
+- name: "munge | Ensure group {{munge_group}} exists"
+  ansible.builtin.group:
+    name: "{{munge_group}}"
+    state: present
+  tags:
+    - cluster
+
+- name: "munge | add munge user"
+  ansible.builtin.user:
+    name: "{{munge_user}}"
+    shell: /bin/bash
+    groups: "{{munge_group}}"
+    append: yes
+  tags:
+    - cluster
+
+- name: "munge | Create munge directory /run/munge"
+  ansible.builtin.file:
+    owner: "{{munge_user}}"
+    group: "{{munge_group}}"
+    mode: 0755
+    state: directory
+    path: "/run/munge"
+  tags:
+    - cluster
+
+- name: "munge | Create munge directory /var/log/munge"
+  ansible.builtin.file:
+    owner: "{{munge_user}}"
+    group: "{{munge_group}}"
+    mode: 0755
+    state: directory
+    path: "/var/log/munge"
+  tags:
+    - cluster
+
+# daemon is same on head and nodes
+- name: "munge | Ensure munge is started"
+  service:
+    name: munge
+    state: started
+    enabled: true
+  tags: cluster

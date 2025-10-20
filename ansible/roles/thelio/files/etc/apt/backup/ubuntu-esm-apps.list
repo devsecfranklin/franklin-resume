@@ -1,0 +1,4 @@
+deb https://esm.ubuntu.com/apps/ubuntu jammy-apps-security main # X-Repolib-Name: ubuntu-esm-apps # X-Repolib-ID: ubuntu-esm-apps
+# deb-src https://esm.ubuntu.com/apps/ubuntu jammy-apps-security main # X-Repolib-Name: ubuntu-esm-apps # X-Repolib-ID: ubuntu-esm-apps
+deb https://esm.ubuntu.com/apps/ubuntu jammy-apps-updates main # X-Repolib-Name: ubuntu-esm-apps-jammy-apps-updates # X-Repolib-ID: ubuntu-esm-apps-jammy-apps-updates
+# deb-src https://esm.ubuntu.com/apps/ubuntu jammy-apps-updates main # X-Repolib-Name: ubuntu-esm-apps-ubuntu-esm-apps-jammy-apps-updates # X-Repolib-ID: ubuntu-esm-apps-ubuntu-esm-apps-jammy-apps-updates

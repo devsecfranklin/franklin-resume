@@ -1,0 +1,199 @@
+---
+- name: "nfs_client | Ensure NFS utilities are installed on client"
+  ansible.builtin.apt:
+    pkg:
+      - nfs-common
+      - nfs-client
+    state: latest
+    autoclean: true
+    autoremove: true
+    force_apt_get: false
+    update_cache: true
+  tags:
+    - nfs
+    - storage
+  # when:
+  # - ansible_facts['distribution'] == "Debian"
+  # - ansible_facts['architecture'] == "aarch64"
+  # - "'node' in inventory_hostname"
+
+- name: "nfs_client | Check for /etc/default/nfs-common"
+  ansible.builtin.stat:
+    path: /etc/default/nfs-common
+  register: nfs_common
+
+- name: "nfs_client | Copy /etc/default/nfs-common"
+  ansible.builtin.copy:
+    src: nfs-common
+    dest: /etc/default/nfs-common
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - nfs_common.stat.exists
+
+- name: "nfs_client | Check for /etc/idmapd.conf"
+  ansible.builtin.stat:
+    path: /etc/idmapd.conf
+  register: idmapd
+
+- name: "nfs_client | Copy /etc/idmapd.conf"
+  ansible.builtin.copy:
+    src: idmapd.conf
+    dest: /etc/idmapd.conf
+    owner: root
+    group: root
+    mode: 0644
+    force: no # only if it does not already exist
+  when:
+    - ansible_facts['distribution'] != "OpenBSD"
+    - idmapd.stat.exists
+
+- name: "nfs_client | Force systemd to re-execute itself (2.8 and above)"
+  systemd:
+    daemon_reload: true
+  #when: idmapd.stat.exists or nfs_common.stat.exists
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined
+
+# the user who does the mount w/krb5 will own it
+- name: "nfs_client | Create /mnt/clusterfs directory"
+  ansible.builtin.file:
+    path: "/mnt/clusterfs"
+    #owner: nobody
+    #group: nogroup
+    #mode: 0755
+    state: directory
+
+- name: "nfs_client | Create /mnt/backup1 directory"
+  ansible.builtin.file:
+    path: "/mnt/backup1"
+    owner: nobody
+    group: nogroup
+    mode: 0755
+    state: directory
+
+- name: "nfs_client | Create /mnt/storage1 directory"
+  ansible.builtin.file:
+    path: "/mnt/storage1"
+    owner: nobody
+    group: nogroup
+    mode: 0755
+    state: directory
+
+- name: "nfs_client | Create /mnt/storage2 directory"
+  ansible.builtin.file:
+    path: "/mnt/storage2"
+    owner: nobody
+    group: nogroup
+    mode: 0755
+    state: directory
+
+- name: "nfs_client | Create /mnt/storage3 directory"
+  ansible.builtin.file:
+    path: "/mnt/storage3"
+    owner: nobody
+    group: nogroup
+    mode: 0755
+    state: directory
+
+- name: "nfs_client |  Update /etc/fstab with /mnt/clusterfs"
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    #line: "storage1:/mnt/clusterfs /mnt/clusterfs nfs sec=krb5i,rw,sync 0 0"
+    line: "thelio:/mnt/clusterfs /mnt/clusterfs nfs defaults 0 0"
+  when: "'storage' not in inventory_hostname"
+  register: clusterfs_mount
+
+- name: "nfs_client |  Update /etc/fstab with /mnt/backup1"
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    #line: "storage1:/mnt/backup1 /mnt/backup1 nfs defaults 0 0"
+    line: "thelio:/mnt/backup1 /mnt/backup1 nfs defaults 0 0"
+  when: "'storage' not in inventory_hostname"
+  register: backup1_mount
+
+- name: "nfs_client | Update /etc/fstab with /mnt/storage1"
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "snowy:/mnt/storage1 /mnt/storage1 nfs defaults 0 0"
+  when:
+    - "'snowy' not in inventory_hostname"
+    - HOMELAB_MOLECULE_TEST is not defined
+  register: storage1_mount
+
+- name: "nfs_client | Update /etc/fstab with /mnt/storage2"
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "snowy:/mnt/storage2 /mnt/storage2 nfs defaults 0 0"
+  when:
+    - "'snowy' not in inventory_hostname"
+    - HOMELAB_MOLECULE_TEST is not defined
+  register: storage2_mount
+
+- name: "nfs_client | Update /etc/fstab with /mnt/storage3"
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "snowy:/mnt/storage3 /mnt/storage3 nfs defaults 0 0"
+  when:
+    - "'snowy' not in inventory_hostname"
+    - HOMELAB_MOLECULE_TEST is not defined
+  register: storage3_mount
+
+- name: "nfs_client | Force systemd to re-execute itself (2.8 and above)"
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when:
+    - clusterfs_mount.changed is defined or backup1_mount.changed is defined or storage1_mount.changed is defined or storage2_mount.changed is defined or storage3_mount.changed is defined
+    - HOMELAB_MOLECULE_TEST is not defined
+
+- name: "nfs_client | Mount /mnt/backup1"
+  ansible.posix.mount:
+    src: thelio:/mnt/backup1
+    path: /mnt/backup1
+    fstype: nfs
+    state: mounted
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined
+    - "'thelio' not in inventory_hostname"
+
+- name: "nfs_client | Mount /mnt/clusterfs"
+  ansible.posix.mount:
+    src: "thelio:/mnt/clusterfs"
+    path: "/mnt/clusterfs"
+    fstype: nfs
+    # opts: sec=krb5i,rw,sync
+    state: present
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined
+    - "'thelio' not in inventory_hostname"
+
+- name: "nfs_client | Mount /mnt/storage1"
+  ansible.posix.mount:
+    src: "snowy:/mnt/storage1"
+    path: "/mnt/storage1"
+    fstype: nfs
+    state: mounted
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined
+    - "'snowy' not in inventory_hostname"
+
+# - name: "nfs_client | Mount /mnt/storage2"
+#   ansible.posix.mount:
+#     src: "snowy:/mnt/storage2"
+#     path: "/mnt/storage2"
+#     fstype: nfs
+#     state: mounted
+#   when:
+#     - HOMELAB_MOLECULE_TEST is not defined
+#     - "'snowy' not in inventory_hostname"
+
+# - name: "nfs_client | Mount /mnt/storage3"
+#   ansible.posix.mount:
+#     src: "snowy:/mnt/storage3"
+#     path: "/mnt/storage3"
+#     fstype: nfs
+#     state: mounted
+#   when:
+#     - HOMELAB_MOLECULE_TEST is not defined
+#     - "'snowy' not in inventory_hostname"

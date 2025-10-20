@@ -1,0 +1,8 @@
+---
+- name: 'Configure WIFI'
+  ansible.builtin.copy:
+    src: wpa_supplicant.conf
+    dest: /etc/wpa_supplicant/wpa_supplicant.conf
+    mode: 0600
+  when:
+    - raspberry_pi|default(false)

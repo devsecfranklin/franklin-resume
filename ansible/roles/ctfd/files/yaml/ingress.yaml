@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ctfd
+  namespace: ctfd
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "web-ctfd-ip"
+spec:
+  defaultBackend:
+    service:
+      name: ctfd-nginx
+      port:
+        number: 8080

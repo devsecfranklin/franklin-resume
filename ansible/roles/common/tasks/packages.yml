@@ -1,0 +1,46 @@
+---
+- name: update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
+  changed_when: no
+
+- name: "install common packages"
+  ansible.builtin.apt:
+    pkg:
+      - build-essential
+      - coreutils
+      - direnv
+      - gawk
+      - git
+      - neofetch
+      - pass
+      - python3-pip
+      - tightvncserver
+    state: latest
+    autoclean: true
+    autoremove: true
+    force_apt_get: false
+    update_cache: true
+  tags: admin
+
+# sudo apt-get --purge wolfram-engine libreoffice* scratch -y
+- name: 'Remove extra junk packages'
+  ansible.builtin.apt:
+    purge: true
+    package: 
+      - 'libreoffice-l10n*'
+      - tripwire
+    state: absent
+  tags: admin
+
+- name: Remove useless packages from the cache
+  ansible.builtin.apt:
+    autoclean: true
+  tags: admin
+
+- name: Remove dependencies that are no longer required
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  tags: admin

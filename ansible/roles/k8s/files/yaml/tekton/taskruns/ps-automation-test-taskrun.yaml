@@ -1,0 +1,13 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: ps-automation-test
+spec:
+  taskRef:
+    name: ps-automation-test
+  resources:
+    inputs:
+      - name: ps-automation
+        resourceRef:
+          name: ps-automation

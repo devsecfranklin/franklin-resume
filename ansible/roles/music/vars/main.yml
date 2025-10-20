@@ -1,0 +1,5 @@
+---
+mopidy_dir: /etc/mopidy
+music_dir: /mnt/storage1/music
+music_hostname: femputer.engr.bitsmasher.net
+home_music_dir: /home/franklin/Music"

@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[global]
+        dns forwarder = 10.10.13.1
+        netbios name = STORAGE1
+        realm = LAB.BITSMASHER.NET
+        server role = active directory domain controller
+        workgroup = {{samba_workgroup}}
+
+[sysvol]
+        path = /var/lib/samba/sysvol
+        read only = No
+
+[netlogon]
+        path = /var/lib/samba/sysvol/lab.bitsmasher.net/scripts
+        read only = No

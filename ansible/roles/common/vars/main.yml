@@ -1,0 +1,7 @@
+---
+bindir: /usr/local/bin
+sbindir: /usr/local/sbin
+users:
+  - username: franklin
+  - username: thedevilsvoice
+  - username: sly

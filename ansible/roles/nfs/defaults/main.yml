@@ -1,0 +1,24 @@
+---
+nfs_exports: [
+    "/mnt/clusterfs 10.10.8.0/21(rw,sync,fsid=0,crossmnt,no_subtree_check,sec=krb5i)",
+    "/mnt/clusterfs 192.168.0.0/24(rw,sync,no_subtree_check,sec=krb5i)",
+    "/mnt/backup1 10.10.8.0/21(rw,sync,no_subtree_check)",
+    "/mnt/backup1 192.168.0.0/24(rw,sync,no_subtree_check)"
+]
+nfs_exports_head2: [
+    "/mnt/clusterfs2 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)"
+]
+nfs_exports_snowy: [
+    "/mnt/storage1 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage1 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage2 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage2 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage3 10.10.8.0/21(rw,sync,no_subtree_check,root_squash)",
+    "/mnt/storage3 192.168.0.0/24(rw,sync,no_subtree_check,root_squash)",
+]
+nfs_exports_thelio: [
+    "/mnt/clusterfs 10.10.8.0/21(rw,sync,fsid=0,crossmnt,no_subtree_check,sec=krb5i)",
+    "/mnt/clusterfs 192.168.0.0/24(rw,sync,no_subtree_check,sec=krb5i)",
+    "/mnt/backup1 10.10.8.0/21(rw,sync,no_subtree_check)",
+    "/mnt/backup1 192.168.0.0/24(rw,sync,no_subtree_check)"
+]

@@ -1,0 +1,20 @@
+---
+- name: Ansible playbook for Debian hosts
+  hosts: debian
+  collections:
+    - community.general
+  become: true
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3.11"
+  roles:
+    - python
+    - ntp
+    - common
+    - ldap
+    - kerberos
+    - ssh
+    - nfs
+    - shell
+    - security
+  environment:
+    DEBIAN_FRONTEND: noninteractive

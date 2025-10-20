@@ -1,0 +1,9 @@
+---
+
+argument_specs:
+  main:
+    short_description: "Install and configure NFS on the lab subnet."
+    description: >
+      Install all required packages, configure required files and manage services to use NFS services.
+    author: franklin@bitsmasher.net
+    version_added: '0.1'

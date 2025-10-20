@@ -1,0 +1,26 @@
+---
+- name: "Create {{ container_reg_dir }} folder"
+  ansible.builtin.file:
+    path: "{{ container_reg_dir }}"
+    owner: "root"
+    state: directory
+    mode: 0755
+
+- name: "Create {{ container_reg_dir }}/data folder"
+  ansible.builtin.file:
+    path: "{{ container_reg_dir }}/data"
+    owner: "root"
+    state: directory
+    mode: 0755
+
+- name: "Copy docker-compose.yml to {{ container_reg_dir }}"
+  copy:
+    src: "docker-compose.yml"
+    dest: "{{ container_reg_dir }}"
+    mode: 0644
+
+- name: "Create symbolic link in {{ html_dir }}"
+  ansible.builtin.file:
+    dest: "{{ html_dir }}/container-registry"
+    src: "{{ container_reg_dir }}"
+    state: link

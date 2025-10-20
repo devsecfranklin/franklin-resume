@@ -1,0 +1,70 @@
+---
+- name: "kerberos | Create /etc/krb5kdc folder"
+  ansible.builtin.file:
+    path: "/etc/krb5kdc"
+    owner: root
+    state: directory
+    mode: 0755
+  tags:
+    - krb5
+
+- name: 'kerberos | Copy /etc/krb5kdc/kdc.conf'
+  ansible.builtin.template:
+    src: kdc.conf.j2
+    dest: /etc/krb5kdc/kdc.conf
+    mode: 0644
+  tags:
+    - krb5
+
+# Add PKINIT configuration
+- name: "kerberos | Create /etc/krb5 folder"
+  ansible.builtin.file:
+    path: "/etc/krb5"
+    owner: root
+    state: directory
+    mode: 0755
+
+- name: 'kerberos | Add extensions.kdc file'
+  ansible.builtin.copy:
+    src: extensions.kdc
+    dest: /etc/krb5kdc/extensions.kdc
+    owner: root
+    mode: 0644
+
+- name: 'kerberos | Add krb5-kdc.service to allow logging to /var/log/kerberos'
+  ansible.builtin.copy:
+    src: krb5-kdc.service
+    dest: /usr/lib/systemd/system/krb5-kdc.service
+    owner: root
+    mode: 0644
+
+- name: 'kerberos | Add extensions.client file'
+  ansible.builtin.copy:
+    src: extensions.client
+    dest: /etc/krb5kdc/extensions.client
+    owner: root
+    mode: 0644
+
+- name: 'kerberos | Copy /usr/local/sbin/kdc_check.sh'
+  copy:
+    src: kdc_check.sh
+    dest: /usr/local/bin/kdc_check.sh
+    owner: root
+    mode: 0755
+
+- name: 'kerberos | Copy /usr/local/sbin/kdc_backup.sh'
+  copy:
+    src: kdc_backup.sh
+    dest: /usr/local/sbin/kdc_backup.sh
+    owner: root
+    mode: 0755
+
+- name: 'kerberos | Ensure krb5-kdc is running'
+  service:
+    name: krb5-kdc
+    state: started
+
+- name: 'kerberos | Ensure krb5-admin-server is running'
+  service:
+    name: krb5-admin-server
+    state: started

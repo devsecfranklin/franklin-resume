@@ -1,0 +1,3 @@
+link /etc/ldap.conf to /etc/ldap/ldap.conf
+
+serial port config setup

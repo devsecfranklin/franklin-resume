@@ -1,0 +1,6 @@
+---
+- name: "Create symbolic link in {{ html_dir }}"
+  ansible.builtin.file:
+    dest: "{{ html_dir }}/pypi"
+    src: "{{ pypi_dir }}"
+    state: link

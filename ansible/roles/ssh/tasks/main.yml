@@ -1,0 +1,11 @@
+---
+- name: "SSH setup"
+  ansible.builtin.include_tasks: ssh_config.yml
+
+- name: "SSH Daemon setup"
+  ansible.builtin.include_tasks: sshd_config.yml
+
+# we only have to do this once for NFS mounted home dir
+- name: "SSH home directory setup"
+  ansible.builtin.include_tasks: ssh_home_dir.yml
+  when: "'storage1' in inventory_hostname"

@@ -1,0 +1,6 @@
+---
+- name: "Restart Open LDAP Service"
+  service:
+    name: slapd
+    state: restarted
+    listen: "restart slapd service"

@@ -1,0 +1,45 @@
+---
+- name: "ntp | Install NTP server packages"
+  ansible.builtin.apt:
+    name:
+      - ntp
+      - gpsd
+      - gpsd-clients
+      - gpsd-tools
+      - libgps-dev
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - ntp
+    - timezone
+  when:
+  - ansible_facts['distribution'] == "Debian"
+
+- name: "ntp | Ensure group {{ntp_group}} exists with correct gid {{ntp_gid}}"
+  ansible.builtin.group:
+    name: "{{ ntp_group }}"
+    state: present
+    #gid: "{{ ntp_gid }}"
+  tags:
+    - ntp
+
+- name: "ntp | Add the user {{ntp_user}} with a specific uid and a primary group of {{ntp_group}}"
+  ansible.builtin.user:
+    name: "{{ ntp_user }}"
+    comment: its time to start running
+    #uid: "{{ ntp_uid }}"
+    group: "{{ ntp_group }}"
+    # gid: "{{ntp_gid}}"
+  tags:
+    - ntp
+
+- name: "ntp | Copy files to /etc"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc"
+    owner: "ntpsec"
+    mode: 0644
+  with_fileglob:
+    - "files/etc/*"
+  tags:
+    - ntp

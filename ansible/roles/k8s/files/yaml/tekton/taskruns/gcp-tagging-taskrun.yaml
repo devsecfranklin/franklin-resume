@@ -1,0 +1,13 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: gcp-tagging-test
+spec:
+  taskRef:
+    name: gcp-tagging-test
+  resources:
+    inputs:
+      - name: gcp-tagging-automation
+        resourceRef:
+          name: gcp-tagging-automation

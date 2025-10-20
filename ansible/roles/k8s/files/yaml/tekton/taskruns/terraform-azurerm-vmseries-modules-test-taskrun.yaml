@@ -1,0 +1,16 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: terraform-azurerm-vmseries-modules-test
+spec:
+  taskRef:
+    name: terraform-azurerm-vmseries-modules-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer
+      - name: terraform-azurerm-vmseries-modules
+        resourceRef:
+          name: terraform-azurerm-vmseries-modules

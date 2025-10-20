@@ -1,0 +1,11 @@
+---
+- hosts: pa220
+  connection: local
+  gather_facts: False
+
+  collections:
+    - paloaltonetworks.panos
+
+  roles:
+    - paloaltonetworks.paloaltonetworks
+    - firewall

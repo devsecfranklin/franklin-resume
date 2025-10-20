@@ -1,0 +1,27 @@
+---
+- name: 'Ansible Playbook for NFSv4/Storage'
+  hosts: storage
+  become: true
+  vars:
+    nfs_server_daemon: nfs-kernel-server
+    ldap_ip_addr: 10.10.13.1
+    krb5_server_ip: 10.10.12.254
+    basedn: "{{ 'dc=' + ( ansible_domain | replace('^.','') | replace('.$','') | replace('.',',dc=')) }}"
+    min_id: 10000
+    min_id_sssd: 5000
+    max_id_sssd: 20000
+    ansible_python_interpreter: "/usr/bin/python3"
+  roles:
+    - python
+    - security
+    - ntp
+    - common
+    - dns
+    - raspberrypi
+    - container_registry
+    - pypi_internal
+    - nfs
+    - ldap
+    - kerberos
+    - ssh
+    - shell

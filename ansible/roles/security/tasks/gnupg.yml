@@ -1,0 +1,15 @@
+---
+- name: "gnupg | Create {{gpg_dir}}"
+  ansible.builtin.file:
+    path: "{{gpg_dir}}"
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
+    state: directory
+
+- name: "gnupg | Copy gpg.conf to {{gpg_dir}}"
+  ansible.builtin.template:
+    src: gpg.conf.j2
+    owner: "{{sec_user}}"
+    group: "{{sec_group}}"
+    dest: "{{gpg_dir}}/gpg.conf"
+    mode: 0644

@@ -1,0 +1,38 @@
+---
+# https://linuxconfig.org/building-a-raspberry-pi-cluster-part-iv-monitoring
+# install glances on the server nodes
+- name: "Install glances with pip"
+  pip:
+    name: "glances[action,browser,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,web,wifi]"
+    state: present
+    executable: "pip3"
+  when: "'server' in inventory_hostname"
+
+# install on the clients
+- name: "install common packages"
+  apt:
+    name:
+      - glances
+      - hddtemp
+      - python-psutil
+    force_apt_get: true
+    update_cache: true
+  tags: admin
+  when: "'node' in inventory_hostname"
+
+- name: "Create /etc/glances"
+  file:
+    path: "/etc/glances"
+    owner: "root"
+    state: directory
+
+- name: "Copy /etc/glances/glances.conf"
+  ansible.builtin.copy:
+    src: glances.conf
+    dest: /etc/glances/glances.conf
+    mode: 0644
+
+- name: "Update /etc/rc.local"
+  lineinfile:
+    dest: /etc/rc.local
+    line: "glances -w --process-short-name --hide-kernel-threads --fs-free-space"

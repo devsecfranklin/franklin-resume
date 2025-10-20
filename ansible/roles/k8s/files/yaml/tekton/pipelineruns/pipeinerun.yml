@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: beta-cluster-pipelinerun
+spec:
+  serviceAccountName: tekton-sa
+  pipelineRef:
+    name: github-pr-pipeline
+  resources:
+    - name: source
+      resourceRef:
+        name: gke-cluster

@@ -1,0 +1,17 @@
+---
+# ansible blowfish.LAB.BITSMASHER.NET -m ansible.builtin.setup
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+
+- name: "Copy files..."
+  ansible.builtin.include_tasks: files.yml
+  when: ansible_distribution == 'OpenBSD'
+
+- name: "update locate database"
+  ansible.builtin.command: locate.updatedb
+  args:
+    chdir: /usr/libexec
+
+- name: "Update timezone"
+  ansible.builtin.command: /usr/sbin/zic -l America/Denver

@@ -1,8 +1,0 @@
-wheel
-google-cloud-logging
-google-cloud-secret-manager
-flask
-PyGithub
-numpy
-#octokit
-google-generativeai

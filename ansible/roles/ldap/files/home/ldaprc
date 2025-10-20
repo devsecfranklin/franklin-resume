@@ -1,0 +1,2 @@
+BASE    dc=lab,dc=bitsmasher,dc=net
+BINDDN  cn=admin,dc=lab,dc=bitsmasher,dc=net

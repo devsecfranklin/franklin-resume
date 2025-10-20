@@ -1,6 +1,0 @@
-librosa
-pydub
-numpy
-#pylast
-#requests
-#beets

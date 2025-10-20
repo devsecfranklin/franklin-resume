@@ -1,0 +1,62 @@
+---
+- name: "music | Install music packages"
+  ansible.builtin.apt:
+    name:
+      - python3-rpi.gpio
+      - python3-spidev
+      - python3-pip
+      - python3-pil
+      - python3-numpy
+      - mopidy-local
+    force_apt_get: true
+    update_cache: true
+  tags:
+    - music
+
+- name: "music | Create {{home_music_dir}}"
+  ansible.builtin.file:
+    path: "{{home_music_dir}}"
+    owner: "franklin"
+    state: link
+    src: "{{music_dir}}"
+  tags:
+    - music
+
+# pip3 install Mopidy-PiDi pidi-display-pil pidi-display-st7789 mopidy-raspberry-gpio --break-system-packages
+
+- name: "music | Create {{mopidy_dir}}"
+  ansible.builtin.file:
+    path: "{{mopidy_dir}}"
+    owner: "mopidy"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+  tags:
+    - music
+
+- name: "music | Copy mopdiy configuration"
+  template:
+    src: mopidy.conf.j2
+    dest: "{{mopidy_dir}}/mopidy.conf"
+    owner: mopidy
+    group: staff
+    mode: "u=rw,g=rw,o=r"
+  tags:
+    - music
+
+- name: "music | Copy /etc/asound.conf"
+  template:
+    src: asound.conf
+    dest: "/etc/asound.conf"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags:
+    - music
+
+- name: "music | Manage mopidy service"
+  ansible.builtin.service:
+    name: "mopidy"
+    state: "{{mopidy_state}}"
+    enabled: "{{mopidy_enabled}}"
+  tags:
+    - music

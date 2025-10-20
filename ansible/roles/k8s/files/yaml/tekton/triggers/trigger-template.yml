@@ -1,0 +1,50 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: github-pr-pipeline-template
+spec:
+  params:
+  - name: gitrevision
+    description: The git revision
+    default: main
+  - name: gitrepositoryurl
+    description: The git repository url ("https://github.com/foo/bar.git")
+  - name: gitprnumber
+    description: The PR number.
+  - name: package
+    description: GitHub org/repo
+  - name: repo-name
+    description: GitHub repo
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: github-pr-pipeline-run-
+    spec:
+      serviceAccountName: tekton-franklin-sa
+      pipelineRef:
+        name: github-pr-pipeline
+      params:
+      - name: pr-number
+        value: $(tt.params.gitprnumber)
+      - name: package
+        value: $(tt.params.package)
+      - name: repo-name
+        value: $(tt.params.repo-name)
+      - name: gitUrl
+        value: https://github.com/$(tt.params.package)
+      - name: gitRevision
+        value: beta-update
+      - name: imageUrl
+        value: gcr.io/gcp-gcs-pso/$(tt.params.repo-name)
+      - name: imageTag
+        value: "tkn-franklin"
+      resources:
+      - name: source
+        resourceSpec:
+          type: git
+          params:
+            - name: revision
+              value: $(tt.params.gitrevision)
+            - name: url
+              value: $(tt.params.gitrepositoryurl)

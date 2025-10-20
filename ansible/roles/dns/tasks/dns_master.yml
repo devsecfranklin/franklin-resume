@@ -1,0 +1,24 @@
+---
+- name: Install packages
+  ansible.builtin.include_tasks: packages.yml
+
+- name: "Create /etc/bind folder"
+  file:
+    path: "/etc/bind"
+    owner: "root"
+    state: directory
+
+- name: "Copy /etc/bind/named.conf.options on master"
+  ansible.builtin.copy:
+    src: named.conf.options.master
+    dest: /etc/bind/named.conf.options
+    mode: 0644
+
+- name: "Copy BIND files"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /etc
+    mode: 0664
+  with_items:
+    - bind
+  notify: "restart bind9 service"

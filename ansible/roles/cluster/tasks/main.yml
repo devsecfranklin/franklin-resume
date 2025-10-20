@@ -1,0 +1,86 @@
+---
+- name: "cluster | Create {{software_dir}}"
+  ansible.builtin.file:
+    path: "{{software_dir}}"
+    owner: "{{engr_user}}"
+    group: "{{engr_group}}"
+    mode: "0775"
+    state: directory
+  when:
+    - ("'node' in inventory_hostname") or ("'head' in inventory_hostname")
+
+- name: "cluster | Setup munge"
+  ansible.builtin.include_tasks: munge.yml
+  when:
+    - ("'node' in inventory_hostname") or ("'head' in inventory_hostname")
+
+- name: "cluster | Build NHC"
+  ansible.builtin.include_tasks: nhc.yml
+  when:
+    - "'head' in inventory_hostname"
+
+- name: "cluster | Configure AUKS on cluster nodes"
+  ansible.builtin.include_tasks: auks.yml
+  when:
+    - "'node' in inventory_hostname"
+
+- name: "cluster | Install SLURM"
+  ansible.builtin.include_tasks: slurm.yml
+  when:
+    - ("'node' in inventory_hostname") or ("'head' in inventory_hostname")
+
+#- name: "Install MPICH on workers"
+#  include: mpich_client.yml
+#  when: "'node90' in inventory_hostname"
+
+# moved these somewhere else
+# - name: "cluster | Install Debian packages"
+#   ansible.builtin.include_tasks: packages-debian.yml
+
+- name: "cluster | Installing Packages"
+  ansible.builtin.apt:
+    pkg:
+      - clustershell
+      - pssh
+    state: present
+  become: true
+
+- name: "cluster | install clush local.cfg"
+  ansible.builtin.copy:
+    src: "clush.local.cfg"
+    dest: /etc/clustershell/groups.d/local.cfg
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush cluster.yaml"
+  ansible.builtin.copy:
+    src: "clush.cluster.yaml"
+    dest: /etc/clustershell/groups.d/cluster.yaml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush groups.conf"
+  ansible.builtin.copy:
+    src: "clush.local.cfg"
+    dest: /etc/clustershell/groups.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush.conf"
+  ansible.builtin.copy:
+    src: "clush.conf"
+    dest: /etc/clustershell/clush.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "cluster | install clush slurm.conf"
+  ansible.builtin.copy:
+    src: "clush.slurm.conf"
+    dest: /etc/clustershell/groups.conf.d/slurm.conf
+    owner: root
+    group: root
+    mode: "0644"

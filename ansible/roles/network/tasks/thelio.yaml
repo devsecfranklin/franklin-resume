@@ -1,0 +1,22 @@
+---
+- name: "network | Copy thelio interface file"
+  ansible.builtin.copy:
+    src: thelio/interfaces.d/enp9s0
+    owner: "root"
+    dest: /etc/network/interfaces.d/enp9s0
+    mode: 0644
+  tags:
+    - thelio
+    - network
+
+- name: "network | Copy interfaces files"
+  ansible.builtin.copy:
+    src: thelio.service
+    owner: "root"
+    dest: /etc/systemd/system/thelio.service
+    mode: 0644
+  when:
+    - "'thelio' in inventory_hostname"
+  tags:
+    - thelio
+    - network

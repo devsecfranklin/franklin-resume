@@ -1,0 +1,14 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: containerizer-build-and-push
+spec:
+  serviceAccountName: cloud-bot
+  taskRef:
+    name: containerizer-build-and-push
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer

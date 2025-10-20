@@ -1,0 +1,16 @@
+---
+- name: "sssd | install sssd-krb5"
+  ansible.builtin.apt:
+    name:
+      - sssd-krb5
+      - sssd-ldap
+      - sssd-tools     ##  sss_cache -U -G
+    state: latest
+
+- name: "sssd | provide identities from directory"
+  ansible.builtin.template:
+    src: sssd.conf.j2
+    dest: /etc/sssd/sssd.conf
+    mode: 0600
+  #notify: restart sssd
+  #when: kadmin.stat.exists

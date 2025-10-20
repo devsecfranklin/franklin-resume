@@ -1,0 +1,83 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: terraform-aws-vmseries-modules-test
+spec:
+  taskRef:
+    name: terraform-aws-vmseries-modules-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer
+      - name: terraform-aws-vmseries-modules
+        resourceRef:
+          name: terraform-aws-vmseries-modules
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: terraform-azurerm-vmseries-modules-test
+spec:
+  taskRef:
+    name: terraform-azurerm-vmseries-modules-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer
+      - name: terraform-azurerm-vmseries-modules
+        resourceRef:
+          name: terraform-azurerm-vmseries-modules
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: terraform-google-vmseries-modules-test
+spec:
+  taskRef:
+    name: terraform-google-vmseries-modules-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer
+      - name: terraform-google-vmseries-modules
+        resourceRef:
+          name: terraform-google-vmseries-modules
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: terraform-oci-vmseries-modules-test
+spec:
+  taskRef:
+    name: terraform-oci-vmseries-modules-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer
+      - name: terraform-oci-vmseries-modules
+        resourceRef:
+          name: terraform-oci-vmseries-modules
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: terraform-panos-modules-test
+spec:
+  taskRef:
+    name: terraform-panos-modules-test
+  resources:
+    inputs:
+      - name: containerizer
+        resourceRef:
+          name: containerizer
+      - name: terraform-panos-modules-test
+        resourceRef:
+          name: terraform-panos-modules-test
+      - name: module-temp
+        resourceRef:
+          name: module-temp

@@ -1,0 +1,3 @@
+---
+apt_mirror: /mnt/backup1/apt-mirror
+html_dir: /var/www/html

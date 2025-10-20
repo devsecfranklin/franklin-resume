@@ -1,0 +1,6 @@
+# vars
+
+These var files are provided in cleartext. They should be edited and encrypted using:
+
+* `ansible-vault encrypt firewall-secrets.yml`
+* `ansible-vault encrypt panorama-secrets.yml`

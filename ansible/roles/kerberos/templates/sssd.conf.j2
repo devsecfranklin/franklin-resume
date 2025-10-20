@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: {{ ansible_email }}
+#
+# SPDX-License-Identifier: (( ansible_license }}
+#
+# {{ ansible_managed }}
+#
+# file location:
+
+[sssd]
+domains = LDAP
+services = nss, pam
+config_file_version = 2
+
+[nss]
+filter_groups = root
+filter_users = root
+
+[pam]
+
+[domain/LDAP]
+id_provider = ldap
+ldap_uri = ldap://{{ ldap_ip_addr }}/
+
+ldap_search_base = {{ basedn }}
+
+auth_provider = krb5
+krb5_server = {{ krb5_server_ip }}
+krb5_realm = {{ krb5_realm }}
+cache_credentials = false
+
+min_id = {{ min_id_sssd }}
+max_id = {{ max_id_sssd }}

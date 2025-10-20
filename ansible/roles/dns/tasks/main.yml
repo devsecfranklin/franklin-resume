@@ -1,0 +1,21 @@
+---
+# master DNS server
+- name: 'Set up main DNS'
+  ansible.builtin.include_tasks: dns_master.yml
+  when:
+    - "'server1' in inventory_hostname"
+
+# slave DNS server
+- name: 'Set up backup DNS'
+  ansible.builtin.include_tasks: dns_slave.yml
+  when:
+    - "'server3' in inventory_hostname"
+
+# Every lab host gets this file
+- name: "Copy /etc/hosts"
+  ansible.builtin.copy:
+    src: hosts
+    dest: /etc/hosts
+    mode: 0644
+  when:
+    - HOMELAB_MOLECULE_TEST is not defined

@@ -1,0 +1,23 @@
+---
+- name: "minecraft | Ensure group {{mc_group}} exists with correct gid {{mc_gid}}"
+  ansible.builtin.group:
+    name: "{{ mc_group }}"
+    state: present
+    gid: "{{ mc_gid }}"
+
+# link /home/minecraft to /mnt/storage1/minecraft
+
+- name: "minecraft | Add the user {{mc_user}} with a specific uid and a primary group of {{mc_group}}"
+  ansible.builtin.user:
+    name: "{{ mc_user }}"
+    comment: watching you so behave
+    uid: "{{ mc_uid }}"
+    group: "{{mc_group}}"
+    gid: "{{mc_gid}}"
+    home: "{{home_dir}}"
+
+# call the packages tasks
+
+# create the log dir
+
+# link server log dirs to main log dir

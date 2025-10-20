@@ -1,0 +1,31 @@
+---
+- name: "Create {{ cluster_bin_dir }} folder"
+  file:
+    path: "{{ cluster_bin_dir }}"
+    owner: "franklin"
+    mode: 0755
+    state: directory
+
+- name: 'Copy cluster_health.sh to {{ cluster_bin_dir }}'
+  copy:
+    src: cluster_health.sh
+    dest: "{{ cluster_bin_dir }}/cluster_health.sh"
+    mode: 0755
+
+- name: 'Copy cluster_status.sh to {{ cluster_bin_dir }}'
+  copy:
+    src: cluster_status.sh
+    dest: "{{ cluster_bin_dir }}/cluster_status.sh"
+    mode: 0755
+
+- name: 'Copy cluster_labels.sh to {{ cluster_bin_dir }}'
+  copy:
+    src: cluster_labels.sh
+    dest: "{{ cluster_bin_dir }}/cluster_labels.sh"
+    mode: 0755
+
+# - name: 'Copy README.md to {{ cluster_bin_dir }}'
+#   copy:
+#     src: readme-bin
+#     dest: "{{ cluster_bin_dir }}/README.md"
+#     mode: 0644
