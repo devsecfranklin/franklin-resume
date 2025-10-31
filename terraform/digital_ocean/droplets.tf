@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+/*
 resource "digitalocean_droplet" "games" {
   name    = "games"
   image   = "debian-12-x64"
@@ -26,12 +27,14 @@ resource "digitalocean_droplet" "games" {
     ]
   }
 }
+*/
 
 resource "digitalocean_droplet" "www" {
+  // count = var.exclude_www_instance ? 0 : 1
   name       = "www"
   backups    = true
   image      = "69440038" //doctl compute image list --public --format ID,Distribution,Slug | grep Debian
-  ipv6       = true
+  ipv6       = false
   monitoring = false
 
   //private_networking = false
@@ -46,6 +49,10 @@ resource "digitalocean_droplet" "www" {
 
   lifecycle {
     prevent_destroy = true
+    ignore_changes = [
+      image,
+      ipv6
+    ]
   }
 }
 

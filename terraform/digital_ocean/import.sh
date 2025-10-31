@@ -19,59 +19,92 @@ IFS=$'\n\t'
 #Cyan         0;36     Light Cyan    1;36
 #Light Gray   0;37     White         1;37
 
-DO_TOKEN=$(pass DO_TOKEN)
+DO_TOKEN=$(pass show DO_TOKEN)
 RECORDS="/tmp/dns_records.txt"
 
-WWW=$(doctl compute droplet list | grep www | cut -f1 -d' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_droplet.www ${WWW}
+function imports() {
+  WWW=$(doctl compute droplet list | grep www | cut -f1 -d' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_droplet.www ${WWW}
 
-GAMES=$(doctl compute droplet list | grep games | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_droplet.games ${GAMES}
+  #GAMES=$(doctl compute droplet list | grep games | cut -f1 -d ' ')
+  #terraform import -var "do_token=${DO_TOKEN}" digitalocean_droplet.games ${GAMES}
+  #terraform import -var "do_token=${DO_TOKEN}" digitalocean_domain.default bitsmasher.net
+  #terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.www bitsmasher.net,131134899
+  MX=$(grep MX "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.mx bitsmasher.net,${MX}
 
-doctl auth init
-doctl compute domain records list bitsmasher.net > "${RECORDS}"
+  PRO_VER=$(grep "protonmail-verification" "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt1 bitsmasher.net,${PRO_VER}
 
-#terraform import -var "do_token=${DO_TOKEN}" digitalocean_domain.default bitsmasher.net
-#terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.www bitsmasher.net,131134899
+  SPF=$(grep spf "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt2 bitsmasher.net,${SPF}
 
+  DMARC=$(grep "DMARC" "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt3 bitsmasher.net,${DMARC}
 
-MX=$(grep MX "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.mx bitsmasher.net,${MX}
+  DKIM1=$(grep "protonmail.domainkey" "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim1 bitsmasher.net,${DKIM1}
 
-PRO_VER=$(grep "protonmail-verification" "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt1 bitsmasher.net,${PRO_VER}
+  DKIM2=$(grep "protonmail.domainkey" "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim2 bitsmasher.net,${DKIM2}
 
-SPF=$(grep spf "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt2 bitsmasher.net,${SPF}
+  DKIM3=$(grep "protonmail.domainkey" "${RECORDS}" | cut -f1 -d ' ')
+  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim3 bitsmasher.net,${DKIM3}
 
-DMARC=$(grep "DMARC" "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt3 bitsmasher.net,${DMARC}
+  NS1=$(grep ns2 "${RECORDS}" | cut -f1 -d ' ')
+  for line in $NS1; do
+    terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns1 bitsmasher.net,${line}
+  done
 
-DKIM1=$(grep "protonmail.domainkey" "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim1 bitsmasher.net,${DKIM1}
+  NS2=$(grep ns2 "${RECORDS}" | cut -f1 -d ' ')
+  for line in $NS2; do
+    terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns2 bitsmasher.net,${line}
+  done
 
-DKIM2=$(grep "protonmail.domainkey" "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim2 bitsmasher.net,${DKIM2}
+  NS3=$(grep ns3 "${RECORDS}" | cut -f1 -d ' ')
+  for line in $NS3; do
+    echo "adding record $line for ns3"
+    terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns3 bitsmasher.net,${line}
+  done
+}
 
-DKIM3=$(grep "protonmail.domainkey" "${RECORDS}" | cut -f1 -d ' ')
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim3 bitsmasher.net,${DKIM3}
+function configure_dns() {
+  TARGETS=()
+  log_info "Configure DNS targets"
+  for i in $(grep name dns.tf | grep -v domain | grep -v acme | grep -e gcp -e lab | cut -d'"' -f2|cut -f1 -d'.'); do
+    log_header "current target: digitalocean_record.${i}"
+    terraform plan -out franklin.plan -var="do_token=${DO_TOKEN}" -target="digitalocean_record.${i}"
+    terraform apply "franklin.plan"
+    # lets_encrypt ${i}
+  done
+}
 
-NS1=$(grep ns2 "${RECORDS}" | cut -f1 -d ' ')
-for line in $NS1
-do
-  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns1 bitsmasher.net,${line}
-done
+function lets_encrypt() {
+  [[ "${1}"  =~ ^[a-zA-Z0-9]+$ ]] && [[ ! "${1}"  =~ ^[0-9]+$ ]] && log_info "Certificate for $1"
+  THIS_HOST=$(grep name dns.tf | grep -v domain | grep -v acme | grep -e gcp -e lab | cut -d'"' -f2 | grep ${1})
+  log_info "TLS certificate for ${1}"
+  sudo terraform plan -out franklin.plan -var="do_token=${DO_TOKEN}" -target="digitalocean_record.${THIS_HOST}.bitsmasher.net" --manual --preferred-challenges dns certonly
+}
 
-NS2=$(grep ns2 "${RECORDS}" | cut -f1 -d ' ')
-for line in $NS2
-do
-  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns2 bitsmasher.net,${line}
-done
+function main() {
+  figlet -f pagga DNS && echo -e "\n"
 
+  if [ -f "/mnt/storage1/workspace/bin/common.sh" ]; then
+    source "/mnt/storage1/workspace/bin/common.sh"
+  else
+    echo -e "${LRED}can not find common.sh.${NC}"
+    exit 1
+  fi
 
-NS3=$(grep ns3 "${RECORDS}" | cut -f1 -d ' ')
-for line in $NS3
-do
-  echo "adding record $line for ns3"
-  terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns3 bitsmasher.net,${line}
-done
+  log_info "successfully sourced common.sh" && echo -e "\n"
+
+  log_header "Connect to Digital Ocean"
+  doctl auth init
+  log_info "Import the DNS records to ${RECORDS}"
+  doctl compute domain records list bitsmasher.net >"${RECORDS}"
+
+  configure_dns
+  lets_encrypt
+}
+
+main "$@"

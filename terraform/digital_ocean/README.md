@@ -1,11 +1,11 @@
 # README.md
 
-```sh
-nix-env -i doctl -f https://github.com/NixOS/nixpkgs/archive/7138a338b58713e0dea22ddab6a6785abec7376a.tar.gz
-unset NIX_REMOTE || set -e NIX_REMOTE
-```
+- [Install `doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/)
+
+## pass
 
 ```sh
+sudo apt-get -y install pass direnv
 gpg --list-keys # get your public key id
 pass init C25565E4701F4ED36A0711AA114F3606EFD923BB # id of your public GPG key
 pass insert DO_TOKEN
@@ -13,16 +13,18 @@ pass ls
 pass show
 ```
 
-* Create Terraform plan.
+## Terraform
 
-```bash
+- Create Terraform plan.
+
+```sh
 export DO_TOKEN=$(pass DO_TOKEN) || export DO_TOKEN=(pass DO_TOKEN)
-#terraform plan -out franklin.plan -var="do_token=${DO_TOKEN}" # BASH
-terraform plan -out franklin.plan -var="do_token=$DO_TOKEN" # FISH
+terraform plan -out franklin.plan -var="do_token=${DO_TOKEN}" # BASH
+#terraform plan -out franklin.plan -var="do_token=$DO_TOKEN" # FISH
 terraform show -json franklin.plan > tfplan.json
 ```
 
-* Import existing
+- Import existing
 
 ```sh
 doctl account get
@@ -46,4 +48,11 @@ terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns3 bitsmasher.
 ```sh
 curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
 ps aux | grep do-agent # verify it is running
+```
+
+## nix
+
+```sh
+nix-env -i doctl -f https://github.com/NixOS/nixpkgs/archive/7138a338b58713e0dea22ddab6a6785abec7376a.tar.gz
+unset NIX_REMOTE || set -e NIX_REMOTE
 ```

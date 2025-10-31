@@ -13,7 +13,7 @@ terraform {
 }
 
 // leave token commented out to pull ENV value from BASH
-  provider "digitalocean" {
+provider "digitalocean" {
   //token = var.do_token
 }
 
