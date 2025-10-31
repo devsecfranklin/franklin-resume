@@ -30,8 +30,6 @@ AC_CONFIG_FILES([
   container/kerberos-containers/kdc-server/Makefile
   container/kerberos-containers/kdc-ssh-server/Makefile
   container/kerberos-containers/ssh-container/Makefile
-  test/test_cluster/Makefile
-  test/test_gui/Makefile
 ])
 
 dnl Checks for programs.
