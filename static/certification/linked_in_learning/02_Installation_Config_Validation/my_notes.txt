@@ -1,0 +1,37 @@
+- Cluster design - secure communication and high availability
+- installation
+  - release binaries
+  - kubeadm
+
+
+https://kubernetes.io/docs/setup/
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/
+
+
+- Choosing a network solution
+
+The CKA exam blueprint says we will have six different clusters.
+One will use Calico overlay networking.
+The others will have Flannel as the overlay solution. Remember that with Flannel you
+have to pass it the --pod-network argument.
+
+
+[End to end testing of the cluster](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-testing/e2e-tests.md)
+ 
+
+
+
+franklin@head1:~/clusterfs $ kubectl get componentstatuses
+Warning: v1 ComponentStatus is deprecated in v1.19+
+NAME                 STATUS      MESSAGE                                                                                       ERROR
+controller-manager   Unhealthy   Get "http://127.0.0.1:10252/healthz": dial tcp 127.0.0.1:10252: connect: connection refused   
+scheduler            Unhealthy   Get "http://127.0.0.1:10251/healthz": dial tcp 127.0.0.1:10251: connect: connection refused   
+etcd-0               Healthy     {"health":"true"}                                                                             
+franklin@head1:~/clusterfs $ kubectl cluster-info
+Kubernetes control plane is running at https://10.10.12.18:6443
+CoreDNS is running at https://10.10.12.18:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+
+Be familiar with kubeadm reset.
