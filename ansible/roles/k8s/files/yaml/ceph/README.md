@@ -1,1 +1,0 @@
-# CEPH Storage Orchestrator

@@ -1,9 +1,0 @@
-mirrors:
-  storage1.lab.bitsmasher.net:
-    endpoint:
-      - "https://storage1.lab.bitsmasher.net:5000"
-configs:
-  "storage1:5000":
-   tls:
-           cert_file: certs/domain.crt
-           key_file: certs/domain.key

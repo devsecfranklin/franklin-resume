@@ -1,5 +1,0 @@
-# clush.conf.d/README
-
-Default directory for additional clush configuration files.
-clush scans the directory set by the confdir variable, defined
-in /etc/clustershell/clush.conf, loading all files of the form *.conf.

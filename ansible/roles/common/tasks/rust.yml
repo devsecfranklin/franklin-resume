@@ -1,3 +1,0 @@
----
-- name: 'Install Rust Language'
-  shell: 'curl https://sh.rustup.rs -sSf | sh'

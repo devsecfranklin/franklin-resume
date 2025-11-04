@@ -1,6 +1,0 @@
-librosa
-remmina
-detox
-# piratre radio
-st7789
-pidi-display-st7789

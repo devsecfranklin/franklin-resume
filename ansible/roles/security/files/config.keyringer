@@ -1,3 +1,0 @@
-# Keyringer config file goes in $HOME/.keyringer/config
-
-vault="/home/franklin/.password-store"

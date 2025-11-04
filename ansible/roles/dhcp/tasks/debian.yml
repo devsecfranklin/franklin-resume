@@ -1,8 +1,0 @@
----
-- name: debian | Installing DHCP Packages
-  ansible.builtin.apt:
-    name: isc-dhcp-server
-    state: present
-  become: true
-  when:
-    - "'server1' in inventory_hostname"

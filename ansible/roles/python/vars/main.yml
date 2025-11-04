@@ -1,2 +1,0 @@
----
-_vars: "{{ query('varnames', '.*python.*') }}"

@@ -1,9 +1,0 @@
----
-kerberos_client__packages_names:
-  - krb5-user
-  - libsasl2-modules-gssapi-mit
-  - sshpass
-  - krb5-config
-  - libpam-krb5
-  - libpam-ccreds
-  - nss-updatedb
