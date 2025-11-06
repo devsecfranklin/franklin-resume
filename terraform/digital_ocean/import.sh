@@ -102,6 +102,7 @@ function main() {
   doctl auth init
   log_info "Import the DNS records to ${RECORDS}"
   terraform import digitalocean_domain.default bitsmasher.net # this script will fail without this step
+  terraform import digitalocean_domain.default bitsmasher.net # this script will fail without this step
   doctl compute domain records list bitsmasher.net >"${RECORDS}"
 
   configure_dns

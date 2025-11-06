@@ -52,20 +52,12 @@ terraform show -json franklin.plan > tfplan.json
 - Import existing
 
 ```sh
-doctl account get
-doctl auth init
+cd /tmp && wget https://github.com/digitalocean/doctl/releases/download/v1.147.0/doctl-1.147.0-linux-arm64.tar.gz
+tar -xf /tmp/https://github.com/digitalocean/doctl/releases/download/v1.147.0/doctl-1.147.0-linux-arm64.tar.gz
+sudo mv /tmp/doctl /usr/local/bin
 export DIGITALOCEAN_TOKEN=$(pass DIGITALOCEAN_TOKEN) || export DIGITALOCEAN_TOKEN=(pass DIGITALOCEAN_TOKEN)
-doctl compute domain records list bitsmasher.net 
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_domain.default bitsmasher.net
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.www bitsmasher.net,131134899
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.txt1 bitsmasher.net,33037444
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.mx bitsmasher.net,36318030
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.txt2 bitsmasher.net,33037448
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.dkim bitsmasher.net,33037446
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.txt3 bitsmasher.net,33037450
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.ns1 bitsmasher.net,33037438
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.ns2 bitsmasher.net,33037439
-terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.ns3 bitsmasher.net,33037441
+doctl auth init
+doctl account get
 ```
 
 ## metrics agent
