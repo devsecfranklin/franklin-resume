@@ -1,39 +1,12 @@
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
-
-/*
-resource "digitalocean_droplet" "games" {
-  name    = "games"
-  image   = "debian-12-x64"
-  backups = true
-  size    = "4gb"
-  ssh_keys = [
-    data.digitalocean_ssh_key.terraform.id
-  ]
-  connection {
-    host        = self.ipv4_address
-    user        = "root"
-    type        = "ssh"
-    private_key = file(var.pvt_key)
-    timeout     = "2m"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "export PATH=$PATH:/usr/bin",
-      # install nginx
-      "sudo apt-get update",
-      "sudo apt-get -y install nginx"
-    ]
-  }
-}
-*/
+# SPDX-License-Identifier: MIT
 
 resource "digitalocean_droplet" "www" {
   // count = var.exclude_www_instance ? 0 : 1
   name       = "www"
   backups    = true
-  image      = "69440038" //doctl compute image list --public --format ID,Distribution,Slug | grep Debian
+  image      = "199888143" //doctl compute image list --public --format ID,Distribution,Slug | grep Debian
   ipv6       = false
   monitoring = false
 

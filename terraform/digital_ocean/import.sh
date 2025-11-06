@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 # set -euo pipefail
 
@@ -87,10 +87,10 @@ function lets_encrypt() {
 }
 
 function main() {
-  figlet -f pagga DNS && echo -e "\n"
+  figlet -f fonts/pagga DNS && echo -e "\n"
 
-  if [ -f "/mnt/storage1/workspace/bin/common.sh" ]; then
-    source "/mnt/storage1/workspace/bin/common.sh"
+  if [ -f "${HOME}/workspace/bin/common.sh" ]; then
+    source "${HOME}/workspace/bin/common.sh"
   else
     echo -e "${LRED}can not find common.sh.${NC}"
     exit 1
@@ -101,6 +101,7 @@ function main() {
   log_header "Connect to Digital Ocean"
   doctl auth init
   log_info "Import the DNS records to ${RECORDS}"
+  terraform import digitalocean_domain.default bitsmasher.net # this script will fail without this step
   doctl compute domain records list bitsmasher.net >"${RECORDS}"
 
   configure_dns
