@@ -2,15 +2,40 @@
 
 - [Install `doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/)
 
-## pass
+## direnv
+
+- install direnv
 
 ```sh
-sudo apt-get -y install pass direnv
+sudo apt-get -y install direnv
+```
+
+## pass
+
+- install pass
+- save your DIGITALOCEAN_TOKEN to your keyring
+
+```sh
+sudo apt-get -y install pass
 gpg --list-keys # get your public key id
 pass init C25565E4701F4ED36A0711AA114F3606EFD923BB # id of your public GPG key
-pass insert DO_TOKEN
+pass insert DIGITALOCEAN_TOKEN
 pass ls
 pass show
+```
+
+## raspi setup
+
+- install doctl
+- initialize doctl
+
+```sh
+cd /tmp && wget https://github.com/digitalocean/doctl/releases/download/v1.147.0/doctl-1.147.0-linux-arm64.tar.gz
+tar -xf /tmp/https://github.com/digitalocean/doctl/releases/download/v1.147.0/doctl-1.147.0-linux-arm64.tar.gz
+sudo mv /tmp/doctl /usr/local/bin
+export DIGITALOCEAN_TOKEN=$(pass DIGITALOCEAN_TOKEN) || export DIGITALOCEAN_TOKEN=(pass DIGITALOCEAN_TOKEN)
+doctl auth init
+doctl account get
 ```
 
 ## Terraform
@@ -18,9 +43,9 @@ pass show
 - Create Terraform plan.
 
 ```sh
-export DO_TOKEN=$(pass DO_TOKEN) || export DO_TOKEN=(pass DO_TOKEN)
-terraform plan -out franklin.plan -var="do_token=${DO_TOKEN}" # BASH
-#terraform plan -out franklin.plan -var="do_token=$DO_TOKEN" # FISH
+export DIGITALOCEAN_TOKEN=$(pass DIGITALOCEAN_TOKEN) || export DIGITALOCEAN_TOKEN=(pass DIGITALOCEAN_TOKEN)
+terraform plan -out franklin.plan -var="DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" # BASH
+#terraform plan -out franklin.plan -var="DIGITALOCEAN_TOKEN=$DIGITALOCEAN_TOKEN" # FISH
 terraform show -json franklin.plan > tfplan.json
 ```
 
@@ -29,18 +54,18 @@ terraform show -json franklin.plan > tfplan.json
 ```sh
 doctl account get
 doctl auth init
-export DO_TOKEN=$(pass DO_TOKEN) || export DO_TOKEN=(pass DO_TOKEN)
+export DIGITALOCEAN_TOKEN=$(pass DIGITALOCEAN_TOKEN) || export DIGITALOCEAN_TOKEN=(pass DIGITALOCEAN_TOKEN)
 doctl compute domain records list bitsmasher.net 
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_domain.default bitsmasher.net
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.www bitsmasher.net,131134899
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt1 bitsmasher.net,33037444
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.mx bitsmasher.net,36318030
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt2 bitsmasher.net,33037448
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.dkim bitsmasher.net,33037446
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.txt3 bitsmasher.net,33037450
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns1 bitsmasher.net,33037438
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns2 bitsmasher.net,33037439
-terraform import -var "do_token=${DO_TOKEN}" digitalocean_record.ns3 bitsmasher.net,33037441
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_domain.default bitsmasher.net
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.www bitsmasher.net,131134899
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.txt1 bitsmasher.net,33037444
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.mx bitsmasher.net,36318030
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.txt2 bitsmasher.net,33037448
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.dkim bitsmasher.net,33037446
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.txt3 bitsmasher.net,33037450
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.ns1 bitsmasher.net,33037438
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.ns2 bitsmasher.net,33037439
+terraform import -var "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}" digitalocean_record.ns3 bitsmasher.net,33037441
 ```
 
 ## metrics agent

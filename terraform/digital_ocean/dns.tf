@@ -12,16 +12,9 @@ resource "digitalocean_record" "www" {
   type   = "A"
   name   = "www"
   value  = "178.62.60.55"
-}
+  ttl    = 1800
 
-/*
-resource "digitalocean_record" "www6" {
-  domain = digitalocean_domain.default.name
-  type   = "AAAA"
-  name   = "www6"
-  value  = "2a03:b0c0:1:d0::30b:7001"
 }
-*/
 
 resource "digitalocean_record" "txt1" {
   domain = digitalocean_domain.default.name
