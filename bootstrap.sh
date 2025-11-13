@@ -252,9 +252,9 @@ function run_aclocal() {
 
     echo -e "${CYAN}Running aclocal...${NC}"
     #aclocal -I m4 $ACLOCAL_FLAGS || exit 1
-    aclocal -Iaclocal/latex-m4 || exit 1
+    aclocal || exit 1
   else
-    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 aclocal -Iaclocal/latex-m4 || exit 1
+    AUTOCONF_VERSION=2.71 AUTOMAKE_VERSION=1.16 aclocal || exit 1
   fi
   echo -e "${CYAN}.. done with aclocal.${NC}"
 }
