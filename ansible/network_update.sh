@@ -8,7 +8,7 @@
 # v0.2 04/22/2024 Add OpenBSD support
 # v0.3 09/22/2025 Major change to the logicdddd
 
-set -euo pipefail # Exit on error, exit on unset variables, fail if any command in a pipe fails.
+#set -euo pipefail # Exit on error, exit on unset variables, fail if any command in a pipe fails.
 #IFS=$'\n\t'        # Preserve newlines and tabs in word splitting.
 
 # --- Terminal Colors ---
@@ -19,7 +19,6 @@ CYAN='\033[0;36m'
 LPURP='\033[1;35m'
 NC='\033[0m' # No Color
 
-# --- Helper Functions for Logging ---
 log_header() {
   printf "\n${LPURP}# --- %s ${NC}\n" "$1"
 }
@@ -37,7 +36,6 @@ log_error() {
 CONTAINER=false
 ETC_DIR="${ANSIBLE_HOME}"
 
-<<<<<<< HEAD
 # Check if we are inside a docker container
 function check_docker() {
   if [ -f "/.dockerenv" ]; then
@@ -51,6 +49,7 @@ function check_docker() {
 function openbsd() {
   log_header "setup OpenBSD"
   ansible -m raw -a "pkg install -y python" -b ./hosts blowfish
+}
 
 function check_container() {
   log_header "Check Container Status ------------------------------------------" && echo -e "\n"
@@ -103,10 +102,9 @@ function main() {
   #[[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || log_warn "ANSIBLE_CONFIG env var is not set!"
   if [ -z ${ANSIBLE_HOME+x} ]; then
     echo "ANSIBLE_HOME is unset"
-    export ANSIBLE_HOME="/mnt/storage1/workspace/lab-franklin/ansible"
-  else
-    echo "ANSIBLE_HOME is set to '$ANSIBLE_HOME'"
-  fi
+    export ANSIBLE_HOME="/mnt/clusterfs2/workspace/lab-franklin/ansible"
+  fi 
+  echo "ANSIBLE_HOME is set to ${ANSIBLE_HOME}"
 
   #echo -e "${LRED}$(figlet -d /usr/share/figlet -f block "Welcome to")${NC}\n"
   #echo -e "${LRED}$(figlet -d /usr/share/figlet -f block bitsmasher.net)${NC}\n"

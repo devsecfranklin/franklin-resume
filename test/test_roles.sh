@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: ©2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
 
@@ -11,7 +11,6 @@
 #
 # v0.1 05/16/2025 Maintainer script
 
-#RED='\033[0;31m'
 LRED='\033[1;31m'
 LGREEN='\033[1;32m'
 #CYAN='\033[0;36m'
@@ -149,6 +148,15 @@ function cleanup_tmp() {
 # }
 
 function main() {
+  figlet -f mini TEST && echo -e "\n"
+  if [ -f "../bin/common.sh" ]; then
+    source "../bin/common.sh"
+  else
+    echo -e "${LRED}can not find common.sh.${NC}"
+    exit 1
+  fi
+  log_info "successfully sourced common.sh" && echo -e "\n"
+
   setup_ansible_logging
   [[ -n "${ANSIBLE_HOME}" ]] && ANSIBLE_HOME="${HOME}/workspace/lab-franklin/ansible" || echo "ANSIBLE_HOME env var is not set!"
   [[ -n "${ANSIBLE_CONFIG}" ]] && ANSIBLE_CONFIG="${ANSIBLE_HOME}/ansible.cfg" || echo "ANSIBLE_CONFIG env var is not set!"
