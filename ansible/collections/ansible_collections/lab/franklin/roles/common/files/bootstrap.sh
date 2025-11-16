@@ -504,7 +504,7 @@ function main() {
     krb5_conf
     setup_ldap
     setup_sudoers
-    nfs_configuration
+    # nfs_configuration
     fix_home_dir
     apt_update
     install_hosts_file
