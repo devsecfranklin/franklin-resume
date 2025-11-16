@@ -38,6 +38,7 @@ klist -ke /etc/krb5.keytab
 
 ```sh
 getent hosts $(hostname) | awk '{print $1; exit}' | xargs getent hosts | awk '{print $2}'
+hostnamectl  set-hostname chonk.lab.bitsmasher.net
 ```
 
 * Add the NFS principal for the hosts to the KDC:
