@@ -1,8 +1,0 @@
-{
-    "restructuredtext.confPath": "",
-    "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "none",
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    }
-}
