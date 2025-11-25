@@ -9,12 +9,13 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"internal/logging"
 )
 
 var (
 	err error
 
-	LayoutDir string = "template/www"
+	LayoutDir string = "template/"
 	tmpls     *template.Template
 )
 
