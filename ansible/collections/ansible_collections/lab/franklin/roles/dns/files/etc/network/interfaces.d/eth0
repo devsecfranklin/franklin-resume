@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
+
+# Managed by Ansible
+
+iface eth0 inet static
+address 10.10.15.1
+netmask 255.255.248.0
+gateway 10.10.8.1

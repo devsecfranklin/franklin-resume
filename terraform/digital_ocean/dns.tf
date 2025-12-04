@@ -259,3 +259,11 @@ resource "digitalocean_record" "txt-chonk" {
   value  = "IXrYBujQw0YLrEY2x1e7qX6CxE5zxfSfgc6dWGJ6W9Q"
   ttl    = 3600
 }
+
+resource "digitalocean_record" "research" {
+  domain = digitalocean_domain.default.name
+  type   = "A"
+  name   = "research"
+  value  = "136.29.106.82"
+}
+
