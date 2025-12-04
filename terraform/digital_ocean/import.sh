@@ -99,6 +99,8 @@ function main() {
   log_info "successfully sourced common.sh" && echo -e "\n"
 
   log_header "Connect to Digital Ocean"
+  export DIGITALOCEAN_TOKEN=$(pass DO_TOKEN)
+
   doctl auth init
   log_info "Import the DNS records to ${RECORDS}"
   terraform import digitalocean_domain.default bitsmasher.net # this script will fail without this step

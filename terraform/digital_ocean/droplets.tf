@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 resource "digitalocean_droplet" "www" {
-  name       = "www"
-  backups    = true
-  image      = "199888143" //doctl compute image list --public --format ID,Distribution,Slug | grep Debian
+  name    = "www"
+  backups = true
+  image   = "199888143" //doctl compute image list --public --format ID,Distribution,Slug | grep Debian
 
   ipv6       = false
   monitoring = false

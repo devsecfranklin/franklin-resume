@@ -1,8 +1,0 @@
-# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
-
-auto wlan0
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-iface wlan0 inet6 auto

@@ -1,8 +1,0 @@
-# SPDX-FileCopyrightText: © 2022-2024 franklin <franklin@bitsmasher.net>
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
-
-auto eth0
-allow-hotplug eth0
-iface eth0 inet dhcp
-iface eth0 inet6 auto
