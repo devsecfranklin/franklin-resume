@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM alpine:3.22
+FROM alpine:3.23
 
 LABEL maintainer="DE:AD:10:C5 <thedevilsvoice@dead10c5.org>"
 LABEL org.opencontainers.image.source = "https://github.com/devsecfranklin/lab-franklin"
