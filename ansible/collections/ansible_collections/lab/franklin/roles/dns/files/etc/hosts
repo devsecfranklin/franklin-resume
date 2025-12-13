@@ -18,11 +18,11 @@ ff02::2		ip6-allrouters
 10.10.8.11     snowy.lab.bitsmasher.net snowy minecraft
 10.10.12.0     node0.lab.bitsmasher.net node0
 10.10.12.1     node1.lab.bitsmasher.net node1
-10.10.12.2     node2.lab.bitsmasher.net node2
+10.10.12.2     time time.lab.bitsmasher.net
 10.10.12.3     node3.lab.bitsmasher.net node3
 10.10.12.4     edge-t.lab.bitsmasher.net edge-t
 10.10.12.12    ns1.lab.bitsmasher.net ns1
-10.10.12.13    time.lab.bitsmasher.net time # b8:27:eb:ee:d2:09 
+#10.10.12.13    time.lab.bitsmasher.net time # b8:27:eb:ee:d2:09 pi2b
 10.10.12.14    node5.lab.bitsmasher.net node5
 10.10.12.15    blowfish.lab.bitsmasher.net blowfish
 10.10.12.17    thelio.lab.bitsmasher.net thelio

@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3" pages="4">
   <diagram id="UxkmW6wW5Cg8wmJ417B1" name="lab">
-    <mxGraphModel dx="1220" dy="973" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1220" dy="947" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" style="locked=1;" parent="0" />
@@ -56,7 +56,7 @@
         <mxCell id="O9XMXnhXL3RfmyYyVhu8-5" value="" style="group" parent="ljSu20lDx0akreVK7Z17-1" vertex="1" connectable="0">
           <mxGeometry x="10" y="540" width="200" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="O9XMXnhXL3RfmyYyVhu8-6" value="time.lab.bitsmasher.net&lt;br&gt;10.10.12.13" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="O9XMXnhXL3RfmyYyVhu8-5" vertex="1">
+        <mxCell id="O9XMXnhXL3RfmyYyVhu8-6" value="time.lab.bitsmasher.net&lt;br&gt;10.10.12.2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="O9XMXnhXL3RfmyYyVhu8-5" vertex="1">
           <mxGeometry y="100" width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="2ubA_QZV_N5itx1ElX5b-7" value="" style="group" parent="O9XMXnhXL3RfmyYyVhu8-5" vertex="1" connectable="0">
@@ -74,14 +74,14 @@
         <mxCell id="2ubA_QZV_N5itx1ElX5b-2" value="ns1.lab.bitsmasher.net&lt;br&gt;10.10.12.12" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="2ubA_QZV_N5itx1ElX5b-1" vertex="1">
           <mxGeometry y="100" width="200" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Gkr_VRNd8eA578gmmun5-1" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.server;" vertex="1" parent="2ubA_QZV_N5itx1ElX5b-1">
+        <mxCell id="Gkr_VRNd8eA578gmmun5-1" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.server;" parent="2ubA_QZV_N5itx1ElX5b-1" vertex="1">
           <mxGeometry x="75" y="67.5" width="50" height="15" as="geometry" />
         </mxCell>
         <mxCell id="2ubA_QZV_N5itx1ElX5b-11" value="blowfish.lab.bitsmasher.net&lt;br&gt;10.10.12.15&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;local mail&lt;/div&gt;&lt;div&gt;syslog&lt;/div&gt;&lt;div&gt;sound&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="ljSu20lDx0akreVK7Z17-1" vertex="1">
           <mxGeometry x="290" y="200" width="200" height="80" as="geometry" />
         </mxCell>
         <mxCell id="2ubA_QZV_N5itx1ElX5b-12" value="" style="group" parent="ljSu20lDx0akreVK7Z17-1" vertex="1" connectable="0">
-          <mxGeometry x="270" y="590" width="200" height="130" as="geometry" />
+          <mxGeometry y="360" width="200" height="130" as="geometry" />
         </mxCell>
         <mxCell id="2ubA_QZV_N5itx1ElX5b-13" value="ldap.lab.bitsmasher.net&lt;br&gt;10.10.13.1&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;ns3&lt;/div&gt;&lt;div&gt;openldap&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="2ubA_QZV_N5itx1ElX5b-12" vertex="1">
           <mxGeometry y="100" width="200" height="30" as="geometry" />
@@ -94,6 +94,9 @@
         </mxCell>
         <mxCell id="2ubA_QZV_N5itx1ElX5b-14" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.server;" parent="ljSu20lDx0akreVK7Z17-1" vertex="1">
           <mxGeometry x="365" y="170" width="50" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="42ayBttnTU86mQezQ6LY-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="ljSu20lDx0akreVK7Z17-1" source="2ubA_QZV_N5itx1ElX5b-13" target="2ubA_QZV_N5itx1ElX5b-9">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
