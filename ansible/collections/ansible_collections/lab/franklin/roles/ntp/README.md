@@ -5,7 +5,12 @@
 
 ## configure
 
-* Set the time zone: `sudo timedatectl set-timezone America/Denver`
+* Set the time zone:
+
+```sh
+sudo timedatectl set-timezone America/Denver
+sudo timedatectl set-ntp true
+```
 
 ```sh
 sudo apt install ntp gpsd gpsd-clients # gpsd-clients has `xgps` used for testing
