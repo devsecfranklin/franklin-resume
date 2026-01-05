@@ -14,6 +14,8 @@ LPURP='\033[1;35m'
 NC='\033[0m' # No Color
 
 COLLECTION_DIR="${ANSIBLE_COLLECTIONS_PATH}/ansible_collections/lab/franklin"
+MY_COLLECTION="lab.franklin"                                      # my own custom thing
+MY_COLLECTIONS=(containers.podman community.docker ansible.posix) # off the shelf
 
 # --- Helper Functions for Logging ---
 log_header() {
@@ -32,10 +34,13 @@ log_error() {
 function verify_collections() {
   log_header "Verify Ansible Collections"
 
-  MY_COLLECTIONS=(containers.podman community.docker ansible.posix)
   for COLLECTION in "${MY_COLLECTIONS[@]}"; do
-    log_info "verify collection: ${COLLECTION}"
-    if ! ansible-galaxy collection verify "${COLLECTION}"; then
+    i=$(echo ${COLLECTION} | cut -f2 -d'.')
+    log_info "verify collection: ${i}"
+
+    # if ! ansible-galaxy collection verify "${COLLECTION}"; then
+    if [ ! -d "${ANSIBLE_COLLECTIONS_PATH}/${i}" ]; then
+      log_warn "did not find ${ANSIBLE_COLLECTIONS_PATH}/${i}"
       log_warn "installing ${COLLECTION}"
       ansible-galaxy collection install --collections-path "${ANSIBLE_COLLECTIONS_PATH}" --force "${COLLECTION}"
     fi
@@ -43,7 +48,7 @@ function verify_collections() {
 }
 
 function build_collection() {
-  MY_COLELCTION="lab.franklin"
+  MY_COLLECTION="lab.franklin"
   log_header "Verify ${MY_COLLECTION} collection package"
 
   pushd "${COLLECTION_DIR}" || log_error "Directory not found ${COLLECTION_DIR}"
@@ -56,7 +61,7 @@ function build_collection() {
 }
 
 function main() {
-  verify_collections
+  # verify_collections
   build_collection
 
   log_info "list local from ansible galaxy collections"

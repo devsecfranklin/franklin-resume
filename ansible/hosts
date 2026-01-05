@@ -2,33 +2,32 @@
 #
 # SPDX-License-Identifier: MIT
 
-snowy.LAB.BITSMASHER.NET
-
 [compute]
+head2.LAB.BITSMASHER.NET
+node[0:3].LAB.BITSMASHER.NET
+node5.LAB.BITSMASHER.NET
+#node6.LAB.BITSMASHER.NET ansible_user=franklin
+
+[compute:vars]
+ansible_user=franklin
+ansible_python_interpreter=/usr/bin/python3
 
 [gpu]
 node90[0:3].LAB.BITSMASHER.NET
 
 [gpu:vars]
 ansible_user=franklin
-ansible_python_interpreter=/usr/bin/python3
+ansible_python_interpreter=/mnt/storage1/home/franklin/.pyenv/versions/3.11.13/bin/python
 
 [servers]
+ldap.LAB.BITSMASHER.NET 
+snowy.lab.bitsmasher.net
+time.LAB.BITSMASHER.NET
+ns1.LAB.BITSMASHER.NET
 
 [servers:vars]
 ansible_user=franklin
 ansible_python_interpreter=/usr/bin/python3
-
-[debian]
-
-
-[debian:vars]
-ansible_user=franklin
-
-[nvidia_nodes]
-node90[0:3].LAB.BITSMASHER.NET
-
-
 
 [openbsd]
 blowfish.lab.bitsmasher.net
@@ -42,22 +41,9 @@ ansible_become_method=doas
 [popos]
 thelio.LAB.BITSMASHER.NET ansible_user=franklin
 
-[raspi_nodes]
-head2.LAB.BITSMASHER.NET
-node[0:3].LAB.BITSMASHER.NET
-node5.LAB.BITSMASHER.NET
-#node6.LAB.BITSMASHER.NET ansible_user=franklin
-
-[raspi_nodes:vars]
-ansible_user=franklin
-ansible_python_interpreter=/usr/bin/python3
-
-[raspi_servers]
-ldap.LAB.BITSMASHER.NET 
-time.LAB.BITSMASHER.NET
-ns1.LAB.BITSMASHER.NET
-
-
-
 [ubuntu]
-odroid-c1.LAB.BITSMASHER.NET ansible_user=franklin
+odroid-c1.LAB.BITSMASHER.NET
+
+[ubuntu:vars]
+ansible_user=franklin
+ansible_python_interpreter=/usr/bin/python3.10

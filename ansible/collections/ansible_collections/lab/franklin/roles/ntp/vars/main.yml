@@ -7,7 +7,6 @@ ntp_uid: 113
 ntp_group: ntpsec
 ntp_gid: 125
 
-ntp_server: time.lab.bitsmasher.net
 ntp_logging_dir: /var/log/ntpsec
 ntp_logging_stats: /var/log/ntpstats
 ntp_obsd_configuration_file: ntp.conf.openbsd.j2

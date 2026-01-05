@@ -2,8 +2,6 @@
 - name: 'Ansible Playbook for Nvidia Cluster'
   hosts: nvidia_nodes
   become: true
-  vars:
-    ansible_python_interpreter: "/usr/bin/python3"
   roles:
     - nfs
     #- common
