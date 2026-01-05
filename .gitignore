@@ -100,8 +100,6 @@ credentials.json
 cred.json
 .boto
 .netrc
-ansible/roles/**/firewall-secrets.yml
-ansible/roles/**/panorama-secrets.yml
 
 # Logs and Plan Files
 *.log
@@ -126,8 +124,13 @@ node_modules/
 ansible/galaxy_cache/
 ansible/tmp/
 ansible/venv_molecule/
-lab-franklin/ansible/collections/ansible_collections/ansible/*
-lab-franklin/ansible/collections/ansible_collections/community/*
+ansible/collections/ansible_collections/ansible*
+ansible/collections/ansible_collections/community*
+ansible/collections/ansible_collections/containers*
+ansible/collections/ansible_collections/paloaltonetworks*
+ansible/roles/**/firewall-secrets.yml
+ansible/roles/**/panorama-secrets.yml
+
 
 ################################
 # 5. TERRAFORM & INFRASTRUCTURE
