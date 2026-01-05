@@ -24,12 +24,10 @@ AC_CONFIG_COMMANDS([franklin-build],
 AC_CONFIG_FILES([
   Makefile
   ansible/Makefile
-  assembly/Makefile
-  assembly/src/Makefile
   container/Makefile
-  container/kerberos-containers/kdc-server/Makefile
-  container/kerberos-containers/kdc-ssh-server/Makefile
-  container/kerberos-containers/ssh-container/Makefile
+  container/kdc-server/Makefile
+  container/kdc-ssh-server/Makefile
+  container/ssh-container/Makefile
 ])
 
 dnl Checks for programs.

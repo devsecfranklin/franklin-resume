@@ -263,3 +263,18 @@ sympy-plots-for-*.tex/
 # 8. MISCELLANEOUS (Explicit Files)
 ################################
 deprecated/
+COPYING
+INSTALL
+Makefile
+Makefile.in
+ansible/Makefile
+ansible/Makefile.in
+config/
+container/Makefile
+container/Makefile.in
+container/kdc-server/Makefile
+container/kdc-server/Makefile.in
+container/kdc-ssh-server/Makefile
+container/kdc-ssh-server/Makefile.in
+container/ssh-container/Makefile
+container/ssh-container/Makefile.in
