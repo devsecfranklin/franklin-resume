@@ -147,9 +147,9 @@ ansible-playbook -i firewalls playbook/firewalls.yml --ask-vault-pass -e 'ansibl
 ## Operation
 
 ```sh
-ansible -i /etc/ansible/hosts -b --list-hosts nodes
+ansible -i "${ANSIBLE_HOME}/hosts" -b --list-hosts nvidia_nodes
 ansible -m setup blowfish.lab.bitsmasher.net -i ./hosts # validate a single host
-ansible nodes -m ping -b -i /etc/ansible/hosts
+ansible nodes -m ping -b -i "${ANSIBLE_HOME}/hosts"
 ansible all -m setup -a "filter=ansible_distribution*" -i /home/franklin/workspace/LAB/lab-home/ansible/hosts # check dists
 clush -d -v -g compute --progress date
 ```
@@ -157,12 +157,12 @@ clush -d -v -g compute --progress date
 ## Example Commands
 
 ```sh
-ansible raspi_nodes -a 'apt update' -b -i /etc/ansible/hosts
-ansible raspi_nodes -a 'apt -y upgrade' -b -i /etc/ansible/hosts
-ansible nvidia_nodes -a 'apt update' -b -i /etc/ansible/hosts -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible raspi_nodes -a 'apt-get update' -b -i "${ANSIBLE_HOME}/hosts"
+ansible raspi_nodes -a 'apt -y upgrade' -b -i "${ANSIBLE_HOME}/hosts"
+ansible nvidia_nodes -a 'apt update' -b -i "${ANSIBLE_HOME}/hosts" -e 'ansible_python_interpreter=/usr/bin/python3'
 ansible-playbook ansible/collections/ansible_collections/lab/franklin/playbooks/playbook.yml -i ./hosts -b
 clush -v -g compute sudo apt update
-clush -g compute DEBIAN_FRONTEND="noninteractive" sudo apt -y upgrade
+clush -g compute DEBIAN_FRONTEND="noninteractive" sudo apt-get -y upgrade
 clush -g compute df -Th | sort
 ```
 

@@ -2,6 +2,9 @@
 # Variables visible to all nodes
 ---
 all:
+  ansible_email: ©2023-2025 franklin <smoooth.y62wj@passmail.net>
+  ansible_license: MIT
+  ansible_managed: MANAGED BY ANSIBLE
   hosts:
     # Use only IP addresses here!
     node0:
@@ -31,8 +34,6 @@ all:
         node2: {}
         node0: {}
         node3: {}
-    raspbian:
-      hosts:
         node5: {}
       vars:
         ansible_ssh_user: pi
