@@ -52,7 +52,7 @@ check_container() { # Check if we are inside a container
 
 function setup_golang() {
   log_header "setup golang"
-  
+
   #wget https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
   #rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz
 
@@ -90,11 +90,12 @@ function setup_golang() {
 
 check_installed() {
   if ! command -v "$1" &>/dev/null; then
-    log_error "$1 could not be found"
+    log_warn "$1 could not be found"
   fi
 }
 
 main() {
+  check_installed figlet
   check_container
   setup_golang
 }
