@@ -1,41 +1,56 @@
-{{define "indexPage"}}
+i<!doctype html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
 
-{{template "header"}}
+<head>
+  <!-- Hello Robots, please have the latest version of this page. No cache. -->
+  <meta name="robots" content="noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="googlebot-news" content="noarchive" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new-style.css') }}">
+  <meta name="author" content="Franklin Diaz">
+  <title>Franklin Diaz Resume</title>
+  <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
+  <meta name="description" content="Resume of a Principal DevSecOps/security leader seeking remote opportunities." />
+  <meta name="keywords"
+    content="resume, infrastructure, security, engineering, DevOps, DevSecOps, Python, Ansible, Terraform, Puppet, AWS, GCP, OCI, Azure" />
+
+  <!-- OpenGraph https://ogp.me/ -->
+  <meta property="og:title" content="Resume of Franklin Diaz" />
+  <meta property="og:type" content="document" />
+  <meta property="og:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta property="og:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
+  <meta property="og:description" content="Resume of Franklin Diaz" />
+
+  <!-- Twitter specific -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta name="twitter:title" content="Franklin Diaz Resume" />
+  <meta name="twitter:description" content="Resume of Franklin Diaz" />
+  <meta name="twitter:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
+</head>
 
 <body>
-    <script>
-    document.getElementById('download-pdf-button').addEventListener('click', function() {
-        var element = document.getElementById('body'); 
-
-        // Configuration options for html2pdf
-        var opt = {
-        margin: 1,
-        filename: 'downloaded-page.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        // Generate and download the PDF
-        html2pdf().from(element).set(opt).save();
-    });
-    </script>
   <div id="page-wrap">
     <div class="noprint">
-      <img class="one" src="/static/images/headshot.jpg" alt="Photo of Franklin" id="pic" />
+      <img class="one" src="{{ url_for('static', filename='headshot.jpg') }}" alt="Photo of Franklin" id="pic" />
     </div>
     <div class="onlyPrint">
-      <img class="one" src="/static/images/qr-code.png" alt="Franklin ORCID" id="pic" />
+      <img class="one" src="{{ url_for('static', filename='qr-code.png') }}" alt="Franklin ORCID" id="pic" />
     </div>
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
       <div class="noprint">
-          <button id="download-pdf-button">Download as PDF</button>
+        <form action="/pdf" method="GET">
+          <button name="pdfBtn" type="submit">Download PDF</button>
+        </form>
       </div>
       <p>
         Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
         Web: <a href="https://g.dev/franklin">GDev Page</a><br />
         LinkedIn: <a href="https://www.linkedin.com/in/franklin-diaz/">LinkedIn</a><br />
+        Latest Version of this Resume: <a href="https://franklin-resume.herokuapp.com/">click here</a>
       </p>
     </div>
 
@@ -128,17 +143,8 @@
   </div>
   <div class="noprint">
     <a href="https://github.com/devsecfranklin/franklin-resume">
-      <img style="position: absolute; top: 0; right: 0; border: 0;" src="/static/images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+      <img style="position: absolute; top: 0; right: 0; border: 0;"
+        src="{{ url_for('static', filename='forkme_right_darkblue_121621.png') }}" alt="Fork me on GitHub" /></a>
   </div>
-
-    {{template "footer"}}
-
 </body>
 </html>
-{{end}}
-
-<!--
-
-С другой стороны начало повседневной работы по формированию позиции напрямую зависит от системы массового участия. Задача организации, в особенности же начало повседневной работы по формированию позиции способствует подготовке и реализации системы обучения кадров, соответствующей насущным потребностям. Разнообразный и богатый опыт рамки и место обучения кадров позволяет оценить значение прогресса профессионального общества. Значимость этих проблем настолько очевидна, что высокотехнологичная концепция общественной системы представляет собой интересный эксперимент форм воздействия. Таким образом начало повседневной работы по формированию позиции играет важную роль в формировании соответствующих условий активизации. Значимость этих проблем настолько очевидна, что новая модель организационной деятельности представляет собой интересный эксперимент системы обучения кадров, соответствующей насущным потребностям. С другой стороны дальнейшее развитие различных форм деятельности требует анализа поэтапного и последовательного развития общества. Для современного мира управление и развитие структуры обеспечивает актуальность позиции, занимаемых участниками в отношении поставленных задач. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий представляет собой интересный эксперимент существующий финансовых и административных условий. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий играет важную роль в формировании системы обучения кадров, соответствующей насущным потребностям.
-
--->
