@@ -18,7 +18,7 @@ set -o nounset  # Treat unset variables as an error
 
 LRED='\033[0;31m'
 NC='\033[0m' # No Color
-SERVER_DIR="${HOME}/workspace/consulting/franklin-resume"
+SERVER_DIR="/mnt/backup1/workspace/consulting/franklin-resume"
 
 
 function main() {
@@ -35,11 +35,11 @@ function main() {
 
 
   log_info "cd to ${SERVER_DIR}"
-  pushd ${SERVER_DIR} >> /dev/null || exit 1       
+  pushd "${SERVER_DIR}" >> /dev/null || exit 1       
   log_info "start screen session"
   screen -mdS franklin_resume go run cmd/main.go
   popd >> /dev/null || exit 1
-  log_info "done!"
+  log_success "Open in browser: http://localhost:9091"
 
 }
 

@@ -74,8 +74,12 @@ function check_installed() {
 function setup_figlet() {
   if ! check_installed figlet; then sudo apt update && sudo apt install figlet -y; fi
   log_header "Figlet font setup"
-  if [ ! -d "/tmp/figlet-fonts" ]; then cd /tmp && git clone https://github.com/xero/figlet-fonts.git; fi
-  if [ ! -d "/usr/share/figlet/fonts" ]; then sudo mv /tmp/figlet-fonts /usr/share/figlet/fonts; fi
+ 
+  if [ ! -d "figlet/fonts" ]; then
+    if [ ! -d "/tmp/figlet-fonts" ]; then cd /tmp && git clone https://github.com/xero/figlet-fonts.git; fi
+    mkdir -p figlet/fonts
+    cp -/tmp/figlet-fonts/smmono9.tlf /tmp/figlet-fonts/pagga.tlf  figlet/fonts
+  fi
   # figlet -f /usr/share/figlet/fonts/smmono9 golang test # example of how to call from your script
 }
 
