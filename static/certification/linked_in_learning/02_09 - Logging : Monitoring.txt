@@ -1,0 +1,10 @@
+https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health/
+
+Metrics Server:
+https://github.com/kubernetes-sigs/metrics-server
+- install: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml 
+
+
+https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
+
+

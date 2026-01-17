@@ -1,0 +1,1 @@
+Review the Official CKA exam guide at https://www.cncf.io/certification/cka/
