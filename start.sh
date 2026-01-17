@@ -35,11 +35,11 @@ function main() {
 
 
   log_info "cd to ${SERVER_DIR}"
-  pushd ${SERVER_DIR} >> /dev/null || exit 1       
+  pushd "${SERVER_DIR}" >> /dev/null || exit 1       
   log_info "start screen session"
   screen -mdS franklin_resume go run cmd/main.go
   popd >> /dev/null || exit 1
-  log_info "Open in browser: http://localhost:9091"
+  log_success "Open in browser: http://localhost:9091"
 
 }
 
