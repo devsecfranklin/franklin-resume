@@ -7,15 +7,23 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
+	"internal/logging"
 	"net/http"
 )
 
 var (
 	err error
 
-	LayoutDir string = "template/www"
+	LayoutDir string = "template/"
 	tmpls     *template.Template
+)
+
+type (
+	Page struct { // Page data structure for a generic page
+		Title string
+	}
 )
 
 func main() {
@@ -29,10 +37,16 @@ func main() {
 
 	http.HandleFunc("/", handler)
 
+	logging.Log_header("Server listening on :8080")
+	err = http.ListenAndServe(":8080", nil)
+	if err != nil {
+		logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
+	}
+
 }
 
 func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
-	log.Println("Serving index page")
+	logging.Log_header("Serving index page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
@@ -42,7 +56,7 @@ func handler(w http.ResponseWriter, r *http.Request) { // handler for the root p
 
 	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
 	if err != nil {
-		log.Println(err)
+		logging.Log_error(err.Error())
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
 	}
 }
