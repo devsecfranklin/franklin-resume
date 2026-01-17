@@ -27,7 +27,7 @@ type (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("./static"))
+	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
@@ -38,7 +38,7 @@ func main() {
 	http.HandleFunc("/", handler)
 
 	logging.Log_header("Server listening on :8080")
-	err = http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":9091", nil)
 	if err != nil {
 		logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
 	}
