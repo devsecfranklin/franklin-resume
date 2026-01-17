@@ -1,19 +1,34 @@
-{{define "indexPage"}}
-
-<!DOCTYPE html>
-<html lang="en">
+i<!doctype html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
-    <meta name="description" content= "www.bitsmasher.net">
-    <meta name="author" content="thedevilsvoice">
-    <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
-    <meta name="keywords" content="HTML, CSS, GoLang">
-    <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
-    <title>{{.Title}}</title>
-    <link rel="stylesheet" href= "/css/new-style.css">
+  <!-- Hello Robots, please have the latest version of this page. No cache. -->
+  <meta name="robots" content="noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="googlebot-news" content="noarchive" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new-style.css') }}">
+  <meta name="author" content="Franklin Diaz">
+  <title>Franklin Diaz Resume</title>
+  <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
+  <meta name="description" content="Resume of a Principal DevSecOps/security leader seeking remote opportunities." />
+  <meta name="keywords"
+    content="resume, infrastructure, security, engineering, DevOps, DevSecOps, Python, Ansible, Terraform, Puppet, AWS, GCP, OCI, Azure" />
 
+  <!-- OpenGraph https://ogp.me/ -->
+  <meta property="og:title" content="Resume of Franklin Diaz" />
+  <meta property="og:type" content="document" />
+  <meta property="og:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta property="og:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
+  <meta property="og:description" content="Resume of Franklin Diaz" />
+
+  <!-- Twitter specific -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta name="twitter:title" content="Franklin Diaz Resume" />
+  <meta name="twitter:description" content="Resume of Franklin Diaz" />
+  <meta name="twitter:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
 </head>
 
 <body>
@@ -131,15 +146,5 @@
       <img style="position: absolute; top: 0; right: 0; border: 0;"
         src="{{ url_for('static', filename='forkme_right_darkblue_121621.png') }}" alt="Fork me on GitHub" /></a>
   </div>
-
-    {{template "footer"}}
-
 </body>
 </html>
-{{end}}
-
-<!--
-
-С другой стороны начало повседневной работы по формированию позиции напрямую зависит от системы массового участия. Задача организации, в особенности же начало повседневной работы по формированию позиции способствует подготовке и реализации системы обучения кадров, соответствующей насущным потребностям. Разнообразный и богатый опыт рамки и место обучения кадров позволяет оценить значение прогресса профессионального общества. Значимость этих проблем настолько очевидна, что высокотехнологичная концепция общественной системы представляет собой интересный эксперимент форм воздействия. Таким образом начало повседневной работы по формированию позиции играет важную роль в формировании соответствующих условий активизации. Значимость этих проблем настолько очевидна, что новая модель организационной деятельности представляет собой интересный эксперимент системы обучения кадров, соответствующей насущным потребностям. С другой стороны дальнейшее развитие различных форм деятельности требует анализа поэтапного и последовательного развития общества. Для современного мира управление и развитие структуры обеспечивает актуальность позиции, занимаемых участниками в отношении поставленных задач. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий представляет собой интересный эксперимент существующий финансовых и административных условий. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий играет важную роль в формировании системы обучения кадров, соответствующей насущным потребностям.
-
--->

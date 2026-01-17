@@ -19,7 +19,7 @@ var (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("./static/www"))
+	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
