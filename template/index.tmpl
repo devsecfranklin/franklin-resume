@@ -3,25 +3,39 @@
 {{template "header"}}
 
 <body>
+    <script>
+    document.getElementById('download-pdf-button').addEventListener('click', function() {
+        var element = document.getElementById('body'); 
+
+        // Configuration options for html2pdf
+        var opt = {
+        margin: 1,
+        filename: 'downloaded-page.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        // Generate and download the PDF
+        html2pdf().from(element).set(opt).save();
+    });
+    </script>
   <div id="page-wrap">
     <div class="noprint">
-      <img class="one" src="images/headshot.jpg" alt="Photo of Franklin" id="pic" />
+      <img class="one" src="/static/images/headshot.jpg" alt="Photo of Franklin" id="pic" />
     </div>
     <div class="onlyPrint">
-      <img class="one" src="/images/qr-code.png" alt="Franklin ORCID" id="pic" />
+      <img class="one" src="/static/images/qr-code.png" alt="Franklin ORCID" id="pic" />
     </div>
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
       <div class="noprint">
-        <form action="/pdf" method="GET">
-          <button name="pdfBtn" type="submit">Download PDF</button>
-        </form>
+          <button id="download-pdf-button">Download as PDF</button>
       </div>
       <p>
         Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
         Web: <a href="https://g.dev/franklin">GDev Page</a><br />
         LinkedIn: <a href="https://www.linkedin.com/in/franklin-diaz/">LinkedIn</a><br />
-        Latest Version of this Resume: <a href="https://franklin-resume.herokuapp.com/">click here</a>
       </p>
     </div>
 
@@ -114,7 +128,7 @@
   </div>
   <div class="noprint">
     <a href="https://github.com/devsecfranklin/franklin-resume">
-      <img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="/static/images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
   </div>
 
     {{template "footer"}}
