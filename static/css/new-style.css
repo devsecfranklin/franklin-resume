@@ -1,163 +1,141 @@
-/* Global Resets */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+        margin: 0;
+        padding: 0;
 }
 
 body {
-    font: 16px/1.5 Helvetica, Arial, Sans-Serif;
-    color: #333;
-    background-color: #fff;
+        font: 16px Helvetica, Sans-Serif;
+        line-height: 24px;
+}
+
+.clear {
+        clear: both;
 }
 
 #page-wrap {
-    max-width: 800px;
-    margin: 40px auto 60px;
-    padding: 0 20px;
+        width: 800px;
+        margin: 40px auto 60px;
 }
 
-/* Typography */
+#pic {
+        float: right;
+        margin: -30px 0 0 0;
+}
+
+img.one {
+        height: 25%;
+        width: 25%;
+}
+
 h1 {
-    margin: 0 0 16px 0;
-    padding: 0 0 16px 0;
-    font-size: 42px;
-    font-weight: bold;
-    letter-spacing: -2px;
-    border-bottom: 1px solid #999;
+        margin: 0 0 16px 0;
+        padding: 0 0 16px 0;
+        font-size: 42px;
+        font-weight: bold;
+        letter-spacing: -2px;
+        border-bottom: 1px solid #999;
 }
 
 h2 {
-    font-size: 20px;
-    margin: 0 0 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+        font-size: 20px;
+        margin: 0 0 6px 0;
+        position: relative;
 }
 
 h2 span {
-    font-style: italic;
-    font-family: Georgia, Serif;
-    font-size: 16px;
-    color: #999;
-    font-weight: normal;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-style: italic;
+        font-family: Georgia, Serif;
+        font-size: 16px;
+        color: #999;
+        font-weight: normal;
 }
 
 p {
-    margin: 0 0 16px 0;
+        margin: 0 0 16px 0;
 }
 
 a {
-    color: #666;
-    text-decoration: none;
-    border-bottom: 1px dotted #999;
-    transition: color 0.2s ease;
+        color: #999;
+        text-decoration: none;
+        border-bottom: 1px dotted #999;
 }
 
 a:hover {
-    border-bottom-style: solid;
-    color: #000;
+        border-bottom-style: solid;
+        color: black;
 }
 
 ul {
-    margin: 0 0 24px 20px;
-}
-
-/* Layout Components */
-#pic {
-    float: right;
-    margin: 0 0 15px 15px;
-    max-width: 25%;
+        margin: 0 0 24px 12px;
 }
 
 #objective {
-    width: 100%;
-    max-width: 600px;
-    font-family: Georgia, Serif;
-    font-style: italic;
-    color: #666;
+        width: 500px;
+        float: left;
 }
 
-/* Definitions List (Modernized with Flex) */
-dl {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
+#objective p {
+        font-family: Georgia, Serif;
+        font-style: italic;
+        color: #666;
 }
 
 dt {
-    font-style: italic;
-    font-weight: bold;
-    font-size: 18px;
-    text-align: right;
-    padding-right: 20px;
-    border-right: 1px solid #999;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: right;
+        padding: 0 26px 0 0;
+        width: 150px;
+        float: left;
+        height: 100px;
+        border-right: 1px solid #999;
 }
 
 dd {
-    margin-bottom: 15px;
+        width: 600px;
+        float: right;
 }
 
-/* Footer (Integrated from Previous Step) */
-.footer {
-    text-align: center;
-    margin-top: 40px;
-    padding: 20px 0;
-    border-top: 1px solid #eee;
-}
-
-.footer-content {
-    font-size: 11px;
-    color: #888;
-    margin-top: 10px;
-}
-
-.footer-content cite {
-    display: block;
-    font-style: italic;
-    margin-bottom: 4px;
-}
-
-/* Utilities */
-.clear { clear: both; }
-
-/* Media Queries */
-@media print {
-    .noprint { display: none !important; }
-    
-    body {
-        font-size: 12pt;
-        line-height: 1.2;
-    }
-
-    #page-wrap {
-        width: 100%;
-        margin: 0;
-    }
-
-    @page {
-        size: A4;
-        margin: 20mm;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    dl {
-        grid-template-columns: 1fr;
-    }
-    
-    dt {
-        text-align: left;
-        border-right: none;
-        border-bottom: 1px solid #999;
-        padding: 0;
-    }
-
-    #pic {
+dd.clear {
         float: none;
-        display: block;
-        margin: 0 auto 20px;
-        max-width: 50%;
-    }
+        margin: 0;
+        height: 15px;
+}
+
+@media print {
+
+        .noprint,
+        .noprint * {
+                display: none !important;
+        }
+        .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+        body,
+        h2,
+        dt,
+        ul,
+        h2 span {
+                font-size: 10px;
+                line-height: 24px;
+                margin: 0;
+                padding: 0;
+        }
+
+        @page {
+                size: 297mm 210mm;
+                /* landscape */
+                /* you can also specify margins here: */
+                margin: 25mm;
+                margin-right: 45mm;
+                /* for compatibility with both A4 and Letter */
+        }
+}
+
+@media screen {
+        .onlyPrint * {
+                display: none !important;
+        }
 }
