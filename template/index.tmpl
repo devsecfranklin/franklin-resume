@@ -3,23 +3,12 @@
 {{template "header"}}
 
 <body>
-    <script>
-    document.getElementById('download-pdf-button').addEventListener('click', function() {
-        var element = document.getElementById('body'); 
-
-        // Configuration options for html2pdf
-        var opt = {
-        margin: 1,
-        filename: 'downloaded-page.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        // Generate and download the PDF
-        html2pdf().from(element).set(opt).save();
-    });
-    </script>
+<script>
+  function downloadPDF() {
+    const element = document.body;
+    html2pdf().from(element).save('franklin-diaz-resume.pdf');
+  }
+</script>
   <div id="page-wrap">
     <div class="noprint">
       <img class="one" src="/static/images/headshot.jpg" alt="Photo of Franklin" id="pic" />
@@ -30,7 +19,7 @@
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
       <div class="noprint">
-          <button id="download-pdf-button">Download as PDF</button>
+          <button onclick="downloadPDF()">Download as PDF</button>
       </div>
       <p>
         Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
