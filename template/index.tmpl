@@ -3,12 +3,13 @@
 {{template "header"}}
 
 <body>
-<script>
-  function downloadPDF() {
-    const element = document.body;
-    html2pdf().from(element).save('franklin-diaz-resume.pdf');
-  }
-</script>
+    
+
+    <script>
+        function printPage() {
+            window.print();
+        }
+    </script>
   <div id="page-wrap">
     <div class="noprint">
       <img class="one" src="/static/images/headshot2.jpg" alt="Photo of Franklin" id="pic" />
@@ -19,7 +20,7 @@
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
       <div class="noprint">
-          <button onclick="downloadPDF()">Download as PDF</button>
+          <button id="printButton" onclick="printPage()">Print This Page</button>
       </div>
       <p>
         Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
@@ -41,6 +42,10 @@
 
     <dt>Experience</dt>
     <dd>
+      <h2>University of Colorado Denver <span>Lecturer - 2025-Current</span></h2>
+      <ul>
+        <li>Teaching ISMG-2050 intro to working with business data.</li>
+      </ul>
       <h2>Palo Alto Networks <span>Principal Eng - 2020-Current</span></h2>
       <ul>
         <li>Design, develop, and deploy infrastructure as Code (IaC) for customers in
@@ -114,14 +119,6 @@
     <a href="https://github.com/devsecfranklin/franklin-resume">
       <img style="position: absolute; top: 0; right: 0; border: 0;" src="/static/images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
   </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 </body>
 </html>
 {{end}}
-
-<!--
-
-С другой стороны начало повседневной работы по формированию позиции напрямую зависит от системы массового участия. Задача организации, в особенности же начало повседневной работы по формированию позиции способствует подготовке и реализации системы обучения кадров, соответствующей насущным потребностям. Разнообразный и богатый опыт рамки и место обучения кадров позволяет оценить значение прогресса профессионального общества. Значимость этих проблем настолько очевидна, что высокотехнологичная концепция общественной системы представляет собой интересный эксперимент форм воздействия. Таким образом начало повседневной работы по формированию позиции играет важную роль в формировании соответствующих условий активизации. Значимость этих проблем настолько очевидна, что новая модель организационной деятельности представляет собой интересный эксперимент системы обучения кадров, соответствующей насущным потребностям. С другой стороны дальнейшее развитие различных форм деятельности требует анализа поэтапного и последовательного развития общества. Для современного мира управление и развитие структуры обеспечивает актуальность позиции, занимаемых участниками в отношении поставленных задач. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий представляет собой интересный эксперимент существующий финансовых и административных условий. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий играет важную роль в формировании системы обучения кадров, соответствующей насущным потребностям.
-
--->
