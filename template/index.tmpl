@@ -3,26 +3,16 @@
 {{template "header"}}
 
 <body>
+    
+
     <script>
-    document.getElementById('download-pdf-button').addEventListener('click', function() {
-        var element = document.getElementById('body'); 
-
-        // Configuration options for html2pdf
-        var opt = {
-        margin: 1,
-        filename: 'downloaded-page.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        // Generate and download the PDF
-        html2pdf().from(element).set(opt).save();
-    });
+        function printPage() {
+            window.print();
+        }
     </script>
   <div id="page-wrap">
     <div class="noprint">
-      <img class="one" src="/static/images/headshot.jpg" alt="Photo of Franklin" id="pic" />
+      <img class="one" src="/static/images/headshot2.jpg" alt="Photo of Franklin" id="pic" />
     </div>
     <div class="onlyPrint">
       <img class="one" src="/static/images/qr-code.png" alt="Franklin ORCID" id="pic" />
@@ -30,7 +20,7 @@
     <div id="contact-info" class="vcard">
       <h1 class="fn">Franklin Diaz</h1>
       <div class="noprint">
-          <button id="download-pdf-button">Download as PDF</button>
+          <button id="printButton" onclick="printPage()">Print This Page</button>
       </div>
       <p>
         Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
@@ -52,6 +42,10 @@
 
     <dt>Experience</dt>
     <dd>
+      <h2>University of Colorado Denver <span>Lecturer - 2025-Current</span></h2>
+      <ul>
+        <li>Teaching ISMG-2050 intro to working with business data.</li>
+      </ul>
       <h2>Palo Alto Networks <span>Principal Eng - 2020-Current</span></h2>
       <ul>
         <li>Design, develop, and deploy infrastructure as Code (IaC) for customers in
@@ -116,13 +110,8 @@
 
       <dt>Publications and Projects</dt>
       <dd>
-        <li>Project paper: <a href="https://github.com/devsecfranklin/paper-cloud-lab/blob/main/cloudlab.pdf">A Cloud
-            Native Security Lab</a>
-          <div class="noprint"><img
-              src="https://img.shields.io/static/v1?label=status&message=released&color=success&style=plastic"> </div>
-        </li>
-        <li>Open Source project contributor on the <a href="https://github.com/inguardians/peirates#what-is-peirates">Peirates, a Kubernetes penetration testing tool</a>.</li>
-        <li>Ran the <a href="https://www.brucon.org/2023/ctf/">2023 BruCon 0x0F Capture the Flag</a> contest in Mechelen, Belgium.</li>
+        <li>Project paper: <a href="https://github.com/devsecfranklin/paper-cloud-lab/blob/main/cloudlab.pdf">A Cloud Native Security Lab</a></li>
+        <li>Project: <a href="https://github.com/devsecfranklin/stash-house">Stash House</a> network credential security research.</li>
       </dd>
     </dl>
   </div>
@@ -130,15 +119,6 @@
     <a href="https://github.com/devsecfranklin/franklin-resume">
       <img style="position: absolute; top: 0; right: 0; border: 0;" src="/static/images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
   </div>
-
-    {{template "footer"}}
-
 </body>
 </html>
 {{end}}
-
-<!--
-
-С другой стороны начало повседневной работы по формированию позиции напрямую зависит от системы массового участия. Задача организации, в особенности же начало повседневной работы по формированию позиции способствует подготовке и реализации системы обучения кадров, соответствующей насущным потребностям. Разнообразный и богатый опыт рамки и место обучения кадров позволяет оценить значение прогресса профессионального общества. Значимость этих проблем настолько очевидна, что высокотехнологичная концепция общественной системы представляет собой интересный эксперимент форм воздействия. Таким образом начало повседневной работы по формированию позиции играет важную роль в формировании соответствующих условий активизации. Значимость этих проблем настолько очевидна, что новая модель организационной деятельности представляет собой интересный эксперимент системы обучения кадров, соответствующей насущным потребностям. С другой стороны дальнейшее развитие различных форм деятельности требует анализа поэтапного и последовательного развития общества. Для современного мира управление и развитие структуры обеспечивает актуальность позиции, занимаемых участниками в отношении поставленных задач. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий представляет собой интересный эксперимент существующий финансовых и административных условий. Повседневная практика показывает, что понимание сущности ресурсосберегающих технологий играет важную роль в формировании системы обучения кадров, соответствующей насущным потребностям.
-
--->

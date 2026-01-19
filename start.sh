@@ -18,7 +18,7 @@ set -o nounset  # Treat unset variables as an error
 
 LRED='\033[0;31m'
 NC='\033[0m' # No Color
-SERVER_DIR="/mnt/backup1/workspace/consulting/franklin-resume"
+SERVER_DIR="${HOME}/workspace/consulting/franklin-resume"
 
 
 function main() {
