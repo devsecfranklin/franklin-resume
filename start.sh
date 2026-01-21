@@ -39,7 +39,7 @@ function main() {
   log_info "start screen session"
   screen -mdS franklin_resume go run cmd/main.go
   popd >> /dev/null || exit 1
-  log_success "Open in browser: http://localhost:9091"
+  log_success "Open in browser: http://localhost:8080"
 
 }
 
