@@ -1,0 +1,85 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%====================
+% OFFICIAL PUBLIC OVERLEAF TEMPLATE
+% https://www.overleaf.com/latex/templates/data-science-tech-resume-template/zcdmpfxrzjhv
+% 
+%====================
+%
+% Resume template for data scientists, a complement to data-science-tech-cover-letter-template:
+% https://www.overleaf.com/latex/templates/data-science-tech-cover-letter-template/gbrcqktbsfxf
+%
+% Files:        resume.tex: Main file
+%               _header.tex: header code
+%               TLCresume.sty: style file containing formatting details
+%               section/objective: https://www.indeed.com/career-advice/resumes-cover-letters/resume-objective-examples
+%               section/skills: table of skills
+%               section/experience: projects or roles
+%               section/education: schools and stuff
+%               section/activities: optional, could comment out in resume.tex.
+%
+% Editor:       https://github.com/TimmyChan 
+%               https://www.linkedin.com/in/timmy-l-chan/
+%               
+% Last Updated: March 24th, 2022
+%
+%====================
+
+
+\usepackage{TLCresume}
+
+%====================
+% CONTACT INFORMATION
+%====================
+\def\name{Your Name} % Name Here
+\def\phone{(xxx) xxx-xxxx}
+\def\city{somewhere, state}
+\def\email{yourname@gmail.com}
+\def\LinkedIn{timmy-l-chan} % linkedin.com/in/______
+\def\github{TimmyChan} % github username
+\def\role{Data Scientist / Junior Developer} % JOB TITLE
+\def\portfoliourl{https://mathtodata.com}
+\def\portfolioname{MathtoData.com}
+
+\RequirePackage{fancyhdr}
+\fancypagestyle{fancy}{%
+	\fancyhf{}
+	\lhead{\phone \\ % PHONE
+		\city \\ % city
+		\href{mailto:\email}{\email}} % EMAIL}
+\chead{%
+	\centering {\Huge \skills \name \vspace{.25em}} \\ % feel free to adjust vspace to 0
+	{\color{highlight} \Large{\role}}}%
+\rhead{Portfolio: \href{https://gimmi.work}{gimmi.work}\\ % Portfolio
+	\href{https://github.com/\github}{github.com/\github} \\% Github
+	\href{https://www.linkedin.com/in/\LinkedIn}{linkedin.com/in/\LinkedIn}} % LinkedIn
+\renewcommand{\headrulewidth}{1pt}% 2pt header rule
+\renewcommand{\headrule}{\hbox to\headwidth{%
+		\color{highlight}\leaders\hrule height \headrulewidth\hfill}}
+		}
+		\pagestyle{fancy}
+		
+		\setlength{\headheight}{90pt}
+		\setlength{\headsep}{5pt}
+
+\begin{document} % \pagestyle{others}\thispagestyle{first_page}
+	
+	\input{sections/objective}
+	
+	\section{Skills}
+	\input{sections/skills}
+	
+	\section{Technical Experience}
+	\input{sections/experience}
+	
+	% make a newpage wherever it is a clean break
+	% \newpage\pagestyle{others}
+	
+	\section{Education}
+	\input{sections/education}
+	
+	\section{Activities}
+	\input{sections/activities}
+	
+\end{document}
