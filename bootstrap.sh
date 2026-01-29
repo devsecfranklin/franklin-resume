@@ -6,7 +6,7 @@
 
 # ChangeLog:
 
-DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra)
+DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev)
 LRED=$(tput setaf 1)
 
 function main() {
