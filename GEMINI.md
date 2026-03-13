@@ -37,7 +37,7 @@ The project uses a standard Autotools workflow:
     - `resume.tex`: The entry point for the LaTeX document.
     - `sections/`: Individual LaTeX files for different resume parts.
     - `TLCresume.sty`: Custom LaTeX style file.
-    - `_header.tex`: Document header and contact info.
+    - `_header.tex`: Handles formatting for the document header and contact info.
     - `Makefile.am`: Automake configuration for building the PDF.
 - `bootstrap.sh`: Script to initialize the build system.
 - `configure.ac`: Autoconf configuration file.
