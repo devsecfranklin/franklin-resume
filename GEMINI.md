@@ -29,7 +29,7 @@ The project uses a standard Autotools workflow:
 
 ### CI/CD
 
-- GitHub Actions (`.github/workflows/latex.yaml`) automatically builds the resume on pull requests using `xu-cheng/latex-action` with `xelatex`.
+- GitHub Actions (`.github/workflows/latex.yaml`) automatically builds the resume on pull requests using `xu-cheng/latex-action` with `pdf`.
 
 ## Key Files and Directories
 
