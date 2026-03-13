@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: ©2026 franklin <smoooth.y62wj@passmail.net>                                                                                          
 #                                                                                                                                                              
 # SPDX-License-Identifier: MIT                                                                                                                                 
-                                                                                                                                                               
 ################################                                                                                                                               
 # 1. TEMPORARY & BACKUP FILES                                                                                                                                  
 ################################                                                                                                                               
@@ -262,4 +261,5 @@ sympy-plots-for-*.tex/
 ################################
 # 8. MISCELLANEOUS (Explicit Files)
 ################################
-
+COPYING
+INSTALL
