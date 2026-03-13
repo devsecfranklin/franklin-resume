@@ -7,6 +7,7 @@ AC_CONFIG_COMMANDS([franklin-build],
  [echo "(⊃｡•‿•｡)⊃━⭑･ﾟﾟ･*:༅｡.｡༅:*ﾟ:*:✼✿ Configuring for $mypkgname ☽༓･*˚⁺‧"],
  [mypkgname=$PACKAGE_NAME])
 AC_CONFIG_FILES([
+  Makefile
   resume/Makefile
 ])
 AC_PROG_CXX
