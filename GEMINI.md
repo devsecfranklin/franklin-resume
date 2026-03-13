@@ -23,7 +23,7 @@ This project is a LaTeX-based resume with an automated build system using GNU Au
 The project uses a standard Autotools workflow:
 
 1.  **Initialize:** Run `./bootstrap.sh` to generate the `configure` script and run it.
-2.  **Build:** Run `make` inside the `resume/` directory (or from the root if configured).
+2.  **Build:** Run `make` inside the `resume/` directory.
     - The `Makefile.am` in `resume/` uses `latexmk` to compile the PDF.
 3.  **Clean:** Run `make clean` in the `resume/` directory to remove build artifacts.
 
