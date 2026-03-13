@@ -1,0 +1,30 @@
+# Gemini CLI Ignore Patterns
+
+# LaTeX Build Artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.lof
+*.lot
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+*.xdv
+*.fdb_latexmk
+*.fls
+*.nav
+*.snm
+*.vrb
+
+# Build Directories
+_build/
+dist/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Gemini Temporary Files
+.gemini/tmp/
