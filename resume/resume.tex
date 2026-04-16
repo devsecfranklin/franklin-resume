@@ -1,6 +1,8 @@
 % !TeX encoding = UTF-8
 % !TeX spellcheck = en_US
 % !TeX root = resume.tex
+% !TeX TXS-program:compile = txs:///xelatex/[--shell-escape]
+% https://orcid.org/0000-0003-4586-8500
 
 \documentclass[letter,10pt]{article}
 \usepackage[utf8]{inputenc}
@@ -23,8 +25,7 @@
 % Last Updated: March 24th, 2022
 %
 %====================
-
-% \usepackage{TLCresume}
+\usepackage{TLCresume}
 
 \def\name{Franklin Diaz}
 \def\phone{(773) 960-5400}
@@ -36,7 +37,7 @@
 
 \input{_header}
 \begin{document}
-\input{sections/objective}
+%\input{sections/objective}
 
 \section{Experience}
 \input{sections/experience}
@@ -48,7 +49,7 @@
 %\newpage
 
 \section{Projects}
-\input{sections/projects}
+%\input{sections/projects}
 
 \section{Education}
 \input{sections/education}
@@ -56,7 +57,5 @@
 %\section{Activities and Interests}
 %\input{sections/activities}
 \vfill{}
-
-% \sffamily\color{Blue}\footnotesize{}
-
+\sffamily\color{Blue}\footnotesize{}
 \end{document}
