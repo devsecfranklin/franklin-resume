@@ -7,6 +7,3 @@ clean:
 			rm -rf $$trash ; \
 		fi ; \
 	done
-
-all: 
-	cd resume &&latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume

@@ -1,6 +1,7 @@
 CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
 clean:
+	latexmk -C
 	rm -rf _build *.egg-info
 	@for trash in *.aux *.bbl *.blg *.lof *.log *.lot *.out *.pdf *.synctex.gz *.toc ; do \
 		if [ -f "$$trash" ]; then \
@@ -9,4 +10,4 @@ clean:
 	done
 
 all: 
-	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume
+	latexmk -xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume
