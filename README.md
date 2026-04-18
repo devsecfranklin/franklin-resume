@@ -1,5 +1,7 @@
 # Franklin Diaz - Resume
 
+[![LaTeX build](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml)
+
 - [here is the PDF file](https://github.com/devsecfranklin/franklin-resume/blob/ceb25740e386654e7e7e637c114389b814c6a308/resume/resume.pdf)
 
 ## Project Overview
