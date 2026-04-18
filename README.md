@@ -1,6 +1,6 @@
 # Franklin Diaz - Resume
 
-This repository contains the source files for my professional resume as a Security Consultant. A hosted demo of this resume project can be found at franklin-resume.herokuapp.com.
+- [here is the PDF file](https://github.com/devsecfranklin/franklin-resume/blob/ceb25740e386654e7e7e637c114389b814c6a308/resume/resume.pdf)
 
 ## Project Overview
 
