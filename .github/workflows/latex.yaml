@@ -12,5 +12,5 @@ jobs:
         uses: xu-cheng/latex-action@v4
         with:
           root_file: resume.tex
-          args: '-pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume'
-          working_directory: .
+          args: '-xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume'
+          working_directory: resume
