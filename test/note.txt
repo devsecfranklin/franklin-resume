@@ -1,0 +1,22 @@
+Recommended Test Cases for Your Layout
+Given your directory layout (containing Autotools files, LaTeX artifacts, and image assets), I recommend the following test cases to ensure project stability:
+
+1. Build System & Cleanup Integrity
+Case: Fresh Build: Run ./bootstrap.sh && ./configure && make. Expected: The build completes with an Output written on resume.pdf message.
+
+Case: Deep Clean: Run make clean. Expected: All artifacts shown in your layout—specifically resume.aux, resume.fdb_latexmk, resume.fls, resume.log, resume.out, resume.synctex.gz, and resume.xdv—are deleted.
+
+Case: Idempotent Make: Run make twice in a row. Expected: latexmk should detect that the "All targets are up-to-date" and not rerun unnecessary compilation steps.
+
+2. Asset & Resource Verification
+Case: Missing QR Code: Temporarily rename images/resume_qr.png and run make. Expected: The build should fail during the xdvipdfmx phase or throw a "File not found" error in resume.log.
+
+Case: Headshot Resolution: Ensure images/headshot2.jpg is properly scaled. Expected: The PDF should render the image without exceeding margin boundaries.
+
+3. Modular Content Integrity
+Case: Orphaned Sections: Verify if sections/projects.tex is properly included in resume.tex. Expected: Content from all .tex files in the sections/ directory appears in the final resume.pdf.
+
+Case: Log File Cleanliness: After a build, check sections/projects.log. Expected: This file should ideally not exist if your build is configured correctly; if it persists, it should be added to the make clean target.
+
+4. Environment & Path Testing
+Case: Path Independence: Run the build from the project root instead of inside the resume/ directory. Expected: The Makefile handles relative paths for the images/ and sections/ directories correctly.

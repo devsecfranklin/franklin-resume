@@ -1,103 +1,53 @@
 #!/usr/bin/env bash
-#
 # SPDX-FileCopyrightText: ©2026 franklin <smoooth.y62wj@passmail.net>
-#
 # SPDX-License-Identifier: MIT
 
-# ChangeLog:
-
+# --- Configuration ---
 DEB_PKG=(latexmk texlive-xetex libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev)
-LRED=$(tput setaf 1)
+BLUE='\033[1;34m'; GREEN='\033[1;32m'; RED='\033[1;31m'; NC='\033[0m'
 
-if tput setaf 1 &>/dev/null; then
-  RED=$(tput setaf 1)
-  GREEN=$(tput setaf 2)
-  YELLOW=$(tput setaf 3)
-  CYAN=$(tput setaf 6)
-  LPURP='\033[1;35m'
-  BOLD=$(tput bold)
-  NC=$(tput sgr0) # No Color
-else
-  RED=""
-  GREEN=""
-  YELLOW=""
-  CYAN=""
-  BOLD=""
-  NC=""
-fi
+log() { echo -e "${BLUE}==>${NC} $1"; }
+success() { echo -e "${GREEN}SUCCESS:${NC} $1"; }
+error() { echo -e "${RED}ERROR:${NC} $1"; exit 1; }
 
-log_header() { printf "\n${LPURP}# --- %s ${NC}\n" "$1"; }
-log_info() { echo -e "${CYAN}==>${NC} ${BOLD}$1${NC}"; }
-log_success() { echo -e "${GREEN}==>${NC} ${BOLD}$1${NC}"; }
-log_warn() { echo -e "${YELLOW}WARN:${NC} $1"; }
-log_error() { >&2 echo -e "${RED}ERROR:${NC} $1"; }
+# --- Dependency Management ---
+install_deps() {
+    local missing=()
+    for pkg in "${DEB_PKG[@]}"; do
+        dpkg -s "$pkg" &>/dev/null || missing+=("$pkg")
+    done
 
-function check_if_root {
-  if [[ $(id -u) -eq 0 ]]; then
-    log_warn "You are the root user."
-  else
-    log_success "You are NOT the root user."
-  fi
-}
-
-# Check if we are inside a container
-CONTAINER=false
-function check_container() {
-  if [ -f /.dockerenv ]; then
-    log_warn "Containerized build environment"
-    CONTAINER=true
-  else
-    log_info "NOT a containerized build environment."
-  fi
-}
-
-function check_installed() {
-  if command -v "$1" &>/dev/null; then
-    log_success "Found command: ${1}"
-    return 0
-  else
-    log_error "Command not found: ${1}"
-    return 1
-  fi
-}
-
-PRIV_CMD="sudo"
-function install_debian() {
-  # Container package installs will fail unless you do an initial update, the upgrade is optional
-  if [ "${CONTAINER}" = true ]; then
-    log_info "Upgrading container packages"
-    sudo apt-get update && apt-get upgrade -y
-    sudo apt-get autoremove -y
-  fi
-
-  for i in "${DEB_PKG[@]}"; do
-    if [ $(dpkg-query -W -f='${Status}' ${i} 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-      log_warn "Installing ${i} since it is not found."
-      # If we are in a container there is no sudo in Debian
-      if [ "${CONTAINER}" = true ]; then
-        $PRIV_CMD apt-get --yes install "${i}"
-        $PRIV_CMD apt-get autoremove -y
-      else
-        $PRIV_CMD apt-get install "${i}" -y
-        $PRIV_CMD apt-get autoremove -y
-      fi
+    if [ ${#missing[@]} -gt 0 ]; then
+        log "Installing missing dependencies: ${missing[*]}"
+        local runner=""
+        [[ $(id -u) -ne 0 ]] && command -v sudo &>/dev/null && runner="sudo"
+        
+        $runner apt-get update -qq
+        $runner apt-get install -y "${missing[@]}" || error "Package installation failed."
     else
-      log_info "found package: ${i}"
+        log "All dependencies already present."
     fi
-  done
-
-  if ! check_installed dircolors && [ ! -d "${HOME}/.dircolors" ]; then
-    dircolors -p >~/.dircolors
-    log_warn "Updating the dircolors configuration."
-  fi
 }
 
-function main() {
-  # echo -e "${LRED}can not find common.sh${NC}"
+# --- Main Build Process ---
+main() {
+    log "Starting project initialization..."
 
-  autoreconf -i
-  ./configure
-  install_debian
+    # 1. Install system dependencies first
+    install_deps
+
+    # 2. Run Autotools to generate 'configure' and 'Makefile.in' 
+    log "Generating build scripts..."
+    autoreconf -i || error "autoreconf failed. Ensure 'autoconf' and 'automake' are installed."
+
+    # 3. Final configuration 
+    log "Configuring project..."
+    ./configure || error "Configuration failed."
+
+    # Optional: ensure dircolors exists for your terminal preference
+    [[ ! -f ~/.dircolors ]] && dircolors -p > ~/.dircolors && log "Updated .dircolors"
+
+    success "Ready to build. Now run 'cd resume && make'."
 }
 
 main "$@"
