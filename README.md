@@ -1,6 +1,8 @@
 # Franklin Diaz - Resume
 
-[![LaTeX build](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml)
+[![GitHub](https://img.shields.io/badge/GitHub-devsecfranklin-blue?logo=github)](https://github.com/devsecfranklin)
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0003--4586--8500-A6CE39?logo=orcid&logoColor=FFFFFF)](https://orcid.org/0000-0003-4586-8500)
+[![LaTeX build](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml) [![Security & Integrity Scan](https://github.com/devsecfranklin/franklin-resume/actions/workflows/security-scan.yml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/security-scan.yml)
 
 - [here is the PDF file](https://github.com/devsecfranklin/franklin-resume/blob/main/resume/resume.pdf)
 
