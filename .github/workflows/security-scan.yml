@@ -18,7 +18,7 @@ jobs:
       - name: Setup Go Environment
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.26'
           cache: true # Slickly caches dependencies for faster runs
 
       - name: Initialize Go Modules
