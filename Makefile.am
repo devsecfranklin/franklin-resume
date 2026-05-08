@@ -1,9 +1,10 @@
-CLOCAL_AMFLAGS = -I config/m4 -I aclocal
+all:
+	cd resume && TEXMFHOME=~/workspace/texmf latexmk -xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume [cite: 61, 147]
 
 clean:
-	rm -rf _build *.egg-info
-	@for trash in *.aux *.bbl *.blg *.lof *.log *.lot *.out *.pdf *.synctex.gz *.toc INSTALL COPYING; do \
-		if [ -f "$$trash" ]; then \
-			rm -rf $$trash ; \
-		fi ; \
-	done
+	cd reusme && latexmk -C
+	rm -rf _build/ *.egg-info
+
+distclean-local:
+	rm -rf autom4te.cache/
+	rm -f config.log config.status Makefile Makefile.in configure aclocal.m4

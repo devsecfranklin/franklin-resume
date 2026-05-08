@@ -1,3 +1,0 @@
-# biography
-
-Collect and improve
