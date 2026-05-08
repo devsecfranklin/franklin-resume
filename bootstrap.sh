@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+
 # SPDX-FileCopyrightText: ©2026 franklin <smoooth.y62wj@passmail.net>
+#
 # SPDX-License-Identifier: MIT
 
-# --- Configuration ---
 DEB_PKG=(latexmk texlive-xetex libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev)
 BLUE='\033[1;34m'; GREEN='\033[1;32m'; RED='\033[1;31m'; NC='\033[0m'
 
@@ -10,7 +11,6 @@ log() { echo -e "${BLUE}==>${NC} $1"; }
 success() { echo -e "${GREEN}SUCCESS:${NC} $1"; }
 error() { echo -e "${RED}ERROR:${NC} $1"; exit 1; }
 
-# --- Dependency Management ---
 install_deps() {
     local missing=()
     for pkg in "${DEB_PKG[@]}"; do
@@ -29,24 +29,18 @@ install_deps() {
     fi
 }
 
-# --- Main Build Process ---
 main() {
     log "Starting project initialization..."
-
-    # 1. Install system dependencies first
     install_deps
-
-    # 2. Run Autotools to generate 'configure' and 'Makefile.in' 
     log "Generating build scripts..."
     autoreconf -i || error "autoreconf failed. Ensure 'autoconf' and 'automake' are installed."
-
-    # 3. Final configuration 
     log "Configuring project..."
     ./configure || error "Configuration failed."
-
-    # Optional: ensure dircolors exists for your terminal preference
     [[ ! -f ~/.dircolors ]] && dircolors -p > ~/.dircolors && log "Updated .dircolors"
-
+    log "Go setup"
+    go mod init github.com/devsecfranklin/franklin-resume
+    go mod tidy
+    go get assets_test.go
     success "Ready to build. Now run 'cd resume && make'."
 }
 
