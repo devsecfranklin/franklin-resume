@@ -1,0 +1,30 @@
+name: Security & Integrity Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  go-security-tests:
+    name: Run Asset & Link Integrity Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go Environment
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache: true # Slickly caches dependencies for faster runs
+
+      - name: Initialize Go Modules
+        # Ensures the environment is ready even if go.sum is missing
+        run: go mod tidy
+
+      - name: Run Integrity Tests
+        # Executes your link_test.go and asset_test.go [cite: 63, 68]
+        run: go test -v ./test/...
