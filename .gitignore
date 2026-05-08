@@ -1,37 +1,37 @@
-# SPDX-FileCopyrightText: ©2026 franklin <smoooth.y62wj@passmail.net>                                                                                          
-#                                                                                                                                                              
-# SPDX-License-Identifier: MIT                                                                                                                                 
-################################                                                                                                                               
-# 1. TEMPORARY & BACKUP FILES                                                                                                                                  
-################################                                                                                                                               
-                                                                                                                                                               
-# Standard editor/OS backups, temporary, and metadata files                                                                                                    
-*~                                                                                                                                                             
-*.bak                                                                                                                                                          
-*.bkp                                                                                                                                                          
-*.orig                                                                                                                                                         
-*.rej                                                                                                                                                          
-*.swp                                                                                                                                                          
-*.lock                                                                                                                                                         
-.DS_Store                                                                                                                                                      
-.Trashes                                                                                                                                                       
-.fuse_hidden*                                                                                                                                                  
-*#                                                                                                                                                             
-.#*                                                                                                                                                            
-Thumbs.db                                                                                                                                                      
-.nfs*                                                                                                                                                          
-*.dtmp                                                                                                                                                         
-.terraform                                                                                                                                                     
-                                                                                                                                                               
-################################                                                                                                                               
-# 2. BUILD ARTIFACTS & COMPILER OUTPUT                                                                                                                         
-################################                                                                                                                               
-                                                                                                                                                               
-# General Build & Object Files                                                                                                                                 
-*.o                                                                                                                                                            
-*.ko                                                                                                                                                           
-*.obj                                                                                                                                                          
-*.elf                                                                                                                                                          
+# SPDX-FileCopyrightText: ©2026 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
+################################
+# 1. TEMPORARY & BACKUP FILES
+################################
+
+# Standard editor/OS backups, temporary, and metadata files
+*~
+*.bak
+*.bkp
+*.orig
+*.rej
+*.swp
+*.lock
+.DS_Store
+.Trashes
+.fuse_hidden*
+*#
+.#*
+Thumbs.db
+.nfs*
+*.dtmp
+.terraform
+
+################################
+# 2. BUILD ARTIFACTS & COMPILER OUTPUT
+################################
+
+# General Build & Object Files
+*.o
+*.ko
+*.obj
+*.elf
 *.exe
 *.out
 *.app
@@ -263,3 +263,4 @@ sympy-plots-for-*.tex/
 ################################
 COPYING
 INSTALL
+coverage.*
