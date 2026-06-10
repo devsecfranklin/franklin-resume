@@ -8,6 +8,7 @@ AC_CONFIG_COMMANDS([franklin-build],
  [mypkgname=$PACKAGE_NAME])
 AC_CONFIG_FILES([
   resume/Makefile
+  resume/biography/Makefile
 ])
 AC_PROG_CXX
 AM_PATH_PYTHON(3.9) # minimum version of Python

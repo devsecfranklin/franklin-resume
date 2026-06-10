@@ -1,5 +1,0 @@
-# All about etcd
-
-There is some [great detail about etcd on Raspi here](https://github.com/robertojrojas/kubernetes-the-hard-way-raspberry-pi/blob/master/docs/03-etcd.md)
-
-Database is locate in: /var/lib/etcd/
