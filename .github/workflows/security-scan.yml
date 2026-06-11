@@ -20,12 +20,7 @@ jobs:
           cache: true 
 
       - name: Initialize Go Modules
-        run: 
-          go mod tidy
-          go test -coverprofile=coverage.out ./test/...
-          go tool cover -html=coverage.out -o coverage.html
+        run: go mod tidy && go test -coverprofile=coverage.out ./test/... && go tool cover -html=coverage.out -o coverage.html
 
       - name: Run Integrity Tests
-        run:
-          go test -json ./test/... > test-report.json
-          go test -v ./test/...
+        run: go test -json ./test/... > test-report.json && go test -v ./test/...
