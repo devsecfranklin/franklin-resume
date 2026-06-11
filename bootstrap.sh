@@ -40,7 +40,6 @@ main() {
     log "Go setup"
     go mod init github.com/devsecfranklin/franklin-resume
     go mod tidy
-    go get assets_test.go
     success "Ready to build. Now run 'cd resume && make'."
 }
 

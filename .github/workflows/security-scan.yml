@@ -1,8 +1,6 @@
 name: Security & Integrity Scan
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -19,12 +17,10 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: '1.26'
-          cache: true # Slickly caches dependencies for faster runs
+          cache: true 
 
       - name: Initialize Go Modules
-        # Ensures the environment is ready even if go.sum is missing
-        run: go mod tidy
+        run: go mod tidy && go test -coverprofile=coverage.out ./test/... && go tool cover -html=coverage.out -o coverage.html
 
       - name: Run Integrity Tests
-        # Executes your link_test.go and asset_test.go [cite: 63, 68]
-        run: go test -v ./test/...
+        run: go test -json ./test/... > test-report.json && go test -v ./test/...

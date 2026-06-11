@@ -264,3 +264,5 @@ sympy-plots-for-*.tex/
 COPYING
 INSTALL
 coverage.*
+test-report.json
+security_scanner.test

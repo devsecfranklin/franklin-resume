@@ -1,4 +1,4 @@
-name: build - resume
+name: build - bio
 on:
   - pull_request
 
@@ -8,9 +8,9 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
-      - name: Compile resume
+      - name: Compile biography
         uses: xu-cheng/latex-action@v4
         with:
-          root_file: resume.tex
-          args: '-xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume'
-          working_directory: resume
+          root_file: biography.tex
+          args: '-xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape biography'
+          working_directory: biography
