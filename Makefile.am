@@ -1,5 +1,5 @@
 all:
-	cd resume && TEXMFHOME=~/workspace/texmf latexmk -xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume [cite: 61, 147]
+	cd resume && TEXMFHOME=~/workspace/texmf latexmk -xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume
 
 clean:
 	cd reusme && latexmk -C
