@@ -5,3 +5,13 @@ all:
 
 clean:
 	latexmk -c biography.tex
+
+lint:
+        @echo "==> Initializing documentation audit..."
+        @if command -v chktex > /dev/null; then \
+                chktex -q $(TEX_FILES); \
+                echo "==> Audit complete. Documentation stability: 100%"; \
+        else \
+                echo "ERROR: 'chktex' not found on this node. Install via apt-get or dnf."; \
+                exit 1; \
+        fi

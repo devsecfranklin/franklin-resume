@@ -1,6 +1,8 @@
+%%% FONT %%%
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
-\setmainfont{Inter} % or {TeX Gyre Heros}
+\usepackage{textcomp}
+\setsansfont{Montserrat}
 
 \usepackage{graphicx} % gives \includegraphics
 %\usepackage{ragged2e} % gives \justifying
@@ -11,3 +13,12 @@
 \definecolor{mycolor}{HTML}{FA582D}
 \definecolor{panorange}{HTML}{FF6A00}
 
+%%% HEADER %%%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % remove the underline from below the graphic
+% \includegraphics[width=4cm]{../images/bio-header-palo.png}
+\fancyhead[L]{\includegraphics[height=20pt]{../images/bio-header-palo.png}}
+
+\setlength{\headheight}{25pt} % Adjust header height for graphics
