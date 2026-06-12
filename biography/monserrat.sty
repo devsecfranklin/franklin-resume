@@ -1,0 +1,26 @@
+\ProvidesPackage{montserrat}
+
+\RequirePackage{fontspec}
+\newfontfamily{\Montserrat}[
+  NFSSFamily=Montserrat,% <--- the key
+  %Path=fonts/montserrat/,% <--- I can only use the TeX Live ones
+  Extension = .otf,% <--- I have OpenType fonts
+  Ligatures = TeX,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic,
+  FontFace={xl}{n}{*-ExtraLight},
+  FontFace={xl}{it}{*-ExtraLightItalic},
+  FontFace={l}{n}{*-Light},
+  FontFace={l}{it}{*-LightItalic},
+  FontFace={mb}{n}{*-Medium},
+  FontFace={mb}{it}{*-MediumItalic},
+  FontFace={k}{n}{*-Black},
+  FontFace={k}{it}{*-BlackItalic},
+]{Montserrat}
+
+\DeclareOption{default}{%
+  \renewcommand{\familydefault}{Montserrat}%
+}
+\ProcessOptions\relax

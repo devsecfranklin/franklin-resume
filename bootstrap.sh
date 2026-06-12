@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-DEB_PKG=(latexmk texlive-xetex libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev)
+DEB_PKG=(latexmk texlive-xetex libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev fonts-montserrat texlive-fonts-recommended)
 BLUE='\033[1;34m'; GREEN='\033[1;32m'; RED='\033[1;31m'; NC='\033[0m'
 
 log() { echo -e "${BLUE}==>${NC} $1"; }
