@@ -1,0 +1,158 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1.8cm, top=1.6cm, bottom=1.6cm]{geometry}
+\usepackage{fontspec}
+\usepackage[english, bidi=basic, provide=*]{babel}
+\babelprovide[import, onchar=ids fonts]{english}
+\babelfont{rm}{Noto Sans}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+% Color definitions
+\definecolor{primary}{HTML}{0F172A}
+\definecolor{accent}{HTML}{0284C7}
+\definecolor{textdark}{HTML}{1E293B}
+\definecolor{muted}{HTML}{64748B}
+\definecolor{rulecolor}{HTML}{CBD5E1}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent,
+    pdftitle={Franklin Diaz - Curriculum Vitae},
+    pdfauthor={Franklin Diaz}
+}
+
+% Typography and section formatting
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\titleformat{\section}
+  {\vspace{8pt}\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\uppercase}
+  {}{0em}{}
+  [\vspace{-4pt}\color{rulecolor}\rule{\textwidth}{1.2pt}\vspace{3pt}]
+
+\setlist[itemize]{leftmargin=14pt, itemsep=2pt, parsep=0pt, topsep=2pt}
+
+\begin{document}
+\color{textdark}
+
+% Header / Masthead
+{\fontsize{20pt}{22pt}\selectfont\textbf{\color{primary}Franklin Diaz}}\\[3pt]
+{\fontsize{10pt}{12pt}\selectfont\textbf{\color{accent}Lecturer --- Information Systems \textbar\ Principal Security Consultant}}\\[5pt]
+{\fontsize{8.5pt}{10pt}\selectfont\color{muted}
+University of Colorado Denver Business School \enspace\textbullet\enspace
+Palo Alto Networks \enspace\textbullet\enspace
+\href{mailto:franklin.diaz@ucdenver.edu}{franklin.diaz@ucdenver.edu} \enspace\textbullet\enspace
+\href{https://www.bitsmasher.net/research/}{bitsmasher.net} \enspace\textbullet\enspace
+\href{https://linkedin.com/in/franklin-diaz}{linkedin.com/in/franklin-diaz} \enspace\textbullet\enspace
+\href{https://github.com/pale-shadow}{github.com/pale-shadow}
+}
+\vspace{6pt}
+\hrule height 1.8pt \color{primary}
+\vspace{6pt}
+
+% Education
+\section{Education}
+\noindent
+\begin{tabularx}{\textwidth}{@{}X X@{}}
+\textbf{Master of Science in Computer Security} & \textbf{Master of Science in Information Systems} \\
+DePaul University, Chicago, IL (2007) & Northwestern University, Evanston, IL (2004)
+\end{tabularx}
+\vspace{4pt}
+
+\noindent
+\textbf{Bachelor of Science in Computer Science} \\
+Roosevelt University, Chicago, IL (2002)
+
+% Academic Appointments
+\section{Academic Appointments}
+\noindent\textbf{Lecturer, Information Systems Discipline} \hfill {\color{muted}\textbf{Sep 2025 -- Present}} \\
+{\color{textdark}\textit{University of Colorado Denver Business School --- Denver, CO}}
+\begin{itemize}
+    \item Teaches \textbf{ISMG 2050: Business Problem Solving Tools}, introducing IT infrastructure, data management systems, analytical modeling, and computational business problem solving.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Adjunct Faculty --- Information Systems} \hfill {\color{muted}\textbf{2006 -- 2011}} \\
+{\color{textdark}\textit{McHenry County College --- Crystal Lake, IL}}
+\begin{itemize}
+    \item Taught undergraduate courses in Linux OS fundamentals, shell programming, enterprise productivity suites, and Microsoft Windows operating systems.
+\end{itemize}
+
+% Professional Experience
+\section{Professional Experience}
+\noindent\textbf{Principal Security Consultant / Extended Expertise} \hfill {\color{muted}\textbf{Jan 2020 -- Present}} \\
+{\color{textdark}\textit{Palo Alto Networks --- Remote}}
+\begin{itemize}
+    \item Lead architecture and deployment of Palo Alto Networks security solutions for enterprise clients executing multi-cloud migrations (GCP, OCI, AWS, Azure).
+    \item Architect scalable infrastructure using Infrastructure as Code (IaC), aligning mission-critical environments to rigorous zero-trust reference architectures.
+    \item Serve as technical advisor identifying policy and architectural gaps, delivering remediation roadmaps, and advising executive stakeholders post-incident.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Security Engineer (Detection \& Response Engineering)} \hfill {\color{muted}\textbf{Oct 2014 -- Jan 2020}} \\
+{\color{textdark}\textit{Salesforce --- Bellevue, WA}}
+\begin{itemize}
+    \item Built high-throughput security telemetry collection systems processing \textbf{over 1 billion security events per day} across global enterprise infrastructure.
+    \item Engineered and maintained analytical data pipelines in a FedRAMP High GovCloud environment on AWS.
+    \item Developed distributed packet capture infrastructure, CI/CD automation, and integrated regression test suites across multi-repository toolsets.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Principal Research Software Engineer} \hfill {\color{muted}\textbf{Aug 2012 -- Jan 2014}} \\
+{\color{accent}\textbf{Role: Security Engineer \& Test Architect}} \enspace\textbar\enspace {\color{textdark}\textit{Indiana University (SDN Lab) --- Bloomington, IN}}
+\begin{itemize}
+    \item Directed testing strategies and test case engineering for Software Defined Networking (OpenFlow) infrastructure.
+    \item Developed web-based telemetry and management tools for the GENI/GEMINI national experimental network testbed.
+    \item Assisted undergraduate computer networking courses: led discussions, developed coursework, and proctored examinations.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Research \& Development Engineer} \hfill {\color{muted}\textbf{Apr 2011 -- Jul 2012}} \\
+{\color{accent}\textbf{Location: Espoo, Finland \& Arlington Heights, IL}} \enspace\textbar\enspace {\color{textdark}\textit{Nokia Siemens Networks}}
+\begin{itemize}
+    \item Conducted cellular base station product development, firmware integration, and multi-subsystem verification for CDMA telecom systems.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Senior Software Engineer} \hfill {\color{muted}\textbf{Jan 1998 -- Mar 2011}} \\
+{\color{accent}\textbf{Cellular Networks \& Space Sector --- 13-Year Core Engineering Tenure}} \enspace\textbar\enspace {\color{textdark}\textit{Motorola Solutions}}
+\begin{itemize}
+    \item Engineered CDMA cellular base station infrastructure and embedded subsystems using C and C++.
+    \item Partnered directly with premier carrier account teams including Sprint, ALLTEL, Lucent, Pelephone, and NTT on systems integration and network testing.
+    \item Led cross-functional system integration efforts and acceptance testing across distributed product feature teams.
+\end{itemize}
+
+% Projects & Open Research
+\section{Projects \& Open Research}
+\begin{itemize}
+    \item \textbf{Cloud Native Security Lab} (\href{https://zenodo.org/records/5918861}{Zenodo Record 5918861}): Complete open-source cloud-native security research lab deployed in Google Cloud Platform.
+    \item \textbf{project emerald}: Minecraft schematic generation utilizing local AI Edge TPU hardware acceleration.
+    \item \textbf{Peirates}: Contributor to open-source Kubernetes penetration testing and attack-surface evaluation tool.
+\end{itemize}
+
+% Publications & Community Service
+\section{Publications, Talks \& Community Service}
+\begin{itemize}
+    \item \textbf{Conference Security Track Volunteer:} BSidesLV.
+    \item \textbf{Technical Author \& Researcher:} Decentralized protocols, autonomous agent runtime security, and DevSecOps at \href{https://www.bitsmasher.net/research/}{bitsmasher.net/research}.
+\end{itemize}
+
+% Technical Skills & Competencies
+\section{Technical Skills \& Competencies}
+\noindent
+\begin{tabularx}{\textwidth}{@{}p{4.2cm} X@{}}
+\textbf{Languages:} & Python, SQL, Go, JavaScript, Bash, C/C++, Java, PERL \\
+\textbf{Frameworks \& Libraries:} & Pydantic, FastAPI, Django, Leaflet, LINQ \\
+\textbf{Cloud \& Platforms:} & AWS, GCP, Azure, OCI \\
+\textbf{Tools \& Infrastructure:} & Git, JIRA, Kafka, Redis, Docker, Kubernetes, Terraform, Airflow, Jenkins, \LaTeX \\
+\textbf{Concepts \& Practices:} & DevSecOps, Infrastructure as Code, REST/XML APIs, Object-Oriented Design, TDD, Multi-Cloud Architecture
+\end{tabularx}
+
+\end{document}

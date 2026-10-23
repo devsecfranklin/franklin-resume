@@ -33,12 +33,13 @@ main() {
     log "Starting project initialization..."
     install_deps
     log "Generating build scripts..."
+    mkdir -p aclocal
     autoreconf -i || error "autoreconf failed. Ensure 'autoconf' and 'automake' are installed."
     log "Configuring project..."
     ./configure || error "Configuration failed."
     [[ ! -f ~/.dircolors ]] && dircolors -p > ~/.dircolors && log "Updated .dircolors"
     log "Go setup"
-    go mod init github.com/devsecfranklin/franklin-resume
+    go mod init github.com/pale-shadow/franklin-resume
     go mod tidy
     success "Ready to build. Now run 'cd resume && make'."
 }

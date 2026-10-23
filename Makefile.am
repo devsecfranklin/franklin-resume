@@ -6,7 +6,7 @@ all:
 clean:
 	cd resume/ && latexmk -C
 	rm -rf _build/ *.egg-info
-	rm coverage.html coverage.out security_scanner.test
+	rm -f coverage.html coverage.out security_scanner.test
 	rm -rf autom4te.cache/
 	rm -f config.log config.status Makefile Makefile.in configure aclocal.m4
 
