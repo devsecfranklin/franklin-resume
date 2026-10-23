@@ -1,4 +1,4 @@
-# Franklin Diaz, CISM
+# Franklin Diaz
 
 **Lecturer — Information Systems | Principal Security Consultant**  
 University of Colorado Denver Business School · Palo Alto Networks  
@@ -17,14 +17,7 @@ Northwestern University, Evanston, IL — 2004
 **Bachelor of Science in Computer Science**  
 Roosevelt University, Chicago, IL — 2002
 
----
 
-## CREDENTIALS & CERTIFICATIONS
-
-- **CISM** — Certified Information Systems Manager (ISACA)
-- **CompTIA Security+**
-
----
 
 ## CURRENT APPOINTMENT
 
