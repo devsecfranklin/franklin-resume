@@ -22,16 +22,6 @@ Master of Science in Information Systems, Northwestern University (2004)
 
 Bachelor of Science in Computer Science, Roosevelt University (2002)
 
-### Credentials
-
-CISSP — Certified Information Systems Security Professional (ISC2)
-
-CISM — Certified Information Systems Manager (ISACA)
-
-CompTIA Security+
-
-(Verify additional certifications to be listed here)
-
 ### Areas of expertise
 
 Cloud Security Architecture
