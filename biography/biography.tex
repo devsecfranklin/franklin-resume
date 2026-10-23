@@ -1,70 +1,71 @@
 % !TeX encoding = UTF-8
 % !TeX spellcheck = en_US
-% !TeX root = biography.tex
 % !TeX TXS-program:compile = txs:///xelatex/[--shell-escape]
-% https://orcid.org/0000-0003-4586-8500
-% !TeX encoding = UTF-8
 
-\documentclass{article}
+\documentclass[10pt]{article}
 
-
-% \usepackage{fed-resume}
 \input{_header}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage[hmargin=0.75in, vmargin=0.75in]{geometry}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=panorange,
+    citecolor=panorange
+}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
 
 \begin{document}
 
-\vspace{0.2in}
-
-\noindent{Franklin Diaz}\vspace{0.1in}\\
-
-\noindent\begin{tikzpicture}
-	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Professional Profile};
-\end{tikzpicture}
-
-
-\noindent Franklin Diaz is a results-driven Principal Engineer, security researcher, and educator with over 20 years of experience spanning telecommunications, software development, cloud security, and DevSecOps. Currently in his seventh year at Palo Alto Networks, Franklin serves as a Principal Extended Expertise Consultant, where he guides large-scale enterprise customers through complex cloud migrations, automation initiatives, and critical infrastructure transformations.\\
-\\
-Alongside his corporate consulting, Franklin is a highly active member of the open-source security community and serves as an Adjunct Instructor at the University of Colorado Denver Business School, bridging the gap between industry practice and academic theory.
+\noindent\fbox{\includegraphics[width=1.8in]{../images/Franklin_24-09-19_3869.jpg}} \hfill
+\begin{minipage}{\dimexpr\linewidth-1.8in-2em\relax}
+\raggedleft
+{\Huge \textbf{Franklin Diaz}}\\[0.1in]
+{\Large Principal Engineer, Security Researcher, and Educator}\\[0.15in]
+{\small
+\href{mailto:franklin.diaz@ucdenver.edu}{franklin.diaz@ucdenver.edu} $\cdot$ Denver, CO
+}
+\end{minipage}
 
 \vspace{0.2in}
 
-\noindent\begin{tikzpicture}
-	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm)  {Skills};
-\end{tikzpicture}
+\noindent\rule{\linewidth}{0.4pt}
 
-\begin{itemize}
-	\item NGFW configuration, implementation, and management
-	\item Panorama/SCM design, implementation and migration.
-	\item User-ID and High Availability for the enterprise.
-\end{itemize}
+\vspace{0.15in}
 
-\vspace{0.2in}
+Franklin Diaz is a Principal Engineer at Palo Alto Networks, where he specializes in public cloud infrastructure, automation, and DevSecOps as a member of the Professional Services team. In this role, he designs, develops, and deploys infrastructure as Code (IaC) for customers across public cloud environments (GCP, OCI, AWS, and Azure) based on best security practices and reference architectures, alongside extensive API automation work.
 
-\noindent\begin{tikzpicture}
-	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Recent PAN Professional Experience};
-\end{tikzpicture}
+\vspace{0.1in}
 
-\begin{itemize}
-	\item Global pharmaceutical distribution company with over 203,000 employees in 27 countries
-	\item Global telecommunications company with over 23,000 employees in 100 countries
-\end{itemize}
+A seasoned technology professional with over 20 years of experience, Diaz's background spans Telecommunications, Networks, Software, and Information Security. His career includes significant contributions such as his time at Salesforce as a Sr. Security Engineer, where his team designed, built, and maintained a large-scale security log collection solution processing over 1 billion security events per day. He also built and maintained data science pipelines, including one in the FedRamp High GovCloud environment in AWS, and developed a large-scale packet capture solution on internal company IT networks. Earlier in his career, as a Principal Research Engineer at Indiana University, he served as a Test Architect in the Software Defined Networking Lab, designing and directing test efforts on openflow networks.
 
-\vspace{0.2in}
+\vspace{0.1in}
 
-% \break
-\noindent\begin{tikzpicture}
-	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Accomplishments};
-\end{tikzpicture}
+Diaz serves as an Adjunct Faculty member at the University of Colorado Denver Business School, teaching Information Systems courses and bridging the gap between industry practice and academic theory. His prior teaching experience includes five years at McHenry County College (2006--2011), where he taught Linux OS basics, Linux shell programming, Microsoft Office, and Microsoft Windows OS.
 
-\begin{itemize}
-	\item Performed best-practice assessments and worked with customer stakeholders to plan and successfully execute change strategy to migrate to a variety of best practices in NGFW platform. 
-	\item Worked with customer stakeholders to educate, adopt, and apply Palo Alto Networks technologies across a variety of teams, technologies, and business processes.
-	\item Obtained consistently high CSAT scores throughout the period of customer engagements.
-\end{itemize}
+\vspace{0.15in}
 
+\noindent\rule{\linewidth}{0.4pt}
+\vspace{0.05in}
+
+egin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.48\linewidth} X @{}}
+\textbf{\large Education} & \textbf{\large Teaching Experience} \\[0.1in]
+MS, Computer Information Systems --- Northwestern University & \textbf{University of Colorado Denver, Business School} \\
+MS, Network Engineering/Network Security --- DePaul University & \quad Adjunct Faculty, Information Systems \\
+BS, Computer Science & \\[0.05in]
+& \textbf{McHenry County College} (2006--2011) \\
+& \quad Courses: Linux OS, Shell Programming, \\
+& \quad Microsoft Office, Windows OS \\
+\end{tabular}
+
+\vfill
+\noindent\small\href{https://orcid.org/0000-0003-4586-8500}{https://orcid.org/0000-0003-4586-8500} $\cdot$ \href{https://github.com/devsecfranklin}{github.com/devsecfranklin} $\cdot$ \href{https://linkedin.com/in/franklin-diaz}{linkedin.com/in/franklin-diaz}
 
 \end{document}
