@@ -4,9 +4,9 @@ Principal Security Consultant · Open Source Contributor · Adjunct Educator
 
 ---
 
-[![GitHub](https://img.shields.io/badge/GitHub-devsecfranklin-blue?logo=github)](https://github.com/devsecfranklin)
+[![GitHub](https://img.shields.io/badge/GitHub-pale-shadow-blue?logo=github)](https://github.com/pale-shadow)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0003--4586--8500-A6CE39?logo=orcid&logoColor=FFFFFF)](https://orcid.org/0000-0003-4586-8500)
-[![build - resume](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml)
+[![build - resume](https://github.com/pale-shadow/franklin-resume/actions/workflows/latex.yaml/badge.svg)](https://github.com/pale-shadow/franklin-resume/actions/workflows/latex.yaml)
 
 ---
 
@@ -20,8 +20,8 @@ This repository is my living resume — built in LaTeX, version-controlled, and 
 
 | | |
 |---|---|
-| 📄 **Resume** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/main/resume/resume.pdf) |
-| 📖 **Biography** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/main/biography/biography.pdf) |
+| 📄 **Resume** | [Download PDF](https://raw.githubusercontent.com/pale-shadow/franklin-resume/main/resume/resume.pdf) |
+| 📖 **Biography** | [Download PDF](https://raw.githubusercontent.com/pale-shadow/franklin-resume/main/biography/biography.pdf) |
 
 ---
 

@@ -209,6 +209,8 @@ terraform.rc
 *.dvi
 *.xdv
 *.synctex*
+# PDF output — most are build artifacts, but the published resume is source-tracked
+!resume/resume.pdf
 *.pdfsync
 *-converted-to.*
 .pdf
