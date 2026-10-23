@@ -1,70 +1,78 @@
 % !TeX encoding = UTF-8
 % !TeX spellcheck = en_US
-% !TeX root = biography.tex
 % !TeX TXS-program:compile = txs:///xelatex/[--shell-escape]
-% https://orcid.org/0000-0003-4586-8500
-% !TeX encoding = UTF-8
 
-\documentclass{article}
+\documentclass[10pt]{article}
 
-
-% \usepackage{fed-resume}
 \input{_header}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage[hmargin=0.75in, vmargin=0.75in]{geometry}
 
 \begin{document}
 
-\vspace{0.2in}
+\vspace{0.3in}
 
-\noindent{Franklin Diaz}\vspace{0.1in}\\
+\noindent\begin{tikzpicture}
+	\fill[panorange] (0,0) rectangle (\linewidth,0.9cm);
+	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.45cm) {Franklin Diaz};
+\end{tikzpicture}
+
+\vspace{0.1in}
+
+\noindent\fbox{\includegraphics[width=1.8in]{Franklin_24-09-19_3869.jpg}} \hspace{0.3in}
+\begin{minipage}{\dimexpr\linewidth-1.8in-0.3in\relax}
+\Large{\textbf{Principal Engineer, Security Researcher, and Educator}} \\[0.1in]
+\small
+Franklin Diaz is a Principal Engineer at Palo Alto Networks, where he specializes in public cloud infrastructure, automation, and DevSecOps as a member of the Professional Services team. In this role, he designs, develops, and deploys infrastructure as Code (IaC) for customers across public cloud environments (GCP, OCI, AWS, and Azure) based on best security practices and reference architectures, alongside extensive API automation work.
+
+\vspace{0.15in}
+
+A seasoned technology professional with over 20 years of experience, Diaz's background spans Telecommunications, Networks, Software, and Information Security. His career includes significant contributions such as his time at Salesforce as a Sr. Security Engineer, where his team designed, built, and maintained a large-scale security log collection solution processing over 1 billion security events per day. He also built and maintained data science pipelines, including one in the FedRamp High GovCloud environment in AWS, and developed a large-scale packet capture solution on internal company IT networks. Earlier in his career, as a Principal Research Engineer at Indiana University, he served as a Test Architect in the Software Defined Networking Lab, designing and directing test efforts on openflow networks.
+
+\vspace{0.15in}
+
+Diaz serves as an Adjunct Faculty member at the University of Colorado Denver Business School, teaching Information Systems courses and bridging the gap between industry practice and academic theory. His prior teaching experience includes five years at McHenry County College (2006--2011), where he taught Linux OS basics, Linux shell programming, Microsoft Office, and Microsoft Windows OS.
+
+\vspace{0.15in}
+
+Diaz holds an MS in Computer Information Systems from Northwestern University, an MS in Network Engineering/Network Security from DePaul University in Chicago, and a BS in Computer Science. He is an active contributor to the open-source community, notably as a contributor to Peirates, a Kubernetes penetration testing tool, and has run the BruCon 0x0F Capture the Flag contest.
+
+\end{minipage}
+
+\vspace{0.3in}
 
 \noindent\begin{tikzpicture}
 	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Professional Profile};
+	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Education};
 \end{tikzpicture}
 
+\vspace{0.05in}
 
-\noindent Franklin Diaz is a results-driven Principal Engineer, security researcher, and educator with over 20 years of experience spanning telecommunications, software development, cloud security, and DevSecOps. Currently in his seventh year at Palo Alto Networks, Franklin serves as a Principal Extended Expertise Consultant, where he guides large-scale enterprise customers through complex cloud migrations, automation initiatives, and critical infrastructure transformations.\\
-\\
-Alongside his corporate consulting, Franklin is a highly active member of the open-source security community and serves as an Adjunct Instructor at the University of Colorado Denver Business School, bridging the gap between industry practice and academic theory.
-
-\vspace{0.2in}
-
-\noindent\begin{tikzpicture}
-	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm)  {Skills};
-\end{tikzpicture}
-
-\begin{itemize}
-	\item NGFW configuration, implementation, and management
-	\item Panorama/SCM design, implementation and migration.
-	\item User-ID and High Availability for the enterprise.
+\begin{itemize}[nosep]
+	\item \textbf{MS, Computer Information Systems} --- Northwestern University
+	\item \textbf{MS, Network Engineering/Network Security} --- DePaul University
+	\item \textbf{BS, Computer Science} 
 \end{itemize}
 
-\vspace{0.2in}
+\vspace{0.15in}
 
 \noindent\begin{tikzpicture}
 	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Recent PAN Professional Experience};
+	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Teaching Experience};
 \end{tikzpicture}
 
-\begin{itemize}
-	\item Global pharmaceutical distribution company with over 203,000 employees in 27 countries
-	\item Global telecommunications company with over 23,000 employees in 100 countries
+\vspace{0.05in}
+
+\begin{itemize}[nosep]
+	\item \textbf{University of Colorado Denver, Business School} --- Adjunct Faculty, Information Systems
+	\item \textbf{McHenry County College} (2006--2011) --- Courses: Linux OS, Shell Programming, Microsoft Office, Windows OS
 \end{itemize}
 
-\vspace{0.2in}
+\vspace{0.3in}
 
-% \break
-\noindent\begin{tikzpicture}
-	\fill[panorange] (0,0) rectangle (\linewidth,0.75cm);
-	\node[text=white, font=\sffamily\bfseries] at ({0.5*\linewidth},0.37cm) {Accomplishments};
-\end{tikzpicture}
-
-\begin{itemize}
-	\item Performed best-practice assessments and worked with customer stakeholders to plan and successfully execute change strategy to migrate to a variety of best practices in NGFW platform. 
-	\item Worked with customer stakeholders to educate, adopt, and apply Palo Alto Networks technologies across a variety of teams, technologies, and business processes.
-	\item Obtained consistently high CSAT scores throughout the period of customer engagements.
-\end{itemize}
-
+\noindent\rule{\linewidth}{0.4pt}
 
 \end{document}
