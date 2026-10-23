@@ -1,4 +1,4 @@
-package test
+package resumescan
 
 import (
 	"os"
@@ -8,6 +8,11 @@ import (
 )
 
 func TestBiographyIntegrity(t *testing.T) {
+	// Resolve resume root relative to this test file's location.
+	if _, err := filepath.Abs(filepath.Dir("")); err != nil {
+		t.Fatalf("failed to resolve test directory: %v", err)
+	}
+
 	// Paths relative to the test directory
 	biographyPaths := []string{
 		"../resume/sections/biography.tex",
@@ -63,7 +68,7 @@ func TestBiographyIntegrity(t *testing.T) {
 		}
 	})
 
-	// 3. Verify LaTeX Input Reference
+	// 3. Verify LaTeX Input Reference — must be error, not log.
 	t.Run("VerifyMainResumeIntegration", func(t *testing.T) {
 		mainResumePath := "../resume/resume.tex"
 		content, err := os.ReadFile(mainResumePath)
@@ -78,7 +83,7 @@ func TestBiographyIntegrity(t *testing.T) {
 		// Search for \input{sections/biography} or \input{sections/objective}
 		inputPattern := `\input{sections/` + sectionName + `}`
 		if !strings.Contains(resumeText, inputPattern) {
-			t.Logf("Warning: %s is not actively included in your resume.tex via %s. Ensure it isn't accidentally commented out.", bioFile, inputPattern)
+			t.Errorf("Missing \\input{} reference: %s is not actively included in resume.tex. Expected pattern: %s (line must contain \\\\input{%s}) — ensure it isn't commented out.", bioFile, inputPattern, sectionName)
 		}
 	})
 }
