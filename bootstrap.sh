@@ -33,6 +33,7 @@ main() {
     log "Starting project initialization..."
     install_deps
     log "Generating build scripts..."
+    mkdir -p aclocal
     autoreconf -i || error "autoreconf failed. Ensure 'autoconf' and 'automake' are installed."
     log "Configuring project..."
     ./configure || error "Configuration failed."

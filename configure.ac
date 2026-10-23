@@ -31,6 +31,7 @@ AC_CONFIG_FILES([
   Makefile
   resume/Makefile
   biography/Makefile
+  cv/Makefile
 ])
 
 AC_OUTPUT
