@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 AC_INIT([franklin-resume], [3.0], [smoooth.y62wj@passmail.net], [https://github.com/devsecfranklin/franklin-resume])
 AC_CONFIG_MACRO_DIR([config/m4])
 AC_CONFIG_AUX_DIR([config])
-AM_INIT_AUTOMAKE([-Wno-override foreign subdir-include])
+AM_INIT_AUTOMAKE([-Wno-override foreign])
 
 dnl Check for xelatex (required)
 AC_CHECK_PROG([HAVE_XELATEX], [xelatex], [found], [not-found])
