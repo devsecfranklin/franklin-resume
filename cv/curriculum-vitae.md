@@ -2,7 +2,7 @@
 
 **Lecturer — Information Systems | Principal Security Consultant**  
 University of Colorado Denver Business School · Palo Alto Networks  
-franklin.diaz@ucdenver.edu · [LinkedIn](https://linkedin.com/in/franklin-diaz) · [bitsmasher.net](https://bitsmasher.net) · [pale-shadow GitHub](https://github.com/pale-shadow)
+franklin.diaz@ucdenver.edu · [LinkedIn](https://linkedin.com/in/franklin-diaz) · [bitsmasher.net](https://bitsmasher.net) · [devsecfranklin GitHub](https://github.com/devsecfranklin)
 
 ---
 
@@ -87,7 +87,7 @@ Guidance for managing clean local development environments ("What to do about yo
 **[Cloud Native Security Lab](https://zenodo.org/records/5918861)** — Published January 29, 2022  
 A cloud-native security lab built in Google Cloud Platform.
 
-**[the greebling](https://github.com/pale-shadow/game-skynet-minecraft)** — *Current*  
+**[the greebling](https://github.com/devsecfranklin/game-skynet-minecraft)** — *Current*  
 Minecraft schematic generation using AI Edge TPU hardware.
 
 ---
