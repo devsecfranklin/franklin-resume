@@ -12,7 +12,7 @@ Principal Security Consultant · Open Source Contributor · Adjunct Educator
 
 ## About
 
-I'm a security consultant specializing in infrastructure hardening, secure system architecture, and identity management. Currently working at Palo Alto Networks, with adjunct faculty experience at the University of Colorado Denver (ISMG-2050).
+I'm a security consultant specializing in infrastructure hardening, secure system architecture, and identity management. Adjunct faculty experience at the University of Colorado Denver (ISMG-2050).
 
 This repository is my living resume — built in LaTeX, version-controlled, and always up to date.
 
