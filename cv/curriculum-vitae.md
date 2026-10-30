@@ -81,14 +81,8 @@ Taught Information Systems courses including Linux OS fundamentals, Linux shell 
 
 ## PROJECTS
 
-**[Stash House](https://zenodo.org/records/19122412)** — *Current*  
-Guidance for managing clean local development environments ("What to do about your issue of a 'dirty' local development environment.")
-
-**[Cloud Native Security Lab](https://zenodo.org/records/5918861)** — Published January 29, 2022  
+**[Cloud Native Security Lab](https://zenodo.org/records/5918861)** — Published January 29, 2022
 A cloud-native security lab built in Google Cloud Platform.
-
-**[the greebling](https://github.com/devsecfranklin/game-skynet-minecraft)** — *Current*  
-Minecraft schematic generation using AI Edge TPU hardware.
 
 ---
 

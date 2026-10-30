@@ -1,0 +1,15 @@
+Subject: Principal DevOps / Cloud Platform Architect (Denver / Remote)
+
+Hi [Name],
+
+I'm a Denver-based Principal Systems/Platform Engineer with 20+ years of experience spanning enterprise Azure/AWS cloud architecture, production Kubernetes (AKS/GKE), and massive telemetry pipelines (1B+ events/day at Salesforce).
+
+I'm currently exploring new Principal DevOps, Platform Engineering, or Staff SRE opportunities (Denver hybrid or remote). My background combines hands-on declarative GitOps/IaC platform delivery with technical leadership.
+
+If you have active searches for senior or principal platform leaders across your Front Range clients, I'd welcome a brief conversation.
+
+Best regards,
+
+Franklin Diaz
+
+franklin.diaz@ucdenver.edu • linkedin.com/in/franklin-diaz
