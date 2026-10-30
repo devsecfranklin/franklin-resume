@@ -14,8 +14,8 @@ This repository is my living resume — built in LaTeX, version-controlled, and 
 
 | | |
 |---|---|
-| 📄 **Resume** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/main/resume/resume.pdf) |
-| 📖 **Biography** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/main/biography/biography.pdf) |
+| 📄 **Resume** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/blob/main/resume/resume.pdf) |
+| 📖 **Biography** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/blob/main/biography/biography.pdf) |
 
 ---
 
