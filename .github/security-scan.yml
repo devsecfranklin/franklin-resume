@@ -1,8 +1,21 @@
 name: Security & Integrity Scan
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/*.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/workflows/security-scan.yml'
   pull_request:
     branches: [ main ]
+    paths:
+      - '**/*.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/workflows/security-scan.yml'
+  workflow_dispatch:
 
 jobs:
   go-security-tests:
@@ -11,16 +24,33 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Setup Go Environment
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v5
         with:
-          go-version: '1.26'
-          cache: true 
+          go-version: '1.24' # or 'stable' / '1.23' depending on go.mod directive
+          check-latest: true
+          cache: true
 
-      - name: Initialize Go Modules
-        run: go mod tidy && go test -coverprofile=coverage.out ./test/... && go tool cover -html=coverage.out -o coverage.html
+      - name: Verify Go Dependencies
+        run: |
+          go mod tidy
+          git diff --exit-code go.mod go.sum || (echo "go.mod or go.sum has uncommitted changes" && exit 1)
 
-      - name: Run Integrity Tests
-        run: go test -json ./test/... > test-report.json && go test -v ./test/...
+      - name: Run Integrity Tests & Generate Coverage
+        run: |
+          go test -v -coverprofile=coverage.out -json ./test/... > test-report.json || TEST_EXIT=$?
+          go tool cover -html=coverage.out -o coverage.html || true
+          exit ${TEST_EXIT:-0}
+
+      - name: Upload Test & Coverage Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integrity-test-reports
+          path: |
+            coverage.html
+            coverage.out
+            test-report.json
+          retention-days: 14

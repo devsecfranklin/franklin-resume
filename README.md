@@ -1,9 +1,5 @@
 # Franklin Diaz
 
-Principal Security Consultant · Open Source Contributor · Adjunct Educator
-
----
-
 [![GitHub](https://img.shields.io/badge/GitHub-devsecfranklin-blue?logo=github)](https://github.com/devsecfranklin)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0003--4586--8500-A6CE39?logo=orcid&logoColor=FFFFFF)](https://orcid.org/0000-0003-4586-8500)
 [![build - resume](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml/badge.svg)](https://github.com/devsecfranklin/franklin-resume/actions/workflows/latex.yaml)
@@ -12,16 +8,14 @@ Principal Security Consultant · Open Source Contributor · Adjunct Educator
 
 ## About
 
-I'm a security consultant specializing in infrastructure hardening, secure system architecture, and identity management. Adjunct faculty experience at the University of Colorado Denver (ISMG-2050).
-
 This repository is my living resume — built in LaTeX, version-controlled, and always up to date.
 
 ## Quick Links
 
 | | |
 |---|---|
-| 📄 **Resume** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/main/resume/resume.pdf) |
-| 📖 **Biography** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/main/biography/biography.pdf) |
+| 📄 **Resume** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/blob/main/resume/resume.pdf) |
+| 📖 **Biography** | [Download PDF](https://raw.githubusercontent.com/devsecfranklin/franklin-resume/blob/main/biography/biography.pdf) |
 
 ---
 

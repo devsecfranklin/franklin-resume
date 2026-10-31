@@ -3,27 +3,29 @@ package resumescan
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
 
 func TestBiographyIntegrity(t *testing.T) {
 	// Resolve resume root relative to this test file's location.
-	if _, err := filepath.Abs(filepath.Dir("")); err != nil {
-		t.Fatalf("failed to resolve test directory: %v", err)
-	}
+	_, file, _, _ := runtime.Caller(0)
+	testDir := filepath.Dir(file)
+	rootDir := filepath.Dir(testDir)
 
-	// Paths relative to the test directory
+	// Paths relative to the resume root
 	biographyPaths := []string{
-		"../resume/sections/biography.tex",
-		"../resume/sections/objective.tex",
+		"resume/sections/biography.tex",
+		"resume/sections/objective.tex",
 	}
 
 	var bioFile string
 	// Locate which file is being used as the biography/objective
-	for _, path := range biographyPaths {
+	for _, rel := range biographyPaths {
+		path := filepath.Join(rootDir, rel)
 		if _, err := os.Stat(path); err == nil {
-			bioFile = path
+			bioFile = filepath.Join("resume/sections", filepath.Base(path))
 			break
 		}
 	}
@@ -34,7 +36,7 @@ func TestBiographyIntegrity(t *testing.T) {
 
 	// 1. Verify File Permissions (DevSecOps Hardening)
 	t.Run("FilePermissions", func(t *testing.T) {
-		info, err := os.Stat(bioFile)
+		info, err := os.Stat(filepath.Join(rootDir, bioFile))
 		if err != nil {
 			t.Fatalf("Failed to stat biography file: %v", err)
 		}
@@ -48,7 +50,7 @@ func TestBiographyIntegrity(t *testing.T) {
 
 	// 2. Scan Biography Content for Placeholders or Draft Notes
 	t.Run("DraftPlaceholderScan", func(t *testing.T) {
-		content, err := os.ReadFile(bioFile)
+		content, err := os.ReadFile(filepath.Join(rootDir, bioFile))
 		if err != nil {
 			t.Fatalf("Failed to read biography file: %v", err)
 		}
@@ -70,7 +72,7 @@ func TestBiographyIntegrity(t *testing.T) {
 
 	// 3. Verify LaTeX Input Reference — must be error, not log.
 	t.Run("VerifyMainResumeIntegration", func(t *testing.T) {
-		mainResumePath := "../resume/resume.tex"
+		mainResumePath := filepath.Join(rootDir, "resume/resume.tex")
 		content, err := os.ReadFile(mainResumePath)
 		if err != nil {
 			t.Fatalf("Failed to read main resume.tex: %v", err)

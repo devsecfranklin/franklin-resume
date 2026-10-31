@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"sync"
 	"testing"
@@ -36,10 +37,8 @@ type linkResult struct {
 func TestLinkIntegrity(t *testing.T) {
 	// Resolve the resume root relative to this test file's location,
 	// not the current working directory — makes tests portable under go workspaces.
-	testDir, err := filepath.Abs(filepath.Dir(""))
-	if err != nil {
-		t.Fatalf("failed to resolve test directory: %v", err)
-	}
+	_, file, _, _ := runtime.Caller(0)
+	testDir := filepath.Dir(file)
 	rootDir := filepath.Dir(testDir)
 
 	// Collect all .tex/.md files first (no walking yet).
