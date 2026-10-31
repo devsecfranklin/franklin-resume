@@ -34,16 +34,17 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 
+\titlespacing{\section}{0pt}{8pt}{3pt}
 \titleformat{\section}
-  {\vspace{8pt}\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\textsc}
+  {\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\textsc}
   {}{0em}{}
-  [\vspace{-4pt}{\color{rulecolor}\rule{\textwidth}{1.2pt}}\vspace{3pt}]
 
 \setlist[itemize]{leftmargin=14pt, itemsep=2pt, parsep=0pt, topsep=2pt}
 
 \begin{document}
 \color{textdark}
 
+\par
 % Header / Masthead
 {\fontsize{20pt}{22pt}\selectfont\textbf{\color{primary}Franklin Diaz}}\\[3pt]
 {\fontsize{10pt}{12pt}\selectfont\textbf{\color{accent}Lecturer --- Information Systems \textbar\ Principal Security Consultant}}\\[5pt]
@@ -56,9 +57,7 @@ Palo Alto Networks \enspace\textbullet\enspace
 \href{https://github.com/devsecfranklin}{github.com/devsecfranklin}
 }
 \vspace{6pt}
-\hrule height 1.8pt \color{primary}
-\vspace{6pt}
-
+\hrule height 1.8pt \color{primary}\par
 % Education
 \section{Education}
 \noindent
