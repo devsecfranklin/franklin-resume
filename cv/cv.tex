@@ -2,7 +2,7 @@
 
 \usepackage[a4paper, margin=1.8cm, top=1.6cm, bottom=1.6cm]{geometry}
 \usepackage{fontspec}
-\usepackage[english, bidi=basic, provide=*]{babel}
+\usepackage[english, provide=*]{babel}
 \babelprovide[import, onchar=ids fonts]{english}
 \babelfont{rm}{Noto Sans}
 
@@ -18,6 +18,8 @@
 \definecolor{textdark}{HTML}{1E293B}
 \definecolor{muted}{HTML}{64748B}
 \definecolor{rulecolor}{HTML}{CBD5E1}
+% Uppercase alias for \titleformat compatibility
+\definecolor{RULECOLOR}{HTML}{CBD5E1}
 
 \hypersetup{
     colorlinks=true,
@@ -33,9 +35,9 @@
 \setlength{\parskip}{0pt}
 
 \titleformat{\section}
-  {\vspace{8pt}\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\uppercase}
+  {\vspace{8pt}\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\textsc}
   {}{0em}{}
-  [\vspace{-4pt}\color{rulecolor}\rule{\textwidth}{1.2pt}\vspace{3pt}]
+  [\vspace{-4pt}{\color{rulecolor}\rule{\textwidth}{1.2pt}}\vspace{3pt}]
 
 \setlist[itemize]{leftmargin=14pt, itemsep=2pt, parsep=0pt, topsep=2pt}
 
