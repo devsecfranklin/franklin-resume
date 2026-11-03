@@ -34,37 +34,39 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 
+\titlespacing{\section}{0pt}{8pt}{3pt}
 \titleformat{\section}
-  {\vspace{8pt}\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\textsc}
+  {\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\textsc}
   {}{0em}{}
-  [\vspace{-4pt}{\color{rulecolor}\rule{\textwidth}{1.2pt}}\vspace{3pt}]
 
 \setlist[itemize]{leftmargin=14pt, itemsep=2pt, parsep=0pt, topsep=2pt}
 
 \begin{document}
 \color{textdark}
 
+\par
+\par
 % Header / Masthead
 {\fontsize{20pt}{22pt}\selectfont\textbf{\color{primary}Franklin Diaz}}\\[3pt]
 {\fontsize{10pt}{12pt}\selectfont\textbf{\color{accent}Lecturer --- Information Systems \textbar\ Principal Security Consultant}}\\[5pt]
+\begin{minipage}[t]{\linewidth}
+\raggedleft
 {\fontsize{8.5pt}{10pt}\selectfont\color{muted}
 University of Colorado Denver Business School \enspace\textbullet\enspace
-Palo Alto Networks \enspace\textbullet\enspace
-\href{mailto:franklin.diaz@ucdenver.edu}{franklin.diaz@ucdenver.edu} \enspace\textbullet\enspace
+\href{mailto:franklin@bitsmasher.net}{franklin@bitsmasher.net} \enspace\textbullet\enspace
 \href{https://www.bitsmasher.net/research/}{bitsmasher.net} \enspace\textbullet\enspace
 \href{https://linkedin.com/in/franklin-diaz}{linkedin.com/in/franklin-diaz} \enspace\textbullet\enspace
-\href{https://github.com/devsecfranklin}{github.com/devsecfranklin}
-}
-\vspace{6pt}
-\hrule height 1.8pt \color{primary}
-\vspace{6pt}
+\href{https://github.com/devsecfranklin}{github.com/devsecfranklin}}
+\end{minipage}
+\par\vspace{6pt}\par
+{\color{primary}\rule{\linewidth}{1.8pt}}\par
 
 % Education
 \section{Education}
 \noindent
 \begin{tabularx}{\textwidth}{@{}X X@{}}
-\textbf{Master of Science in Computer Security} & \textbf{Master of Science in Information Systems} \\
-DePaul University, Chicago, IL (2007) & Northwestern University, Evanston, IL (2004)
+\textbf{Master of Science in Computer Security} \& \textbf{Master of Science in Information Systems} \\
+DePaul University, Chicago, IL (2007) \& Northwestern University, Evanston, IL (2004)
 \end{tabularx}
 \vspace{4pt}
 
@@ -89,7 +91,7 @@ Roosevelt University, Chicago, IL (2002)
 
 % Professional Experience
 \section{Professional Experience}
-\noindent\textbf{Principal Security Consultant / Extended Expertise} \hfill {\color{muted}\textbf{Jan 2020 -- Present}} \\
+\noindent\textbf{Principal Security Consultant / Extended Expertise} \hfill {\color{muted}\textbf{Jan 2020 -- Oct 2026}} \\
 {\color{textdark}\textit{Palo Alto Networks --- Remote}}
 \begin{itemize}
     \item Lead architecture and deployment of Palo Alto Networks security solutions for enterprise clients executing multi-cloud migrations (GCP, OCI, AWS, Azure).
@@ -131,7 +133,7 @@ Roosevelt University, Chicago, IL (2002)
     \item Led cross-functional system integration efforts and acceptance testing across distributed product feature teams.
 \end{itemize}
 
-% Projects & Open Research
+% Projects \& Open Research
 \section{Projects \& Open Research}
 \begin{itemize}
     \item \textbf{Cloud Native Security Lab} (\href{https://zenodo.org/records/5918861}{Zenodo Record 5918861}): Complete open-source cloud-native security research lab deployed in Google Cloud Platform.
@@ -139,22 +141,22 @@ Roosevelt University, Chicago, IL (2002)
     \item \textbf{Peirates}: Contributor to open-source Kubernetes penetration testing and attack-surface evaluation tool.
 \end{itemize}
 
-% Publications & Community Service
+% Publications \& Community Service
 \section{Publications, Talks \& Community Service}
 \begin{itemize}
     \item \textbf{Conference Security Track Volunteer:} BSidesLV.
     \item \textbf{Technical Author \& Researcher:} Decentralized protocols, autonomous agent runtime security, and DevSecOps at \href{https://www.bitsmasher.net/research/}{bitsmasher.net/research}.
 \end{itemize}
 
-% Technical Skills & Competencies
+% Technical Skills \& Competencies
 \section{Technical Skills \& Competencies}
 \noindent
 \begin{tabularx}{\textwidth}{@{}p{4.2cm} X@{}}
-\textbf{Languages:} & Python, SQL, Go, JavaScript, Bash, C/C++, Java, PERL \\
-\textbf{Frameworks \& Libraries:} & Pydantic, FastAPI, Django, Leaflet, LINQ \\
-\textbf{Cloud \& Platforms:} & AWS, GCP, Azure, OCI \\
-\textbf{Tools \& Infrastructure:} & Git, JIRA, Kafka, Redis, Docker, Kubernetes, Terraform, Airflow, Jenkins, \LaTeX \\
-\textbf{Concepts \& Practices:} & DevSecOps, Infrastructure as Code, REST/XML APIs, Object-Oriented Design, TDD, Multi-Cloud Architecture
+\textbf{Languages:} \& Python, SQL, Go, JavaScript, Bash, C/C++, Java, PERL \\
+\textbf{Frameworks \& Libraries:} \& Pydantic, FastAPI, Django, Leaflet, LINQ \\
+\textbf{Cloud \& Platforms:} \& AWS, GCP, Azure, OCI \\
+\textbf{Tools \& Infrastructure:} \& Git, JIRA, Kafka, Redis, Docker, Kubernetes, Terraform, Airflow, Jenkins, \LaTeX \\
+\textbf{Concepts \& Practices:} \& DevSecOps, Infrastructure as Code, REST/XML APIs, Object-Oriented Design, TDD, Multi-Cloud Architecture
 \end{tabularx}
 
 \end{document}

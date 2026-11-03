@@ -35,6 +35,7 @@ jobs:
 
       - name: Verify Go Dependencies
         run: |
+          ./bootstrap.sh
           go mod tidy
           git diff --exit-code go.mod go.sum || (echo "go.mod or go.sum has uncommitted changes" && exit 1)
 
