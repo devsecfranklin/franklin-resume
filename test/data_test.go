@@ -23,7 +23,7 @@ func TestSectionDataFiles(t *testing.T) {
 	for _, name := range requiredFiles {
 		path := filepath.Join(sectionsDir, name)
 
-		info, err := os.Stat(path)
+		_, err := os.Stat(path)
 		if os.IsNotExist(err) {
 			t.Errorf("Missing required section file: %s", path)
 			continue

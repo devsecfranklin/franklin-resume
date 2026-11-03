@@ -110,7 +110,7 @@ func TestSchemaFieldStructure(t *testing.T) {
 
 	for _, field := range requiredFields {
 		found := false
-		for lineNum, line := range lines {
+		for _, line := range lines {
 			trimmed := strings.TrimSpace(line)
 			if strings.Contains(trimmed, field) {
 				found = true
