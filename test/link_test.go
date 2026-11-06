@@ -34,7 +34,12 @@ type linkResult struct {
 	lineNo int
 }
 
+// TestLinkIntegrity skips link checking in CI (network-dependent tests
+// are flaky behind corporate firewalls and unreliable from cloud runners).
 func TestLinkIntegrity(t *testing.T) {
+	if os.Getenv("TEST_CI") != "" {
+		t.Skip("skipping link integrity check in CI — network-dependent")
+	}
 	// Resolve the resume root relative to this test file's location,
 	// not the current working directory — makes tests portable under go workspaces.
 	_, file, _, _ := runtime.Caller(0)

@@ -26,6 +26,11 @@ jobs:
           root_file: cv.tex
           working_directory: cv
           args: '-xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape'
+          extra_system_packages: fontconfig
+          pre_compile: |
+            mkdir -p /usr/share/fonts/opentype
+            find / -name "\*Montserrat\*.otf" -exec cp {} /usr/share/fonts/opentype/ \; 2>/dev/null || true fc-cache -fv
+            fc-cache -fv
 
       - name: Upload cv artifact
         uses: actions/upload-artifact@v4

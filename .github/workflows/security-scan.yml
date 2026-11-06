@@ -35,14 +35,16 @@ jobs:
 
       - name: Verify Go Dependencies
         run: |
+          ./bootstrap.sh
           go mod tidy
           git diff --exit-code go.mod go.sum || (echo "go.mod or go.sum has uncommitted changes" && exit 1)
 
       - name: Run Integrity Tests & Generate Coverage
+        env:
+          TEST_CI: "1"
         run: |
-          go test -v -coverprofile=coverage.out -json ./test/... > test-report.json || TEST_EXIT=$?
-          go tool cover -html=coverage.out -o coverage.html || true
-          exit ${TEST_EXIT:-0}
+          make test
+          go test -v -coverprofile=coverage.out -json ./test/... > test-report.json
 
       - name: Upload Test & Coverage Artifacts
         if: always()
