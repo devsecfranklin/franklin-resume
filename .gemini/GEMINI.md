@@ -1,51 +1,37 @@
 # Gemini Project Context: Franklin Resume
 
-This project is a LaTeX-based resume with an automated build system using GNU Autotools.
+This repository maintains Franklin Diaz's living curriculum vitae, resume, and biography, typeset in LaTeX with an automated build system and a Go verification test suite.
 
-## Project Overview
+## Project Invariants & Identity
 
-- **Goal:** Maintain and build a professional resume in PDF format from LaTeX source.
-- **Main Source:** `resume/resume.tex`
-- **Content Sections:** Located in `resume/sections/` (e.g., `experience.tex`, `education.tex`).
-- **Styling:** Defined in `resume/TLCresume.sty`.
+- **Author:** Franklin Diaz
+- **Primary Contact:** `franklin@bitsmasher.net` (Academic: `franklin.diaz@ucdenver.edu`)
+- **Canonical GitHub Handle:** `devsecfranklin` (Never use deprecated handle `pale-shadow`)
+- **Research Site:** `https://www.bitsmasher.net/research/`
+- **LinkedIn:** `https://linkedin.com/in/franklin-diaz`
 
-## Development Workflow
+## Key Targets & Document Structure
 
-### Prerequisites
+- **Main Resume (`resume/`):**
+  - Entry point: `resume/resume.tex`
+  - Partials: `resume/_header.tex`, modular sections in `resume/sections/*.tex`
+  - Style package: `resume/fed-resume.sty`
+- **Biography (`biography/`):**
+  - Entry point: `biography/biography.tex`
+  - Partials: `biography/_header.tex`
+  - Style package: `biography/monserrat.sty` (note single 't')
+- **Curriculum Vitae (`cv/`):**
+  - Sources: `cv/cv.tex`, `cv/curriculum-vitae.md`
+- **Images (`images/`):**
+  - Headshot: `images/Franklin_24-09-19_3869.jpg`
+  - Visual assets: `images/bio-header-palo.png`, `images/ORCID.png`
+- **Excluded Fixtures:**
+  - `test/test.tex` is an isolated legacy driver fixture; do not alter or scan for identity checks.
 
-- LaTeX distribution (e.g., TeX Live)
-- `latexmk`
-- GNU Autotools (`autoconf`, `automake`)
-- Python 3.9+ (as specified in `configure.ac`)
+## Compilation & Build Mechanics
 
-### Build Process
+- **Engine:** Always compile with **XeLaTeX** (`xelatex`) due to `fontspec` and OpenType/TrueType font dependencies (`biography/monserrat.sty`, `resume/fed-resume.sty`).
+- **Standard Compile Flags:**
+  ```bash
+  xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape <document.tex>
 
-The project uses a standard Autotools workflow:
-
-1.  **Initialize:** Run `./bootstrap.sh` to generate the `configure` script and run it.
-2.  **Build:** Run `make` inside the `resume/` directory.
-    - The `Makefile.am` in `resume/` uses `latexmk` to compile the PDF.
-3.  **Clean:** Run `make clean` in the `resume/` directory to remove build artifacts.
-
-### CI/CD
-
-- GitHub Actions (`.github/workflows/latex.yaml`) automatically builds the resume on pull requests using `xu-cheng/latex-action` with `pdf`.
-
-## Key Files and Directories
-
-- `resume/`: Contains the main LaTeX source and build configuration.
-    - `resume.tex`: The entry point for the LaTeX document.
-    - `sections/`: Individual LaTeX files for different resume parts.
-    - `TLCresume.sty`: Custom LaTeX style file.
-    - `_header.tex`: Handles formatting for the document header and contact info.
-    - `Makefile.am`: Automake configuration for building the PDF.
-- `bootstrap.sh`: Script to initialize the build system.
-- `configure.ac`: Autoconf configuration file.
-- `images/`: Contains images used in the resume (e.g., headshot, QR codes).
-- `certification/`: Directory for certification-related documents and notes.
-
-## Coding Standards
-
-- **LaTeX:** Follow standard LaTeX conventions. Use `UTF-8` encoding.
-- **Structure:** Keep content modular by using `\input{sections/...}` in `resume.tex`.
-- **Style:** Avoid hardcoding styles in section files; use `TLCresume.sty` for consistent formatting.
