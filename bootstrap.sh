@@ -39,8 +39,8 @@ main() {
     ./configure || error "Configuration failed."
     [[ ! -f ~/.dircolors ]] && dircolors -p > ~/.dircolors && log "Updated .dircolors"
     log "Go setup"
-    go mod init github.com/devsecfranklin/franklin-resume
-    go mod tidy
+    /usr/local/go/bin/go mod init github.com/devsecfranklin/franklin-resume
+    /usr/local/go/bin/go mod tidy
     success "Ready to build. Now run 'cd resume && make'."
 }
 
