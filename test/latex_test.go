@@ -74,7 +74,7 @@ func TestLatexIncludeAndPackageIntegrity(t *testing.T) {
 			for _, pkg := range pkgs {
 				pkgName := strings.TrimSpace(pkg)
 				if knownLocalPackages[pkgName] {
-					styName := "resume/" + pkgName + ".sty"
+					styName := pkgName + ".sty"
 					styCandidates := []string{
 						filepath.Join(dir, styName),
 						filepath.Join(rootDir, "resume", styName),
