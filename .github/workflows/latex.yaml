@@ -1,16 +1,60 @@
-name: build - resume
+name: build - career documents
+
 on:
-  - pull_request
+  push:
+    branches:
+      - main
+    paths:
+      - 'resume/**'
+      - 'cv/**'
+      - 'biography/**'
+      - 'images/**'
+      - '.github/workflows/latex.yaml'
+  pull_request:
+    paths:
+      - 'resume/**'
+      - 'cv/**'
+      - 'biography/**'
+      - 'images/**'
+      - '.github/workflows/latex.yaml'
+  workflow_dispatch:
 
 jobs:
-  build_latex:
-    runs-on: ubuntu-24.04
+  build_documents:
+    name: Build LaTeX Documents
+    runs-on: ubuntu-latest
     steps:
-      - name: Set up Git repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
-      - name: Compile resume
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile Career Documents (Resume, CV, Biography)
         uses: xu-cheng/latex-action@v4
         with:
-          root_file: resume.tex
-          args: '-xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape resume'
-          working_directory: resume
+          root_file: |
+            resume/resume.tex
+            cv/cv.tex
+            biography/biography.tex
+          work_in_root_file_dir: true
+          args: '-xelatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape'
+          extra_system_packages: fontconfig
+
+      - name: Upload Resume artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdf
+          path: resume/resume.pdf
+          retention-days: 14
+
+      - name: Upload CV artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: cv/cv.pdf
+          retention-days: 14
+
+      - name: Upload Biography artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: biography-pdf
+          path: biography/biography.pdf
+          retention-days: 14
