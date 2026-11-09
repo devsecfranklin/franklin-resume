@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-DEB_PKG=(latexmk texlive-xetex libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev fonts-montserrat texlive-fonts-recommended)
+DEB_PKG=(latexmk fonts-roboto texlive-fonts-extra texlive-xetex libpcsclite-dev texlive-pictures texlive-latex-extra libssl-dev fonts-montserrat texlive-fonts-recommended)
 BLUE='\033[1;34m'; GREEN='\033[1;32m'; RED='\033[1;31m'; NC='\033[0m'
 
 log() { echo -e "${BLUE}==>${NC} $1"; }
@@ -14,7 +14,7 @@ error() { echo -e "${RED}ERROR:${NC} $1"; exit 1; }
 install_deps() {
     local missing=()
     for pkg in "${DEB_PKG[@]}"; do
-        dpkg -s "$pkg" &>/dev/null || missing+=("$pkg")
+        sudo dpkg -s "$pkg" &>/dev/null || missing+=("$pkg")
     done
 
     if [ ${#missing[@]} -gt 0 ]; then
@@ -27,6 +27,7 @@ install_deps() {
     else
         log "All dependencies already present."
     fi
+    sudo fc-cache -f -v
 }
 
 main() {
