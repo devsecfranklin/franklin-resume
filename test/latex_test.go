@@ -74,7 +74,7 @@ func TestLatexIncludeAndPackageIntegrity(t *testing.T) {
 			for _, pkg := range pkgs {
 				pkgName := strings.TrimSpace(pkg)
 				if knownLocalPackages[pkgName] {
-					styName := "resume/" + pkgName + ".sty"
+					styName := pkgName + ".sty"
 					styCandidates := []string{
 						filepath.Join(dir, styName),
 						filepath.Join(rootDir, "resume", styName),
@@ -105,9 +105,9 @@ func TestLatexIncludeAndPackageIntegrity(t *testing.T) {
 
 // TestLatexCompilationSmoke runs a headless compilation against resume/resume.tex
 func TestLatexCompilationSmoke(t *testing.T) {
-	engine, err := exec.LookPath("pdflatex")
+	engine, err := exec.LookPath("xelatex")
 	if err != nil {
-		engine, err = exec.LookPath("xelatex")
+		engine, err = exec.LookPath("pdflatex")
 	}
 	if err != nil {
 		t.Skip("Neither pdflatex nor xelatex found on host, skipping smoke test")
@@ -119,7 +119,12 @@ func TestLatexCompilationSmoke(t *testing.T) {
 	}
 
 	tmpDir := t.TempDir()
-	cmd := exec.Command(engine, "-interaction=nonstopmode", "-output-directory="+tmpDir, target)
+	absTarget, err := filepath.Abs(target)
+	if err != nil {
+		t.Fatalf("Failed to resolve target: %v", err)
+	}
+	cmd := exec.Command(engine, "-interaction=nonstopmode", "-shell-escape", "-output-directory="+tmpDir, absTarget)
+	cmd.Dir = filepath.Dir(absTarget)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		t.Fatalf("LaTeX compilation failed: %v\nOutput snippet:\n%s", err, string(out))

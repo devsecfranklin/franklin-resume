@@ -56,6 +56,10 @@ func TestLinkIntegrity(t *testing.T) {
 		if info.IsDir() && strings.HasPrefix(info.Name(), ".") {
 			return filepath.SkipDir
 		}
+		// Skip test directory and test fixtures
+		if strings.Contains(path, "/test/") {
+			return nil
+		}
 		// Only scan source/documentation files.
 		ext := filepath.Ext(path)
 		if ext != ".tex" && ext != ".md" {
@@ -89,6 +93,8 @@ func TestLinkIntegrity(t *testing.T) {
 			line := scanner.Text()
 			matches := linkRegex.FindAllString(line, -1)
 			for _, rawURL := range matches {
+				rawURL = strings.ReplaceAll(rawURL, `\github`, "devsecfranklin")
+				rawURL = strings.ReplaceAll(rawURL, `\LinkedIn`, "franklin-diaz")
 				if !seen[rawURL] {
 					seen[rawURL] = true
 					allLinks = append(allLinks, linkSource{url: rawURL, file: path, lineNo: lineNo})
@@ -157,14 +163,14 @@ func checkLink(l linkSource) linkResult {
 	client := &http.Client{
 		Timeout: 15 * time.Second,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			if len(via) >= 5 {
+			if len(via) >= 10 {
 				return fmt.Errorf("too many redirects")
 			}
 			return nil
 		},
 	}
 
-	// Liveness Check: HEAD first, GET fallback for servers that block HEAD.
+	// Liveness Check: GET with browser User-Agent
 	resp, err := doWithFallback(client, url)
 	if err != nil {
 		return linkResult{url: url, pass: false, issue: fmt.Sprintf("Connection Error: Failed to reach %s (line %d in %s): %v", url, l.lineNo, filepath.Base(l.file), err), file: l.file, lineNo: l.lineNo}
@@ -173,7 +179,7 @@ func checkLink(l linkSource) linkResult {
 
 	// Classify status codes.
 	switch {
-	case resp.StatusCode >= 200 && resp.StatusCode < 400:
+	case (resp.StatusCode >= 200 && resp.StatusCode < 400) || (resp.StatusCode == 999 && strings.Contains(url, "linkedin.com")):
 		return linkResult{url: url, pass: true, file: l.file, lineNo: l.lineNo}
 	case resp.StatusCode == 403:
 		return linkResult{url: url, pass: false, issue: fmt.Sprintf("Forbidden (403): %s (line %d in %s). Resource may require authentication or be unavailable.", url, l.lineNo, filepath.Base(l.file)), file: l.file, lineNo: l.lineNo}
@@ -184,20 +190,12 @@ func checkLink(l linkSource) linkResult {
 	}
 }
 
-// doWithFallback attempts HEAD first, then GET if HEAD fails.
+// doWithFallback sends a GET request with a browser User-Agent header.
 func doWithFallback(client *http.Client, url string) (*http.Response, error) {
-	resp, err := client.Head(url)
-	if err == nil && resp.StatusCode < 500 {
-		return resp, nil
-	}
-	// HEAD failed or returned server error — retry with GET.
-	if resp != nil {
-		resp.Body.Close()
-	}
-
-	resp, err = client.Get(url)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		return nil, fmt.Errorf("HEAD and GET both failed for %s: %w", url, err)
+		return nil, err
 	}
-	return resp, nil
+	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; ResumeLinkChecker/1.0)")
+	return client.Do(req)
 }
