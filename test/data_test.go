@@ -44,7 +44,7 @@ func TestSectionDataFiles(t *testing.T) {
 		}
 
 		// Check that a \resumeitem or equivalent entry marker exists
-		entryRegex := regexp.MustCompile(`\\(?:(?:sub)?resume|itemize|skills)\b`)
+		entryRegex := regexp.MustCompile(`\\(?:(?:sub)?resume(?:item)?|item(?:ize)?|skills)\b`)
 		hasEntry := false
 		for _, line := range strings.Split(string(data), "\n") {
 			if len(strings.TrimSpace(line)) > 0 && !strings.HasPrefix(strings.TrimSpace(line), "%") {

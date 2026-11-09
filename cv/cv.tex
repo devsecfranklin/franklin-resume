@@ -9,7 +9,7 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{enumitem}
-\usepackage{titlesec}
+\usepackage[nostruts]{titlesec}
 \usepackage{tabularx}
 
 % Color definitions
@@ -36,7 +36,7 @@
 
 \titlespacing{\section}{0pt}{8pt}{3pt}
 \titleformat{\section}
-  {\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\textsc}
+  {\color{primary}\normalfont\fontsize{10.5pt}{12pt}\bfseries\scshape}
   {}{0em}{}
 
 \setlist[itemize]{leftmargin=14pt, itemsep=2pt, parsep=0pt, topsep=2pt}
@@ -44,8 +44,6 @@
 \begin{document}
 \color{textdark}
 
-\par
-\par
 % Header / Masthead
 {\fontsize{20pt}{22pt}\selectfont\textbf{\color{primary}Franklin Diaz}}\\[3pt]
 {\fontsize{10pt}{12pt}\selectfont\textbf{\color{accent}Lecturer --- Information Systems \textbar\ Principal Security Consultant}}\\[5pt]
@@ -65,8 +63,8 @@ University of Colorado Denver Business School \enspace\textbullet\enspace
 \section{Education}
 \noindent
 \begin{tabularx}{\textwidth}{@{}X X@{}}
-\textbf{Master of Science in Computer Security} \& \textbf{Master of Science in Information Systems} \\
-DePaul University, Chicago, IL (2007) \& Northwestern University, Evanston, IL (2004)
+\textbf{Master of Science in Computer Security} & \textbf{Master of Science in Information Systems} \\
+DePaul University, Chicago, IL (2007) & Northwestern University, Evanston, IL (2004)
 \end{tabularx}
 \vspace{4pt}
 
@@ -151,12 +149,12 @@ Roosevelt University, Chicago, IL (2002)
 % Technical Skills \& Competencies
 \section{Technical Skills \& Competencies}
 \noindent
-\begin{tabularx}{\textwidth}{@{}p{4.2cm} X@{}}
-\textbf{Languages:} \& Python, SQL, Go, JavaScript, Bash, C/C++, Java, PERL \\
-\textbf{Frameworks \& Libraries:} \& Pydantic, FastAPI, Django, Leaflet, LINQ \\
-\textbf{Cloud \& Platforms:} \& AWS, GCP, Azure, OCI \\
-\textbf{Tools \& Infrastructure:} \& Git, JIRA, Kafka, Redis, Docker, Kubernetes, Terraform, Airflow, Jenkins, \LaTeX \\
-\textbf{Concepts \& Practices:} \& DevSecOps, Infrastructure as Code, REST/XML APIs, Object-Oriented Design, TDD, Multi-Cloud Architecture
+\begin{tabularx}{\textwidth}{@{}p{4.8cm} X@{}}
+\textbf{Languages:} & Python, SQL, Go, JavaScript, Bash, C/C++, Java, PERL \\
+\textbf{Frameworks \& Libraries:} & Pydantic, FastAPI, Django, Leaflet, LINQ \\
+\textbf{Cloud \& Platforms:} & AWS, GCP, Azure, OCI \\
+\textbf{Tools \& Infrastructure:} & Git, JIRA, Kafka, Redis, Docker, Kubernetes, Terraform, Airflow, Jenkins, \LaTeX \\
+\textbf{Concepts \& Practices:} & DevSecOps, Infrastructure as Code, REST/XML APIs, Object-Oriented Design, TDD, Multi-Cloud Architecture
 \end{tabularx}
 
 \end{document}

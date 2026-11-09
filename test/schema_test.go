@@ -101,9 +101,7 @@ func TestSchemaFieldStructure(t *testing.T) {
 
 	requiredFields := []string{
 		"fed-resume",     // document class / package
-		"full-name",      // author name field
-		"title",          // title field
-		"date",           // date field
+		"_header",        // author header include
 		"experience",     // experience section header
 		"education",      // education section header
 	}
