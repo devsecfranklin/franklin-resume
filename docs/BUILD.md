@@ -59,6 +59,6 @@ go tool cover -html=coverage.out -o coverage.html  # open in browser
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/latex.yaml`) builds the resume on every pull request using [`xu-cheng/latex-action`](https://github.com/xu-cheng/latex-action).
+GitHub Actions (`.github/workflows/latex.yaml`) builds the resume, curriculum vitae, and biography using [`xu-cheng/latex-action`](https://github.com/xu-cheng/latex-action).
 
 Security & integrity tests run via `.github/workflows/security-scan.yml`, triggered on pushes and PRs touching `*.go`, `go.mod`, or `go.sum`. It checks Go dependency freshness (via `bootstrap.sh` + `go mod tidy`), runs asset/link integrity tests, and uploads coverage reports as artifacts for 14 days.
